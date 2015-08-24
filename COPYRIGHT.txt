@@ -1,0 +1,52 @@
+All Groovel code is Copyright 2014 - 2015 by the original author.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or (at
+your option) any later version.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program as the file LICENSE.txt; if not, please see
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
+
+Groovel is a registered trademark of Varnier Francois.
+
+Groovel includes works under other copyright notices and distributed
+according to the terms of the GNU General Public License or a compatible
+license, including:
+
+Javascript
+d3.js  Michael Bostock Library released under BSD license. https://github.com/mbostock/d3
+
+topojson.js see licence https://github.com/mbostock/topojson/blob/master/LICENSE  Michael Bostock https://github.com/mbostock/topojson
+
+datamap.js under MIT licence   Mark DiMarco. see http://datamaps.github.io/
+
+tinymce.js TinyMCE editor under GPL licence see http://www.tinymce.com/
+
+jqplot.js under the MIT and GPL version 2 licenses see http://www.jqplot.com/
+
+jquery.js under the MIT https://jquery.com/
+
+list.js see http://www.listjs.com/
+
+morris.js licence http://morrisjs.github.io/morris.js/#license see http://morrisjs.github.io/morris.js/
+
+CSS :
+Bootstrap  under MIT licence see http://getbootstrap.com/
+
+Bootstrap-Admin-Theme under MIT licence see https://github.com/VinceG/Bootstrap-Admin-Theme
+
+ionicons under MIT licence see http://ionicons.com/
+
+PHP
+Laravel Taylor Otwell. under MIT licence see http://laravel.com/
+
+
+ DATA geoloc
+ dbip: free to use for no commercial purpose see https://db-ip.com/

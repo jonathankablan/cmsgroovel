@@ -1,0 +1,49 @@
+{
+    "name": "groovel/cmsgroovel",
+    "description": "hybrid cms for web artisan",
+    "keywords": ["cms","framework"],
+    "license": "GPLv2",
+    "homepage": "http://www.groovelcms.com",
+    "authors": [
+        {
+            "name": "francois varnier",
+            "email": "groovelcms@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "laravel/framework": "4.2.*",
+        "raveren/kint": "dev-master",
+        "illuminate/support": "4.2.*",
+        "composer/composer": "dev-master",
+        "elasticsearch/elasticsearch": "dev-master",
+        "pda/pheanstalk": "2.0.*"
+    },
+    "autoload": {
+         "classmap": [
+            "src/migrations",
+            "src/controllers",
+            "src/business",
+            "src/business/groovel",
+            "src/business/groovel/admin",
+            "src/business/groovel/admin/routes",
+            "src/business/groovel/admin/contents",
+			"src/controllers/groovel",
+		    "src/controllers/groovel/admin/common",
+            "src/controllers/groovel/admin/routes",
+            "src/views",
+            "src/facades/groovel/cmsgroovel",
+            "src/models",
+            "src/dao",
+            "src/Groovel/Cmsgroovel",
+            "src/handlers",
+            "src/commons",
+             "src/config",
+             "src/dbip"
+        ],
+        "psr0": {
+            "Groovel\\Cmsgroovel\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
