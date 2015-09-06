@@ -38,7 +38,7 @@ class RemindersController extends GroovelFormController {
 		if($_SERVER['SERVER_NAME']=='localhost'){
 			$referer='http://'.$_SERVER['SERVER_NAME'].'/admin/auth/login/remind/form';
 		}else{
-			$referer='http://www.'.$_SERVER['SERVER_NAME'].'/admin/auth/login/remind/form';
+			$referer='http://'.$_SERVER['SERVER_NAME'].'/admin/auth/login/remind/form';
 		}
 		if(!parent::checkRefererStatus($referer)){
 			sleep(rand(2, 5)); // delay spammers a bit

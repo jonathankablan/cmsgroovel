@@ -26,14 +26,14 @@
 						     <p class='required' style='font-size:15px;margin-right:80%'>Fields are required</p>
 			       		
 			       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			       			 <input type="submit" id="submitForm" value="Send"  class="btn btn-default"/>
+			       			 <input type="submit" id="submitFormTopic" value="Send"  class="btn btn-default"/>
 			        	 </div>
 			        	   {{ Form::close() }}
 					</div>
 				</div>
 </div>
 <script>
-$("#submitForm").click(function (event) {
+$("#submitFormTopic").click(function (event) {
 	var form=$('#topic_form').serialize();
 	$.post('/forum/topic/post', form, function (data, textStatus) {
 			var parsed = JSON.parse(data);

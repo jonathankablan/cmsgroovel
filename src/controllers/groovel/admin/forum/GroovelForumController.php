@@ -99,7 +99,8 @@ class GroovelForumController extends GroovelFormController {
 			$validation = \Validator::make(\Input::all(), $rules);
 			if($validation->passes()){
 				$forumId=\Input::get('id');
-				$topics=$this->forumManager-> getAllTopics(\Input::get('forumName'));
+				//$topics=$this->forumManager-> getAllTopics(\Input::get('forumName'));
+				$topics=$this->forumManager-> getAllTopics($forumId);
 				$topicsAll=array();
 				foreach($topics as $topic){
 					$topicId=$topic->id;
@@ -112,7 +113,7 @@ class GroovelForumController extends GroovelFormController {
 				if(array_key_exists('view', \Input::all())){
 					$view=\Input::get('view');
 				}
-				\Log::info($view);
+				//\Log::info($view);
 				//'groovelcms.pages.forum.forums'
 				return  \View::make($view,['forumid'=>$forumId,'forumName'=>\input::get('forumName'),'topics'=>$topicsAll]);
 			}else{
@@ -230,7 +231,7 @@ class GroovelForumController extends GroovelFormController {
 		    $this->forumManager->deleteAnswer($input['answerid']);	
 		    $forumId=$input['forumid'];
 		    $forum= $this->forumManager->findForum( $forumId);
-		    $topics=$this->forumManager-> getAllTopics($forum->name);
+		    $topics=$this->forumManager-> getAllTopics($forumId);
 		    $topicsAll=array();
 		    foreach($topics as $topic){
 		    	$topicId=$topic->id;

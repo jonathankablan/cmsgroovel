@@ -51,7 +51,8 @@ class GroovelUserMessageBusiness implements \GroovelUserMessageBusinessInterface
  	
 	public function sendMessage($subject,$recipient,$author,$body){
 		$this->messageDao->saveMessage($subject,$recipient,$author,$body);
-		if(!empty(\Auth::user())){
+		$auth=\Auth::user();
+		if(!empty($auth)){
 			if(\Auth::user()->notification_email_enable==1){
 				if($this->configDao->isEmailEnable()==0){
 					\Mail::pretend();

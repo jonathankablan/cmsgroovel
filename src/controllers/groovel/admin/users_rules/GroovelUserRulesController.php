@@ -37,7 +37,7 @@ class GroovelUserRulesController extends GroovelController {
 	
    public function checkAccessRulesURL($user,$params){
    	//\Log::info(\Session::all());
-   	//\Log::info($params);
+   //	\Log::info($params);
    	 
    	$isAccess=false;
    	 try{
@@ -51,7 +51,8 @@ class GroovelUserRulesController extends GroovelController {
   	 		return true;
   	 	}
  	    $permissions=$this->permissionManager->getUserPermissions($user['pseudo']);
- 	    if(empty(\Auth::user())&& empty($permissions)){
+ 	    $auth=\Auth::user();
+ 	    if(empty($auth)&& empty($permissions)){
  	    	return true;
  	    }
  	    //\Log::info($permissions);
@@ -65,8 +66,8 @@ class GroovelUserRulesController extends GroovelController {
 	 	    	 }
 	 	    }
  	    }
- 	    \Log::info('test');
- 	    \Log::info($isAccess);
+ 	    //\Log::info('test');
+ 	    //\Log::info($isAccess);
  	    return $isAccess;
  	    
       }catch (\Exception $ex){

@@ -131,7 +131,7 @@
 		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Forums <span class="caret"></span></a>
 		              <ul class="dropdown-menu" role="menu">
 		                <!-- <li><a href="./admin/routes">List Routes</a></li>-->
-		                <li>{{ HTML::link('/forums', 'List all forums')}}</li>
+		                <li>{{ HTML::link('/forums/view', 'List all forums')}}</li>
 		              </ul>
 		            </li>
 		            

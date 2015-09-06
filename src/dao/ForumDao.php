@@ -44,7 +44,8 @@ class ForumDao implements \ForumDaoInterface{
 	}
 	
 	public function getAllTopics($forumName){
-		$forum=\Forums::where('name','=',$forumName)->first();
+		//\Log::info($forumName);
+		$forum=\Forums::where('id','=',$forumName)->first();
 		return \ForumQuestions::where('forum_id','=',$forum->id)->get();
 	}
 	
