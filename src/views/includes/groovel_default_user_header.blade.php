@@ -18,7 +18,7 @@
                             <li class="divider"></li>
                             <li>   {{ HTML::link('/messages/list', 'Messages')}}</li>                    
                            <li class="divider"></li>
-     					  <li>{{ HTML::link('/forums', 'Forums')}}</li>
+     					  <li>{{ HTML::link('/forums/view', 'Forums')}}</li>
      					   <li class="divider"></li>
                           @if (Auth::check())
               				<li>{{ link_to('admin/auth/logout', 'Log out') }}</li>
