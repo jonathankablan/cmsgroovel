@@ -41,7 +41,7 @@
              "src/config",
              "src/dbip"
         ],
-        "psr0": {
+        "psr-0": {
             "Groovel\\Cmsgroovel\\": "src/"
         }
     },
