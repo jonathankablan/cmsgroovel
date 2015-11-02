@@ -14,19 +14,19 @@
 /**********************************************************************/
 
 
-namespace business\groovel\admin\templates;
+namespace Groovel\Cmsgroovel\business\groovel\admin\templates;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
 use Monolog\Logger;
-use business\groovel\admin\bundles\GroovelPackageManagerBusinessInterface;
-use business\groovel\admin\bundles\DTD_COMPOSER;
+use Groovel\Cmsgroovel\business\groovel\admin\bundles\GroovelPackageManagerBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\bundles\DTD_COMPOSER;
 use Composer\Composer\Console\Application;
 use Composer\Composer\Command\UpdateCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 
-class GroovelTemplateManagerBusiness implements \GroovelTemplateManagerBusinessInterface{
+class GroovelTemplateManagerBusiness implements GroovelTemplateManagerBusinessInterface{
 
 	
 }

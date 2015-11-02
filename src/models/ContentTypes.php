@@ -12,8 +12,9 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\models;
 use Illuminate\Database\Eloquent\Model;
-class ContentTypes extends Eloquent{
+class ContentTypes extends Model{
 
 
 	protected $table = 'content_types';
@@ -26,7 +27,7 @@ class ContentTypes extends Eloquent{
 	protected $fillable = array('tableName','fieldName','description','type','content_type','widget','isnullable','required','updated_at','created_at');
 
 	public function contents() {
-		return $this->hasMany('Contents'); // this matches the Eloquent model
+		return $this->hasMany('Groovel\Cmsgroovel\model\Contents'); // this matches the Eloquent model
 	}
 	
 	

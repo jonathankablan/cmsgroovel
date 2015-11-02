@@ -12,40 +12,49 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
+use Groovel\Cmsgroovel\models\Contents;
+use Groovel\Cmsgroovel\models\ContentTypes;
+use Groovel\Cmsgroovel\models\AllContentTypes;
+use Groovel\Cmsgroovel\models\ContentsTranslation;
 
+class ContentsDao implements ContentsDaoInterface{
 
-class ContentsDao implements \ContentsDaoInterface{
-
-public function create($title,$data,$url,$grooveldescription,$contentType,$userid,$publish,$topPublish){
-	$contents= new \Contents();
-	$contents->name=$title;
-	$contents->content=$data;
+public function create($url,$contentType,$userid,$publish,$topPublish){
+	$contents= new Contents();
+	//$contents->name=$title;
+	//$contents->content=$data;
 	$contents->url=$url;
 	$contents->type_id=$contentType;
 	$contents->author_id=$userid;
 	$contents->ispublish=$publish;
 	$contents->ontop=$topPublish;
-	$contents->grooveldescription=$grooveldescription;
+	//$contents->grooveldescription=$grooveldescription;
 	$contents->save();
 	return $contents;
 }
 
 public function delete($id){
-	$content = \Contents::find($id);
+	$content = Contents::find($id);
 	$content->delete();
 }
 
 public function find($id){
-	return \Contents::find($id);
+	return Contents::find($id);
+}
+
+public function paginate($langage=null){
+	if($langage!=null){
+		return  ContentsTranslation::where('lang','=',$langage)->orderBy('created_at', 'desc')->paginate(15);
+	}
+	return Contents::orderBy('created_at', 'desc')->orderBy('ontop', 'desc')->paginate(15);
 }
 
 
-public function paginate(){
-	return \Contents::orderBy('created_at', 'desc')->orderBy('ontop', 'desc')->paginate(15);
-	
+public function getContentByTitleAndType($title,$type){
+	$contentType=AllContentTypes::where('name','=',$type)->first();
+	return Contents::where('name','=',$title)->where('type_id','=',$contentType->id)->get();
 }
-
 
 /*public function search($query = "")
 {

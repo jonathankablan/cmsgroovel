@@ -12,10 +12,10 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
 
 
-class AuditUrlDao implements \AuditUrlDaoInterface{
+class AuditUrlDao implements AuditUrlDaoInterface{
 
 	
 

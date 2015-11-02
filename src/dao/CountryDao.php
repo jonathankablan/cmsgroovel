@@ -13,12 +13,17 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
+use Groovel\Cmsgroovel\models\Country;
 
-class CountryDao implements \CountryDaoInterface{
+class CountryDao implements CountryDaoInterface{
 
 	public function find($country){
-		return \Country::where('code','=',$country)->first();
+		return Country::where('code','=',$country)->first();
+	}
+	
+	public function all(){
+		return Country::all();
 	}
 	
 	

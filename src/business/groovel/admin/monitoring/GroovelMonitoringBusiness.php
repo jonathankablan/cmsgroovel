@@ -13,24 +13,27 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace business\groovel\admin\monitoring;
+namespace Groovel\Cmsgroovel\business\groovel\admin\monitoring;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
 use Monolog\Logger;
-use business\groovel\admin\monitoring\GroovelMonitoringBusinessInterface;
-use Elasticsearch\Client;
-use config\ElasticSearchConnection;
+use Groovel\Cmsgroovel\business\groovel\admin\monitoring\GroovelMonitoringBusinessInterface;
+use Groovel\Cmsgroovel\Elasticsearch\Client;
+use Groovel\Cmsgroovel\config\ElasticSearchConnection;
+use Elasticsearch\ClientBuilder;
 
-class GroovelMonitoringBusiness implements \GroovelMonitoringBusinessInterface{
+class GroovelMonitoringBusiness implements GroovelMonitoringBusinessInterface{
 
 	private $elasticsearch;
 	
 	public function __construct(ElasticSearchConnection $params)
 	{
 	
-		$this->elasticsearch = new Client($params->getConnection());
+		//\Log::info(parse_url('http://localhost:9200'));
+		$this->elasticsearch = ClientBuilder::create()->setHosts([$params->getConnection()])->build();
+		//new Client($params->getConnection());
 	}
 	
 	public function getElasticSearchStatus(){
@@ -38,7 +41,7 @@ class GroovelMonitoringBusiness implements \GroovelMonitoringBusinessInterface{
 		try{
 			//	$this->elasticsearch->ping();
 			$results = $this->elasticsearch->cluster()->health();
-			\Log::info($results);
+		//	\Log::info($results);
 			if(empty($results)){
 				$status=false;
 			}else if($results['status']=='green'||$results['status']=='yellow'){
@@ -71,7 +74,7 @@ class GroovelMonitoringBusiness implements \GroovelMonitoringBusinessInterface{
 		$logpath=log_path();
 		$data = file($logpath.'/'."laravel.log");
 		$lines = implode("\r\n",array_slice($data,count($data)-101,100));
-		\Log::info($lines);
+		//\Log::info($lines);
 	}
 	
 	

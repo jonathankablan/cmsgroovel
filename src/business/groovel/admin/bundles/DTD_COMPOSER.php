@@ -13,7 +13,7 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace business\groovel\admin\bundles;
+namespace Groovel\Cmsgroovel\business\groovel\admin\bundles;
 
 use Monolog\Logger;
 

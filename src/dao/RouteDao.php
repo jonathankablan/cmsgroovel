@@ -12,13 +12,14 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
+use Groovel\Cmsgroovel\models\RoutesGroovel;
 
 
-class RouteDao implements \RouteDaoInterface{
+class RouteDao implements RouteDaoInterface{
 
 public function create($title,$url,$name){
-	$routegroovel=new \RoutesGroovel;
+	$routegroovel=new RoutesGroovel;
 	$routegroovel->uri=$url;
 	$routegroovel->name=$title;
 	$routegroovel->action='get';
@@ -29,28 +30,28 @@ public function create($title,$url,$name){
 }
 
 	public function paginateRoutes(){
-		return \RoutesGroovel::where('type', '=', 'Groovel')->paginate(15);
+		return RoutesGroovel::where('type', '=', 'Groovel')->paginate(15);
 	}
 
 	public function paginateRoutesOnlyUser(){
-		return \RoutesGroovel::where('type', '!=', 'Groovel')->paginate(15);
+		return RoutesGroovel::where('type', '!=', 'Groovel')->paginate(15);
 	}
 
 	public function getRouteByUri($uri){
-		return \RoutesGroovel::where('uri', '=', $uri)->first();
+		return RoutesGroovel::where('uri', '=', $uri)->first();
 	}
 	
 	public function find($id){
-		return \RoutesGroovel::find($id);
+		return RoutesGroovel::find($id);
 	}
 	
 	public function deleteRoute($id){
-		$routegroovel = \RoutesGroovel::find($id);
+		$routegroovel = RoutesGroovel::find($id);
 		$routegroovel->delete();
 	}
 	
 	public function updateRoute($id,$domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route){
-		$routegroovel = \RoutesGroovel::find($id);
+		$routegroovel = RoutesGroovel::find($id);
 		$routegroovel->domain=$domain;
 		$routegroovel->uri=$uri;
 		$routegroovel->name=$name;
@@ -68,7 +69,7 @@ public function create($title,$url,$name){
 	}
 	
 	public function addRoute($domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route){
-		$routegroovel=new \RoutesGroovel;
+		$routegroovel=new RoutesGroovel;
 		$routegroovel->domain=$domain;
 		$routegroovel->uri=$uri;
 		$routegroovel->name=$name;
@@ -86,7 +87,7 @@ public function create($title,$url,$name){
 	}
 	
 	public function getRouteByViewName($view){
-		return \RoutesGroovel::where('view','=',$view)->where('type','!=','Groovel')->get();
+		return RoutesGroovel::where('view','=',$view)->where('type','!=','Groovel')->get();
 	}
 
 }

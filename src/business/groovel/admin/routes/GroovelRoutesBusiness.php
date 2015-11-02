@@ -14,19 +14,22 @@
 /**********************************************************************/
 
 
-namespace business\groovel\admin\routes;
+namespace Groovel\Cmsgroovel\business\groovel\admin\routes;
 use Illuminate\Database\Eloquent\Model;
-use dao\RouteDao;
-use dao\SubtypeDao;
+use Groovel\Cmsgroovel\dao\RouteDao;
+use Groovel\Cmsgroovel\dao\SubtypeDao;
+use Groovel\Cmsgroovel\dao\RouteDaoInterface;
+use Groovel\Cmsgroovel\dao\ContentTypeDaoInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\routes\GroovelRoutesBusinessInterface;
 
-class GroovelRoutesBusiness implements \GroovelRoutesBusinessInterface{
+class GroovelRoutesBusiness implements GroovelRoutesBusinessInterface{
 
 	
 	private $routeDao;
 	
 	private $subtypeDao;
 	
-	public function __construct(\RouteDaoInterface $routeDao,\ContentTypeDaoInterface $subtypeDao)
+	public function __construct(RouteDaoInterface $routeDao,ContentTypeDaoInterface $subtypeDao)
 	{
 		$this->routeDao =$routeDao;
 		$this->subtypeDao=$subtypeDao;

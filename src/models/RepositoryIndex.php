@@ -12,10 +12,11 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\models;
 use Illuminate\Database\Eloquent\Model;
-use handlers\ElasticSearchHandler;
-use commons\ModelConstants;
-class RepositoryIndex extends Eloquent{
+use Groovel\Cmsgroovel\handlers\ElasticSearchHandler;
+use Groovel\Cmsgroovel\commons\ModelConstants;
+class RepositoryIndex extends Model{
 
 
 	protected $table = 'repositoryindex';

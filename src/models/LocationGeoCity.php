@@ -13,9 +13,10 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\models;
 
 use Illuminate\Database\Eloquent\Model;
-class LocationGeoCity extends Eloquent{
+class LocationGeoCity extends Model{
 
 
 	protected $table = 'location_geo_cities';

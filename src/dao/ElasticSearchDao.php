@@ -13,20 +13,24 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
 use Elasticsearch\Client;
-use config\ElasticSearchConnection;
+use Groovel\Cmsgroovel\config\ElasticSearchConnection;
 use Guzzle\Common\Exception\ExceptionCollection;
 use Elasticsearch\Common\Exceptions\Curl\CouldNotConnectToHost;
 use Elasticsearch\Common\Exceptions\ElasticsearchException;
+use Elasticsearch\ClientBuilder;
 
-class ElasticSearchDao implements \ElasticSearchDaoInterface{
+class ElasticSearchDao implements ElasticSearchDaoInterface{
 
 	private $elasticsearch;
 	
-	public function __construct(\config\ElasticSearchConnection $params)
+	public function __construct(ElasticSearchConnection $params)
 	{
-		$this->elasticsearch = new Client($params->getConnection());
+
+		$clientBuilder  =  ClientBuilder::create()  ;         // Instantiate a new ClientBuilder
+		$clientBuilder->setHosts([$params->getConnection()]) ;     // Set the hosts
+		$this->elasticsearch=$clientBuilder->build();
 	}
 	
 	/**

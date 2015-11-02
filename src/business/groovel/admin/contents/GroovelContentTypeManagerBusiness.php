@@ -14,26 +14,26 @@
 /**********************************************************************/
 
 
-namespace business\groovel\admin\contents;
+namespace Groovel\Cmsgroovel\business\groovel\admin\contents;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
-use business\groovel\admin\contents\GroovelContentTypeManagerBusinessInterface;
-use dao\ContentsDaoInterface;
-use dao\ContentsDao;
-use dao\ContentTypeDaoInterface;
-use dao\ContentTypeDao;
-use dao\WidgetDaoInterface;
-use dao\WidgetDao;
+use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentTypeManagerBusinessInterface;
+use Groovel\Cmsgroovel\dao\ContentsDaoInterface;
+use Groovel\Cmsgroovel\dao\ContentsDao;
+use Groovel\Cmsgroovel\dao\ContentTypeDaoInterface;
+use Groovel\Cmsgroovel\dao\ContentTypeDao;
+use Groovel\Cmsgroovel\dao\WidgetDaoInterface;
+use Groovel\Cmsgroovel\dao\WidgetDao;
 
-class GroovelContentTypeManagerBusiness implements \GroovelContentTypeManagerBusinessInterface{
+class GroovelContentTypeManagerBusiness implements GroovelContentTypeManagerBusinessInterface{
 	
 	private $contentDao;
 	private $contentTypeDao;
 	private $widgetDao;
 	
-	public function __construct(\ContentsDaoInterface $contentDao,\ContentTypeDaoInterface $contentTypeDao,\WidgetDaoInterface $widgetDao)
+	public function __construct(ContentsDaoInterface $contentDao,ContentTypeDaoInterface $contentTypeDao,WidgetDaoInterface $widgetDao)
 	{
 		$this->contentDao =$contentDao;
 		$this->contentTypeDao =$contentTypeDao;

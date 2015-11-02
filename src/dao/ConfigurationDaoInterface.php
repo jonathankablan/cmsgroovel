@@ -12,6 +12,8 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\dao;
+
 interface ConfigurationDaoInterface{
 
 public function importCountryData($filename, $type, $table_name , $progress_callback = null);

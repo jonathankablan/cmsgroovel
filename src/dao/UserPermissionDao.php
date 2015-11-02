@@ -12,13 +12,14 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
+use Groovel\Cmsgroovel\models\Permissions;
 
 
-class UserPermissionDao implements \UserPermissionDaoInterface{
+class UserPermissionDao implements UserPermissionDaoInterface{
 
  public function create($user,$action,$type,$owncontent,$othercontent){
-	$permission= new \Permissions();
+	$permission= new Permissions();
 	$permission->userid=$user->id;
 	foreach($action as $key=>$value){
         switch($key){
@@ -46,7 +47,7 @@ class UserPermissionDao implements \UserPermissionDaoInterface{
  }
  
  public function updateUserPermissions($permissionid,$userid,$contenttype,$action,$owncontent,$othercontent){
-  $permission=\Permissions::find($permissionid);
+  $permission=Permissions::find($permissionid);
   $permission->userid=$userid;
   foreach($action[0] as $key=>$value){
   	switch($key){
@@ -74,12 +75,12 @@ class UserPermissionDao implements \UserPermissionDaoInterface{
  }
 
  public function deleteUserPermission($id){
- 	$permission=\Permissions::find($id);
+ 	$permission=Permissions::find($id);
  	$permission->delete();
  }
  
  public function getPermissionByUserid($id){
- 	return \Permissions::where('userid','=',$id)->get();
+ 	return Permissions::where('userid','=',$id)->get();
  }
  
  public function getPermissionsByContentTypeAndActionAndUserId($userid,$typeid,$action){
@@ -92,15 +93,15 @@ class UserPermissionDao implements \UserPermissionDaoInterface{
  }
  
  public function getPermissionsByContentTypeAndAction($typeid,$action){
-  return \Permissions::where('contenttypeid','=',$typeid)->andWhere('actions','=',$action)->get();
+  return Permissions::where('contenttypeid','=',$typeid)->andWhere('actions','=',$action)->get();
  }
  
  public function getPermissionById($id){
- 	return \Permissions::find($id);
+ 	return Permissions::find($id);
  }
  
  public function paginate(){
- 	return \Permissions::paginate(15);
+ 	return Permissions::paginate(15);
  }
 
 }

@@ -12,16 +12,31 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace business\groovel\admin\trackers;
+namespace Groovel\Cmsgroovel\business\groovel\admin\trackers;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
 use Monolog\Logger;
-use business\groovel\admin\trackers\GroovelUserTrackingBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\trackers\GroovelUserTrackingBusinessInterface;
+use Groovel\Cmsgroovel\dao\UserDao;
+use Groovel\Cmsgroovel\dao\UserDaoInterface;
+use Groovel\Cmsgroovel\dao\CountryDao;
+use Groovel\Cmsgroovel\dao\CountryDaoInterface;
+use Groovel\Cmsgroovel\dao\LocationIPCitiesDao;
+use Groovel\Cmsgroovel\dao\LocationGeoCitiesDao;
+use Groovel\Cmsgroovel\dao\LocationIPCitiesDaoInterface;
+use Groovel\Cmsgroovel\dao\LocationGeoCitiesDaoInterface;
+use Groovel\Cmsgroovel\dao\UserTrackingDao;
+use Groovel\Cmsgroovel\dao\UserTrackingDaoInterface;
+use Groovel\Cmsgroovel\dao\StatsUsersGeolocationDao;
+use Groovel\Cmsgroovel\dao\StatsUsersGeolocationDaoInterface;
+use Groovel\Cmsgroovel\dao\LocationGeoCountriesDao;
+use Groovel\Cmsgroovel\dao\LocationGeoCountriesDaoInterface;
+use Groovel\Cmsgroovel\dao\MessageDao;
+use Groovel\Cmsgroovel\dao\MessageDaoInterface;
 
-
-class GroovelUserTrackingBusiness implements \GroovelUserTrackingBusinessInterface{
+class GroovelUserTrackingBusiness implements GroovelUserTrackingBusinessInterface{
 
 	private $locationIPDao;
 	
@@ -39,9 +54,9 @@ class GroovelUserTrackingBusiness implements \GroovelUserTrackingBusinessInterfa
 	
 	private $messageDao;
 	
-	public function __construct(\LocationIPCitiesDaoInterface $locationIPDao, \LocationGeoCitiesDaoInterface $locationGeoCitiesDao,\UserTrackingDaoInterface $userTrackingDao
-			,\StatsUsersGeolocationDaoInterface $statsUsersGeolocationDao,\CountryDaoInterface $countriesDao
-			, \LocationGeoCountriesDaoInterface $locationGeoCountriesDao,\UserDaoInterface $userDao,\MessageDaoInterface $messageDao)
+	public function __construct(LocationIPCitiesDaoInterface $locationIPDao, LocationGeoCitiesDaoInterface $locationGeoCitiesDao,UserTrackingDaoInterface $userTrackingDao
+			,StatsUsersGeolocationDaoInterface $statsUsersGeolocationDao,CountryDaoInterface $countriesDao
+			, LocationGeoCountriesDaoInterface $locationGeoCountriesDao,UserDaoInterface $userDao,MessageDaoInterface $messageDao)
 	{
 	
 		$this->locationIPDao=$locationIPDao;

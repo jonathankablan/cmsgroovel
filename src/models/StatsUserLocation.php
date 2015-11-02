@@ -12,11 +12,12 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\models;
 use Illuminate\Database\Eloquent\Model;
-use handlers\ElasticSearchHandler;
-use handlers\DatabaseSearchHandler;
-use commons\ModelConstants;
-class StatsUserLocation extends Eloquent{
+use Groovel\Cmsgroovel\handlers\ElasticSearchHandler;
+use Groovel\Cmsgroovel\handlers\DatabaseSearchHandler;
+use Groovel\Cmsgroovel\commons\ModelConstants;
+class StatsUserLocation extends Model{
 
 
 	protected $table = 'stats_users_location';

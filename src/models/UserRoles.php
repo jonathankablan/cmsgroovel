@@ -12,10 +12,12 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\models;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Illuminate\Database\Eloquent\Model;
 
-class UserRoles extends Eloquent{
+class UserRoles extends Model{
 
 
 	protected $table = 'user_roles';
@@ -26,12 +28,12 @@ class UserRoles extends Eloquent{
 	
 	public function role()
 	{
-		return $this->hasOne('Roles','id','roleid');
+		return $this->hasOne('Groovel\Cmsgroovel\models\Roles','id','roleid');
 	}
 	
 	public function user()
 	{
-		return $this->belongsTo('User','userid');
+		return $this->belongsTo('Groovel\Cmsgroovel\models\User','userid');
 	}
 	
 	

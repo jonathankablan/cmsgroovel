@@ -13,7 +13,7 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace config;
+namespace Groovel\Cmsgroovel\config;
 interface GroovelConnectionInterface{
 	
 	

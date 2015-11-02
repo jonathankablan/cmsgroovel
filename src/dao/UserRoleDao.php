@@ -12,38 +12,39 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
+use Groovel\Cmsgroovel\models\Roles;
+use Groovel\Cmsgroovel\models\UserRoles;
 
-
-class UserRoleDao implements \UserRoleDaoInterface{
+class UserRoleDao implements UserRoleDaoInterface{
 
 	public function paginate(){
-		return \Roles::paginate(15);
+		return Roles::paginate(15);
 	}
 	
 	public function all(){
-		return \Roles::all(); 
+		return Roles::all(); 
 	}
 	
 	public function getRoleIdByRoleName($rolename){
-		return \Roles::where('role', '=', $rolename)->first();
+		return Roles::where('role', '=', $rolename)->first();
 	}
 	
 	public function add($roleid,$userid){
-		$userrole=new \UserRoles();
+		$userrole=new UserRoles();
 		$userrole->userid=$userid;
 		$userrole->roleid=$roleid;
 		$userrole->save();
 	}
 	
 	public function delete($id){
-		$role=\Roles::find($id);
+		$role=Roles::find($id);
 		$role->delete();
 	}
 	
 	public function updateUserRole($userid,$rolename){
 		$role=$this->getRoleIdByRoleName($rolename);
-		$userrole=\UserRoles::where('userid','=',$userid)->first();
+		$userrole=UserRoles::where('userid','=',$userid)->first();
 		if(empty($role)){
 			$userrole->roleid=2;
 		}else{
@@ -53,13 +54,12 @@ class UserRoleDao implements \UserRoleDaoInterface{
 	}
 	
 	public function getUserRole($id){
-		$user_role= \UserRoles::find($id);
+		$user_role= UserRoles::find($id);
 		return $user_role;
 	}
 	
 	public function getUserRoleByUserId($userid){
-		$role= \UserRoles::where('userid','=',$userid)->first();
-		//\Log::info($role->role);
+		$role= UserRoles::where('userid','=',$userid)->first();
 		if($role!=null){
 			return $role->role['role'];
 		}

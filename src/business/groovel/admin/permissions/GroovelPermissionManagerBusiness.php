@@ -12,27 +12,32 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace business\groovel\admin\permissions;
+namespace Groovel\Cmsgroovel\business\groovel\admin\permissions;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
 use Monolog\Logger;
-use dao\UserDaoInterface;
-use dao\UserDao;
-use dao\ContentTypeDaoInterface;
-use dao\ContentTypeDao;
-use dao\UserPermissionDao;
-use dao\UserRoleDao;
+use Groovel\Cmsgroovel\dao\UserDaoInterface;
+use Groovel\Cmsgroovel\dao\UserDao;
+use Groovel\Cmsgroovel\dao\ContentTypeDaoInterface;
+use Groovel\Cmsgroovel\dao\ContentTypeDao;
+use Groovel\Cmsgroovel\dao\UserPermissionDaoInterface;
+use Groovel\Cmsgroovel\dao\UserPermissionDao;
+use Groovel\Cmsgroovel\dao\UserRoleDaoInterface;
+use Groovel\Cmsgroovel\dao\UserRoleDao;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class GroovelPermissionManagerBusiness implements \GroovelPermissionManagerBusinessInterface{
+class GroovelPermissionManagerBusiness implements GroovelPermissionManagerBusinessInterface{
 
 private $userDao;
 private $contentTypeDao;
 private $permissionDao;
 private $userRoleDao;
+private static $perPage = 10;
 	
-	public function __construct(\UserDaoInterface $userDao,\ContentTypeDaoInterface $contentTypeDao,\UserPermissionDaoInterface $permissionDao,\UserRoleDaoInterface $userRoleDao)
+	public function __construct(UserDaoInterface $userDao,ContentTypeDaoInterface $contentTypeDao,UserPermissionDaoInterface $permissionDao,UserRoleDaoInterface $userRoleDao)
 	{
 		$this->userDao =$userDao;
 		$this->contentTypeDao =$contentTypeDao;
@@ -178,7 +183,21 @@ private $userRoleDao;
    	    	}
    	    }
    	}
-   	return \Paginator::make($permissions_users,count($users),10);
+   	
+
+
+   	//return new LengthAwarePaginator($permissions_users,count($users),10,$currentPage);
+   	//new Paginator($permissions_users,count($users),10);
+   //	return  new Paginator($permissions_users,10,null,null);
+   	$currentPage = \Input::get('page') - 1;
+   	$pagedData = array_slice( $permissions_users, $currentPage * self::$perPage, self::$perPage);
+   	//$items = Paginator::make($pagedData, count( $items), self::$perPage);
+   	$currentPage = LengthAwarePaginator::resolveCurrentPage() ?: 1;
+   	$paginator = new LengthAwarePaginator($pagedData, count( $permissions_users),  self::$perPage, $currentPage, [
+   			'path'  => Paginator::resolveCurrentPath()
+   	
+   	]);
+   	return $paginator;
    }
    
    

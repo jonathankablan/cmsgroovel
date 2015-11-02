@@ -13,19 +13,21 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace business\groovel\admin\bundles;
+namespace Groovel\Cmsgroovel\business\groovel\admin\bundles;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
+use Illuminate\Pagination\Paginator;
 use Monolog\Logger;
-use business\groovel\admin\bundles\GroovelPackageManagerBusinessInterface;
-use business\groovel\admin\bundles\DTD_COMPOSER;
+use Groovel\Cmsgroovel\business\groovel\admin\bundles\GroovelPackageManagerBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\bundles\DTD_COMPOSER;
 use Composer\Composer\Console\Application;
 use Composer\Composer\Command\UpdateCommand;
 use Symfony\Component\Console\Input\ArrayInput;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class GroovelPackageManagerBusiness implements \GroovelPackageManagerBusinessInterface{
+class GroovelPackageManagerBusiness implements GroovelPackageManagerBusinessInterface{
 
 	private static $PACKAGES_DIR=array();
 	
@@ -45,6 +47,7 @@ class GroovelPackageManagerBusiness implements \GroovelPackageManagerBusinessInt
 				return array ();
 			}
 			foreach ( $directories as $directory ) {
+				//\Log::info ( $directory  );
 				$result = $this->getPathJson ( $directory );
 			}
 		} else if ($isjson) {
@@ -62,7 +65,7 @@ class GroovelPackageManagerBusiness implements \GroovelPackageManagerBusinessInt
 	
 	public function getPathWhereComposerJsonFile($path) {
 		$package_directories = glob ( $path . '/vendor/*', GLOB_ONLYDIR );
-		$package_directories_workspace = glob ( $path . '/workbench/*', GLOB_ONLYDIR );
+		$package_directories_workspace = glob ( $path . '/packages/*', GLOB_ONLYDIR );
 		//\Log::info($path . '/workbench/*');
 		$res=array_merge($package_directories,$package_directories_workspace);
 		
@@ -80,21 +83,23 @@ class GroovelPackageManagerBusiness implements \GroovelPackageManagerBusinessInt
 		$composer=new ComposeJson;
 		$composer->pathComposerJson=$pathToJsonFile;
 		//\Log::info($composer->pathComposerJson);
-		foreach ( $json_a as $key => $value ) {
-			if (DTD_COMPOSER::$name == $key) {
-				$composer->name=$value;
-			}
-			if (DTD_COMPOSER::$authors == $key) {
-				$composer->authors=$value;
-			}
-			if (DTD_COMPOSER::$description == $key) {
-				$composer->description= $value;
-			}
-			if (DTD_COMPOSER::$require == $key) {
-				$composer->require=$value;
-			}
-			if (DTD_COMPOSER::$requiredev== $key) {
-				$composer->requireDev= $value;
+		if(!empty($json_a)){
+			foreach ( $json_a as $key => $value ) {
+				if (DTD_COMPOSER::$name == $key) {
+					$composer->name=$value;
+				}
+				if (DTD_COMPOSER::$authors == $key) {
+					$composer->authors=$value;
+				}
+				if (DTD_COMPOSER::$description == $key) {
+					$composer->description= $value;
+				}
+				if (DTD_COMPOSER::$require == $key) {
+					$composer->require=$value;
+				}
+				if (DTD_COMPOSER::$requiredev== $key) {
+					$composer->requireDev= $value;
+				}
 			}
 		}
 		return $composer;
@@ -141,9 +146,15 @@ class GroovelPackageManagerBusiness implements \GroovelPackageManagerBusinessInt
 		
 		$currentPage = \Input::get('page') - 1;
 		$pagedData = array_slice( $items, $currentPage * self::$perPage, self::$perPage);
-		 $items = \Paginator::make($pagedData, count( $items), self::$perPage);
+		 //$items = Paginator::make($pagedData, count( $items), self::$perPage);
+		$currentPage = LengthAwarePaginator::resolveCurrentPage() ?: 1;
+		$paginator = new LengthAwarePaginator($pagedData, count( $items),  self::$perPage, $currentPage, [
+				'path'  => Paginator::resolveCurrentPath()
+				
+		]);
+		//$items= new Paginator( $pagedData, self::$perPage,count( $items));
 		
-		return $items;
+		return $paginator;
 	}
 	
 	function dumpAutoload($jsonDirFile) {

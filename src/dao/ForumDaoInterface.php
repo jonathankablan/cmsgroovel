@@ -12,6 +12,8 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\dao;
+
 interface ForumDaoInterface{
 	public function paginateForums();
 	public function createForum($name,$description);

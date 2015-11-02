@@ -13,12 +13,14 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace dao;
-use dbip\Dbip;
-use dbip\DBIP_Exception;
-use dbip\DbLocateCities;
+namespace Groovel\Cmsgroovel\dao;
 
-class UserTrackingDao implements \UserTrackingDaoInterface{
+use Groovel\Cmsgroovel\dbip\Dbip;
+use Groovel\Cmsgroovel\dbip\DBIP_Exception;
+use Groovel\Cmsgroovel\dbip\DbLocateCities;
+use Groovel\Cmsgroovel\models\UserTracking;
+
+class UserTrackingDao implements UserTrackingDaoInterface{
 	
 	static private function Addr_Type($addr) {
 		
@@ -33,19 +35,19 @@ class UserTrackingDao implements \UserTrackingDaoInterface{
 	}
 
 	public function update($ip,$hostname,$ref) {
-		$result=\UserTracking::where('ip','=',inet_pton($ip))->where('hostname', '=', $hostname)->where('ref', '=', $ref)->first();
-		$track=\UserTracking::find($result['id']);
+		$result=UserTracking::where('ip','=',inet_pton($ip))->where('hostname', '=', $hostname)->where('ref', '=', $ref)->first();
+		$track=UserTracking::find($result['id']);
 		$track->count=$track->count+1;
 		$track->save();
 	}
 	
 	public function get($ip,$hostname,$ref) {
-		$result=\UserTracking::where('ip','=',inet_pton($ip))->where('hostname', '=', $hostname)->where('ref', '=', $ref)->get();
+		$result=UserTracking::where('ip','=',inet_pton($ip))->where('hostname', '=', $hostname)->where('ref', '=', $ref)->get();
 		return $result;
 	}
 	
 	public function save($ip,$hostname,$ref,$agent){
-		$result=new \UserTracking();
+		$result=new UserTracking();
 		$result->hostname=$hostname;
 		$ipv = inet_pton($ip);
 		$result->addr_type=self::Addr_Type($ip);
@@ -57,13 +59,13 @@ class UserTrackingDao implements \UserTrackingDaoInterface{
 	}
 
 	public function checkExist($ip){
-		$result=\UserTracking::where('ip','=',inet_pton($ip))->get();
+		$result=UserTracking::where('ip','=',inet_pton($ip))->get();
 		if($result!=null && count($result)>0){
 			return true;
 		}else return false;
 	}
 
 	public function getAllIps(){
-		return \UserTracking::all();
+		return UserTracking::all();
 	}
 }

@@ -12,14 +12,14 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
 
 class Groovel_Exception extends \Exception {
 
 }
 
 
-class LocationIPCitiesDao implements \LocationIPCitiesDaoInterface{
+class LocationIPCitiesDao implements LocationIPCitiesDaoInterface{
 	
 	public function update(){}
 

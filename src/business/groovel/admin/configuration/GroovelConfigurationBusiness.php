@@ -14,23 +14,23 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace business\groovel\admin\configuration;
+namespace Groovel\Cmsgroovel\business\groovel\admin\configuration;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
-use dao\ConfigurationDaoInterface;
-use dao\ConfigurationDao;
-use dao\StatsUsersGeolocationDaoInterface;
-use dao\StatsUsersGeolocationDao;
+use Groovel\Cmsgroovel\dao\ConfigurationDaoInterface;
+use Groovel\Cmsgroovel\dao\ConfigurationDao;
+use Groovel\Cmsgroovel\dao\StatsUsersGeolocationDaoInterface;
+use Groovel\Cmsgroovel\dao\StatsUsersGeolocationDao;
 
-class GroovelConfigurationBusiness implements \GroovelConfigurationBusinessInterface{
+class GroovelConfigurationBusiness implements GroovelConfigurationBusinessInterface{
 	
 	private $systemDao;
 	
 	private $statsUsersGeolocationDao;
 
-	public function __construct(\ConfigurationDaoInterface $systemDao,\StatsUsersGeolocationDaoInterface $statsUsersGeolocationDao)
+	public function __construct(ConfigurationDaoInterface $systemDao,StatsUsersGeolocationDaoInterface $statsUsersGeolocationDao)
 	{
 		$this->systemDao =$systemDao;
 		$this->statsUsersGeolocationDao=$statsUsersGeolocationDao;

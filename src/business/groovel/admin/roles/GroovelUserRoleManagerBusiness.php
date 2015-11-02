@@ -14,21 +14,29 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace business\groovel\admin\roles;
+namespace Groovel\Cmsgroovel\business\groovel\admin\roles;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
 use Monolog\Logger;
-use dao\UserPermissionDao;
-use dao\UserRoleDao;
+use Groovel\Cmsgroovel\dao\UserPermissionDao;
+use Groovel\Cmsgroovel\dao\UserRoleDao;
+use Groovel\Cmsgroovel\dao\UserPermissionDaoInterface;
+use Groovel\Cmsgroovel\dao\UserRoleDaoInterface;
+use Groovel\Cmsgroovel\dao\UserDao;
+use Groovel\Cmsgroovel\dao\UserDaoInterface;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class GroovelUserRoleManagerBusiness implements \GroovelUserRoleManagerBusinessInterface{
+
+class GroovelUserRoleManagerBusiness implements GroovelUserRoleManagerBusinessInterface{
 
 private $userDao;
 private $userRoleDao;
+private static $perPage = 10;
 	
-	public function __construct(\UserDaoInterface $userDao,\UserRoleDaoInterface $userRoleDao)
+	public function __construct(UserDaoInterface $userDao,UserRoleDaoInterface $userRoleDao)
 	{
 		$this->userDao =$userDao;
 		$this->userRoleDao=$userRoleDao;
@@ -67,7 +75,16 @@ private $userRoleDao;
    			}
    				
  		}
-   		return \Paginator::make($users_role,count($users),10);
+   		//return \Paginator::make($users_role,count($users),10);
+ 		$currentPage = \Input::get('page') - 1;
+ 		$pagedData = array_slice( $users_role, $currentPage * self::$perPage, self::$perPage);
+ 		//$items = Paginator::make($pagedData, count( $items), self::$perPage);
+ 		$currentPage = LengthAwarePaginator::resolveCurrentPage() ?: 1;
+ 		$paginator = new LengthAwarePaginator($pagedData, count( $users_role),  self::$perPage, $currentPage, [
+ 				'path'  => Paginator::resolveCurrentPath()
+ 		
+ 		]);
+ 		return $paginator;
 }
 	
 

@@ -12,7 +12,7 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace commands\console;
+namespace Groovel\Cmsgroovel\commands\console;
  
 class AssetsCommand extends Command {
     protected $name = 'faq:assets';

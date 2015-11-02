@@ -13,25 +13,26 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
+use Groovel\Cmsgroovel\models\Messages;
 
-class MessageDao implements \MessageDaoInterface{
+class MessageDao implements MessageDaoInterface{
 
 	
 	public function getMessagesSentByUserPseudo($pseudo){
-		return \Messages::where('author','=',$pseudo)->paginate(15);
+		return Messages::where('author','=',$pseudo)->paginate(15);
 	}
 	
 	public function getMessagesReceivedByUserPseudo($pseudo){
-		return \Messages::where('recipient','=',$pseudo)->paginate(15);
+		return Messages::where('recipient','=',$pseudo)->paginate(15);
 	}
 	
 	public function getMessage($id){
-		return \Messages::find($id);
+		return Messages::find($id);
 	}
 	
 	public function saveMessage($subject,$recipient,$author,$body){
-		$message=new  \Messages();
+		$message=new Messages();
 		$message->subject=$subject;
 		$message->recipient=$recipient;
 		$message->author=$author;
@@ -41,7 +42,7 @@ class MessageDao implements \MessageDaoInterface{
 	}
 	
 	public function deleteMessage($id){
-		\Messages::find($id)->delete();
+		Messages::find($id)->delete();
 	}
 	
 	public function getTotalMessage(){

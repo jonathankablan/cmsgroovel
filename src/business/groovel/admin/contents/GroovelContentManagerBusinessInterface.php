@@ -12,18 +12,23 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\business\groovel\admin\contents;
 
 interface GroovelContentManagerBusinessInterface{
 
-	public function addContent($title,$data,$url,$grooveldescription,$contentType,$userid,$publish,$topPublish);
+	public function addContent($title,$data,$url,$grooveldescription,$langage,$contentType,$userid,$publish,$topPublish);
 	public function getContent($name);
-	public function editContent($contentid);
+	public function editContent($contentid,$contentTranslationid);
     public function paginateContent();
-    public function deleteContent($id);
+    public function deleteContent($id,$translation_id);
     public function getFieldRequired($contentype);
-    public function paginateFullContentDeserialize();
+    public function paginateFullContentDeserialize($langage);
     public function getContentTypeNameById($id);
     public function getContentTypeNameOfContent($contentid);
+    public function getPageTemplateElements($title,$type);
+    public function getAllCountries();
+    public function find($refcontentid,$lang);
+    
  
 }
 

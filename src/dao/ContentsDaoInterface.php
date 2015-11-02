@@ -12,15 +12,19 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\dao;
 
 interface ContentsDaoInterface{
 
-public function create($title,$data,$url,$grooveldescription,$contentType,$userid,$publish,$topPublish);
+//public function create($title,$data,$url,$grooveldescription,$contentType,$userid,$publish,$topPublish);
+public function create($url,$contentType,$userid,$publish,$topPublish);
 
 public function delete($id);
 
 public function find($id);
 
-public function paginate();
+public function paginate($langage);
+
+public function getContentByTitleAndType($title,$type);
 
 }

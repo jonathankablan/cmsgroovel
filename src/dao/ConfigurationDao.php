@@ -12,13 +12,14 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace dao;
-use dbip\Dbip;
-use dbip\DBIP_Exception;
-use dbip\DbLocateCities;
-use dbip\DbLocateCountries;
+namespace Groovel\Cmsgroovel\dao;
+use Groovel\Cmsgroovel\dbip\Dbip;
+use Groovel\Cmsgroovel\dbip\DBIP_Exception;
+use Groovel\Cmsgroovel\dbip\DbLocateCities;
+use Groovel\Cmsgroovel\dbip\DbLocateCountries;
+use Groovel\Cmsgroovel\models\Configuration;
 
-class ConfigurationDao implements \ConfigurationDaoInterface{
+class ConfigurationDao implements ConfigurationDaoInterface{
 
 	/*public function importCountryData($filename, $type, $table_name , $progress_callback = null){
 		$pdo=\DB::connection()->getPdo();
@@ -48,9 +49,9 @@ class ConfigurationDao implements \ConfigurationDaoInterface{
 	}
 	
 	public function updateConfigAuditTracking($enableUserTracking,$enableMap){
-		$config=\Configuration::find(0);
+		$config=Configuration::find(0);
 		if($config==null){
-			$config = new \Configuration();
+			$config = new Configuration();
 		}
 		$config->enable_user_tracking=$enableUserTracking;
 		$config->enable_map_location=$enableMap;
@@ -58,7 +59,7 @@ class ConfigurationDao implements \ConfigurationDaoInterface{
 	}
 	
 	public function updateConfigElasticSearch($enableElasticSearch){
-		$config=\Configuration::find(0);
+		$config=Configuration::find(0);
 		if($config==null){
 			$config = new \Configuration();
 		}
@@ -68,7 +69,7 @@ class ConfigurationDao implements \ConfigurationDaoInterface{
 	
 	
 	public function updateConfigMaintenance($enableMaintenance){
-		$config=\Configuration::find(0);
+		$config=Configuration::find(0);
 		if($config==null){
 			$config = new \Configuration();
 		}
@@ -77,7 +78,7 @@ class ConfigurationDao implements \ConfigurationDaoInterface{
 	}
 	
 	public function updateConfigMail($enableMail){
-		$config=\Configuration::find(0);
+		$config=Configuration::find(0);
 		if($config==null){
 			$config = new \Configuration();
 		}
@@ -86,39 +87,39 @@ class ConfigurationDao implements \ConfigurationDaoInterface{
 	}
 	
 	public function updateEnableUserActivation($enableUserActivation){
-		$config=\Configuration::find(0);
+		$config=Configuration::find(0);
 		if($config==null){
-			$config = new \Configuration();
+			$config = new Configuration();
 		}
 		$config->enable_user_activation=$enableUserActivation;
 		$config->save();
 	}
 	
 	public function isEnableUserActivation(){
-		$config=\Configuration::find(0);
+		$config=Configuration::find(0);
 		return $config->enable_user_activation;
 	}
 
 	public function isUserAuditTrackingEnable(){
-		$config=\Configuration::find(0);
+		$config=Configuration::find(0);
 		return $config->enable_user_tracking;
 	}
 	public function isWorldMapLocationEnable(){
-		$config=\Configuration::find(0);
+		$config=Configuration::find(0);
 		return $config->enable_map_location;
 	}
 	public function isElasticSearchEnable(){
-		$config=\Configuration::find(0);
+		$config=Configuration::find(0);
 		return $config->enable_elasticsearch;
 	}
 	
 	public function isMaintenanceEnable(){
-		$config=\Configuration::find(0);
+		$config=Configuration::find(0);
 		return $config->enable_maintenance;
 	}
 	
 	public function isEmailEnable(){
-		$config=\Configuration::find(0);
+		$config=Configuration::find(0);
 		return $config->enable_email;
 	}
 

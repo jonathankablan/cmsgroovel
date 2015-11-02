@@ -12,15 +12,18 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace handlers;
-use commons\ModelConstants;
+namespace Groovel\Cmsgroovel\handlers;
+use Groovel\Cmsgroovel\commons\ModelConstants;
 use Elasticsearch\Client;
-use config\ElasticSearchConnection;
+use Elasticsearch\ClientBuilder;
+use Groovel\Cmsgroovel\config\ElasticSearchConnection;
 use Guzzle\Common\Exception\ExceptionCollection;
 use Elasticsearch\Common\Exceptions\Curl\CouldNotConnectToHost;
 use Elasticsearch\Common\Exceptions\ElasticsearchException;
-use business\groovel\admin\monitoring\GroovelMonitoringBusiness;
-use business\groovel\admin\monitoring\GroovelMonitoringBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\monitoring\GroovelMonitoringBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\monitoring\GroovelMonitoringBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\configuration\GroovelConfigurationBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\configuration\GroovelConfigurationBusinessInterface;
 
 class ElasticSearchHandler
 {
@@ -30,10 +33,11 @@ class ElasticSearchHandler
 	
 	private $config;
 	
-	public function __construct(\config\ElasticSearchConnection $params,\GroovelMonitoringBusinessInterface $monitor,\GroovelConfigurationBusinessInterface $config)
+	public function __construct( ElasticSearchConnection $params,GroovelMonitoringBusinessInterface $monitor,GroovelConfigurationBusinessInterface $config)
 	{
 		
-		$this->elasticsearch = new Client($params->getConnection());
+		$this->elasticsearch = ClientBuilder::create()->setHosts([$params->getConnection()])->build();
+		//new Client($params->getConnection());
 		$this->monitor=$monitor;
 		$this->config=$config;
 	}

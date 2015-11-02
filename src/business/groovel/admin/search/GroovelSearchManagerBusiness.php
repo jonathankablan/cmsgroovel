@@ -14,23 +14,25 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace business\groovel\admin\search;
+namespace Groovel\Cmsgroovel\business\groovel\admin\search;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
 use Monolog\Logger;
-use dao\RepositoryIndexDao;
+use Groovel\Cmsgroovel\dao\RepositoryIndexDao;
+use Groovel\Cmsgroovel\dao\RepositoryIndexDaoInterface;
+use Groovel\Cmsgroovel\dao\ElasticSearchDaoInterface;
+use Groovel\Cmsgroovel\dao\ElasticSearchDao;
 
-
-class GroovelSearchManagerBusiness implements \GroovelSearchManagerBusinessInterface{
+class GroovelSearchManagerBusiness implements GroovelSearchManagerBusinessInterface{
 
 private $repositoryIndexDao;
 
 private $elasticSearchDao;
 
 
-	public function __construct(\RepositoryIndexDaoInterface $repositoryIndexDao,\ElasticSearchDaoInterface $elasticSearchDao)
+	public function __construct(RepositoryIndexDaoInterface $repositoryIndexDao,ElasticSearchDaoInterface $elasticSearchDao)
 	{
 		$this->repositoryIndexDao =$repositoryIndexDao;
 		$this->elasticSearchDao=$elasticSearchDao;

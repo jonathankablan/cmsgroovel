@@ -12,18 +12,18 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
+use Groovel\Cmsgroovel\models\Widgets;
 
-
-class WidgetDao implements \WidgetDaoInterface{
+class WidgetDao implements WidgetDaoInterface{
 
 	public function findByName($widget){
-		return  \Widgets::where('name', '=', $widget)->firstOrFail();
+		return  Widgets::where('name', '=', $widget)->firstOrFail();
 	}
 	
 
 	public function find($id){
-		return  \Widgets::find($id);
+		return  Widgets::find($id);
 	}
 
 }

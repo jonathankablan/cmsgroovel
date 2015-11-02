@@ -12,8 +12,9 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\models;
 use Illuminate\Database\Eloquent\Model;
-class ForumAnswers extends Eloquent{
+class ForumAnswers extends Model{
 
 
 	protected $table = 'forum_answer';

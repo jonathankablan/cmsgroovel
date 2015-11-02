@@ -12,9 +12,10 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\models;
 use Illuminate\Database\Eloquent\Model;
 
-class Permissions extends Eloquent{
+class Permissions extends Model{
 
 
 	protected $table = 'permissions';
@@ -30,12 +31,12 @@ class Permissions extends Eloquent{
 	
 	public function user()
 	{
-		return $this->belongsTo('User','userid');
+		return $this->belongsTo('Groovel\Cmsgroovel\models\User','userid');
 	}
 	
 	public function contentType()
 	{
-		return $this->belongsTo('AllContentTypes','contenttypeid');
+		return $this->belongsTo('Groovel\Cmsgroovel\models\AllContentTypes','contenttypeid');
 	}
 	
 }

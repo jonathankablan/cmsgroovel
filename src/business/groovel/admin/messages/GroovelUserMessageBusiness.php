@@ -13,20 +13,21 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace business\groovel\admin\messages;
+namespace Groovel\Cmsgroovel\business\groovel\admin\messages;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
-use business\groovel\admin\messages\GroovelUserMessageBusinessInterface;
-use dao\MessageDaoInterface;
-use dao\MessageDao;
-use dao\UserDaoInterface;
-use dao\UserDao;
-use dao\ConfigurationDao;
+use Groovel\Cmsgroovel\business\groovel\admin\messages\GroovelUserMessageBusinessInterface;
+use Groovel\Cmsgroovel\dao\MessageDaoInterface;
+use Groovel\Cmsgroovel\dao\MessageDao;
+use Groovel\Cmsgroovel\dao\UserDaoInterface;
+use Groovel\Cmsgroovel\dao\UserDao;
+use Groovel\Cmsgroovel\dao\ConfigurationDao;
+use Groovel\Cmsgroovel\dao\ConfigurationDaoInterface;
 
 
-class GroovelUserMessageBusiness implements \GroovelUserMessageBusinessInterface{
+class GroovelUserMessageBusiness implements GroovelUserMessageBusinessInterface{
 	
 	private $messageDao;
 	
@@ -34,7 +35,7 @@ class GroovelUserMessageBusiness implements \GroovelUserMessageBusinessInterface
 	
 	private $configDao;
 	
-	public function __construct(\MessageDaoInterface $messageDao,\UserDaoInterface $userDao,\ConfigurationDaoInterface $configDao)
+	public function __construct(MessageDaoInterface $messageDao,UserDaoInterface $userDao,ConfigurationDaoInterface $configDao)
 	{
 		$this->messageDao =$messageDao;
 		$this->userDao =$userDao;
@@ -58,7 +59,7 @@ class GroovelUserMessageBusiness implements \GroovelUserMessageBusinessInterface
 					\Mail::pretend();
 				}
 				$dest=$this->userDao->getUserByPseudo($recipient);
-				\Mail::send('cmsgroovel::pages.email.email', array('pseudo'=>$dest->pseudo,'body'=>$body,'author'=>$author), function($message) use ($dest,$subject){
+				\Mail::send('cmsgroovel.pages.email.email', array('pseudo'=>$dest->pseudo,'body'=>$body,'author'=>$author), function($message) use ($dest,$subject){
 					$message->to($dest->email, $dest->username)->subject($subject);
 				});
 			}
@@ -67,7 +68,7 @@ class GroovelUserMessageBusiness implements \GroovelUserMessageBusinessInterface
 					\Mail::pretend();
 				}
 				$dest=$this->userDao->getUserByPseudo($recipient);
-				\Mail::send('cmsgroovel::pages.email.email', array('pseudo'=>$dest->pseudo,'body'=>$body,'author'=>$author), function($message) use ($dest,$subject) {
+				\Mail::send('cmsgroovel.pages.email.email', array('pseudo'=>$dest->pseudo,'body'=>$body,'author'=>$author), function($message) use ($dest,$subject) {
 					$message->to($dest->email, $dest->username)->subject($subject);
 				});
 		}

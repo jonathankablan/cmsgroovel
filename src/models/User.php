@@ -12,13 +12,20 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableInterface;
-use handlers\ElasticSearchHandler;
-use handlers\DatabaseSearchHandler;
-use commons\ModelConstants;
+//use Illuminate\Auth\UserInterface;
+//use Illuminate\Auth\Reminders\RemindableInterface;
+namespace Groovel\Cmsgroovel\models;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Groovel\Cmsgroovel\handlers\ElasticSearchHandler;
+use Groovel\Cmsgroovel\handlers\DatabaseSearchHandler;
+use Groovel\Cmsgroovel\commons\ModelConstants;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
 	/**
 	 * The database table used by the model.
@@ -132,12 +139,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 //ok for permissions
 	public function permissions()
 	{
-		return $this->hasMany('Permissions','userid');
+		return $this->hasMany('Groovel\Cmsgroovel\models\Permissions','userid');
 	}
 	
 	public function role()
 	{
-		return $this->hasOne('UserRoles','userid');
+		return $this->hasOne('Groovel\Cmsgroovel\models\UserRoles','userid');
 	}
 
 
@@ -147,7 +154,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 	
 	
+public function	getEmailForPasswordReset(){
 	
+	
+}
 	
 	
 	
@@ -160,8 +170,8 @@ public static function boot()
 		$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
 				'url'=>'','grooveldescription'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
 	   
-		\Queue::push('handlers\DatabaseSearchHandler@update', array('type'=>ModelConstants::$user,'data'=>$data));
-		\Queue::push('handlers\ElasticSearchHandler@update', array('type'=>ModelConstants::$user,'data'=>$data));
+		\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@update', array('type'=>ModelConstants::$user,'data'=>$data));
+		\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@update', array('type'=>ModelConstants::$user,'data'=>$data));
 	});
 	
 	User::saved(function($user)
@@ -170,8 +180,8 @@ public static function boot()
 		$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
 				'url'=>'','grooveldescription'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
 			
-		\Queue::push('handlers\DatabaseSearchHandler@create', array('type'=>ModelConstants::$user,'data'=>$data));
-		\Queue::push('handlers\ElasticSearchHandler@create', array('type'=>ModelConstants::$user,'data'=>$data));
+		\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@create', array('type'=>ModelConstants::$user,'data'=>$data));
+		\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@create', array('type'=>ModelConstants::$user,'data'=>$data));
 	});
 	
 	User::deleting(function($user)
@@ -179,8 +189,8 @@ public static function boot()
 		$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
 				'url'=>'','grooveldescription'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
 		
-		\Queue::push('handlers\DatabaseSearchHandler@delete', array('type'=>ModelConstants::$user,'data'=>$data));
-		\Queue::push('handlers\ElasticSearchHandler@delete', array('type'=>ModelConstants::$user,'data'=>$data));
+		\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@delete', array('type'=>ModelConstants::$user,'data'=>$data));
+		\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@delete', array('type'=>ModelConstants::$user,'data'=>$data));
 	});
 }
 	

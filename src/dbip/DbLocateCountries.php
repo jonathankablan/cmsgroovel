@@ -1,5 +1,5 @@
-<?php namespace dbip;
-use dbip\DBIP_Exception;
+<?php namespace Groovel\Cmsgroovel\dbip;
+use Groovel\Cmsgroovel\dbip\DBIP_Exception;
 
 class DbLocateCountries{
 	

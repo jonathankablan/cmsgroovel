@@ -1,4 +1,4 @@
-<?php namespace dbip;
+<?php namespace Groovel\Cmsgroovel\dbip;
 
 class DBIP_Exception extends \Exception {
 

@@ -12,9 +12,11 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\dao;
+
 interface CountryDaoInterface{
 
 	public function find($country);
-
+	public function all();
 
 }

@@ -12,8 +12,9 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\models;
 use Illuminate\Database\Eloquent\Model;
-class Subtype extends Eloquent{
+class Subtype extends Model{
 
 
 	protected $table = 'subtypes';

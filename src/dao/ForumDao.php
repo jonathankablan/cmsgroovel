@@ -12,57 +12,59 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
+use Groovel\Cmsgroovel\models\Forum;
+use Groovel\Cmsgroovel\models\ForumAnswers;
+use Groovel\Cmsgroovel\models\ForumQuestions;
 
-
-class ForumDao implements \ForumDaoInterface{
+class ForumDao implements ForumDaoInterface{
 
 	public function paginateForums(){
-		return \Forums::all();
+		return Forum::all();
 	}
 	public function createForum($name,$description){
-		$forum=new \Forums();
+		$forum=new Forum();
 		$forum->name=$name;
 		$forum->description=$description;
 		$forum->save();
 	}
 	
 	public function getNumberSubjects($forumName){
-		$Forum=\Forums::where('name','=',$forumName)->first();
-		return \ForumQuestions::where('forum_id','=',$Forum->id)->count();
+		$Forum=Forum::where('name','=',$forumName)->first();
+		return ForumQuestions::where('forum_id','=',$Forum->id)->count();
 	}
 	
 	public function getNumberMessages($forumName){
-		$forum=\Forums::where('name','=',$forumName)->first();
-		$total=\ForumQuestions::where('forum_id','=',$forum->id)->count();+\ForumAnswers::where('forum_id','=',$forum->id)->count();
+		$forum=Forum::where('name','=',$forumName)->first();
+		$total=ForumQuestions::where('forum_id','=',$forum->id)->count();+ForumAnswers::where('forum_id','=',$forum->id)->count();
 		return $total;
 	}
 	
 	public function getLastMessage($forumName){
-		$forum=\Forums::where('name','=',$forumName)->first();
-		return \ForumAnswers::where('forum_id','=',$forum->id)->orderby('created_at', 'desc')->first();
+		$forum=Forum::where('name','=',$forumName)->first();
+		return ForumAnswers::where('forum_id','=',$forum->id)->orderby('created_at', 'desc')->first();
 	}
 	
 	public function getAllTopics($forumName){
 		//\Log::info($forumName);
-		$forum=\Forums::where('id','=',$forumName)->first();
-		return \ForumQuestions::where('forum_id','=',$forum->id)->get();
+		$forum=Forum::where('id','=',$forumName)->first();
+		return ForumQuestions::where('forum_id','=',$forum->id)->get();
 	}
 	
 	public function getAllAnswers($topicId,$forumId){
-		return \ForumAnswers::where('forum_id','=',$forumId)->where('question_id','=',$topicId)->get();
+		return ForumAnswers::where('forum_id','=',$forumId)->where('question_id','=',$topicId)->get();
 	}
 	
 	public function getLastAnswer($topicId,$forumId){
-		return \ForumAnswers::where('forum_id','=', $forumId)->where('question_id', $topicId)->orderby('created_at', 'desc')->first();
+		return ForumAnswers::where('forum_id','=', $forumId)->where('question_id', $topicId)->orderby('created_at', 'desc')->first();
 	}
 	
 	public function getNumberAnswers($topicId,$forumId){
-		return \ForumAnswers::where('forum_id','=',$forumId)->where('question_id','=',$topicId)->count();
+		return ForumAnswers::where('forum_id','=',$forumId)->where('question_id','=',$topicId)->count();
 	}
 	
 	public function saveTopic($subject,$question,$forumid,$pseudo){
-		$topic= new \ForumQuestions();
+		$topic= new ForumQuestions();
 		$topic->forum_id=$forumid;
 		$topic->question=$question;
 		$topic->topic=$subject;
@@ -71,11 +73,11 @@ class ForumDao implements \ForumDaoInterface{
 	}
 	
 	public function findTopic($topicId){
-		return \ForumQuestions::find($topicId);
+		return ForumQuestions::find($topicId);
 	}
 
 	public function saveAnswer($pseudo,$message,$forumid,$topic_id){
-		$answer= new \ForumAnswers();
+		$answer= new ForumAnswers();
 		$answer->forum_id=$forumid;
 		$answer->question_id=$topic_id;
 		$answer->pseudo=$pseudo;
@@ -85,27 +87,27 @@ class ForumDao implements \ForumDaoInterface{
 	
 	
 	public function deleteTopic($id){
-		$topic= \ForumQuestions::find($id);
+		$topic= ForumQuestions::find($id);
 		if($topic!=null){
 			$topic->delete();
 		}
 	}
 	
 	public function deleteForum($id){
-		$forum=	\Forums::find($id);
+		$forum=	Forum::find($id);
 		if($forum!=null){
 			$forum->delete();
 		}
 	}
 	public function deleteAnswer($id){
-		$answer=\ForumAnswers::find($id);
+		$answer=ForumAnswers::find($id);
 		if($answer!=null){
 			$answer->delete();
 		}
 	}
 	
 	public function findForum($forumid){
-		return 	\Forums::find($forumid);
+		return 	Forum::find($forumid);
 	}
 	
 	

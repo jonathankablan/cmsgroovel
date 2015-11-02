@@ -12,13 +12,14 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
+use Groovel\Cmsgroovel\models\RepositoryIndex;
 
 
-class RepositoryIndexDao implements \RepositoryIndexDaoInterface{
+class RepositoryIndexDao implements RepositoryIndexDaoInterface{
 
 	public function create($type,$id,$data,$title,$url){
-	    $index= new \RepositoryIndex();
+	    $index= new RepositoryIndex();
 		$index->type=$type;
 		$index->refid=$id;
 		$index->data=$data;
@@ -28,9 +29,9 @@ class RepositoryIndexDao implements \RepositoryIndexDaoInterface{
 	}
 
 	public function update($type,$id,$data,$title,$url){
-		$index=\RepositoryIndex::find($id);
+		$index=RepositoryIndex::find($id);
 		if($index==null){
-			$index= new \RepositoryIndex();
+			$index= new RepositoryIndex();
 			$index->type=$type;
 			$index->refid=$id;
 			$index->data=$data;
@@ -48,7 +49,7 @@ class RepositoryIndexDao implements \RepositoryIndexDaoInterface{
 	}
 	
 	public function findByRefId($id){
-		$index = \RepositoryIndex::where('refid', '=', $id)->first();
+		$index = RepositoryIndex::where('refid', '=', $id)->first();
 		return $index;
 	}
 	
@@ -60,7 +61,7 @@ class RepositoryIndexDao implements \RepositoryIndexDaoInterface{
 	}
 	
 	public function search($body){
-		return \RepositoryIndex::where('data', 'LIKE', '%'.$body.'%')->get();
+		return RepositoryIndex::where('data', 'LIKE', '%'.$body.'%')->get();
 	}
 	
 }

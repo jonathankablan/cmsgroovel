@@ -12,21 +12,30 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace business\groovel\admin\users;
+namespace Groovel\Cmsgroovel\business\groovel\admin\users;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
 use Monolog\Logger;
+use Groovel\Cmsgroovel\dao\ContentTypeDao;
+use Groovel\Cmsgroovel\dao\UserPermissionDao;
+use Groovel\Cmsgroovel\dao\UserDao;
+use Groovel\Cmsgroovel\dao\UserRoleDao;
+use Groovel\Cmsgroovel\dao\ContentTypeDaoInterface;
+use Groovel\Cmsgroovel\dao\UserPermissionDaoInterface;
+use Groovel\Cmsgroovel\dao\UserDaoInterface;
+use Groovel\Cmsgroovel\dao\UserRoleDaoInterface;
 
-class GroovelUserManagerBusiness implements \GroovelUserManagerBusinessInterface{
+
+class GroovelUserManagerBusiness implements GroovelUserManagerBusinessInterface{
 
 	private $userDao;
 	private $contentTypeDao;
 	private $permissionDao;
 	private $userRoleDao;
 	
-	public function __construct(\UserDaoInterface $userDao,\ContentTypeDaoInterface $contentTypeDao,\UserPermissionDaoInterface $permissionDao,\UserRoleDaoInterface $userRoleDao)
+	public function __construct(UserDaoInterface $userDao,ContentTypeDaoInterface $contentTypeDao,UserPermissionDaoInterface $permissionDao,UserRoleDaoInterface $userRoleDao)
 	{
 		$this->userDao =$userDao;
 		$this->contentTypeDao =$contentTypeDao;

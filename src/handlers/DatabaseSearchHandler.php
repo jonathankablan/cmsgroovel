@@ -12,16 +12,16 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace handlers;
-use commons\ModelConstants;
-use dao\RepositoryIndexDao;
-use dao\RepositoryIndexDaoInterface;
+namespace Groovel\Cmsgroovel\handlers;
+use Groovel\Cmsgroovel\commons\ModelConstants;
+use Groovel\Cmsgroovel\dao\RepositoryIndexDao;
+use Groovel\Cmsgroovel\dao\RepositoryIndexDaoInterface;
 
 class DatabaseSearchHandler
 {
 	private $reposearch;
 	
-	public function __construct(\RepositoryIndexDaoInterface $reposearch)
+	public function __construct(RepositoryIndexDaoInterface $reposearch)
 	{
 		$this->reposearch =$reposearch;
 	}
@@ -45,6 +45,7 @@ class DatabaseSearchHandler
 		}else if(ModelConstants::$user==$data['type']){
 			$index='users';
 		}
+		//\Log::info($data);
 		$this->reposearch->update($data['type'],$data['data']['id'],$data['data']['grooveldescription'],$data['data']['title'],$data['data']['url']);
 		
 	}

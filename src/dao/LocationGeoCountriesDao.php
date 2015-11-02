@@ -13,13 +13,13 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace dao;
+namespace Groovel\Cmsgroovel\dao;
+use Groovel\Cmsgroovel\models\LocationGeoCountry;
 
-
-class LocationGeoCountriesDao implements \LocationGeoCountriesDaoInterface{
+class LocationGeoCountriesDao implements LocationGeoCountriesDaoInterface{
 
 	public function find($country){
-		return \LocationGeoCountry::where('country','=',$country)->first();
+		return LocationGeoCountry::where('country','=',$country)->first();
 	}
 
 

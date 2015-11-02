@@ -12,8 +12,9 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
+namespace Groovel\Cmsgroovel\models;
 use Illuminate\Database\Eloquent\Model;
-class AllContentTypes extends Eloquent{
+class AllContentTypes extends Model{
 
 
 	protected $table = 'all_contents_type';
@@ -27,7 +28,7 @@ class AllContentTypes extends Eloquent{
 
 	public function author()
 	{
-		return $this->belongsTo('User');
+		return $this->belongsTo('Groovel\Cmsgroovel\models\User');
 	}
 	
 	

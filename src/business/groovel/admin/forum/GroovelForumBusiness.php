@@ -13,20 +13,21 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace business\groovel\admin\forum;
+namespace Groovel\Cmsgroovel\business\groovel\admin\forum;
 use Illuminate\Database\Eloquent\Model;
 use models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Connection;
-use business\groovel\admin\messages\GroovelUserMessageBusinessInterface;
-use dao\ForumDaoInterface;
-use dao\ForumDao;
-use dao\UserDaoInterface;
-use dao\UserDao;
-use dao\ConfigurationDao;
+use Groovel\Cmsgroovel\business\groovel\admin\messages\GroovelUserMessageBusinessInterface;
+use Groovel\Cmsgroovel\dao\ForumDaoInterface;
+use Groovel\Cmsgroovel\dao\ForumDao;
+use Groovel\Cmsgroovel\dao\UserDaoInterface;
+use Groovel\Cmsgroovel\dao\UserDao;
+use Groovel\Cmsgroovel\dao\ConfigurationDao;
+use Groovel\Cmsgroovel\dao\ConfigurationDaoInterface;
 
 
-class GroovelForumBusiness implements \GroovelForumBusinessInterface{
+class GroovelForumBusiness implements GroovelForumBusinessInterface{
 	
 	private $forumDao;
 	
@@ -34,7 +35,7 @@ class GroovelForumBusiness implements \GroovelForumBusinessInterface{
 	
 	private $configDao;
 	
-	public function __construct(\ForumDaoInterface $forumDao,\UserDaoInterface $userDao,\ConfigurationDaoInterface $configDao)
+	public function __construct(ForumDaoInterface $forumDao,UserDaoInterface $userDao,ConfigurationDaoInterface $configDao)
 	{
 		$this->forumDao =$forumDao;
 		$this->userDao =$userDao;

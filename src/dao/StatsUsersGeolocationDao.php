@@ -13,13 +13,15 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace dao;
-use \Carbon\Carbon;
+namespace Groovel\Cmsgroovel\dao;
 
-class StatsUsersGeolocationDao implements \StatsUsersGeolocationDaoInterface{
+use \Carbon\Carbon;
+use Groovel\Cmsgroovel\models\StatsUserLocation;
+
+class StatsUsersGeolocationDao implements StatsUsersGeolocationDaoInterface{
 
 	public function save($country,$countryCodeIso,$city,$countPeople,$latitude,$longitude){
-		 $stats=new \StatsUserLocation;
+		 $stats=new StatsUserLocation;
 		 $stats->country=$country;
 		 $stats->country_code_iso=$countryCodeIso;
 		 $stats->city=$city;
@@ -31,21 +33,21 @@ class StatsUsersGeolocationDao implements \StatsUsersGeolocationDaoInterface{
 	}
 	
 	public function getByCountryAndCity($countryCodeIso,$city){
-	   return \StatsUserLocation::where('country_code_iso','=',$countryCodeIso)->where('city','=',$city)->first();
+	   return StatsUserLocation::where('country_code_iso','=',$countryCodeIso)->where('city','=',$city)->first();
 	}
 	
 	public function getByCountry($countryCodeIso){
-		return \StatsUserLocation::where('country_code_iso','=',$countryCodeIso)->get();
+		return StatsUserLocation::where('country_code_iso','=',$countryCodeIso)->get();
 	}
 	
 	public function update($country,$countryCodeIso,$city,$latitude,$longitude){
-		$stats=\StatsUserLocation::where('country_code_iso','=',$countryCodeIso)->where('city','=',$city)->first();
+		$stats=StatsUserLocation::where('country_code_iso','=',$countryCodeIso)->where('city','=',$city)->first();
 		$stats->people=$stats->people+1;
 		$stats->save();
 	}
 	
 	public function getAllStatsUsers(){
-		$res= \StatsUserLocation::where('isarchived','!=',1)->get();
+		$res= StatsUserLocation::where('isarchived','!=',1)->get();
 		return $res;
 	}
 

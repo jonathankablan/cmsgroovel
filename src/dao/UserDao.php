@@ -13,10 +13,12 @@
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
 
-namespace dao;
-use \Carbon\Carbon;
+namespace Groovel\Cmsgroovel\dao;
 
-class UserDao implements \UserDaoInterface{
+use \Carbon\Carbon;
+use Groovel\Cmsgroovel\models\User;
+
+class UserDao implements UserDaoInterface{
 
 	public function getAllUsersAdmin(){
 		$pdo=\DB::connection()->getPdo();
@@ -32,7 +34,7 @@ class UserDao implements \UserDaoInterface{
 	
 	public function setLastTimeSeen($pseudo){
 		$now=\Carbon\Carbon::now();
-		$user = \User::where('pseudo', '=', $pseudo)->first();
+		$user = User::where('pseudo', '=', $pseudo)->first();
 		$user->lastTimeSeen=$now;
 		$user->save();
 	}
@@ -44,12 +46,12 @@ class UserDao implements \UserDaoInterface{
 	}
 	
 	public function getUserByPseudo($pseudo){
-		$user = \User::where('pseudo', '=', $pseudo)->first();
+		$user = User::where('pseudo', '=', $pseudo)->first();
 		return $user;
 	}
 	
 	public function getUserByEmail($email){
-		$user = \User::where('email', '=', $email)->first();
+		$user = User::where('email', '=', $email)->first();
 		return $user;
 	}
 	
@@ -66,7 +68,7 @@ class UserDao implements \UserDaoInterface{
 	}
 	
 	public function getUser($id){
-		$user = \User::find($id);
+		$user = User::find($id);
 		$user=array('id'=>$id,
 				'userpicture'=>$user->picture,
 				'username'=>$user->username,
@@ -82,12 +84,12 @@ class UserDao implements \UserDaoInterface{
 	}
 	
 	public function paginate(){
-		$users=\User::paginate(15);
+		$users=User::paginate(15);
 		return $users;
 	}
 	
 	public function addUser($picture,$username,$pseudo,$email,$password,$activate,$enable_notification_email){
-		$user = new \User();
+		$user = new User();
 		$user->picture=$picture;
 		$user->username=$username;
 		if(!empty($password)){
@@ -102,7 +104,7 @@ class UserDao implements \UserDaoInterface{
 	}
 	
 	public function updateUser($picture,$id,$username,$pseudo,$email,$password,$activate,$enable_notification_email){
-		$user=\User::find($id);
+		$user=User::find($id);
 		$user->picture=$picture;
 		$user->username=$username;
 		if(!empty($password)){
@@ -118,22 +120,22 @@ class UserDao implements \UserDaoInterface{
 	}
 	
 	public function find($id){
-		return \User::find($id);
+		return User::find($id);
 	}
 	
 	public function delete($id){
-		$user = \User::find($id);
+		$user = User::find($id);
 		$user->delete();
 	}
 	
 	public function activateUser($userid){
-		$user=\User::find($userid);
+		$user=User::find($userid);
 		$user->activate=1;
 		$user->save();
 	}
 	
 	public function blockUser($userid){
-		$user=\User::find($userid);
+		$user=User::find($userid);
 		$user->activate=0;
 		$user->save();
 	}
