@@ -14,7 +14,7 @@
 	    "laravel/framework":"5.1.0",
 		"illuminate/html": "5.*",
 		"elasticsearch/elasticsearch": "dev-master",
-        "pda/pheanstalk": "2.0.*"
+        "pda/pheanstalk": "2.0.*",
     	"composer/composer": "dev-master"
 	},
 	"require-dev": {
