@@ -25,5 +25,6 @@
 		"psr-4": {
 			"Groovel\\Cmsgroovel\\": "src/"
 		}
-	}
+	},
+	 "minimum-stability": "dev"
 }
