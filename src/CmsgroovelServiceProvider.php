@@ -68,6 +68,9 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 				__DIR__.'/../views' => base_path('resources/views/cmsgroovel'),
 		]);
 		
+		$this->publishes([
+				__DIR__.'/../public/packages' => base_path('public/packages'),
+		]);
 		
 		
 		
