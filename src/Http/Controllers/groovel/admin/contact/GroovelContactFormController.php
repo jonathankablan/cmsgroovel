@@ -19,7 +19,12 @@ use Illuminate\Database\Eloquent\Model;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelController;
 use Monolog\Logger;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelFormController;
-
+use Groovel\Cmsgroovel\business\groovel\admin\messages\GroovelUserMessageBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\messages\GroovelUserMessageBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\users\GroovelUserManagerBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\users\GroovelUserManagerBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\configuration\GroovelConfigurationBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\configuration\GroovelConfigurationBusinessInterface;
 
 class GroovelContactFormController extends GroovelFormController {
 	
@@ -29,7 +34,7 @@ class GroovelContactFormController extends GroovelFormController {
 	
 	protected $userManager;
 	
-	public function __construct(\GroovelUserManagerBusinessInterface $userManager,\GroovelUserMessageBusinessInterface $messageManager,\GroovelConfigurationBusinessInterface $config)
+	public function __construct(GroovelUserManagerBusinessInterface $userManager,GroovelUserMessageBusinessInterface $messageManager,GroovelConfigurationBusinessInterface $config)
 	{
 	
 		$this->messageManager=$messageManager;
