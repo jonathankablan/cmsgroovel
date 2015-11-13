@@ -50,6 +50,19 @@ public function paginate($langage=null){
 
 public function getContentByTitleAndType($title,$type){
 	$contentType=AllContentTypes::where('name','=',$type)->first();
+	$contents= Contents::where('type_id','=',$contentType->id)->get();
+	$result=array();
+	foreach($contents as $content){
+		if($content->ispublish==1){
+			foreach($content->translation as $translation){
+			 if($translation->name==$title){
+			  	array_push($result,$translation);
+			 }
+			}
+		}
+	}
+	return $result;
+	
 	return Contents::where('name','=',$title)->where('type_id','=',$contentType->id)->get();
 }
 

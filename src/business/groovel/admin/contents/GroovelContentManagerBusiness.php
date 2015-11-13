@@ -153,16 +153,16 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
    public function getPageTemplateElementsByTitleAndType($title,$type,$langage){
    		$res=$this->contentDao->getContentByTitleAndType($title, $type);
    		$result=array();
-   		foreach ($res as $content){
-   			if($content->ispublish==1){
-   				$contenttype=$this->contentTypeDao->find( $content->type_id);
-   				$contentTranslations=$content->translation;
-   				foreach ($contentTranslations as $contentTranslation){
-	   				$merge=$this->editContent($content->id,$contentTranslation->id);
-	   				$merge['type']=$contenttype->name;
-	   				array_push($result,$merge);
-   				}
+   		$ctref=null;
+   		foreach ($res as $translation){
+   			if($ctref==null){
+   				$ctref=$this->contentDao->find($translation->first()->refcontentid);
    			}
+   			if($translation->first()->lang==$langage){
+		   			$merge=$this->editContent($translation->first()->refcontentid,$translation->first()->id);
+		   			$merge['type']=$ctref->name;
+		   			array_push($result,$merge);
+   				}
    		}
    		return $result;
    }
