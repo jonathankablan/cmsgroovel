@@ -22,14 +22,11 @@ class ContentsDao implements ContentsDaoInterface{
 
 public function create($url,$contentType,$userid,$publish,$topPublish){
 	$contents= new Contents();
-	//$contents->name=$title;
-	//$contents->content=$data;
 	$contents->url=$url;
 	$contents->type_id=$contentType;
 	$contents->author_id=$userid;
 	$contents->ispublish=$publish;
 	$contents->ontop=$topPublish;
-	//$contents->grooveldescription=$grooveldescription;
 	$contents->save();
 	return $contents;
 }
@@ -56,12 +53,16 @@ public function getContentByTitleAndType($title,$type){
 	return Contents::where('name','=',$title)->where('type_id','=',$contentType->id)->get();
 }
 
-/*public function search($query = "")
-{
-	return \IndexContents::where('body', 'like', "%{$query}%")
-	->orWhere('title', 'like', "%{$query}%")
-	->get();
-}*/
+public function getContentByType($type){
+	$contentType=AllContentTypes::where('name','=',$type)->first();
+	$contents= Contents::where('type_id','=',$contentType->id)->get();
+	$result=array();
+	foreach($contents as $content){
+		array_push($result,$content->translation);
+	}
+	return $result;
+}
+
 
 
 }

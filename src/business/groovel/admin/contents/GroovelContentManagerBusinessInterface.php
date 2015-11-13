@@ -25,9 +25,12 @@ interface GroovelContentManagerBusinessInterface{
     public function paginateFullContentDeserialize($langage);
     public function getContentTypeNameById($id);
     public function getContentTypeNameOfContent($contentid);
-    public function getPageTemplateElements($title,$type);
     public function getAllCountries();
-    public function find($refcontentid,$lang);
+    public function find($refcontentid,$lang); 
+    public function getPageTemplateElementsByType($type,$langage);
+    public function getPageTemplateElementsByTitleAndType($title,$type,$langage);
+    
+    
     
  
 }

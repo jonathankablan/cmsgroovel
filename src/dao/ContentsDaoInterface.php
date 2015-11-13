@@ -27,4 +27,6 @@ public function paginate($langage);
 
 public function getContentByTitleAndType($title,$type);
 
+public function getContentByType($type);
+
 }

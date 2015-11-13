@@ -59,7 +59,6 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 
 	public function addContent($title,$data,$url,$grooveldescription,$langage,$contentType,$userid,$publish,$topPublish){
 		 $contents= $this->contentDao->create($url,$contentType,$userid,$publish,$topPublish);
-		 //$this->contentDao->create($title,$data,$url,$grooveldescription,$contentType,$userid,$publish,$topPublish);
 		 $contentsTranslation=$this->contentTranslationDao->create($contents->id, $title, $data, $grooveldescription, $langage);
 		 $this->createUrlView($title,$url,$contentType);
 		 return $contentsTranslation->getId();
@@ -73,7 +72,6 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 	
 	public function getContent($name){
 		$content=$this->contentDao->find($name);
-		//\Log::info($content);
 		return $this->deserialize($content['content']);
 	}
 	
@@ -81,24 +79,28 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 	public function editContent($contentid,$contentTranslationid){
 		$contentTranslation= $this->contentTranslationDao->find($contentTranslationid);
 		$content= $this->contentDao->find($contentTranslation->refcontentid);
-		//\Log::info($content);
-		
 		$blob=$this->deserialize($contentTranslation['content']);
-		//\Log::info($blob);
 		$res=array('title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'url'=>$content['url'],'groovelDescription'=>$contentTranslation->grooveldescription,'contentType'=>$content->type_id,'content'=>$blob,'ispublish'=>$content->ispublish,'ontop'=>$content->ontop);
-		//\Log::info($res);
 		return $res;
 	}
 
 	
    public function deserialize($dataDb){
    	$data=unserialize(base64_decode($dataDb));
-    return $data;
+   	$res=array();
+   	foreach($data as $key=>$value){
+   		if(!is_array($value)){
+   			$res[$key]=html_entity_decode($value);
+   		}else{
+   			$res[$key]=$value;
+   		}
+   	}
+    return $res;
    }
 
 
    public function serialize($content){
-	 return base64_encode(serialize($content));
+  	 return base64_encode(serialize($content));
    }
    
    public function paginateContent(){
@@ -134,8 +136,6 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
    				array_push($result,$this->editContent($contentTranslation->refcontentid,$contentTranslation->id));
    			}
    	}
-   	
-   //	\Log::info($result);
    	return $result;
    }
    
@@ -144,24 +144,46 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
    	  return $this->contentTypeDao->find( $content->type_id);
    }
    
+   public function find($refcontentid,$lang){
+   	return $this->contentTranslationDao->findTranslation($refcontentid,$lang);
+   }
+   
    
    /**to put elements contents in different sections in the page sidebar head **/
-   public function getPageTemplateElements($title,$type){
+   public function getPageTemplateElementsByTitleAndType($title,$type,$langage){
    		$res=$this->contentDao->getContentByTitleAndType($title, $type);
    		$result=array();
    		foreach ($res as $content){
    			if($content->ispublish==1){
    				$contenttype=$this->contentTypeDao->find( $content->type_id);
-   				$merge=$this->editContent($content->id)['content'];
-   				$merge['type']=$contenttype->name;
-   				array_push($result,$merge);
+   				$contentTranslations=$content->translation;
+   				foreach ($contentTranslations as $contentTranslation){
+	   				$merge=$this->editContent($content->id,$contentTranslation->id);
+	   				$merge['type']=$contenttype->name;
+	   				array_push($result,$merge);
+   				}
    			}
    		}
-   		//	\Log::info($result);
    		return $result;
    }
    
- public function find($refcontentid,$lang){
- 	return $this->contentTranslationDao->findTranslation($refcontentid,$lang);
- }
+   public function getPageTemplateElementsByType($type,$langage){
+   	$contentTranslations=$this->contentDao->getContentByType($type);
+   	$result=array();
+   	$ctref=null;
+   	foreach ($contentTranslations as $contentTranslation){
+   		if($ctref==null){
+   			$ctref=$this->contentDao->find($contentTranslation->first()->refcontentid);
+   		}
+   		if($ctref->ispublish==1 && $contentTranslation->first()->lang==$langage){
+   			$contenttype=$this->contentTypeDao->find( $ctref->type_id);
+   			$merge=$this->editContent($contentTranslation->first()->refcontentid,$contentTranslation->first()->id);
+   			$merge['type']=$contenttype->name;
+   			array_push($result,$merge);
+   		}
+   	}
+   	return $result;
+   }
+   
+ 
 }
