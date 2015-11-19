@@ -31,10 +31,9 @@ class GroovelViewsController extends GroovelController {
      		 \View::make('cmsgroovel.pages.login_form');
   	 }
 
-	 $app = App();
+   $app = App();
    $controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteController');
    $params =array('method'=>$route->method,'controller'=>$route->controller,'before_filter'=>$route->before_filter);
- 	// \Log::info($params);
      return $controller->callAction('dispatcher',array($params));
    }
  

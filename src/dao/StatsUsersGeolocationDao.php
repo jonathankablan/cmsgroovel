@@ -55,7 +55,6 @@ class StatsUsersGeolocationDao implements StatsUsersGeolocationDaoInterface{
 		$pdo=\DB::connection()->getPdo();
 		$pdo->beginTransaction();
 		$pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-		//UPDATE `routes_groovel` SET `audit_tracking_url_enable`=1
 		$now=\Carbon\Carbon::now();
 		$q=$pdo->prepare("update stats_users_location set isarchived=1,archived_at= " .'\''.$now.'\''.' where isarchived!=1'   );
 		$q->execute();

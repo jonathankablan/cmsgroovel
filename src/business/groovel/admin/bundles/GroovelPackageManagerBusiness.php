@@ -47,7 +47,6 @@ class GroovelPackageManagerBusiness implements GroovelPackageManagerBusinessInte
 				return array ();
 			}
 			foreach ( $directories as $directory ) {
-				//\Log::info ( $directory  );
 				$result = $this->getPathJson ( $directory );
 			}
 		} else if ($isjson) {
@@ -66,7 +65,6 @@ class GroovelPackageManagerBusiness implements GroovelPackageManagerBusinessInte
 	public function getPathWhereComposerJsonFile($path) {
 		$package_directories = glob ( $path . '/vendor/*', GLOB_ONLYDIR );
 		$package_directories_workspace = glob ( $path . '/packages/*', GLOB_ONLYDIR );
-		//\Log::info($path . '/workbench/*');
 		$res=array_merge($package_directories,$package_directories_workspace);
 		
 		$i = 0;
@@ -82,7 +80,6 @@ class GroovelPackageManagerBusiness implements GroovelPackageManagerBusinessInte
 		$json_a = json_decode ( $json, true );
 		$composer=new ComposeJson;
 		$composer->pathComposerJson=$pathToJsonFile;
-		//\Log::info($composer->pathComposerJson);
 		if(!empty($json_a)){
 			foreach ( $json_a as $key => $value ) {
 				if (DTD_COMPOSER::$name == $key) {
@@ -138,7 +135,6 @@ class GroovelPackageManagerBusiness implements GroovelPackageManagerBusinessInte
 			foreach ($packages as $package){
 				$bundles[$package]=self::parseJson($package);
 			}
-			//\Log::info($bundles);
 			\Cache::forever(self::$PACKAGES,$bundles);
 			 $items=\Cache::get(self::$PACKAGES);
 			
@@ -146,14 +142,11 @@ class GroovelPackageManagerBusiness implements GroovelPackageManagerBusinessInte
 		
 		$currentPage = \Input::get('page') - 1;
 		$pagedData = array_slice( $items, $currentPage * self::$perPage, self::$perPage);
-		 //$items = Paginator::make($pagedData, count( $items), self::$perPage);
 		$currentPage = LengthAwarePaginator::resolveCurrentPage() ?: 1;
 		$paginator = new LengthAwarePaginator($pagedData, count( $items),  self::$perPage, $currentPage, [
 				'path'  => Paginator::resolveCurrentPath()
 				
 		]);
-		//$items= new Paginator( $pagedData, self::$perPage,count( $items));
-		
 		return $paginator;
 	}
 	
@@ -167,7 +160,6 @@ class GroovelPackageManagerBusiness implements GroovelPackageManagerBusinessInte
 		$app = new \Composer\Console\Application();
 		$app->setAutoExit(false);
 		$app->run($input,$output);
-		\Log::info("Done.");
 	}
 	
 	function install($jsonDirFile) {
@@ -179,7 +171,6 @@ class GroovelPackageManagerBusiness implements GroovelPackageManagerBusinessInte
 		$app = new \Composer\Console\Application();
 		$app->setAutoExit(false);
 		$app->run($input,$output);
-		\Log::info("Done.");
 	}
 	
 	function update($jsonDirFile) {
@@ -191,7 +182,6 @@ class GroovelPackageManagerBusiness implements GroovelPackageManagerBusinessInte
 		$app = new \Composer\Console\Application();
 		$app->setAutoExit(false);
 		$app->run($input,$output);
-		\Log::info("Done.");
 	}
 	
 	

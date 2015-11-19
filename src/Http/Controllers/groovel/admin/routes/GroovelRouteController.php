@@ -50,7 +50,6 @@ class GroovelRouteController extends GroovelController {
      $uri=\Request::path();
 	$route=null;
      try {
-     //	\Log::info($uri);
 	       	if (\Cache::has($uri)){
 	       		$route=\Cache::get($uri);
 	       		return $route;
@@ -79,7 +78,6 @@ class GroovelRouteController extends GroovelController {
 		    return $controller->callAction($params['method'],array('view'=>$params['view']));
 		}
 		if($params['view']=='cmsgroovel.pages.login_form' && !\Auth::guest()){
-			//\Log::info('test');
 			return \View::make('cmsgroovel.pages.welcome');
 		}
 		

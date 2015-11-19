@@ -44,8 +44,6 @@ class GroovelForumController extends GroovelFormController {
 	}
 	
 	public function init($params){
-	//	\Log::info(\Input::get('view'));
-	//	\Log::info($params);
 	$view=null;
 	if(array_key_exists('view', \Input::all())){
 		$view=\Input::get('view');
@@ -99,28 +97,23 @@ class GroovelForumController extends GroovelFormController {
 				}
 			}
 		}else if(\Request::is('forum') && array_key_exists('forumName', \Input::all())){
-			//\Log::info(\Input::all());
 			$rules['id']='required|exists:forums';
 			$rules['forumName']='required';
 			$validation = \Validator::make(\Input::all(), $rules);
 			if($validation->passes()){
 				$forumId=\Input::get('id');
-				//$topics=$this->forumManager-> getAllTopics(\Input::get('forumName'));
 				$topics=$this->forumManager-> getAllTopics($forumId);
 				$topicsAll=array();
 				foreach($topics as $topic){
 					$topicId=$topic->id;
 					$numberAnswers=$this->forumManager->getNumberAnswers($topicId, $forumId);
 					$lastAnswer=$this->forumManager->getLastAnswer($topicId, $forumId);
-					//\Log::info($topicId.' '.$forumId);
 					$topicsAll[$topic->id]=['topic_id'=>$topic->id,'topic'=>$topic->topic,'question'=>$topic->question,'number_answers'=>$numberAnswers,'lastanswer'=>$lastAnswer];
 				}
 				$view=$params;
 				if(array_key_exists('view', \Input::all())){
 					$view=\Input::get('view');
 				}
-				//\Log::info($view);
-				//'groovelcms.pages.forum.forums'
 				return  \View::make($view,['forumid'=>$forumId,'forumName'=>\input::get('forumName'),'topics'=>$topicsAll]);
 			}else{
 				$validation->getMessageBag()->add('messages', 'Please check errors');
@@ -133,7 +126,6 @@ class GroovelForumController extends GroovelFormController {
 				return $this->jsonResponse($formatMess,false,true,true);
 			}
 		}else if(\Request::is('forum/topic')&& array_key_exists('forumid', \Input::all())){
-			//\Log::info(\Input::all());
 			$rules['id']='required|exists:forum_question';
 			$rules['forumid']='required';
 			$validation = \Validator::make(\Input::all(), $rules);
@@ -148,11 +140,9 @@ class GroovelForumController extends GroovelFormController {
 					$answer_author=$this->userManager->getUserByPseudo($answer->pseudo);
 					$answer['answer_author']=$answer_author;
 					$answers[$i]=$answer;
-					//array_merge(array($answer),array('answer_author'=>$answer_author));
 					$i++;
 				}
 				$topic_author=$this->userManager->getUserByPseudo($topic->pseudo);
-				//\Log::info($answers);
 				$view=$params;
 				if(array_key_exists('view', \Input::all())){
 					$view=\Input::get('view');
@@ -243,7 +233,6 @@ class GroovelForumController extends GroovelFormController {
 		    	$topicId=$topic->id;
 		    	$numberAnswers=$this->forumManager->getNumberAnswers($topicId, $forumId);
 		    	$lastAnswer=$this->forumManager->getLastAnswer($topicId, $forumId);
-		    	//\Log::info($topicId.' '.$forumId);
 		    	$topicsAll[$topic->id]=['topic_id'=>$topic->id,'topic'=>$topic->topic,'question'=>$topic->question,'number_answers'=>$numberAnswers,'lastanswer'=>$lastAnswer];
 		    }
 		    $view=$params;

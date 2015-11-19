@@ -39,9 +39,6 @@ class GroovelUserRulesController extends GroovelController {
 	}
 	
    public function checkAccessRulesURL($user,$params){
-   	//\Log::info(\Session::all());
-   //	\Log::info($params);
-   	 
    	$isAccess=false;
    	 try{
   	 	$role=$this->userRoleManager->getUserRoleByUserId($user['id']);
@@ -58,19 +55,14 @@ class GroovelUserRulesController extends GroovelController {
  	    if(empty($auth)&& empty($permissions)){
  	    	return true;
  	    }
- 	    //\Log::info($permissions);
  	    if($permissions!=null && !empty($permissions)){
 	 	    foreach($permissions as $permission){
 	 	    	$content_type=$this->contentTypeManager->find( $permission['contenttypeid']);
-	 	    	//\Log::info($permission);
-	 	    	//\Log::info($params);
 	 	    	 if($params['subtype']==$content_type['name'] &&  $permission[$params['action']]==1 ){
 	 	    	 	 $isAccess= true;
 	 	    	 }
 	 	    }
  	    }
- 	    //\Log::info('test');
- 	    //\Log::info($isAccess);
  	    return $isAccess;
  	    
       }catch (\Exception $ex){

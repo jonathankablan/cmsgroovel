@@ -36,7 +36,6 @@ class GroovelUserFormController extends GroovelFormController {
 
 	public function validateForm($params)
 	{
-		//\Log::info(\Request::path());
 		if (\Request::is('*/user/add'))
 		{
 			$this->checkToken();
@@ -152,8 +151,6 @@ class GroovelUserFormController extends GroovelFormController {
     	if($id==null){
 	    	$input =   \Input::get('q');
 	    	$user=$this->userManager->getUser($input['id']);
-	    	//\Log::info('profile');
-	    	//\Log::info($user);
 	    	\Session::flash('user', $user);
 	    	$uri=array();
 	    	$uri['uri']= url('admin/user/view/profile', $parameters = array(), $secure = null);
@@ -179,7 +176,6 @@ class GroovelUserFormController extends GroovelFormController {
   
    private function updateUser(){
    		$input =  \Input::all();
-   		//\Log::info($input);
    		$picture=\Input::get('myfiles');
    		if(!array_key_exists('myfiles', $input)){
    			$user=$this->userManager->getUser($input['id']);

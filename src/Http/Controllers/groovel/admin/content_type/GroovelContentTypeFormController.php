@@ -84,7 +84,6 @@ class GroovelContentTypeFormController extends GroovelFormController {
 				$inputs=\Input::get('fieldName');
 				$inputstovalidate=array();
 				$inputstovalidate['title']=\Input::get('title');
-				//\Log::info(\Input::all());
 				$field_description=false;
 				foreach(\Input::get('fieldName') as $val)
 				{
@@ -213,7 +212,6 @@ class GroovelContentTypeFormController extends GroovelFormController {
 
 	private function update(){
 		$tableName=$this->contentTypeManager->update(\Input::get('title'),$_POST['field_id'],$_POST['fieldName'],$_POST['type_selected'],$_POST['widget_selected'],$_POST['description'],$_POST['isnullable'],$_POST['required']);
-		//\Log::info(\Input::get('content_type_id'));
 		$this->refreshContent(\Input::get('title'),\Input::get('content_type_id'));
 		return \Redirect::to('/admin/content_type/editform');
 	}
@@ -240,8 +238,6 @@ class GroovelContentTypeFormController extends GroovelFormController {
 		$input =  \Input::get('q');
 		$contentType=$this->contentTypeManager->editContentType($input['id']);
 		$res=array('id'=>$input['id'],'title'=>$input['title'],'fields'=>$contentType);
-		//\Log::info('test');
-		//\Log::info($res);
 		\Session::flash('content_type_edit', $res);
 		$uri=array();
 		$uri['uri']= url('admin/content_type/editform', $parameters = array(), $secure = null);
@@ -252,10 +248,6 @@ class GroovelContentTypeFormController extends GroovelFormController {
 			$w[$widget->getId()]=$widget->name;
 		}
 		\Session::flash('widgets',$w);
-		//\Log::info($res);
-	 	//return \View::make('admin::pages.admin_content_type_form',['content_type_edit'=>$res,'widgets'=>$w]);
-	 	//return \Redirect::to('/admin/content/editform')->with(['content_type_edit'=>$res,'widgets'=>$w]);
-		
 		return $this->jsonResponse($uri);
 	}
 	

@@ -131,11 +131,9 @@ class AuthController extends GroovelController {
              $user = array('pseudo' => \Input::get('pseudo'), 'password' =>  \Input::get('password'),'activate'=>'1');
 	        if (\Auth::attempt($user, \Input::get('rememberme'),true)) {
 	          $this->userManager->setLastTimeSeen(\Input::get('pseudo'));
-	          //\Log::info($this->userManager->getUserByPseudo(\Input::get('pseudo')));
 	          $user=$this->userManager->getUserByPseudo(\Input::get('pseudo'));
 	          $role= $this->userManager->getUserRole($user['id']);
 	          $user_privileges=array("role"=>$role,"status"=>$user['activate']);
-	          //\Log::info($user_privileges);
 	          \Session::put('user_privileges',$user_privileges);
 	          return \Redirect::intended('/admin/welcome')->with('flash_notice', 'Vous avez été correctement connecté avec le pseudo ' . \Auth::user()->pseudo);
 	        }

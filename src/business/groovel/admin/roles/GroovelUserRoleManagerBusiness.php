@@ -75,10 +75,8 @@ private static $perPage = 10;
    			}
    				
  		}
-   		//return \Paginator::make($users_role,count($users),10);
- 		$currentPage = \Input::get('page') - 1;
+   		$currentPage = \Input::get('page') - 1;
  		$pagedData = array_slice( $users_role, $currentPage * self::$perPage, self::$perPage);
- 		//$items = Paginator::make($pagedData, count( $items), self::$perPage);
  		$currentPage = LengthAwarePaginator::resolveCurrentPage() ?: 1;
  		$paginator = new LengthAwarePaginator($pagedData, count( $users_role),  self::$perPage, $currentPage, [
  				'path'  => Paginator::resolveCurrentPath()

@@ -91,8 +91,6 @@ class GroovelUserTrackingBusiness implements GroovelUserTrackingBusinessInterfac
 			$this->userTrackingDao->save($ip,$hostname,$ref,$agent);
 		}
 		$res=$this->locationIPDao->Lookup($ip);
-		//\Log::info($res->city);
-		//\Log::info($res->country);
 		$countryName=null;
 		$city=null;
 		$latitude=null;
@@ -107,9 +105,7 @@ class GroovelUserTrackingBusiness implements GroovelUserTrackingBusinessInterfac
 					$longitude=$lat_long[0]['longitude'];
 				}
 				else{//we get latitude and longitude of country if cities not found
-					//\Log::info($res->country);
 					$lat_long=$this->locationGeoCountriesDao->find($res->country);
-					//\Log::info($lat_long);
 					if($lat_long!=null && !empty($lat_long) && count($lat_long)>0){
 						$latitude=$lat_long['latitude'];
 						$longitude=$lat_long['longitude'];
@@ -123,7 +119,6 @@ class GroovelUserTrackingBusiness implements GroovelUserTrackingBusinessInterfac
 				$this->updateStatsUsers($countryName['name_en'],$res->country,$city,$latitude,$longitude);
 			}
 		}
-		//\Log::info($res->country.' '. $res->city);
 	}
 	
 	public function getUserLocationFromIP($ip){

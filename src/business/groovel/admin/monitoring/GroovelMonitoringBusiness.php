@@ -30,18 +30,13 @@ class GroovelMonitoringBusiness implements GroovelMonitoringBusinessInterface{
 	
 	public function __construct(ElasticSearchConnection $params)
 	{
-	
-		//\Log::info(parse_url('http://localhost:9200'));
 		$this->elasticsearch = ClientBuilder::create()->setHosts([$params->getConnection()])->build();
-		//new Client($params->getConnection());
 	}
 	
 	public function getElasticSearchStatus(){
 		$status=false;
 		try{
-			//	$this->elasticsearch->ping();
 			$results = $this->elasticsearch->cluster()->health();
-		//	\Log::info($results);
 			if(empty($results)){
 				$status=false;
 			}else if($results['status']=='green'||$results['status']=='yellow'){
@@ -55,8 +50,6 @@ class GroovelMonitoringBusiness implements GroovelMonitoringBusinessInterface{
 		
 		return $status;
 	}
-	
-	
 	
 	public function getElasticSearchPendingTasks(){
 		return $this->elasticsearch->cluster()->pendingTasks();
@@ -74,7 +67,6 @@ class GroovelMonitoringBusiness implements GroovelMonitoringBusinessInterface{
 		$logpath=log_path();
 		$data = file($logpath.'/'."laravel.log");
 		$lines = implode("\r\n",array_slice($data,count($data)-101,100));
-		//\Log::info($lines);
 	}
 	
 	

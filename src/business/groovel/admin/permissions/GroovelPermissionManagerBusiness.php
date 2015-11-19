@@ -161,37 +161,25 @@ private static $perPage = 10;
    
    
    public function paginateUserPermission(){
-   //	\Log::info(\User::all()->permissions);
    	$users = $this->userDao->paginate();
    	$permissions_users=array();
    	$i=0;
    	
    	foreach($users as $user){
-   	//	\Log::info($user);
    	    if(count($user->permissions)>0){
 
    	    	foreach ($user->permissions as $permission){
    	    		$contentTypeName=$permission->contentType['name'];
    	     		$permission=['id'=>$permission['id'],'username'=>$user->username,'pseudo'=>$user->pseudo,'retrieve'=>$permission['op_retrieve'],'save'=>$permission['op_save'],
    	     				'update'=>$permission['op_update'],'delete'=>$permission['op_delete'],'add'=>$permission['op_add'],'edit'=>$permission['op_edit'],'contentTypeName'=>$contentTypeName,'owncontent'=>$permission['owncontent'],'othercontent'=>$permission['othercontent'],'updated_at'=>$permission['updated_at'],'created_at'=>$permission['created_at']];
-   	    				
-   	     		//\Log::info($permission);
-   	    		//$permissions_users[$i]=[$user->username,$permission];
    	     		$permissions_users[$i]=$permission;
-   	    		//\Log::info($permissions_users[$i]);
    	    		$i++;
    	    	}
    	    }
    	}
    	
-
-
-   	//return new LengthAwarePaginator($permissions_users,count($users),10,$currentPage);
-   	//new Paginator($permissions_users,count($users),10);
-   //	return  new Paginator($permissions_users,10,null,null);
    	$currentPage = \Input::get('page') - 1;
    	$pagedData = array_slice( $permissions_users, $currentPage * self::$perPage, self::$perPage);
-   	//$items = Paginator::make($pagedData, count( $items), self::$perPage);
    	$currentPage = LengthAwarePaginator::resolveCurrentPage() ?: 1;
    	$paginator = new LengthAwarePaginator($pagedData, count( $permissions_users),  self::$perPage, $currentPage, [
    			'path'  => Paginator::resolveCurrentPath()
@@ -224,7 +212,6 @@ private static $perPage = 10;
     public function getPermission($id){
     	$permission=$this->permissionDao->getPermissionById($id);
     	$user=$permission->user;
-    	//\Log::info($user);
     	$contentTypeName=$permission->contentType['name'];
     	$permission=['id'=>$permission['id'],'username'=>$user->username,'pseudo'=>$user->pseudo,'retrieve'=>$permission['op_retrieve'],'save'=>$permission['op_save'],
     			'update'=>$permission['op_update'],'delete'=>$permission['op_delete'],'add'=>$permission['op_add'],'edit'=>$permission['op_edit'],'contentTypeName'=>$contentTypeName,'owncontent'=>$permission['owncontent'],'othercontent'=>$permission['othercontent'],'updated_at'=>$permission['updated_at'],'created_at'=>$permission['created_at']];

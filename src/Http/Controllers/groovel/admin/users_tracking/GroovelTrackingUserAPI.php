@@ -30,14 +30,10 @@ class GroovelTrackingUserAPI implements GroovelTrackingUserInterface {
 		$ip=$this->tracking_ip();
 		$agent=$this->tracking_agent();
 		$ref=$this->tracking_ref();
-		//$ip='184.160.213.209';
 		$this->userTrackingManager->saveTrackingUserInfo($hostname,$ip,$agent,$ref);
 	}
 	
 	private function tracking_ref(){
-		/*if(array_key_exists('HTTP_REFERER', $_SERVER)){
-			return $_SERVER['HTTP_REFERER'];
-		}else return '';*/
 		return \Request::path();
 	}
 	

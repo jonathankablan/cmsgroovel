@@ -103,12 +103,10 @@ class GroovelTemplateManagerController extends GroovelController {
 				$validation2 = \Validator::make(array('url'=>\Input::get('url')), $rules2);
 				if($validation2->passes()){
 					ini_set ('max_execution_time', 0);
-					//$this->artisanCreateTemplate(\Input::get('vendor'),\Input::get('package'));//create package in workbench
 					$this->copyBladeTemplatesToApp(\Input::get('template'));//copy templates from groovel to new package
 					if(\Input::get('controller')!=null){
 						$this->artisanCreateController(\Input::get('controller'));//create a controller
 					}
-					//$this-> artisanPublishAssets(\Input::get('vendor'),\Input::get('package'));//publish styles from new package in public app
 					$this-> createRoute(\Input::get('url'),\Input::get('template'),\Input::get('controller'),'index','op_retrieve','base.core');
 					return $this->jsonResponse(array('done'),false,true,false);
 				}else if($validation2->fails()){
@@ -204,54 +202,6 @@ class GroovelTemplateManagerController extends GroovelController {
 	
 		return $out;
 	}
-	
-	/*function copyBladeTemplatesToWorkbench($templateName,$vendor,$package){
-		$dir_workbench=base_path () . '/workbench/groovel/cmsgroovel/templates/layouts/'.$templateName;
-		$dst=base_path () . '/workbench/'.$vendor.'/'.$package.'/src/views';
-		$pub=base_path () . '/workbench/'.$vendor.'/'.$package.'/public';
-		if(!is_dir($dst.'/base')){
-			mkdir($dst.'/base');
-		}if(!is_dir($dst.'/includes')){
-			mkdir($dst.'/includes');
-		}
-		if(!is_dir($dst.'/pages')){
-			mkdir($dst.'/pages');
-		}
-		if(!is_dir($pub.'/styles')){
-			mkdir($pub.'/styles');
-		}
-		
-		$this->recurse_copy($dir_workbench, $dst);
-	}*/
-	
-	
-	/*function artisanPublishAssets($vendor,$package) {
-		ini_set ('max_execution_time', 0);
-		\Log::info('<br>init artisan::publish assets...');
-		$name=$vendor.'/'.$package;
-		\Artisan::call('asset:publish', array('--bench' => ''.$name.''));
-	    \Log::info( 'done artisan::publish assets');
-	}*/
-
-	/*function artisanCreateTemplate($vendor,$package) {
-		ini_set ('max_execution_time', 0);
-		\Log::info('<br>init artisan::workbench...');
-		$name=$vendor.'/'.$package;
-		//php artisan workbench vendor/package --resources
-		\Artisan::call('workbench',array('package'=>''.$name.'','--resources'=>'resources'));
-		\Log::info( 'done artisan::workbench');
-	
-	}*/
-	
-	/*function artisanCreateController($vendor,$packageName,$controller) {
-		ini_set ('max_execution_time', 0);
-		\Log::info('<br>init artisan::controller...');
-		//php artisan workbench vendor/package --resources
-		\Artisan::call('controller:make',array('name'=>$controller,'--bench'=>''.$vendor.'/'.$packageName.''));
-		\Log::info( 'done artisan::controller');
-	
-	}*/
-	
 	
 	
     

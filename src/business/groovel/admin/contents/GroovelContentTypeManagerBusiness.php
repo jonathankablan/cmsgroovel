@@ -45,14 +45,11 @@ class GroovelContentTypeManagerBusiness implements GroovelContentTypeManagerBusi
       $this->insertIntoContent_Types($tableName,$fieldNames,$descriptions,$types,$type->id,$widget,$isnullable,$required);
 	}
 
-/*tableName','fieldName','description','type','length','updated_at','created_at*/
-
     private function insertIntoContent_Types($tableName,$fieldNames,$descriptions,$types,$type,$widget,$isnullable,$required){
         for ($i = 0; $i <count($fieldNames); $i++){
         	$res=null;
         	$widgetid=null;
         	if($widget[$i]!='blank'){
-        		//$widgetid = \Widgets::where('name', '=', $widget[$i])->firstOrFail();
         		$res=$this->widgetDao->findByName($widget[$i]);
         		$widgetid=$res->id;
         	}else{
@@ -62,8 +59,6 @@ class GroovelContentTypeManagerBusiness implements GroovelContentTypeManagerBusi
         	
           $this->contentTypeDao->create($tableName,$fieldNames[$i],$descriptions[$i],$types[$i],$type,$widgetid,$isnullable[$i],$required[$i]);
         }
-        //create and add a specific columname groovelDescription to search index
-        //$this->contentTypeDao->create($tableName,'groovelDescription','null','string',$type,'-1','0','1');
     }
 
 
@@ -95,8 +90,7 @@ class GroovelContentTypeManagerBusiness implements GroovelContentTypeManagerBusi
 					
 			);
 		}
-	//\Log::info($map);
-   	return $map;
+  	return $map;
    }
    
    public function deleteField($fieldName){
@@ -119,7 +113,6 @@ class GroovelContentTypeManagerBusiness implements GroovelContentTypeManagerBusi
    	{
    		$persistFields[$fields['fieldName']]=$fields['fieldName'];
    	}
-   	//\Log::info($persistFields);
    	$updateFields=array();
    
    	for($i=0;$i<$index_max;$i++){

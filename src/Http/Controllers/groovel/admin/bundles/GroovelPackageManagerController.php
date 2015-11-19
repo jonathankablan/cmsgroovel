@@ -77,10 +77,7 @@ class GroovelPackageManagerController extends GroovelController {
 	
 	function artisanDumpAutoload() {
 		ini_set ('max_execution_time', 0);
-		\Log::info('<br>init artisan::dumpautoload...');
 		\Artisan::call('cache:clear');
-	    \Log::info( 'done artisan::dumpautoload');
-		
 	}
 	
 	function dumpAutoload($jsonDirFile) {

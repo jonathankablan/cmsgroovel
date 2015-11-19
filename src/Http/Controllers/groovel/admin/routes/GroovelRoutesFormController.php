@@ -34,7 +34,6 @@ class GroovelRoutesFormController extends GroovelFormController {
 	
 	public function init(){
 		$subtypes=$this->routeBusiness->getSubtypeList();
-		//\Log::info($subtypes);
 		return \View::make('cmsgroovel.pages.admin_form_route',['subtypes'=>$subtypes]);
 	}
 	
@@ -110,7 +109,6 @@ class GroovelRoutesFormController extends GroovelFormController {
 	
 	public function processForm(){
 		if (\Request::is('*/routes/add')){
-			\Log::info(\Input::all());
 			$this->addRoute();
 			return $this->jsonResponse(array('route has been added'),false,true,false);
 		}
@@ -134,8 +132,7 @@ class GroovelRoutesFormController extends GroovelFormController {
 
  	private function updateRoute(){
  		   $input=\Input::get('q');
- 		   //\Log::info($input);
-	     	if(empty($input)){
+ 		  	if(empty($input)){
 	     		$input=\Input::all();
 	     		}
            $this->routeBusiness->updateRoute($input['id'],$input['domain'],$input['uri'],$input['name'],$input['controller'],$input['method'],$input['action'][0],$input['view'],$input['before_filter'],$input['after_filter'],$input['type'],$input['subtype'][0],$input['audit_tracking_url_enable'],$input['activate_route']);

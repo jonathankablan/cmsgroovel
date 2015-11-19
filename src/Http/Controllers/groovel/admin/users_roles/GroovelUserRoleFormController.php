@@ -45,7 +45,6 @@ class GroovelUserRoleFormController extends GroovelFormController {
 		{
 			$options[$role->role] = $role->role;
 		}
-		//\Log::info($options);
 		\Session::flash('roles', $options);
 	}
 	

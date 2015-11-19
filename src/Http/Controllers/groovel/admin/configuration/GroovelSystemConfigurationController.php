@@ -31,7 +31,6 @@ class GroovelSystemConfigurationController extends GroovelController {
 	{
 		$this->configBusiness =$configBusiness;
 		$this->beforeFilter('auth');
-		//$this->beforeFilter('csrf');
 	}
 	
 	public function validateForm()

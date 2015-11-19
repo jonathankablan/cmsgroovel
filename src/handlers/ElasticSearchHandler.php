@@ -37,7 +37,6 @@ class ElasticSearchHandler
 	{
 		
 		$this->elasticsearch = ClientBuilder::create()->setHosts([$params->getConnection()])->build();
-		//new Client($params->getConnection());
 		$this->monitor=$monitor;
 		$this->config=$config;
 	}

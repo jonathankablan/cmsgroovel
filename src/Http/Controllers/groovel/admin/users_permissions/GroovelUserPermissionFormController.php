@@ -25,24 +25,6 @@ use Groovel\Cmsgroovel\business\groovel\admin\permissions\GroovelPermissionManag
 use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentTypeManagerBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\permissions\GroovelPermissionManagerBusiness;
 
-/*class PermissionValidator extends \Illuminate\Validation\Validator {
-
-	public function validatePermissions($attribute, $value, $parameters)
-	{
-				// Get table name from first parameter
-		$table = array_shift($parameters);
-	
-		// Build the query
-		$query = \DB::table($table);
-	
-		// Add the field conditions
-		foreach ($parameters as $i => $field)
-			$query->where($field, $value[$i]);
-	
-		// Validation result will be false if any rows match the combination
-		return ($query->count() == 0);
-	}
-}*/
 
 class GroovelUserPermissionFormController extends GroovelFormController {
 
@@ -61,17 +43,6 @@ class GroovelUserPermissionFormController extends GroovelFormController {
 	}
 	
 
-
-	/*$validator = Validator::make(
-    // Validator data goes here
-    array(
-        'unique_fields' => array('examdate_value', 'batch_value', 'chapter_value')
-    ),
-    // Validator rules go here
-    array(
-        'unique_fields' => 'unique_multiple:exams,examdate,batch,chapter'
-    )
-);*/
 	public function validateForm($params)
 	{	$messages=null;
 	    $valid=true;
@@ -151,7 +122,6 @@ class GroovelUserPermissionFormController extends GroovelFormController {
 				}
 				return $this->processForm($input);
 			}else{
-				//\Log::info($valid['messages']);
 				return $this->jsonResponse(array('user not valid'),false,true,true);
 			}
 		}else{
@@ -175,9 +145,7 @@ class GroovelUserPermissionFormController extends GroovelFormController {
         }else if (\Request::is('*/users/permission/edit')){
         	return $this->editUserPermission();	
         }
-        //return \View::make('admin::pages.admin_content_management');
-        //return  \Redirect::to('/admin/contents/form');
-        return \Redirect::to('/admin/user/permissions/form')->with($messages);
+         return \Redirect::to('/admin/user/permissions/form')->with($messages);
         
 
     }
@@ -215,13 +183,7 @@ class GroovelUserPermissionFormController extends GroovelFormController {
     	{
     		$systems[$content_type->name] = $content_type->name;
     	}
-    	//system 
-    	/*$options['routes']='routes';
-    	$options['content']='content';
-    	$options['content_type']='content_type';
-    	$options['file']='file';
-    	$options['user']='user';
-    	$options['login']='login';*/
+    	
     	\Session::flash('system_types', $systems);
     	\Session::flash('content_types', $options);
     }
@@ -259,7 +221,6 @@ class GroovelUserPermissionFormController extends GroovelFormController {
    		$action['save']=\Input::get('save');
    		$action['edit']=\Input::get('edit');
    		array_push($actions,$action);
-   		//\Log::info($actions);
    		$this->permissionManager->updateUserPermissions($input['permission_id'],$user->id,$contentTypeid,$actions,$input['owncontent'][0],$input['othercontent'][0]);
    }
 
@@ -279,7 +240,6 @@ class GroovelUserPermissionFormController extends GroovelFormController {
 			}
 			\Session::flash('content_types', $systems);
 		}
-		//\Log::info($permission);
 		\Session::flash('user_permissions', $permission);
 		$uri=array();
 		$uri['uri']= url('admin/user/permission/editform', $parameters = array(), $secure = null);
