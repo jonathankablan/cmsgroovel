@@ -57,7 +57,7 @@
 				            	</div>
 				            	
 				            	<div class="form-group form-inline">
-				                	{!! Form::label('groovelDescription', 'groovelDescription', array('class' => 'col-md-2 control-label required','style'=>'margin-right:75px')).Form::text('groovelDescription', Session::get('content_edit')['groovelDescription'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
+				                	{!! Form::label('tag', 'tag', array('class' => 'col-md-2 control-label required','style'=>'margin-right:75px')).Form::text('groovelDescription', Session::get('content_edit')['groovelDescription'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
 				            	</div>
 				            	
 				            	<div class="form-group form-inline">
@@ -128,8 +128,10 @@
 							   </div>
 						         <div class="form-group form-inline" id="row_content" style="margin-top:50px;margin-bottom:50px">
 							         {!! Form::label('isPublish','Publish',array('style'=>'margin-right: 20px;margin-left: 250px')).Form::checkbox('isPublish', Input::old('isPublish'),Session::get('content_edit')['ispublish'], array('class'=>'form-control','placeholder' => 'isPublish')) !!}
-							             
-							         {!! Form::label('isTopPublish','First position',array('style'=>'margin-right: 20px;margin-left: 150px')).Form::checkbox('isTopPublish',Input::old('isTopPublish'),Session::get('content_edit')['ontop'], array('class'=>'form-control','placeholder' => 'isTopPublish')) !!}
+							  	 	     
+								 	 {!! Form::label('weight','weight of your content',array('style'=>'margin-right: 20px;margin-left: 150px')).Form::text('weight',Session::get('content_edit')['weight'], array('class'=>'form-control','placeholder' => 'weight')) !!}
+					
+							
 								 </div>
 							  	
 				   			</div>

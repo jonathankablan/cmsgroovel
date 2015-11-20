@@ -27,7 +27,7 @@ class Contents extends Model{
 	public $timestamps = true;
 
 
-	protected $fillable = array('author_id','type_id','url','ispublish','ontop','updated_at','created_at');
+	protected $fillable = array('author_id','type_id','url','ispublish','weight','updated_at','created_at');
 	
 	
 	public function translation()

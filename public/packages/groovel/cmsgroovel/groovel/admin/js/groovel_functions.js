@@ -2,7 +2,6 @@
 var generateFormTinyMCE=[];
       $(function(){
           //Add, Save, Edit and Delete functions code
-        //  $(".btnEdit").bind("click", Edit);
           $(".btnDeleteRoute").bind("click", DeleteRoute);
           $(".btnSaveRoute").bind("click", SaveRoute);
           $(".btnEditRoute").bind("click", EditRoute);
@@ -48,7 +47,6 @@ langages['US']='United States';
                 var cells = x.find('th#col_route');
                 $(cells, this).each(function () {
                     var d = $(this).val()||$(this).text();
-                   //console.log(d);
                     ret.push(d);
                 });
                 return ret;
@@ -64,18 +62,13 @@ langages['US']='United States';
     for (i = 0; i < thArray.length; i++){ 
          inputData[thArray[i]]=tdArray[i];
     }
-    
-   //console.log(any2url('q',inputData));
     $.ajax({
                 type: 'get',
                 data : any2url('q',inputData),
                 url: "/admin/routes/delete",
                  success: function(data) {
-                    // alert(data);
                     alert('route deleted successfull');
-                    ////console.log(data.status);
-                    ////console.log(data.errors);
-                },
+                 },
                 error: function(xhr, textStatus, thrownError) {
                    alert(thrownError);
                     alert('Something went to wrong.Please Try again later...');
@@ -94,7 +87,6 @@ langages['US']='United States';
                 var cells = x.find('th#col_route');
                 $(cells, this).each(function () {
                     var d = $(this).val()||$(this).text();
-                    // //console.log(d);
                     ret.push(d);
                 });
                 return ret;
@@ -111,17 +103,13 @@ langages['US']='United States';
          inputData[thArray[i]]=tdArray[i];
     }
     
-    //console.log(any2url('q',inputData));
-    $.ajax({
+     $.ajax({
                 type: 'get',
                 data : any2url('q',inputData),
                 url: "/admin/routes/update",
                  success: function(data) {
-                    // alert(data);
                     alert('route saved successfull');
-                   // //console.log(data.status);
-                   // //console.log(data.errors);
-                },
+                 },
                 error: function(xhr, textStatus, thrownError) {
                     alert(thrownError);
                     alert('Something went to wrong.Please Try again later...');
@@ -374,7 +362,7 @@ function setDataJSON(req,url)
   form_group3 = document.createElement('div');
   form_group3.className = "form-group form-inline";
   form_group3.style="margin-top:50px";
-  var label3='<label for=\'groovelDescription\' class="required">groovelDescription</label>';
+  var label3='<label for=\'tag\' class="required">tag</label>';
   form_group3.innerHTML=label3;
 
   input3=document.createElement('input');
@@ -570,17 +558,18 @@ function setDataJSON(req,url)
 	                     form_group = document.createElement('div');
 	                     form_group.className = "form-group";
 	                     form_group.style='margin-left:50px';
-	                     var label='<label for='+'isTopPublish' +' style="font-size: 20px">First position</label>';
+	                     var label='<label for='+'weight' +' style="font-size: 20px">position of your content</label>';
 	                     form_group.innerHTML=label;
 	                     input=document.createElement('input');
-	                     input.type='checkbox';
-	                     input.name='isTopPublish';
+	                     input.type='text';
+	                     input.name='weight';
 	                     input.value='';
 	                     input.style='margin-left:130px';
-	                     input.id='isTopPublish';
+	                     input.id='weight';
 	                     form_group.appendChild(input);
-	                     
 	                     my_form.appendChild(form_group);
+	                     
+	                     
 	                },
 	                error: function(xhr, textStatus, thrownError) {
 	                    alert(thrownError);
@@ -622,20 +611,21 @@ function setDataJSON(req,url)
 	    form_group.appendChild(input);
 	    my_form.appendChild(form_group);
 	    
-	    form_group = document.createElement('div');
-	    form_group.className = "form-group";
-	    form_group.style='margin-left:50px';
-	    var label='<label for='+'isTopPublish' +' style="font-size: 20px">First position</label>';
-	    form_group.innerHTML=label;
-	    input=document.createElement('input');
-	    input.type='checkbox';
-	    input.name='isTopPublish';
-	    input.value='';
-	    input.style='margin-left:130px';
-	    input.id='isTopPublish';
-	    form_group.appendChild(input);
+	   
 	    
-	    my_form.appendChild(form_group);
+	    form_group = document.createElement('div');
+        form_group.className = "form-group";
+        form_group.style='margin-left:50px';
+        var label='<label for='+'weight' +' style="font-size: 20px">weight content</label>';
+        form_group.innerHTML=label;
+        input=document.createElement('input');
+        input.type='text';
+        input.name='weight';
+        input.value='';
+        input.style='margin-left:130px;margin-top:50px';
+        input.id='weight';
+        form_group.appendChild(input);
+        my_form.appendChild(form_group);
     }
    
     

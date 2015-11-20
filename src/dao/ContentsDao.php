@@ -17,16 +17,20 @@ use Groovel\Cmsgroovel\models\Contents;
 use Groovel\Cmsgroovel\models\ContentTypes;
 use Groovel\Cmsgroovel\models\AllContentTypes;
 use Groovel\Cmsgroovel\models\ContentsTranslation;
-
+use DB;
 class ContentsDao implements ContentsDaoInterface{
 
-public function create($url,$contentType,$userid,$publish,$topPublish){
+public function create($url,$contentType,$userid,$publish,$weight=null){
 	$contents= new Contents();
 	$contents->url=$url;
 	$contents->type_id=$contentType;
 	$contents->author_id=$userid;
 	$contents->ispublish=$publish;
-	$contents->ontop=$topPublish;
+	if($weight==null){
+		$contents->weight=0;
+	}else{
+		$contents->weight=$weight;
+	}
 	$contents->save();
 	return $contents;
 }
@@ -41,16 +45,62 @@ public function find($id){
 }
 
 public function paginate($langage=null){
+	$contents=null;
 	if($langage!=null){
-		return  ContentsTranslation::where('lang','=',$langage)->orderBy('created_at', 'desc')->paginate(15);
+		$contents = DB::table('contents')
+		->join('contents_translation', 'contents.id', '=', 'contents_translation.refcontentid')
+		->join('all_contents_type', 'all_contents_type.id', '=', 'contents.type_id')
+		->join('users', 'users.id', '=', 'contents.author_id')
+		->select('contents.id as content_id','contents.*', 'contents_translation.id as translation_id','contents_translation.*','all_contents_type.name as type','users.pseudo as author')
+		->where('contents.ispublish','=',1)
+		->where('contents_translation.lang','=',$langage)
+		->orderBy('contents.weight','desc')
+		->orderBy('contents.created_at', 'desc')
+		->paginate(15);
+	}else {
+		$contents = DB::table('contents')
+		->join('contents_translation', 'contents.id', '=', 'contents_translation.refcontentid')
+		->join('all_contents_type', 'all_contents_type.id', '=', 'contents.type_id')
+		->join('users', 'users.id', '=', 'contents.author_id')
+		->select('contents.id as content_id','contents.*', 'contents_translation.id as translation_id','contents_translation.*','all_contents_type.name as type','users.pseudo as author')
+		->where('contents.ispublish','=',1)
+		->orderBy('contents.weight','desc')
+		->orderBy('contents.created_at', 'desc')
+		->paginate(15);
 	}
-	return Contents::orderBy('created_at', 'desc')->orderBy('ontop', 'desc')->paginate(15);
+	return  $contents;
+}
+
+public function paginateAll($langage=null){
+	$contents=null;
+	if($langage!=null){
+		$contents = DB::table('contents')
+		->join('contents_translation', 'contents.id', '=', 'contents_translation.refcontentid')
+		->join('all_contents_type', 'all_contents_type.id', '=', 'contents.type_id')
+		->join('users', 'users.id', '=', 'contents.author_id')
+		->select('contents.id as content_id','contents.*', 'contents_translation.id as translation_id','contents_translation.*','all_contents_type.name as type','users.pseudo as author')
+		->where('contents_translation.lang','=',$langage)
+		->orderBy('contents.weight','desc')
+		->orderBy('contents.created_at', 'desc')
+		->paginate(15);
+	}else {
+		$contents = DB::table('contents')
+		->join('contents_translation', 'contents.id', '=', 'contents_translation.refcontentid')
+		->join('all_contents_type', 'all_contents_type.id', '=', 'contents.type_id')
+		->join('users', 'users.id', '=', 'contents.author_id')
+		->select('contents.id as content_id','contents.*', 'contents_translation.id as translation_id','contents_translation.*','all_contents_type.name as type','users.pseudo as author')
+		->orderBy('contents.weight','desc')
+		->orderBy('contents.created_at', 'desc')
+		->paginate(15);
+	}
+	return  $contents;
+	
 }
 
 
 public function getContentByTitleAndType($title,$type){
 	$contentType=AllContentTypes::where('name','=',$type)->first();
-	$contents= Contents::where('type_id','=',$contentType->id)->get();
+	$contents= Contents::where('type_id','=',$contentType->id)->orderBy('weight','desc')->get();
 	$result=array();
 	foreach($contents as $content){
 		if($content->ispublish==1){
@@ -62,13 +112,12 @@ public function getContentByTitleAndType($title,$type){
 		}
 	}
 	return $result;
-	
-	return Contents::where('name','=',$title)->where('type_id','=',$contentType->id)->get();
+
 }
 
 public function getContentByType($type){
 	$contentType=AllContentTypes::where('name','=',$type)->first();
-	$contents= Contents::where('type_id','=',$contentType->id)->get();
+	$contents= Contents::where('type_id','=',$contentType->id)->orderBy('weight','desc')->get();
 	$result=array();
 	foreach($contents as $content){
 		array_push($result,$content->translation);

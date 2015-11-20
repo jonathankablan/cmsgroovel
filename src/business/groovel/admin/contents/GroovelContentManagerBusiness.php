@@ -57,8 +57,8 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 		$this->routeDao->create($title,$url,$name);
 	}
 
-	public function addContent($title,$data,$url,$grooveldescription,$langage,$contentType,$userid,$publish,$topPublish){
-		 $contents= $this->contentDao->create($url,$contentType,$userid,$publish,$topPublish);
+	public function addContent($title,$data,$url,$grooveldescription,$langage,$contentType,$userid,$publish,$weight){
+		 $contents= $this->contentDao->create($url,$contentType,$userid,$publish,$weight);
 		 $contentsTranslation=$this->contentTranslationDao->create($contents->id, $title, $data, $grooveldescription, $langage);
 		 $this->createUrlView($title,$url,$contentType);
 		 return $contentsTranslation->getId();
@@ -80,7 +80,7 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 		$contentTranslation= $this->contentTranslationDao->find($contentTranslationid);
 		$content= $this->contentDao->find($contentTranslation->refcontentid);
 		$blob=$this->deserialize($contentTranslation['content']);
-		$res=array('title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'url'=>$content['url'],'groovelDescription'=>$contentTranslation->grooveldescription,'contentType'=>$content->type_id,'content'=>$blob,'ispublish'=>$content->ispublish,'ontop'=>$content->ontop);
+		$res=array('title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'url'=>$content['url'],'groovelDescription'=>$contentTranslation->grooveldescription,'contentType'=>$content->type_id,'content'=>$blob,'ispublish'=>$content->ispublish,'weight'=>$content->weight);
 		return $res;
 	}
 
@@ -103,8 +103,12 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
   	 return base64_encode(serialize($content));
    }
    
-   public function paginateContent(){
-   	return $this->contentDao->paginate();
+   public function paginateContent($langage=null){
+   	return $this->contentDao->paginate($langage);
+   }
+   
+   public function paginateAllContent(){
+   	return $this->contentDao->paginateAll();
    }
 
    public function deleteContent($id,$translation_id){

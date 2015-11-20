@@ -31,7 +31,7 @@
 					                          <th id="col_content">url</th>
 					                          <th id="col_content">author</th>
 					                          <th id="col_content">published</th>
-					                          <th id="col_content">ontop</th>
+					                          <th id="col_content">weight</th>
 					                          <th id="col_content">langage</th>
 					                          <th id="col_content">date creation</th>
 					                          <th id="col_content">last update</th>
@@ -40,30 +40,23 @@
 										</thead>
 										<tbody class='list'>
 										 	 @foreach ($contents as $content)
-										 	   
-										 	 	@foreach ($content->translation as $translation)
-					                            <tr id="rows_contents">
-						                            <td id="row_content" >{!!$content->id!!}</td>
-						                            <td id="row_content" >{!!$translation->id!!}</td>
-						                            <td id="row_content" class='name'>{!!$translation->name!!}</td>
-						                            <td id="row_content">{!!$content->type['name']!!}</td>
+									              <tr id="rows_contents">
+						                            <td id="row_content" >{!!$content->content_id!!}</td>
+						                            <td id="row_content" >{!!$content->translation_id!!}</td>
+						                            <td id="row_content" class='name'>{!!$content->name!!}</td>
+						                            <td id="row_content">{!!$content->type!!}</td>
 						                            <td id="row_content">{!!$content->url!!}</td>
-						                            <td id="row_content">{!!$content->author['pseudo']!!}</td>
+						                            <td id="row_content">{!!$content->author!!}</td>
 						                             <?php if($content->ispublish==1) :?>
 						                              <td id="row_content">yes</td>
 						                            <?php endif; ?>
 						                             <?php if($content->ispublish==0) :?>
 						                                 <td id="row_content">no</td>
 						                             <?php endif; ?>
-						                            <?php if($content->ontop==1) :?>
-						                               <td id="row_content">yes</td>
-						                            <?php endif; ?>
-						                            <?php if($content->ontop==0) :?>
-						                               <td id="row_content">no</td>
-						                            <?php endif; ?> 
-						                            <td id="row_content">{!!$translation->lang!!}</td>
-						                             <td id="row_content">{!!$translation->created_at!!}</td>
-						                             <td id="row_content">{!!$translation->updated_at!!}</td>
+						                            <td id="row_content">{!!$content->weight!!}</td>
+						                            <td id="row_content">{!!$content->lang!!}</td>
+						                             <td id="row_content">{!!$content->created_at!!}</td>
+						                             <td id="row_content">{!!$content->updated_at!!}</td>
 						                            <td id="edit">
 						                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditContent')) !!}
 						                            <!--<img src='../../public/theme-admin/images/save.png' class='btnSave' style="width:20px;height:20px">-->
@@ -77,7 +70,6 @@
 						                            <button id="dump" class="btn btn-success btnTranslateContent">translate in a new langage</button>
 						                            </td>
 					                            </tr>
-					                             @endforeach
 					                          @endforeach
           								</tbody>
           							</table>

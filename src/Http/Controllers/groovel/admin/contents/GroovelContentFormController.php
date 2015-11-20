@@ -215,23 +215,26 @@ class GroovelContentFormController extends GroovelFormController {
         $arr=array();
         $ispublish=0;
         $ontop=0;
+        $weight;
        foreach ($data as $elt){
        	    $entite=htmlentities($elt);
        	 	$elt_parse=preg_split('#\=+#', $entite);
-         	if('Title'!=$elt_parse[0] && 'ContentType'!=$elt_parse[0] && 'groovelDescription'!=$elt_parse[0] 
-         			&& 'isPublish'!=$elt_parse[0] && 'isTopPublish'!=$elt_parse[0]&&'url'!=$elt_parse[0]){
+         	if('title'!=$elt_parse[0] && 'ContentType'!=$elt_parse[0] && 'groovelDescription'!=$elt_parse[0] 
+         			&& 'isPublish'!=$elt_parse[0] &&'url'!=$elt_parse[0] &&'weight'!=$elt_parse[0] && '_token'!=$elt_parse[0]
+         			&&'langage'!=$elt_parse[0]){
          		$arr[$elt_parse[0]]=$elt_parse[1];
          	}
          	if('isPublish'==$elt_parse[0]){
          		$ispublish=1;
          	}
-         	if('isTopPublish'==$elt_parse[0]){
-         		$ontop=1;
+         	
+         	if('weight'==$elt_parse[0]){
+         		$weight=$elt_parse[1];
          	}
         }
         $content=$this->contentManager->serialize($arr);
      	$userid=\Auth::id();
-    	$id=$this->contentManager->addContent($title,$content,$url,$groovelDescription,$langage,$type->id,$userid,$ispublish,$ontop);
+    	$id=$this->contentManager->addContent($title,$content,$url,$groovelDescription,$langage,$type->id,$userid,$ispublish,$weight);
 	}
 
 	private function deleteContent(){
@@ -241,8 +244,8 @@ class GroovelContentFormController extends GroovelFormController {
   
    private function updateContent(){
    		$input = \Input::all();
-		if($input['duplicate']=='yes'){//duplicate and create new translation content
-			$content_translation= new ContentsTranslation;
+   		if($input['duplicate']=='yes'){//duplicate and create new translation content
+   			$content_translation= new ContentsTranslation;
 			$content_translation->name=$input['title'];
 			$content_translation->grooveldescription=$input['groovelDescription'];
 			$content_translation->lang=$input['langage'][0];
@@ -250,31 +253,29 @@ class GroovelContentFormController extends GroovelFormController {
 			
 			$content= Contents::find($input['content_id']);
 			$content->url=$input['url'];
+			$content->weight=$input['weight'];
 			if(filter_var(\Input::get('isPublish'), FILTER_VALIDATE_BOOLEAN)){
 				$content->ispublish=1;
 			}else{
 				$content->ispublish=0;
 			}
-			if(filter_var(\Input::get('isTopPublish'), FILTER_VALIDATE_BOOLEAN)){
-				$content->ontop=1;
-			}else{
-				$content->ontop=0;
-			}
-			
-			$blob=$this->contentManager->deserialize( $content_translation['content']);
+			$data=array();
 			foreach (array_keys($input) as $key){
-				if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType'){
-					$blob[$key]=$input[$key];
+				if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
+		    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='url' && $key!='groovelDescription' && $key!='langage' && $key!='weight' && $key!='isPublish'){
+					$data[$key]=$input[$key];
 					if('myfiles'==$key && array_key_exists('myfiles',$input)){
 						if(empty($input['myfiles'])){
-							unset($blob[$key]);
+							unset($data[$key]);
 						}else{
-							$blob[$key]=$input['myfiles'];
+							$data[$key]=$input['myfiles'];
 						}
 					}
 				}
 			}
-			$blobout=$this->contentManager->serialize($blob);
+			\Log::info('update');
+			\Log::info($data);
+			$blobout=$this->contentManager->serialize($data);
 			$content_translation->content=$blobout;
 			$content->update();
 			$content_translation->save();
@@ -288,21 +289,17 @@ class GroovelContentFormController extends GroovelFormController {
 		    }else{
 		    	$content->ispublish=0;
 		    }
-		    if(filter_var(\Input::get('isTopPublish'), FILTER_VALIDATE_BOOLEAN)){
-		    	$content->ontop=1;
-		    }else{
-		    	$content->ontop=0;
-		    }
-		    
+		   
+		    $content->weight=$input['weight'];
 		    $content_translation= ContentsTranslation::where('id','=',$input['translation_id'])->first();
 		    $content_translation->name=$input['title'];
 		    $content_translation->grooveldescription=$input['groovelDescription'];
 		    $content_translation->lang=$input['langage'][0];
 		    $content_translation->updated_at=time();
-		    
 		    $blob=$this->contentManager->deserialize( $content_translation['content']);
 		    foreach (array_keys($input) as $key){
-		    	if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType'){
+		    	if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
+		    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='url' && $key!='groovelDescription' && $key!='langage' && $key!='weight' && $key!='isPublish'){
 		    		$blob[$key]=$input[$key];
 		    		if('myfiles'==$key && array_key_exists('myfiles',$input)){
 		    			if(empty($input['myfiles'])){
@@ -331,6 +328,7 @@ class GroovelContentFormController extends GroovelFormController {
 			$input['id']=$id;
 		}
 		$content=$this->contentManager->editContent($input['id'],$input['translation_id']);
+		\Log::info($content);
 		if($id!= null){
 			$input['url']=$content['url'];
 		}
@@ -380,7 +378,7 @@ class GroovelContentFormController extends GroovelFormController {
     	 	$i++;
     	}
     	
-   		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'no','translation_id'=>$input['translation_id'],'title'=>$content['title'],'url'=>$input['url'],'groovelDescription'=>$content['groovelDescription'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'ontop'=>$content['ontop']);
+   		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'no','translation_id'=>$input['translation_id'],'title'=>$content['title'],'url'=>$input['url'],'groovelDescription'=>$content['groovelDescription'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight']);
     	\Session::flash('content_edit', $ct);
     	
     	$countries=$this->contentManager->getAllCountries();
@@ -485,7 +483,6 @@ class GroovelContentFormController extends GroovelFormController {
 	private function translateContent(){
 		$input =  \Input::get('q');
 		$content=$this->contentManager->editContent($input['id'],$input['translation_id']);
-		
 		//mapping of data and type and widget
 		$contentItems=$this->contentTypeManager->findContentTypeById($content['contentType']);
 		$mapping=array();
@@ -531,10 +528,9 @@ class GroovelContentFormController extends GroovelFormController {
 			);
 			$i++;
 		}
-		 
-		$ct=array('id'=>$input['id'],'lang'=>$content['content']['langage'][0],'duplicate'=>'yes','translation_id'=>null,'title'=>$content['title'],'url'=>$input['url'],'groovelDescription'=>$content['groovelDescription'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'ontop'=>$content['ontop']);
+		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'yes','translation_id'=>null,'title'=>$content['title'],'url'=>$input['url'],'groovelDescription'=>$content['groovelDescription'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight']);
 		\Session::flash('content_edit', $ct);
-		 
+		
 		$countries=$this->contentManager->getAllCountries();
 		$lang=array();
 		foreach($countries as $country){

@@ -35,7 +35,7 @@ class GroovelContentsListController extends GroovelController {
 	}
 
 	public function init(){
-	     return \View::make('cmsgroovel.pages.admin_list_contents',['contents'=>$this->contentManager->paginateContent()]);
+	     return \View::make('cmsgroovel.pages.admin_list_contents',['contents'=>$this->contentManager->paginateAllContent()]);
  	}
 
 }
