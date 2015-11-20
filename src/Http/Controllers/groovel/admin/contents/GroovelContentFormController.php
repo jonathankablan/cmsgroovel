@@ -273,8 +273,6 @@ class GroovelContentFormController extends GroovelFormController {
 					}
 				}
 			}
-			\Log::info('update');
-			\Log::info($data);
 			$blobout=$this->contentManager->serialize($data);
 			$content_translation->content=$blobout;
 			$content->update();
@@ -328,7 +326,6 @@ class GroovelContentFormController extends GroovelFormController {
 			$input['id']=$id;
 		}
 		$content=$this->contentManager->editContent($input['id'],$input['translation_id']);
-		\Log::info($content);
 		if($id!= null){
 			$input['url']=$content['url'];
 		}
@@ -379,7 +376,7 @@ class GroovelContentFormController extends GroovelFormController {
     	}
     	
    		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'no','translation_id'=>$input['translation_id'],'title'=>$content['title'],'url'=>$input['url'],'groovelDescription'=>$content['groovelDescription'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight']);
-    	\Session::flash('content_edit', $ct);
+   		\Session::flash('content_edit', $ct);
     	
     	$countries=$this->contentManager->getAllCountries();
     	$lang=array();
