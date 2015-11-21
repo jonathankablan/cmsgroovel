@@ -179,10 +179,20 @@ class GroovelContentFormController extends GroovelFormController {
         	return $this->editContent();	
         }else if (\Request::is('*/content/translate')){
 			return $this->translateContent();
+		}else if(\Request::is('*/content/viewcode')){
+			return $this->viewCode();
 		}
     }
 
   
+    private function viewCode(){
+     	$input =  \Input::get('q');
+    	$content=$this->contentManager->editContent($input['id'],$input['translation_id']);
+    	return $this->jsonResponse($content);
+    	
+    }
+    
+    
     
 	private function addContent(){
 	    $query_string = "";

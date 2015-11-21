@@ -146,6 +146,8 @@
 								
 			    	 			{!! Form::close() !!}	
 			    	 			<button id="delete" onclick='deleteContents()' class="btn btn-default">Delete</button>
+			    	 			
+			    	 			<button id="view" onclick='viewContents()' class="btn btn-default">View code</button>
 			        	 </div>
 					</div>
 				  </div>
@@ -159,6 +161,30 @@ $(document).ready(function() {
 });
 
 
+function viewContents(){
+	inputData=document.getElementById('id');
+    inputData1=document.getElementById('translation_id');
+    args=new Array();
+    args['id']=inputData.value;
+    args['translation_id']=inputData1.value;
+ 	   $.ajax({
+           type: 'get',
+           data : any2url('q',args),
+           url: "/admin/content/viewcode",
+            success: function(data) {
+               alert(data);
+            },
+           error: function(xhr, textStatus, thrownError) {
+              alert(thrownError);
+               alert('Something went to wrong.Please Try again later...');
+           }
+          
+       });
+	
+}
+
+
+
 function deleteContents(){
     inputData=document.getElementById('id');
     inputData1=document.getElementById('translation_id');
@@ -170,7 +196,6 @@ function deleteContents(){
            data : any2url('q',args),
            url: "/admin/content/delete",
             success: function(data) {
-               // alert(data);
                alert('content deleted successfull');
                $('#modal').modal('hide');
            },
