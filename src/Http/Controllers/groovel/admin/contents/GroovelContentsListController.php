@@ -34,6 +34,12 @@ class GroovelContentsListController extends GroovelController {
 		$this->beforeFilter('auth');
 	}
 
+	//load all contents into a view
+	public function loadContents(){
+		return $this->contentManager->paginateFullContentDeserialize();
+	}
+	
+	
 	public function init(){
 	     return \View::make('cmsgroovel.pages.admin_list_contents',['contents'=>$this->contentManager->paginateAllContent()]);
  	}

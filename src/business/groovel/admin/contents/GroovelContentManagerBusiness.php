@@ -132,13 +132,11 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
    }
 
    /**function to call in the controller to get contents by langage**/
-   public function paginateFullContentDeserialize($langage){
+   public function paginateFullContentDeserialize($langage=null){
    	$res= $this->contentDao->paginate($langage);
    	$result=array();
    	foreach ($res as $contentTranslation){
-   			if($contentTranslation->content->ispublish==1){
    				array_push($result,$this->editContent($contentTranslation->refcontentid,$contentTranslation->id));
-   			}
    	}
    	return $result;
    }

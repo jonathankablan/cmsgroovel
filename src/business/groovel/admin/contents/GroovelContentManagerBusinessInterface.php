@@ -22,7 +22,7 @@ interface GroovelContentManagerBusinessInterface{
     public function paginateContent($langage);
     public function deleteContent($id,$translation_id);
     public function getFieldRequired($contentype);
-    public function paginateFullContentDeserialize($langage);
+    public function paginateFullContentDeserialize($langage=null);
     public function getContentTypeNameById($id);
     public function getContentTypeNameOfContent($contentid);
     public function getAllCountries();

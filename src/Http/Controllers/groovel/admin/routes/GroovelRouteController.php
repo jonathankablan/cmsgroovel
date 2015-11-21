@@ -68,14 +68,21 @@ class GroovelRouteController extends GroovelController {
         	\Log::info($ex);
          }
   	}
+  	
+  	
 
 	public function dispatcher($params)
 	{
-	//init the uri and controller to call and view put in memory simple singleton
+		//load contents in a view
+		$app = App();
+		$controllerContents = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\contents\GroovelContentsListController');
+		$contents=$controllerContents->callAction('loadContents',array());
+		
+		//init the uri and controller to call and view put in memory simple singleton
 		if($params['controller']!=null){
 			$app = App();
 		    $controller = $app->make($params['controller']);
-		    return $controller->callAction($params['method'],array('view'=>$params['view']));
+		    return $controller->callAction($params['method'],array('view'=>$params['view'],'content'=>$contents));
 		}
 		if($params['view']=='cmsgroovel.pages.login_form' && !\Auth::guest()){
 			return \View::make('cmsgroovel.pages.welcome');
@@ -86,8 +93,7 @@ class GroovelRouteController extends GroovelController {
 		if(array_key_exists('view', \Input::all())){
 			$view=\Input::get('view');
 		}
-		
-		return \View::make($view);
+		return \View::make($view,['contents'=>$contents]);
 	}
 
 	public function showRoutes(){
