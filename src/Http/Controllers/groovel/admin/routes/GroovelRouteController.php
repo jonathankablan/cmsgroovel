@@ -76,7 +76,11 @@ class GroovelRouteController extends GroovelController {
 		//load contents in a view
 		$app = App();
 		$controllerContents = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\contents\GroovelContentsListController');
-		$contents=$controllerContents->callAction('loadContents',array());
+		$site_extension=null;
+		if($_SERVER['SERVER_NAME']!='localhost'){
+			$site_extension=substr($_SERVER['SERVER_NAME'], strrpos($_SERVER['SERVER_NAME'], ".")+1);
+		}
+		$contents=$controllerContents->callAction('loadContents',array('extension'=>$site_extension));
 		
 		//init the uri and controller to call and view put in memory simple singleton
 		if($params['controller']!=null){
