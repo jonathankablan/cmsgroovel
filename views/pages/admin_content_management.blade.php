@@ -201,6 +201,7 @@ $("#submitForm").click(function (event) {
         document.getElementById('content_form').appendChild( document.getElementById('token'));
         
 		form=$('#content_form').serialize();
+		 document.getElementById('modal').appendChild( document.getElementById('token'));
 		$.post('/admin/content/add', form, function (data, textStatus) {
 			urlimg={};
 			if(textStatus=='success'){

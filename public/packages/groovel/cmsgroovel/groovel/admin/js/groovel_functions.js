@@ -126,7 +126,6 @@ langages['US']='United States';
 	                var cells = x.find('th#col_route');
 	                $(cells, this).each(function () {
 	                    var d = $(this).val()||$(this).text();
-	                    // //console.log(d);
 	                    ret.push(d);
 	                });
 	                return ret;
@@ -142,15 +141,12 @@ langages['US']='United States';
 	    for (i = 0; i < thArray.length; i++){ 
 	         inputData[thArray[i]]=tdArray[i];
 	    }
-	    //console.log(any2url('q',inputData));
 	    $.ajax({
 	                type: 'get',
 	                data : any2url('q',inputData),
 	                url: "/admin/routes/edit",
 	                 success: function(data) {
-	                	 //console.log(data);
 	                     var parsed = JSON.parse(data);
-	                     //console.log(parsed.datas.uri);
 	                     window.location.href = parsed.datas.uri;
 	                },
 	                error: function(xhr, textStatus, thrownError) {
@@ -175,8 +171,7 @@ function any2url(prefix, obj) {
         }
         else
             args[args.length]=prefix+'='+encodeURIComponent(obj);
-        //   //console.log(args);
-        return args.join('&');
+        	return args.join('&');
     }
 
 String.prototype.trim = function() {
@@ -225,7 +220,6 @@ String.prototype.trim = function() {
         	  }else if(rowCount <= 2){
         		  break;
         	  }
-              //console.log(rowCount);
               table.deleteRow(i);
               rowCount--;
               i--;
@@ -239,9 +233,6 @@ String.prototype.trim = function() {
   }
   
   
-  
-
-
 var pleaseWaitDiv =$('#pleaseWaitDialog');
 var timer=null;
 function modifValues(){
@@ -267,7 +258,6 @@ function showContentType(str,url){
                 dateType:'json',
                 url: url,
                  success: function(data) {
-                   //   $('#test').empty();
                 	 var parsed = JSON.parse(data);
                 	  if(parsed.datas[0].length!=0){
                 		  setDataJSON(data,url);	
@@ -276,7 +266,6 @@ function showContentType(str,url){
                 	
                 },
                 error: function(xhr, textStatus, thrownError) {
-                   //console.log(thrownError);
                     alert(thrownError);
                     alert('Something went to wrong.Please Try again later...');
                 }
@@ -328,7 +317,6 @@ function setDataJSON(req,url)
   p.style.color='black';
   p.innerHTML='General settings';
   p.style='margin-left:350px';
-//  form_group.appendChild(p);
   sidebarHead.appendChild(p);
   my_form.appendChild( sidebarHead);
 
@@ -396,16 +384,12 @@ function setDataJSON(req,url)
   form_group4.appendChild(input4); 
   my_form.appendChild(form_group4); 
  
-  
-  
-  
   sidebarIntro = document.createElement('div');
   sidebarIntro.style = "margin-top:40px;margin-bottom:40px;width:100%;height:60px;background-color: #98FB98;";
   p=document.createElement('p');
   p.style.color='black';
   p.innerHTML='Content';
   p.style='margin-left:350px';
-//  form_group.appendChild(p);
   sidebarIntro.appendChild(p);
   my_form.appendChild( sidebarIntro);
   
@@ -505,16 +489,13 @@ function setDataJSON(req,url)
 
         }else if (parsed.datas[i][j]['widget']=='12'){//send files
         	sidebar='not null';
-        	//$("#content_form").load("file/upload/widget");
         	  $.ajax({
 	                type: 'get',
 	                data :"",
 	                dateType:'json',
 	                url: "file/upload/widget",
 	                 success: function(data) {
-	                     //var parsed = JSON.parse(data);
-	                    // //console.log(data.html);form_group =document.createElement('div');
-	                	 form_group_label =document.createElement('div');
+	                 	 form_group_label =document.createElement('div');
 	                     form_group_label.className = "form-group";
 	                     var label1='<label for=\'files\'>Files Attachements</label>';
 	                     form_group_label.innerHTML=label1;
@@ -524,20 +505,17 @@ function setDataJSON(req,url)
 	                     form_group.className = "form-group form-inline";
 	                     form_group.style='margin-left:250px';
 	                     form_group.innerHTML=data.html;
-	                     //form_group.innerHTML=label1;
 	                     my_form.appendChild(form_group);   
 	                     document.body.appendChild(my_form);
 	                     document.getElementById('form-modal').appendChild(my_form);
 	                     fileEvents();
-	             		//$("#loading").hide();
-	                     //add sidebar
+	                      //add sidebar
 	                     sidebar = document.createElement('div');
 	                     sidebar.style = "margin-top:30px;margin-bottom:15px;width:100%;height:60px;background-color: #98FB98;";
 	                     p=document.createElement('p');
 	                     p.style.color='black';
 	                     p.innerHTML='Optional settings';
 	                     p.style='margin-left:300px';
-	                   //  form_group.appendChild(p);
 	                     sidebar.appendChild(p);
 	                     my_form.appendChild( sidebar);
 	                     //select publish, ontop
@@ -584,7 +562,6 @@ function setDataJSON(req,url)
     for(var i=0;i<numberFieldTinyMCE;i++){
     	generateFormTinyMCE.push(fiedTinyMCE[i]);
     }
-     //$('#modal').modal('show');
     if(sidebar==null){
 	    sidebar = document.createElement('div');
 	    sidebar.style = "margin-top:30px;margin-bottom:15px;width:100%;height:60px;background-color: #98FB98;";
@@ -592,7 +569,6 @@ function setDataJSON(req,url)
 	    p.style.color='black';
 	    p.innerHTML='Optional settings';
 	    p.style='margin-left:300px';
-	  //  form_group.appendChild(p);
 	    sidebar.appendChild(p);
 	    my_form.appendChild( sidebar);
 	    
@@ -610,9 +586,6 @@ function setDataJSON(req,url)
 	    input.id='isPublish';
 	    form_group.appendChild(input);
 	    my_form.appendChild(form_group);
-	    
-	   
-	    
 	    form_group = document.createElement('div');
         form_group.className = "form-group";
         form_group.style='margin-left:50px';
@@ -647,12 +620,8 @@ $(document).on('hide.bs.modal', function () {
 
 $(document).on('shown.bs.modal', function(e) {
 for(var i=0;i<generateFormTinyMCE.length;i++){
-	//console.log('ici');
 	var selector=generateFormTinyMCE[i];
 	var sel= document.getElementById(selector);
-	////console.log(sel);
-    //var sel2=$('textarea#'+selector);
-    ////console.log(sel2);
 	if(sel!=null){
 	 sel.focus();
 	eval (tinymce.init({
@@ -697,17 +666,7 @@ for(var i=0;i<generateFormTinyMCE.length;i++){
 		 })
 	 )
 	}
-}	
-
-////console.log(newVal);
-//clearInterval(timer);
-//incjauge=5;
-//doc=document.getElementById('progress');
-//doc.innerHTML="";
-//var pleaseWaitDiv = $('Processing');
-////console.log(pleaseWaitDiv);
-//pleaseWaitDiv.modal('hide'); 
-; 
+}; 
 });
 
 
@@ -723,7 +682,6 @@ for(var i=0;i<generateFormTinyMCE.length;i++){
                 var cells = x.find('th#col_content');
                 $(cells, this).each(function () {
                     var d = $(this).val()||$(this).text();
-                   // //console.log(d);
                     ret.push(d);
                 });
                 return ret;
@@ -747,11 +705,7 @@ for(var i=0;i<generateFormTinyMCE.length;i++){
                 dateType:'json',
                 url: "content/edit",
                  success: function(data) {
-                    // alert(data);
-                   // alert('edit saved successfull');
-                    //console.log(data);
                      var parsed = JSON.parse(data);
-                     //console.log(parsed.datas.uri);
                      window.location.href = parsed.datas.uri;
                 },
                 error: function(xhr, textStatus, thrownError) {
@@ -771,7 +725,6 @@ for(var i=0;i<generateFormTinyMCE.length;i++){
                 var cells = x.find('th#col_content');
                 $(cells, this).each(function () {
                     var d = $(this).val()||$(this).text();
-                    // //console.log(d);
                     ret.push(d);
                 });
                 return ret;
@@ -794,7 +747,6 @@ for(var i=0;i<generateFormTinyMCE.length;i++){
                 data : any2url('q',inputData),
                 url: "content/delete",
                  success: function(data) {
-                    // alert(data);
                     alert('content deleted successfull');
                  },
                 error: function(xhr, textStatus, thrownError) {
@@ -820,7 +772,6 @@ for(var i=0;i<generateFormTinyMCE.length;i++){
                var cells = x.find('th#col_content');
                $(cells, this).each(function () {
                    var d = $(this).val()||$(this).text();
-                  // //console.log(d);
                    ret.push(d);
                });
                return ret;
@@ -951,14 +902,11 @@ function DeleteContentType(){
     for (i = 0; i < thArray.length; i++){ 
          inputData[thArray[i]]=tdArray[i];
     }
-    
-    //console.log(any2url('q',inputData));
     $.ajax({
                 type: 'get',
                 data : any2url('q',inputData),
                 url: "content_type/delete",
                  success: function(data) {
-                   //console.log(data);
                    var parsed = JSON.parse(data);
                    if(parsed['success']){
                        alert('content type deleted successfull');
@@ -985,7 +933,6 @@ function DeleteContentType(){
                var cells = x.find('th#col_user');
                $(cells, this).each(function () {
                    var d = $(this).val()||$(this).text();
-                   // //console.log(d);
                    ret.push(d);
                });
                return ret;
@@ -1001,18 +948,13 @@ function DeleteContentType(){
    for (i = 0; i < thArray.length; i++){ 
         inputData[thArray[i]]=tdArray[i];
    }
-   
-   //console.log(any2url('q',inputData));
    $.ajax({
                type: 'get',
                data : any2url('q',inputData),
                url: "user/delete",
                 success: function(data) {
-                   // alert(data);
                    alert('user deleted successfull');
-                   //console.log(data.status);
-                   //console.log(data.errors);
-               },
+                },
                error: function(xhr, textStatus, thrownError) {
                   alert(thrownError);
                    alert('Something went to wrong.Please Try again later...');
@@ -1031,7 +973,6 @@ function DeleteContentType(){
                var cells = x.find('th#col_user');
                $(cells, this).each(function () {
                    var d = $(this).val()||$(this).text();
-                   // //console.log(d);
                    ret.push(d);
                });
                return ret;
@@ -1047,8 +988,6 @@ function DeleteContentType(){
    for (i = 0; i < thArray.length; i++){ 
         inputData[thArray[i]]=tdArray[i];
    }
-   
-   //console.log(any2url('q',inputData));
    $.ajax({
                type: 'get',
                data : any2url('q',inputData),
@@ -1072,7 +1011,6 @@ function DeleteContentType(){
 	                var cells = x.find('th#col_user');
 	                $(cells, this).each(function () {
 	                    var d = $(this).val()||$(this).text();
-	                    // //console.log(d);
 	                    ret.push(d);
 	                });
 	                return ret;
@@ -1088,16 +1026,12 @@ function DeleteContentType(){
 	    for (i = 0; i < thArray.length; i++){ 
 	         inputData[thArray[i]]=tdArray[i];
 	    }
-	    
-	    //console.log(any2url('q',inputData));
 	    $.ajax({
 	                type: 'get',
 	                data : any2url('q',inputData),
 	                url: "user/edit",
 	                 success: function(data) {
-	                	 //console.log(data);
 	                     var parsed = JSON.parse(data);
-	                     //console.log(parsed.datas.uri);
 	                     window.location.href = parsed.datas.uri;
 	                },
 	                error: function(xhr, textStatus, thrownError) {
@@ -1118,7 +1052,6 @@ function DeleteContentType(){
                var cells = x.find('th#col_user');
                $(cells, this).each(function () {
                    var d = $(this).val()||$(this).text();
-                   // //console.log(d);
                    ret.push(d);
                });
                return ret;
@@ -1134,21 +1067,16 @@ function DeleteContentType(){
    for (i = 0; i < thArray.length; i++){ 
         inputData[thArray[i]]=tdArray[i];
    }
-   
-   //console.log(any2url('q',inputData));
    $.ajax({
                type: 'get',
                data : any2url('q',inputData),
                url: "delete/permission",
                 success: function(data) {
-                   // alert(data);
                    alert('permission deleted successfull');
-                   //console.log(data.status);
-                   //console.log(data.errors);
                },
                error: function(xhr, textStatus, thrownError) {
                   alert(thrownError);
-                   alert('Something went to wrong.Please Try again later...');
+                  alert('Something went to wrong.Please Try again later...');
                }
               
            });
@@ -1166,7 +1094,6 @@ function EditUserPermission(){
 	                var cells = x.find('th#col_user');
 	                $(cells, this).each(function () {
 	                    var d = $(this).val()||$(this).text();
-	                    // //console.log(d);
 	                    ret.push(d);
 	                });
 	                return ret;
@@ -1182,17 +1109,12 @@ function EditUserPermission(){
 	    for (i = 0; i < thArray.length; i++){ 
 	         inputData[thArray[i]]=tdArray[i];
 	    }
-	    //console.log('ici edit user perm');
-		
-	    //console.log(any2url('q',inputData));
 	    $.ajax({
 	                type: 'get',
 	                data : any2url('q',inputData),
 	                url: "permission/edit",
 	                 success: function(data) {
-	                	 //console.log(data);
 	                     var parsed = JSON.parse(data);
-	                     //console.log(parsed.datas.uri);
 	                     window.location.href = parsed.datas.uri;
 	                },
 	                error: function(xhr, textStatus, thrownError) {
@@ -1206,14 +1128,12 @@ function EditUserPermission(){
 
 
 function UpdatePackage(){
-	//console.log('updatePackage');
 	var thArray = $("#table_packages thead tr").map(function(index, elem) {
 		var ret = [];
 		var x = $(this);
 		var cells = x.find('th#col_package');
 		$(cells, this).each(function() {
 			var d = $(this).val() || $(this).text();
-			////console.log(d);
 			ret.push(d);
 		});
 		return ret;
@@ -1236,10 +1156,7 @@ function UpdatePackage(){
 		data : any2url('q', inputData),
 		url : "packages/composer",
 		success : function(data) {
-			// alert(data);
 			alert('package has been updated');
-			// //console.log(data.status);
-			// //console.log(data.errors);
 		},
 		error : function(xhr, textStatus, thrownError) {
 			alert(thrownError);
@@ -1251,8 +1168,7 @@ function UpdatePackage(){
 }
 
 function DumpAutoloadPackage() {
-	//console.log('dumpAutoloadPackage');
-	var thArray = $("#table_packages thead tr").map(function(index, elem) {
+		var thArray = $("#table_packages thead tr").map(function(index, elem) {
 		var ret = [];
 		var x = $(this);
 		var cells = x.find('th#col_package');
@@ -1281,10 +1197,7 @@ function DumpAutoloadPackage() {
 		data : any2url('q', inputData),
 		url : "packages/composer",
 		success : function(data) {
-			// alert(data);
 			alert('package has been refresh');
-			// //console.log(data.status);
-			// //console.log(data.errors);
 		},
 		error : function(xhr, textStatus, thrownError) {
 			alert(thrownError);
@@ -1301,14 +1214,12 @@ function removePackage(){
 }
 
 function InstallPackage(){
-	//console.log('InstallPackage');
-	var thArray = $("#table_packages thead tr").map(function(index, elem) {
+		var thArray = $("#table_packages thead tr").map(function(index, elem) {
 		var ret = [];
 		var x = $(this);
 		var cells = x.find('th#col_package');
 		$(cells, this).each(function() {
 			var d = $(this).val() || $(this).text();
-			////console.log(d);
 			ret.push(d);
 		});
 		return ret;
@@ -1331,10 +1242,7 @@ function InstallPackage(){
 		data : any2url('q', inputData),
 		url : "packages/composer",
 		success : function(data) {
-			// alert(data);
 			alert('package has been installed');
-			// //console.log(data.status);
-			// //console.log(data.errors);
 		},
 		error : function(xhr, textStatus, thrownError) {
 			alert(thrownError);
@@ -1348,8 +1256,6 @@ function InstallPackage(){
 
 
 function ArtisanCacheClear(){
-	//console.log('ArtisanCacheClear');
-	
 	var inputData = new Array();
 	inputData['function'] = 'artisan-cache-clear';
 	$.ajax({
@@ -1357,10 +1263,7 @@ function ArtisanCacheClear(){
 		data : any2url('q', inputData),
 		url : "packages/composer",
 		success : function(data) {
-			// alert(data);
 			alert('cache has been cleared');
-			// //console.log(data.status);
-			// //console.log(data.errors);
 		},
 		error : function(xhr, textStatus, thrownError) {
 			alert(thrownError);
@@ -1380,10 +1283,7 @@ function ArtisanDumpAutoload(){
 		data : any2url('q', inputData),
 		url : "packages/composer",
 		success : function(data) {
-			// alert(data);
 			alert('artisan dump autoload done');
-			// //console.log(data.status);
-			// //console.log(data.errors);
 		},
 		error : function(xhr, textStatus, thrownError) {
 			alert(thrownError);
@@ -1396,14 +1296,12 @@ function ArtisanDumpAutoload(){
 
 
 function ViewUser(){
-	//console.log('View user');
 	  var thArray = $("#table_users thead tr").map(function(index,elem) {
           var ret = [];
           var x = $(this);
           var cells = x.find('th#col_user');
           $(cells, this).each(function () {
               var d = $(this).val()||$(this).text();
-              // //console.log(d);
               ret.push(d);
           });
           return ret;
@@ -1419,15 +1317,12 @@ var inputData = new Array();
 for (i = 0; i < thArray.length; i++){ 
    inputData[thArray[i]]=tdArray[i];
 }
-//console.log(any2url('q',inputData));
 $.ajax({
           type: 'get',
           data : any2url('q',inputData),
           url: "user/view",
            success: function(data) {
-          //	 //console.log(data);
                var parsed = JSON.parse(data);
-               //console.log(parsed.datas.uri);
                window.location.href = parsed.datas.uri;
           },
           error: function(xhr, textStatus, thrownError) {
@@ -1442,21 +1337,15 @@ $.ajax({
 
 
 function EditUserProfile(){
-//	//console.log('user profile');
-//	//console.log( document.getElementById('user'));
 	id=document.getElementById('user').value;
 	var inputData = new Array();
 	inputData['id']=id;
-	//inputData['user']='test';
-	//console.log(any2url('q',inputData));
 	    $.ajax({
 	                type: 'get',
 	                data : any2url('q',inputData),
 	                url: "profile/edit",
 	                 success: function(data) {
-	                	 //console.log(data);
 	                    var parsed = JSON.parse(data);
-	                     //console.log(parsed.datas.uri);
 	                     window.location.href = parsed.datas.uri;
 	                },
 	                error: function(xhr, textStatus, thrownError) {
@@ -1475,8 +1364,7 @@ function ActivateUser(){
          var cells = x.find('th#col_user');
          $(cells, this).each(function () {
              var d = $(this).val()||$(this).text();
-             // //console.log(d);
-             ret.push(d);
+              ret.push(d);
          });
          return ret;
        });
@@ -1491,7 +1379,6 @@ function ActivateUser(){
 		for (i = 0; i < thArray.length; i++){ 
 		  inputData[thArray[i]]=tdArray[i];
 		}
-	//console.log(any2url('q',inputData));
 	    $.ajax({
 	                type: 'get',
 	                data : any2url('q',inputData),
@@ -1515,7 +1402,6 @@ function NotActivateUser(){
          var cells = x.find('th#col_user');
          $(cells, this).each(function () {
              var d = $(this).val()||$(this).text();
-             // //console.log(d);
              ret.push(d);
          });
          return ret;
@@ -1531,7 +1417,6 @@ function NotActivateUser(){
 		for (i = 0; i < thArray.length; i++){ 
 		  inputData[thArray[i]]=tdArray[i];
 		}
-	//console.log(any2url('q',inputData));
 	    $.ajax({
 	                type: 'get',
 	                data : any2url('q',inputData),
@@ -1557,7 +1442,6 @@ var thArray = $("#table_users thead tr").map(function(index,elem) {
               var cells = x.find('th#col_user');
               $(cells, this).each(function () {
                   var d = $(this).val()||$(this).text();
-                 // //console.log(d);
                   ret.push(d);
               });
               return ret;
@@ -1574,7 +1458,6 @@ var thArray = $("#table_users thead tr").map(function(index,elem) {
        inputData[thArray[i]]=tdArray[i];
   }
   
-  //console.log(any2url('q',inputData));
   $.ajax({
               type: 'get',
               data : any2url('q',inputData),
@@ -1582,7 +1465,6 @@ var thArray = $("#table_users thead tr").map(function(index,elem) {
               url: "role/edit",
                success: function(data) {
                    var parsed = JSON.parse(data);
-                   //console.log(parsed.datas.uri);
                    window.location.href = parsed.datas.uri;
               },
               error: function(xhr, textStatus, thrownError) {
@@ -1601,7 +1483,6 @@ function DeleteUserRole(){
 	              var cells = x.find('th#col_user');
 	              $(cells, this).each(function () {
 	                  var d = $(this).val()||$(this).text();
-	                 // //console.log(d);
 	                  ret.push(d);
 	              });
 	              return ret;
@@ -1618,18 +1499,13 @@ function DeleteUserRole(){
 	       inputData[thArray[i]]=tdArray[i];
 	  }
 	  
-	  //console.log(any2url('q',inputData));
 	  $.ajax({
 	              type: 'get',
 	              data : any2url('q',inputData),
 	              dateType:'json',
 	              url: "user/role/edit",
 	               success: function(data) {
-	                  // alert(data);
-	                 // alert('edit saved successfull');
-	                  //console.log(data);
 	                   var parsed = JSON.parse(data);
-	                   //console.log(parsed.datas.uri);
 	                   window.location.href = parsed.datas.uri;
 	              },
 	              error: function(xhr, textStatus, thrownError) {
@@ -1647,7 +1523,6 @@ function DeleteMessage(){
                 var cells = x.find('th#col_message');
                 $(cells, this).each(function () {
                     var d = $(this).val()||$(this).text();
-                    // //console.log(d);
                     ret.push(d);
                 });
                 return ret;
@@ -1663,18 +1538,13 @@ function DeleteMessage(){
     for (i = 0; i < thArray.length; i++){ 
          inputData[thArray[i]]=tdArray[i];
     }
-    
-    //console.log(any2url('q',inputData));
-    $.ajax({
+     $.ajax({
                 type: 'get',
                 data : any2url('q',inputData),
                 url: "/messages/delete",
                  success: function(data) {
-                    // alert(data);
                     alert('message deleted successfull');
-                    //console.log(data.status);
-                    //console.log(data.errors);
-                },
+                 },
                 error: function(xhr, textStatus, thrownError) {
                    alert(thrownError);
                     alert('Something went to wrong.Please Try again later...');
@@ -1694,7 +1564,6 @@ function DeleteMessage(){
                var cells = x.find('th#col_message');
                $(cells, this).each(function () {
                    var d = $(this).val()||$(this).text();
-                  // //console.log(d);
                    ret.push(d);
                });
                return ret;
@@ -1710,8 +1579,6 @@ function DeleteMessage(){
    for (i = 0; i < thArray.length; i++){ 
         inputData[thArray[i]]=tdArray[i];
    }
-   
-   //console.log(any2url('q',inputData));
    $.ajax({
                type: 'get',
                data : any2url('q',inputData),
@@ -1719,7 +1586,6 @@ function DeleteMessage(){
                url: "/messages/edit",
                 success: function(data) {
                     var parsed = JSON.parse(data);
-                    //console.log(parsed.datas.uri);
                     window.location.href = parsed.datas.uri;
                },
                error: function(xhr, textStatus, thrownError) {
@@ -1737,7 +1603,6 @@ function DeleteMessage(){
 	               var cells = x.find('th#col_forum');
 	               $(cells, this).each(function () {
 	                   var d = $(this).val()||$(this).text();
-	                   // //console.log(d);
 	                   ret.push(d);
 	               });
 	               return ret;
@@ -1753,15 +1618,11 @@ function DeleteMessage(){
 	   for (i = 0; i < thArray.length; i++){ 
 	        inputData[thArray[i]]=tdArray[i];
 	   }
-	   
-	   //console.log(any2url('q',inputData));
 	   $.ajax({
 	               type: 'get',
 	               data : any2url('q',inputData),
 	               url: "/forum/delete",
 	                success: function(data) {
-	                   // alert(data);
-	                 
 	                   var parsed = JSON.parse(data);
 	                   if(parsed['success']==false){
 	                	   alert(parsed['errors']['reason']);
@@ -1788,7 +1649,6 @@ function DeleteMessage(){
 		               var cells = x.find('th#col_topic');
 		               $(cells, this).each(function () {
 		                   var d = $(this).val()||$(this).text();
-		                   // //console.log(d);
 		                   ret.push(d);
 		               });
 		               return ret;
@@ -1805,14 +1665,11 @@ function DeleteMessage(){
 		        inputData[thArray[i]]=tdArray[i];
 		   }
 		   
-		   //console.log(any2url('q',inputData));
 		   $.ajax({
 		               type: 'get',
 		               data : any2url('q',inputData),
 		               url: "/forum/topic/delete",
 		                success: function(data) {
-		                   // alert(data);
-		                 
 		                   var parsed = JSON.parse(data);
 		                   if(parsed['success']==false){
 		                	   alert(parsed['errors']['reason']);
@@ -1858,19 +1715,13 @@ function DeleteMessage(){
 		    for (i = 0; i < thArray.length; i++){ 
 		         inputData[thArray[i]]=tdArray[i];
 		    }
-		    
-		    //console.log(any2url('q',inputData));
 		    $.ajax({
 		                type: 'get',
 		                data : any2url('q',inputData),
 		                dateType:'json',
 		                url: "content/translate",
 		                 success: function(data) {
-		                    // alert(data);
-		                   // alert('edit saved successfull');
-		                    //console.log(data);
 		                     var parsed = JSON.parse(data);
-		                     //console.log(parsed.datas.uri);
 		                     window.location.href = parsed.datas.uri;
 		                },
 		                error: function(xhr, textStatus, thrownError) {
