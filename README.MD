@@ -31,8 +31,8 @@ The next required step is to add the service provider and alias to config/app.ph
    Then add Alias to config/app.php :
     	
 ```    	
-		'Form'=> 'Illuminate\Html\FormFacade',
-		'HTML'=> 'Illuminate\Html\HtmlFacade'
+		'Form'=> 'Illuminate\Html\FormFacade::class',
+		'HTML'=> 'Illuminate\Html\HtmlFacade::class',
     	
 ```
 
