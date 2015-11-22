@@ -17,7 +17,7 @@ namespace Groovel\Cmsgroovel;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Application;
-//use Facades\groovel\cmsgroovel\Cmsgroovel;
+
 
 class CmsgroovelServiceProvider extends ServiceProvider {
 
@@ -38,21 +38,7 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 		$this->mergeConfigFrom(
 				__DIR__.'/Http/groovel.php', 'groovel'
 		);
-		//$this->package('groovel/cmsgroovel');
-		// Get namespace
-		//$nameSpace = $this->app->getNamespace();
-		// Routes
-		/*$this->app->router->group(['namespace' => $nameSpace . 'Http\Controllers'], function()
-		{
-			require  __DIR__.'/../../routes.php';
-		});*/
-		
-		
-		/*$this->publishes([
-				__DIR__.'/packages/groovel/cmsgroovel' => base_path('resources')
-		]);*/
-		
-		// Get namespace
+			// Get namespace
 		$nameSpace = $this->app->getNamespace();
 		
 		
@@ -72,21 +58,13 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 				__DIR__.'/../public/packages' => base_path('public/packages'),
 		]);
 		
-		
-		
-		
-		
-		
-		
-		
+		$this->publishes([
+				__DIR__.'/../templates' => base_path('templates'),
+		]);
 		
 		include __DIR__.'/Http/routes.php';
 		include __DIR__.'/Http/groovel.php';
-		//\Log::info(__DIR__.'/../views');
 		$this->loadViewsFrom(__DIR__.'/../../views', 'cmsgroovel');
-		/*$this->publishes([
-				__DIR__.'/../../views' => base_path('resources/views/vendor/cmsgroovel'),
-		]);*/
 	}
 
 	/**
@@ -100,9 +78,7 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 	    {
 	        return new Cmsgroovel;
 	    });
-	/*	$this->mergeConfigFrom(
-				__DIR__.'/Http/groovel.php', 'cmsgroovel'
-		);*/
+	
 	}
 
 	/**

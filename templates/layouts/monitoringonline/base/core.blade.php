@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        @include('includes.head')
+        @include('monitoringonline.includes.head')
     </head>
 <body>
     <!-- menubar -->
     <header>
     <div class="container">
-        @include('includes.header')
+        @include('monitoringonline.includes.header')
        </div>
     </header><!-- /header -->
  
@@ -72,13 +72,13 @@
  
     <!-- footer -->
     <footer>
-        @include('includes.footer')
+        @include('monitoringonline.includes.footer')
     </footer>
 
   
-  {{ HTML::script('styles/vendors/morris/morris.min.js')}}
+  {!! HTML::script('monitoringonline/styles/vendors/morris/morris.min.js')!!}
     
-    {{ HTML::script('styles/js/custom.js')}}
-    {{ HTML::script('styles/js/stats.js')}}
+    {!! HTML::script('monitoringonline/styles/js/custom.js')!!}
+    {!! HTML::script('monitoringonline/styles/js/stats.js')!!}
 </body>
 </html>

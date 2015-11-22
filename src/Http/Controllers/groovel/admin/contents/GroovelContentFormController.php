@@ -187,9 +187,11 @@ class GroovelContentFormController extends GroovelFormController {
   
     private function viewCode(){
      	$input =  \Input::get('q');
-    	$content=$this->contentManager->editContent($input['id'],$input['translation_id']);
+     	$content=array('nothing to show');
+     	if($input['translation_id']!=null){
+    		$content=$this->contentManager->editContent($input['id'],$input['translation_id']);
+     	}
     	return $this->jsonResponse($content);
-    	
     }
     
     
@@ -339,8 +341,9 @@ class GroovelContentFormController extends GroovelFormController {
 		if($id!= null){
 			$input['url']=$content['url'];
 		}
+		$type=$this->contentTypeManager->findAllContentTypeByName($content['contentType']);
 		//mapping of data and type and widget
-		$contentItems=$this->contentTypeManager->findContentTypeById($content['contentType']);
+		$contentItems=$this->contentTypeManager->findContentTypeById($type->id);
 		$mapping=array();
 		$i=0;
 		foreach ($contentItems as $items) {
@@ -491,7 +494,9 @@ class GroovelContentFormController extends GroovelFormController {
 		$input =  \Input::get('q');
 		$content=$this->contentManager->editContent($input['id'],$input['translation_id']);
 		//mapping of data and type and widget
-		$contentItems=$this->contentTypeManager->findContentTypeById($content['contentType']);
+		$type=$this->contentTypeManager->findAllContentTypeByName($content['contentType']);
+		
+		$contentItems=$this->contentTypeManager->findContentTypeById($type->id);
 		$mapping=array();
 		$i=0;
 		foreach ($contentItems as $items) {

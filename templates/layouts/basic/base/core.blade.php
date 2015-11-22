@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        @include('includes.head')
+        @include('basic.includes.head')
     </head>
 <body>
     <!-- menubar -->
     <header>
-        @include('includes.header')
+        @include('basic.includes.header')
     </header><!-- /header -->
  
     <!-- content -->
@@ -16,7 +16,7 @@
  
     <!-- footer -->
     <footer>
-        @include('includes.footer')
+        @include('basic.includes.footer')
     </footer>
 </body>
 </html>

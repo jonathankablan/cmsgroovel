@@ -45,12 +45,8 @@ class GroovelTemplateManagerController extends GroovelController {
 	
 	
 	public function listAllTemplates(){
-		$dir_vendor= base_path () . '/vendor/groovel/cmsgroovel/templates/layouts/*';
-		$dir_workbench=base_path () . '/packages/groovel/cmsgroovel/templates/layouts/*';
+		$dir_vendor= base_path () . '/templates/layouts/*';
 		$template_directories = glob ( $dir_vendor, GLOB_ONLYDIR );
-		if(empty($template_directories)){
-			$template_directories=glob (	$dir_workbench, GLOB_ONLYDIR );
-		}
 		$template_names=array();
 		foreach ( $template_directories as $templatenamedir ) {
 			$exp = explode ( "/", $templatenamedir );
@@ -107,7 +103,7 @@ class GroovelTemplateManagerController extends GroovelController {
 					if(\Input::get('controller')!=null){
 						$this->artisanCreateController(\Input::get('controller'));//create a controller
 					}
-					$this-> createRoute(\Input::get('url'),\Input::get('template'),\Input::get('controller'),'index','op_retrieve','base.core');
+					$this-> createRoute(\Input::get('url'),\Input::get('template'),\Input::get('controller'),'index','op_retrieve',\Input::get('template').'.'.'base.core');
 					return $this->jsonResponse(array('done'),false,true,false);
 				}else if($validation2->fails()){
 					$validation2->getMessageBag()->add('template', 'please check errors');
@@ -139,20 +135,19 @@ class GroovelTemplateManagerController extends GroovelController {
 	}
 	
 	function copyBladeTemplatesToApp($templateName){
-		$dir_workbench_base=base_path () . '/packages/groovel/cmsgroovel/templates/layouts/'.$templateName.'/base';
-		$dir_workbench_includes=base_path () . '/packages/groovel/cmsgroovel/templates/layouts/'.$templateName.'/includes';
-		$dir_workbench_pages=base_path () . '/packages/groovel/cmsgroovel/templates/layouts/'.$templateName.'/pages';
-		$dst_base=base_path () . '/resources/views/base';
-		$dst_includes=base_path () . '/resources/views/includes';
-		$dst_pages=base_path () . '/resources/views/pages';
-		$dir_workbench_styles=base_path () . '/packages/groovel/cmsgroovel/templates/layouts/'.$templateName.'/styles';
+		$dir_workbench_base=base_path () . '/templates/layouts/'.$templateName.'/base';
+		$dir_workbench_includes=base_path () . '/templates/layouts/'.$templateName.'/includes';
+		$dir_workbench_pages=base_path () . '/templates/layouts/'.$templateName.'/pages';
+		$dst_base=base_path () . '/resources/views/'.$templateName.'/base';
+		$dst_includes=base_path () . '/resources/views/'.$templateName.'/includes';
+		$dst_pages=base_path () . '/resources/views/'.$templateName.'/pages';
+		$dir_workbench_styles=base_path () . '/templates/layouts/'.$templateName.'/styles';
 		$pub=public_path() ;
-	
 	
 		$this->recurse_copy($dir_workbench_base, $dst_base);
 		$this->recurse_copy($dir_workbench_includes, $dst_includes);
 		$this->recurse_copy($dir_workbench_pages, $dst_pages);
-		$this->recurse_copy($dir_workbench_styles, $pub.'/styles');
+		$this->recurse_copy($dir_workbench_styles, $pub.'/'.$templateName.'/styles');
 	
 	}
 	

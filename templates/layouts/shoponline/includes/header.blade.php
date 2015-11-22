@@ -1,7 +1,7 @@
          <div class="line">
             <div class="box">
                <div class="s-6 l-2"> 
-                   {{ HTML::image('styles/img/logo.png') }}
+                   {!! HTML::image('shoponline/styles/img/logo.png') !!}
                </div>
                <div class="s-12 l-8 right">
                   <div class="margin">

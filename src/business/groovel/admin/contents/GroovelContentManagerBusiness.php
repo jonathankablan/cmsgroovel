@@ -80,7 +80,7 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 		$contentTranslation= $this->contentTranslationDao->find($contentTranslationid);
 		$content= $this->contentDao->find($contentTranslation->refcontentid);
 		$blob=$this->deserialize($contentTranslation['content']);
-		$res=array('title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'url'=>$content['url'],'groovelDescription'=>$contentTranslation->grooveldescription,'contentType'=>$content->type_id,'content'=>$blob,'ispublish'=>$content->ispublish,'weight'=>$content->weight);
+		$res=array('title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'url'=>$content['url'],'groovelDescription'=>$contentTranslation->grooveldescription,'contentType'=>$content->type->name,'content'=>$blob,'ispublish'=>$content->ispublish,'weight'=>$content->weight);
 		return $res;
 	}
 
