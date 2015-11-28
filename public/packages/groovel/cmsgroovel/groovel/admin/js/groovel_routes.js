@@ -1,4 +1,23 @@
-  function DeleteRoute(){
+
+normalMode = function() {
+	var normalFieldMode=['uri','name','view','type','subtype','activate_route'];
+	var expertFieldMode=['controller','method','before_filter','after_filter','audit_url'];
+    for(i = 0; i < expertFieldMode.length; i++){
+        document.getElementById(expertFieldMode[i]).style.display = 'none';
+	 }
+}
+
+expertMode = function() {
+	var normalFieldMode=['uri','name','view','type','subtype','activate_route'];
+	var expertFieldMode=['controller','method','before_filter','after_filter','audit_url'];
+    for(i = 0; i < expertFieldMode.length; i++){
+        document.getElementById(expertFieldMode[i]).style.display = 'block';
+	 }
+}
+
+
+
+function DeleteRoute(){
     var thArray = $("#table_routes thead tr").map(function(index,elem) {
                 var ret = [];
                 var x = $(this);

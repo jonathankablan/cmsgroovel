@@ -55,26 +55,15 @@
 											     		</select>
 										     		</div>
 									     		@endif
-												<div class="form-group form-inline">
+												<div class="form-group form-inline"  id="controller" data-toggle="tooltip" title="the setting to be called and doing stuffs before rendering your page, optional field,leave it blank otherwhise">
 													{!! Form::label('controller', 'controller').Form::text('controller', Session::get('template')['controller'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:50px')) !!}
 												</div>
-												<div class="form-group form-inline">
+												<div class="form-group form-inline" id="url" data-toggle="tooltip" title="url of your page">
 													{!! Form::label('url', 'url',array('class'=>'required')).Form::text('url', Session::get('template')['url'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:80px')) !!}
 												</div>
 												
 								  		</div>
-							   		<!-- div class="panel-body">
-												{!! Form::open(array('id'=>'template_form','url' => 'admin/template/add', 'method' => 'POST', 'class' => 'form-horizontal well ')) !!}
-										    
-												<div class="form-group form-inline">
-													{!! Form::label('vendor', 'vendor',array('class'=>'required')).Form::text('vendor', Session::get('template')['vendor'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:50px')) !!}
-												</div>
-												<div class="form-group form-inline">
-													{!! Form::label('package', 'package',array('class'=>'required')).Form::text('package', Session::get('template')['package'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:40px')) !!}
-												</div>
-												 <input type="submit" id="submitForm" value="Publish"  class="btn btn-default" data-dismiss="modal" style='margin-left:600px'/>
-									</div>
-								 </div>-->
+							   		
 								 <div class="modal-footer">
 								     <input type="submit" id="submitForm" value="Create"  class="btn btn-default" data-dismiss="modal" style='margin-left:600px'/>
 					 				{!! Form::close() !!}
@@ -89,6 +78,10 @@
 		 	 	</div>
 	 </div>
 <script type="text/javascript">
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
 $("#submitForm").click(function (event) {
 	form=$('#template_form').serialize();
 	 

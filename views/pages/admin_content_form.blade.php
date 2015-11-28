@@ -47,20 +47,20 @@
 							   <div style="margin-top: 30px; margin-bottom: 15px;width: 100%; height: 60px; background-color: rgb(152, 251, 152)">
 							   <p style="margin-left: 350px;">General settings</p>
 							   </div>
-				            	<div class="form-group form-inline">
+				            	<div class="form-group form-inline" data-toggle="tooltip" title="the title of your content">
 				                	{!! Form::label('Title', 'Title', array('class' => 'col-md-1 control-label required','style'=>'margin-left: auto')).Form::text('title', Session::get('content_edit')['title'],$attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:146px')) !!}
 				            	</div>
 				               
 				        
-				                <div class="form-group form-inline">
+				                <div class="form-group form-inline" data-toggle="tooltip" title="the url to access to your content">
 				                	{!! Form::label('Url', 'url', array('class' => 'col-md-3 control-label required')).Form::text('url', Session::get('content_edit')['url'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
 				            	</div>
 				            	
-				            	<div class="form-group form-inline">
+				            	<div class="form-group form-inline" data-toggle="tooltip" title="the tag is the word that will be used in the search engine to find the content">
 				                	{!! Form::label('tag', 'tag', array('class' => 'col-md-2 control-label required','style'=>'margin-right:75px')).Form::text('groovelDescription', Session::get('content_edit')['groovelDescription'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
 				            	</div>
 				            	
-				            	<div class="form-group form-inline">
+				            	<div class="form-group form-inline" title="the langage of the content will be used in accordance with your extension website for exemple if your site has for extension.fr the contents with langage france will be shown">
 				            			   
 							     		@if($langages= Session::get('langages'))
 								        	<?php $lang=$langages[Session::get('content_edit')['lang']];?>
@@ -127,9 +127,9 @@
 							   <p style="margin-left: 350px;">Optional settings</p>
 							   </div>
 						         <div class="form-group form-inline" id="row_content" style="margin-top:50px;margin-bottom:50px">
-							         {!! Form::label('isPublish','Publish',array('style'=>'margin-right: 20px;margin-left: 250px')).Form::checkbox('isPublish', Input::old('isPublish'),Session::get('content_edit')['ispublish'], array('class'=>'form-control','placeholder' => 'isPublish')) !!}
+							         {!! Form::label('isPublish','Publish',array('style'=>'margin-right: 20px;margin-left: 250px')).Form::checkbox('isPublish', Input::old('isPublish'),Session::get('content_edit')['ispublish'], array('data-toggle'=>'tooltip',"title"=>"to publish your content you have to check the box",'class'=>'form-control','placeholder' => 'isPublish')) !!}
 							  	 	     
-								 	 {!! Form::label('weight','weight of your content',array('style'=>'margin-right: 20px;margin-left: 150px')).Form::text('weight',Session::get('content_edit')['weight'], array('class'=>'form-control','placeholder' => 'weight')) !!}
+								 	 {!! Form::label('weight','weight of your content',array('style'=>'margin-right: 20px;margin-left: 150px')).Form::text('weight',Session::get('content_edit')['weight'], array('data-toggle'=>'tooltip',"title"=>"the biggest value will be set,it means this content will be shown first",'class'=>'form-control','placeholder' => 'weight')) !!}
 					
 							
 								 </div>
@@ -154,7 +154,12 @@
 				</div>	
 	</div>
 <script>
-	               
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+						                     		
+
 $(document).ready(function() {
 	fileEvents();
 	 $('#modal').modal('show');

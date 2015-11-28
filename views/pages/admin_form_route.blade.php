@@ -21,26 +21,26 @@
 				       <div id='light'></div>
 						<div id='fade'></div>
 			     <div id='form-modal' class="modal-body" >
+			     			<div class="btn-group" role="group" aria-label="..." style='margin-left:400px;margin-bottom:30px'>
+								  <button type="button" class="btn btn-primary" onclick="normalMode();">Normal Mode(for beginners)</button>
+								  <button type="button" class="btn btn-primary" onclick="expertMode();">Expert Mode(for professionals)</button>
+							</div>
 							{!!Form::open(array('id'=>'route_form','url' => 'admin/routes/add', 'method' => 'post'))!!}
-				             <!--  <div class="form-group form-inline">
-				                {!! Form::label('domain', 'domain').Form::text('domain', Input::old('domain'), array('class'=>'form-control','placeholder' => 'awesome@awesome.com')) !!}
-				              </div> -->
-				  
 				               {!! Form::hidden('domain','', array('id' => 'id')) !!}
 				  
-				              <div class="form-group form-inline">
+				              <div class="form-group form-inline" id="uri" data-toggle="tooltip" title="the url which you call your page example test and to get your page you call it http://yourserver//test">
 				                {!! Form::label('uri', 'uri',array('class'=>'required','style'=>'margin-right:80px')).Form::text('uri', Input::old('uri'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				                <div class="form-group form-inline">
+				                <div class="form-group form-inline" id="name" data-toggle="tooltip" title="the name of your route">
 				                {!! Form::label('name', 'name',array('class'=>'required','style'=>'margin-right:60px')).Form::text('name', Input::old('name'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				                <div class="form-group form-inline">
-				                {!! Form::label('controller', 'controller',array('style'=>'margin-right:50px')).Form::text('controller', Input::old('controller'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'awesome@awesome.com')) !!}
+				                <div class="form-group form-inline" id="controller" data-toggle="tooltip" title="specific class to give if you want develop a specific feature before to render the page">
+				                {!! Form::label('controller', 'controller',array('style'=>'margin-right:50px')).Form::text('controller', Input::old('controller'), array('id'=>'controller','class'=>'form-control','style'=>'width:450px','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				                <div class="form-group form-inline">
+				                <div class="form-group form-inline" id="method" data-toggle="tooltip" title="method name which will be called and which will do some stuffs before to render your page">
 				                {!! Form::label('method', 'method',array('style'=>'margin-right:60px')).Form::text('method', Input::old('method'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				                <div class="form-group form-inline">
+				                <div class="form-group form-inline" id="action" data-toggle="tooltip" title="action is when you want to access to a page is it for doing some update or save data or..action will be used to set some permissions rules">
 				                 {!!Form::label('action', 'action',array('style'=>'margin-right:70px')).Form::select('action[]',
 										        array(
 										         'op_retrieve' => 'retrieve',
@@ -53,19 +53,19 @@
 										        );
 									    	!!}
 				                </div>
-				                <div class="form-group form-inline">
+				                <div class="form-group form-inline" id="view" data-toggle="tooltip" title="the name of your view (page name) that will be called">
 				                {!! Form::label('view', 'view',array('style'=>'margin-right:80px')).Form::text('view', Input::old('view'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				                <div class="form-group form-inline">
+				                <div class="form-group form-inline" id="before_filter" data-toggle="tooltip" title="filter settings name that will be called before to render data to a view">
 				                {!! Form::label('before_filter', 'before_filter',array('style'=>'margin-right:30px')).Form::text('before_filter', Input::old('before_filter'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				                <div class="form-group form-inline">
+				                <div class="form-group form-inline" id="after_filter" data-toggle="tooltip" title="filter settings name that will be called after data rendered in view">
 				                {!! Form::label('after_filter', 'after_filter',array('style'=>'margin-right:40px')).Form::text('after_filter', Input::old('after_filter'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				               <div class="form-group form-inline">
+				               <div class="form-group form-inline"  id="type" data-toggle="tooltip" title="name of your application it is optional but it will be easy to find your route if you have got a lot of routes">
 				                {!! Form::label('type', 'type',array('style'=>'margin-right:75px')).Form::text('type', Input::old('type'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				              <div class="form-group form-inline">
+				              <div class="form-group form-inline" id="subtype" data-toggle="tooltip" title="what type of content is your page is it a view,some contents, a route.., it will be used to set permissions rules">
 				               {!!Form::label('subtype', 'subtype',array('style'=>'margin-right:35px','class'=>'required'))!!}  
 								<select name="subtype[]" class='form-control' style='width:450px'>
 								    @foreach ($subtypes as $subtype)
@@ -73,14 +73,14 @@
 									@endforeach
 								</select>
 				              </div>
-				               <div class="form-group form-inline">
+				               <div class="form-group form-inline" id="audit_url" data-toggle="tooltip" title="if you want some statistics on access this uri enable it">
 				                {!! Form::label('audit url', 'audit_url',array('style'=>'margin-right:40px'))!!}
 				               		<select name="audit_tracking_url_enable"  class='form-control'>
 										<option value='0'>disabled</option>
 										<option value='1'>enabled</option>
 									</select>
 								</div>
-								 <div class="form-group form-inline">
+								 <div class="form-group form-inline" id="activate_route" data-toggle="tooltip" title="enable it to access to your page by this uri">
 				                {!! Form::label('activate_route', 'activate_route',array('style'=>'margin-right:5px'))!!}
 				               		<select name="activate_route"  class='form-control'>
 										<option value='0'>disabled</option>
@@ -105,6 +105,17 @@
   
  	</div>
 <script type="text/javascript">
+
+
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function() { 
+	normalMode();
+});
+
 $(document).ready(function() { 
 	 $('#modal').modal('show');
 });
@@ -177,6 +188,12 @@ $("#submitForm").click(function (event) {
 });
 </script>
 <style>
+								    
+#hidden {
+    visibility: hidden;
+    height: 0;
+}
+
 #fade{
     display: none;
     position: fixed;
