@@ -7,23 +7,22 @@
 
     <title>Dashboard Groovel</title>
 
-    <!-- Bootstrap core CSS -->
-    <!--<link href="../../../../../public/theme-admin/css/bootstrap.min.css" rel="stylesheet">-->
-
-    <!-- Custom styles for this template -->
-    <!--<link href="../../../../../public/theme-admin/css/dashboard.css" rel="stylesheet">-->
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <link href="./public/theme-admin/css/bootstrap.min.css" rel="stylesheet">
-    <script src="./assets/js/docs.min.js"></script>
-   <link href="./public/theme-admin/css/dashboard.css" rel="stylesheet">-->
-
     {!!HTML::style('packages/groovel/cmsgroovel/bootstrap/css/bootstrap.min.css')!!}
     {!!HTML::style('packages/groovel/cmsgroovel/groovel/files/css/fileselect.css')!!}
     {!!HTML::style('packages/groovel/cmsgroovel/groovel/admin/css/dashboard.css')!!}
     {!!HTML::style('packages/groovel/cmsgroovel/groovel/admin/css/userprofile-styles.css')!!}
     {!! HTML::script('packages/groovel/cmsgroovel/jquery/js/jquery-1.11.1.min.js') !!}
     {!! HTML::script('packages/groovel/cmsgroovel/groovel/files/js/tools-files.js') !!}
+    
     {!! HTML::script('packages/groovel/cmsgroovel/groovel/admin/js/groovel_functions.js') !!}
+    {!! HTML::script('packages/groovel/cmsgroovel/groovel/admin/js/groovel_contents.js') !!}
+    {!! HTML::script('packages/groovel/cmsgroovel/groovel/admin/js/groovel_forum.js') !!}
+    {!! HTML::script('packages/groovel/cmsgroovel/groovel/admin/js/groovel_langages.js') !!}
+    {!! HTML::script('packages/groovel/cmsgroovel/groovel/admin/js/groovel_packages.js') !!}
+    {!! HTML::script('packages/groovel/cmsgroovel/groovel/admin/js/groovel_permissions.js') !!}
+    {!! HTML::script('packages/groovel/cmsgroovel/groovel/admin/js/groovel_routes.js') !!}
+    {!! HTML::script('packages/groovel/cmsgroovel/groovel/admin/js/groovel_users.js') !!}
+     
     {!! HTML::script('packages/groovel/cmsgroovel/bootstrap/js/bootstrap.js') !!}
     {!! HTML::script('packages/groovel/cmsgroovel/tinymce/tinymce.min.js') !!}
     {!! HTML::script('packages/groovel/cmsgroovel/groovel/editor-tinymce-custom/js/editor-tinymce.js') !!}
@@ -36,19 +35,8 @@
     {!!HTML::style('packages/groovel/cmsgroovel/jqplot/css/jquery.jqplot.css')!!}
      {!! HTML::script('packages/groovel/cmsgroovel/jqplot/js/plugins/jqplot.dateAxisRenderer.min.js')!!}
       
- {!! HTML::script('packages/groovel/cmsgroovel/groovel/browser/ajax.js') !!}
-{!! HTML::script('packages/groovel/cmsgroovel/groovel/browser/browser.js') !!}
-{!!HTML::style('packages/groovel/cmsgroovel/groovel/browser/styles.css')!!}
- 
-      <!-- upload file -->
-      <!-- {{ HTML::script('packages/jQueryFileUpload/js/vendor/jquery.ui.widget.js') }}
-      {{ HTML::script('packages/jQueryFileUpload/js/jquery.iframe-transport.js') }}
-      {{ HTML::script('packages/jQueryFileUpload/js/jquery.fileupload.js') }}-->
-      
- 
- 
-    <!-- {{ HTML::script('packages/groovel/admin/js/tinymce/tiny_mce_popup.js')}}-->
-   <!-- <script>tinymce.init({selector:'editor1'});</script>-->
-    
-    
-  <!--  <script>CKEDITOR.replace( 'editorHTML', {   filebrowserUploadUrl: '/groovel/browser.php'});</script>-->
+	{!! HTML::script('packages/groovel/cmsgroovel/groovel/browser/ajax.js') !!}
+	{!! HTML::script('packages/groovel/cmsgroovel/groovel/browser/browser.js') !!}
+	{!!HTML::style('packages/groovel/cmsgroovel/groovel/browser/styles.css')!!}
+	 
+  
