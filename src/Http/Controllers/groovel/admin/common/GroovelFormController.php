@@ -21,7 +21,6 @@ use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\antispam\GroovelAntiSpamCo
 abstract class GroovelFormController extends GroovelAntiSpamController  {
 
 	public function validateForm($params){
-		\Log::info('validate');
 		if (!isset($_POST['leave_blank']) || $_POST['leave_blank']!="") {
 			sleep(rand(2, 5)); // delay spammers a bit
 			header("HTTP/1.0 403 Forbidden");
