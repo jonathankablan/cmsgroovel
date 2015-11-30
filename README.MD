@@ -35,7 +35,18 @@ The next required step is to add the service provider and alias to config/app.ph
 		'HTML'=> Illuminate\Html\HtmlFacade::class,
     	
 ```
+###Config the authentification in config/auth.php#####
+```
+ 'model' => App\User::class,
+ 'table' => 'users',
+ 'password' => [
+        'email' => 'cmsgroovel.pages.login_reminders',
+        'table' => 'password_reminders',
+        'expire' => 60,
+    ],
 
+
+```
 ###Config the database#####
 add in file database.php
 ``` 

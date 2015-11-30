@@ -21,37 +21,23 @@ use Monolog\Logger;
 use Groovel\Cmsgroovel\business\groovel\admin\users\GroovelUserManagerBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\users\GroovelUserManagerBusinessInterface;
 use Groovel\Cmsgroovel\business\groovel\admin\configuration\GroovelConfigurationBusinessInterface;
-
+use Groovel\Cmsgroovel\business\groovel\admin\configuration\GroovelConfigurationBusiness;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\View\Factory;
+use Illuminate\Mail\Message;
 
 class RemindersController extends GroovelFormController {
  
 	protected $configManager;
 
-	public function __construct( \GroovelConfigurationBusinessInterface $configManager)
+	public function __construct( GroovelConfigurationBusinessInterface $configManager)
 	{
 		$this->configManager=$configManager;
 		
 	}
 	
 	public function validateForm($params){
-		$referer=null;
-		if($_SERVER['SERVER_NAME']=='localhost'){
-			$referer='http://'.$_SERVER['SERVER_NAME'].'/admin/auth/login/remind/form';
-		}else{
-			$referer='http://'.$_SERVER['SERVER_NAME'].'/admin/auth/login/remind/form';
-		}
-		if(!parent::checkRefererStatus($referer)){
-			sleep(rand(2, 5)); // delay spammers a bit
-			header("HTTP/1.0 403 Forbidden");
-			exit;
-		}
-		parent::checkToken();
-		if(!parent::checkPOSTStatus()){
-			sleep(rand(2, 5)); // delay spammers a bit
-			header("HTTP/1.0 403 Forbidden");
-			exit;
-		}
-		
 		if(!$this->configManager->isEmailEnable()){
 			\Config::set('mail.pretend',1);
 		}
@@ -69,18 +55,18 @@ class RemindersController extends GroovelFormController {
 	}
 	
 	public function postRemind(){
-    	$response = \Password::remind(\Input::only('email'), function($message)
-	    {
-	      $message->subject('Password forgotten.');
+	    $response = Password::sendResetLink(\Input::only('email'), function (Message $message) {
+	    	$message->subject('Password forgotten.');
 	    });
-	    switch ($response)
-	    {
-	        case \Password::INVALID_USER:
-	            return \Redirect::back()->with('error', \Lang::get($response))->withInput();
-	 
-	        case \Password::REMINDER_SENT:
-	         return \Redirect::back()->with('status', \Lang::get($response))->withInput();
-	    }
+	    
+	    	switch ($response) {
+	    		case Password::RESET_LINK_SENT:
+	    			return redirect()->back()->with('status', trans($response));
+	    
+	    		case Password::INVALID_USER:
+	    			return redirect()->back()->with('error', trans($response));
+	    	}
+	    
 	}
 	
 	/**

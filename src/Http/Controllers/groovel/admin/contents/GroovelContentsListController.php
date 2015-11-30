@@ -37,11 +37,11 @@ class GroovelContentsListController extends GroovelController {
 	//load all contents into a view
 	public function loadContents($site_extension){
 		$lang=null;
-		if($site_extension==='com'){
+		if($site_extension=='com'){
 			$lang='US';
-		}else if($site_extension==='fr'){
+		}else if($site_extension=='fr'){
 			$lang='FR';
-		}else if($site_extension==='uk'){
+		}else if($site_extension=='uk'){
 			$lang='GB';
 		}
 		return $this->contentManager->paginateFullContentDeserialize($lang);
