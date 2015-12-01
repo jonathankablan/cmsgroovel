@@ -187,8 +187,8 @@ class GroovelRoutesFormController extends GroovelFormController {
 				'activate_route'=>$routegroovel->activate_route
 		);
 		$subtypes=$this->routeBusiness->getSubtypeList();
-		\Session::flash('route_edit', $route);
-		\Session::flash('subtypes', $subtypes);
+		\Session::put('route_edit', $route);
+		\Session::put('subtypes', $subtypes);
 		$uri=array();
 		$uri['uri']= url('admin/routes/editform', $parameters = array(), $secure = null);
 		return $this->jsonResponse($uri);
