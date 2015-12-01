@@ -45,7 +45,7 @@ class GroovelUserRoleFormController extends GroovelFormController {
 		{
 			$options[$role->role] = $role->role;
 		}
-		\Session::flash('roles', $options);
+		\Session::put('roles', $options);
 	}
 	
 	public function init(){
@@ -139,7 +139,6 @@ class GroovelUserRoleFormController extends GroovelFormController {
   
    private function updateUserRole(){
    		$input =  \Input::all();
-   		\Log::info($input);
    		$this->userRoleManager->updateUserRole($input['id'],$input['role']);
    }
 
@@ -157,7 +156,7 @@ class GroovelUserRoleFormController extends GroovelFormController {
 	    }
 	    $user['activate']=$default_val;
 	    $user['role']= $user_role->role['role'];
-	   \Session::flash('user_role', $user);
+	   \Session::put('user_role', $user);
 		$uri=array();
 		$uri['uri']= url('admin/user/role/editform', $parameters = array(), $secure = null);
 		return $this->jsonResponse($uri);

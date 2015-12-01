@@ -389,7 +389,7 @@ class GroovelContentFormController extends GroovelFormController {
     	}
     	
    		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'no','translation_id'=>$input['translation_id'],'title'=>$content['title'],'url'=>$input['url'],'groovelDescription'=>$content['groovelDescription'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight']);
-   		\Session::flash('content_edit', $ct);
+   		\Session::put('content_edit', $ct);
     	
     	$countries=$this->contentManager->getAllCountries();
     	$lang=array();
@@ -399,7 +399,7 @@ class GroovelContentFormController extends GroovelFormController {
     			$lang[$country['code']]=$country['name_en'];
     		}
     	}
-    	\Session::flash('langages', $lang);
+    	\Session::put('langages', $lang);
         $uri=array();
  		$uri['uri']= url('admin/content/editform', $parameters = array(), $secure = null);
  		return $this->jsonResponse($uri);

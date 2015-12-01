@@ -184,8 +184,8 @@ class GroovelUserPermissionFormController extends GroovelFormController {
     		$systems[$content_type->name] = $content_type->name;
     	}
     	
-    	\Session::flash('system_types', $systems);
-    	\Session::flash('content_types', $options);
+    	\Session::put('system_types', $systems);
+    	\Session::put('content_types', $options);
     }
 
     public function init(){
@@ -238,9 +238,9 @@ class GroovelUserPermissionFormController extends GroovelFormController {
 			{
 				$systems[$content_type->name] = $content_type->name;
 			}
-			\Session::flash('content_types', $systems);
+			\Session::put('content_types', $systems);
 		}
-		\Session::flash('user_permissions', $permission);
+		\Session::put('user_permissions', $permission);
 		$uri=array();
 		$uri['uri']= url('admin/user/permission/editform', $parameters = array(), $secure = null);
 		return $this->jsonResponse($uri);

@@ -36,21 +36,20 @@
 							     <div id='form-modal' class="modal-body">
 												<div class="panel-body">
 												{!! Form::open(array('id'=>'user_form','url' => 'admin/user/add', 'method' => 'POST', 'class' => 'form-horizontal well ')) !!}
-										 	   {!! Form::hidden('id', Session::get('user_edit')['id'], array('id' => 'id')) !!}
-										  		<div class="form-group form-inline">
-												  @include('cmsgroovel.sections.picture_user')
+										 	  	<div class="form-group form-inline">
+												  @include('cmsgroovel.sections.picture_new_user')
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('username', 'username',array('class'=>'required')).Form::text('username', Session::get('user_edit')['username'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:50px')) !!}
+													{!! Form::label('username', 'username',array('class'=>'required')).Form::text('username',Input::old('username') ,  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:50px')) !!}
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('pseudo', 'pseudo',array('class'=>'required')).Form::text('pseudo', Session::get('user_edit')['pseudo'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:65px')) !!}
+													{!! Form::label('pseudo', 'pseudo',array('class'=>'required')).Form::text('pseudo',Input::old('pseudo'),  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:65px')) !!}
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('email', 'email',array('class'=>'required')).Form::text('email', Session::get('user_edit')['email'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:80px')) !!}
+													{!! Form::label('email', 'email',array('class'=>'required')).Form::text('email',Input::old('email'),  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:80px')) !!}
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('password', 'password reset').Form::text('password', Session::get('user_edit')['password'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:90px')) !!}
+													{!! Form::label('password', 'password reset').Form::text('password', Input::old('password'),  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:90px')) !!}
 												</div>
 												 <div class="form-group form-inline">
 								                {!! Form::label('notification_email_enable', 'enable notification by email',array('style'=>'margin-right:80px'))!!}
@@ -60,7 +59,7 @@
 													</select>
 												</div>
 												<div class="form-group form-inline">
-													<span class="label label-info" style="margin-right:50px" >Status: </span>{!! Session::get('user_edit')['activate']!!}
+													<span class="label label-info" style="margin-right:50px" >Status: </span>
 													<span class="label label-info" style="margin-left:50px">activate user?</span>	{!!Form::select('activate',array('default' => 'Please Select') +array('0' => 'NotActivate', '1' => 'Activate'))!!}
 												</div>
 									

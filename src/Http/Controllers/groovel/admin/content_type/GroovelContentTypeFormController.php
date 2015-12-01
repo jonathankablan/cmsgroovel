@@ -238,7 +238,7 @@ class GroovelContentTypeFormController extends GroovelFormController {
 		$input =  \Input::get('q');
 		$contentType=$this->contentTypeManager->editContentType($input['id']);
 		$res=array('id'=>$input['id'],'title'=>$input['title'],'fields'=>$contentType);
-		\Session::flash('content_type_edit', $res);
+		\Session::put('content_type_edit', $res);
 		$uri=array();
 		$uri['uri']= url('admin/content_type/editform', $parameters = array(), $secure = null);
 		$widgets=Widgets::all();
@@ -247,7 +247,7 @@ class GroovelContentTypeFormController extends GroovelFormController {
 		foreach ($widgets as $widget){
 			$w[$widget->getId()]=$widget->name;
 		}
-		\Session::flash('widgets',$w);
+		\Session::put('widgets',$w);
 		return $this->jsonResponse($uri);
 	}
 	

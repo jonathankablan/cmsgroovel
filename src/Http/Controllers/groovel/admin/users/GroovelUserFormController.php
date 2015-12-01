@@ -193,7 +193,7 @@ class GroovelUserFormController extends GroovelFormController {
 	private function editUser(){
 		$input =  \Input::get('q');
 		$user=$this->userManager->getUser($input['id']);
-		\Session::flash('user_edit', $user);
+		\Session::put('user_edit', $user);
 		$uri=array();
 		$uri['uri']= url('admin/user/editform', $parameters = array(), $secure = null);
 		return $this->jsonResponse($uri);
