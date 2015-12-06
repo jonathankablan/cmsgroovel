@@ -1,72 +1,74 @@
-@extends('cmsgroovel.layouts.groovel_admin_default')
+@extends('cmsgroovel.layouts.groovel_admin_content')
 @section('content')
-	 <div class="col-md-12">
+	  <div class="col-md-12" style="margin-top:70px">
 	       	@if(Session::get('messages'))
 	             <div>{!!var_dump(Session::get('messages'))!!}</div>
 	        @endif
-	        <h2>Contents Board</h2>
-	          <div class="span2">      
-	            {!! HTML::link('/admin/content/form', 'Add new content',array('class' => 'btn btn-default'))!!}
-	          </div>
-	           <div class="row" id='contents'>
-	                <div class="col-lg-12">
-	                    <div class="panel panel-primary">
+	        
+	           <div class="table-responsive scrollable" id='contents'>
+	                <div class="col-md-12">
+	                    <div class="panel panel-default">
 	                        <div class="panel-heading">
 	                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Contents Data</h3>
 	                        </div>
 	                        <div class="panel-body">
-	                         <div style='margin-bottom: 10px' >
-		                        	<input class="search" placeholder="Search" style="height:30px" />
-							  		<button class="sort" data-sort="name" style="height:30px">
-							    		Sort by name
-							  		</button>
-						  		</div>
-	            				<table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-striped table-bordered " id="table_contents">
+		                         <div class='row' style='margin-bottom: 10px' >
+			                         	<div class="col-md-2">  
+				                        	<input class="search" placeholder="Search" style="height:30px" />
+				                        </div>
+				                        <div class="col-md-2"> 
+									  		<button class="sort" data-sort="name" style="height:30px">
+									    		Sort by name
+									  		</button>
+									  	</div>
+									  	<div class="col-md-2">      
+			            						{!! HTML::link('/admin/content/form', 'Add new content',array('class' => 'btn btn-default'))!!}
+			          					</div>
+							  		</div>
+						  	</div>
+	            				<table class="table table-striped table-hover table-bordered" id="table_contents">
 										<thead>
 											 <tr>
-					                          <th id="col_content">id</th>
-					                          <th id="col_content">translation_id</th>
-					                          <th id="col_content">title</th>
-					                          <th id="col_content">type</th>
-					                          <th id="col_content">url</th>
-					                          <th id="col_content">author</th>
-					                          <th id="col_content">published</th>
-					                          <th id="col_content">weight</th>
-					                          <th id="col_content">langage</th>
-					                          <th id="col_content">date creation</th>
-					                          <th id="col_content">last update</th>
+					                          <th id="col_content" class="col-md-1">id</th>
+					                          <th id="col_content" class="col-md-1">translation_id</th>
+					                          <th id="col_content" class="col-md-1">title</th>
+					                          <th id="col_content" class="col-md-1">type</th>
+					                          <th id="col_content" class="col-md-1">url</th>
+					                          <th id="col_content" class="col-md-1">author</th>
+					                          <th id="col_content" class="col-md-1">published</th>
+					                          <th id="col_content" class="col-md-1">weight</th>
+					                          <th id="col_content" class="col-md-1">langage</th>
+					                          <th id="col_content" class="col-md-1">date creation</th>
+					                          <th id="col_content" class="col-md-1">last update</th>
 					                        
                         					</tr>
 										</thead>
-										<tbody class='list'>
+										<tbody class="list">
 										 	 @foreach ($contents as $content)
 									              <tr id="rows_contents">
-						                            <td id="row_content" >{!!$content->content_id!!}</td>
-						                            <td id="row_content" >{!!$content->translation_id!!}</td>
-						                            <td id="row_content" class='name'>{!!$content->name!!}</td>
-						                            <td id="row_content">{!!$content->type!!}</td>
-						                            <td id="row_content">{!!$content->url!!}</td>
-						                            <td id="row_content">{!!$content->author!!}</td>
+						                            <td id="row_content"  class="col-md-1">{!!$content->content_id!!}</td>
+						                            <td id="row_content" class="col-md-1">{!!$content->translation_id!!}</td>
+						                            <td id="row_content" class='name col-md-1'>{!!$content->name!!}</td>
+						                            <td id="row_content" class="col-md-1">{!!$content->type!!}</td>
+						                            <td id="row_content" class="col-md-1">{!!$content->url!!}</td>
+						                            <td id="row_content" class="col-md-1">{!!$content->author!!}</td>
 						                             <?php if($content->ispublish==1) :?>
-						                              <td id="row_content">yes</td>
+						                              <td id="row_content" class="col-md-1">yes</td>
 						                            <?php endif; ?>
 						                             <?php if($content->ispublish==0) :?>
-						                                 <td id="row_content">no</td>
+						                                 <td id="row_content" class="col-md-1">no</td>
 						                             <?php endif; ?>
-						                            <td id="row_content">{!!$content->weight!!}</td>
-						                            <td id="row_content">{!!$content->lang!!}</td>
-						                             <td id="row_content">{!!$content->created_at!!}</td>
-						                             <td id="row_content">{!!$content->updated_at!!}</td>
-						                            <td id="edit">
+						                            <td id="row_content" class="col-md-1">{!!$content->weight!!}</td>
+						                            <td id="row_content" class="col-md-1">{!!$content->lang!!}</td>
+						                             <td id="row_content" class="col-md-1">{!!$content->created_at!!}</td>
+						                             <td id="row_content" class="col-md-1">{!!$content->updated_at!!}</td>
+						                            <td id="edit" class="col-md-1">
 						                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditContent')) !!}
-						                            <!--<img src='../../public/theme-admin/images/save.png' class='btnSave' style="width:20px;height:20px">-->
 						                            </td>
-						                            <td id="del">
-						                            <!--<img src='../../public/theme-admin/images/del.png' class='btnDelete' style="width:20px;height:20px">-->
+						                            <td id="del" class="col-md-1">
 						                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteContent')) !!}
 						                            </td>
-						                             <td id="translate">
-						                            <!--<img src='../../public/theme-admin/images/del.png' class='btnDelete' style="width:20px;height:20px">-->
+						                             <td id="translate" class="col-md-1">
 						                            <button id="dump" class="btn btn-success btnTranslateContent">translate in a new langage</button>
 						                            </td>
 					                            </tr>
@@ -77,11 +79,9 @@
 						                {!! $contents->render() !!}
 	               					 </ul>
 	                          </div>
-	                    </div>
-	                </div>
- 				</div>
- 				
-	    </div>
+	                	</div>
+ 					</div>
+ 	   		 </div>
     <script>
  var options = {
   valueNames: [ 'name']
