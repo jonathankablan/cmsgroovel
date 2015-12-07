@@ -1,8 +1,7 @@
-@section('menu')
-@include('cmsgroovel.layouts.groovel_admin_default')
-@show
+@extends('cmsgroovel.layouts.groovel_admin_forum')
 @section('content')
-<div id='forums' style='margin-left:150px;margin-top:150px'>
+<div id='forums' style='margin-top:100px'>
      
 @include('cmsgroovel.pages.forum.section.section_list_forums')
 </div>
+@stop

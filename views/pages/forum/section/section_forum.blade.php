@@ -1,18 +1,26 @@
-        <h1 class="page-header">Welcome to Forum {!!$forumName!!}</h1> 
-        <div class="span2" style='margin-left:50px'>  
+	    <div class="row">
+		    <div id='light_forum'></div>
+			<div id='fade_forum'></div>
+		   <div id='dialog'>
+		       @include('cmsgroovel.pages.forum.newtopic_form')
+		   </div>
+	   </div>
+   		<div class="row" id="forum" style='margin-top:50px'>
+   		  <div class="row">
+   		   <div class="col-md-11 col-md-offset-2">
+   		  		<h1 class="page-header">Welcome to Forum {!!$forumName!!}</h1> 
+   		  	</div>
+   		  </div>
+          <div class="row" style='margin-bottom:20px'>
+          	<div class="col-md-1 col-md-offset-1">
 	     	  @if(\Auth::user()!=null)
 		  		<a onclick='showModalPopUp()' class='btn btn-default'>Post a new topic</a>
 	   		  @else
 		  		<a onclick='pleaseConnect()' class='btn btn-default'>Post a new topic</a>
 			  @endif
-	   </div>
-	    <div id='light_forum'></div>
-		<div id='fade_forum'></div>
-	   <div id='dialog'>
-	       @include('cmsgroovel.pages.forum.newtopic_form')
-	   </div>
-   		<div class="row" id="forum">
-   	               <div class="col-lg-10" style='margin-left:50px'>
+			  </div>
+	      </div>
+   	               <div class="col-md-10" style='margin-left:50px'>
 	                           	 <table class="table table-hover table-bordered"  id="table_topics" style='background:#F2F2F2'>
 				                      <thead style='background:#D8D8D8'>
 				                        <tr>
@@ -43,9 +51,7 @@
         </div>    
  
 <style>
- #body:{
- style=background: #F0F0F0
- }
+ 
  #fade_forum{
     display: none;
     position: fixed;

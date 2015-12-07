@@ -1,0 +1,49 @@
+/*
+ * Base structure
+ */
+
+
+.mousechange:hover {
+        cursor:pointer;
+}
+
+#deleteButton{
+	cursor:pointer;
+    cursor:hand;
+ }
+ 
+ #editButton{
+	cursor:pointer;
+    cursor:hand;
+ }
+
+
+
+.modal-dialog {
+  width: 70%; /* or whatever you wish */
+}
+
+
+ .list {
+  font-family:sans-serif;
+}
+
+
+.sort {
+  padding:8px 30px;
+  border-radius: 6px;
+  border:none;
+  display:inline-block;
+  color:#fff;
+  text-decoration: none;
+  background-color: #28a8e0;
+  height:30px;
+}
+.sort:hover {
+  text-decoration: none;
+  background-color:#1b8aba;
+}
+
+
+
+

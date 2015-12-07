@@ -40,6 +40,8 @@ $("#submitFormTopic").click(function (event) {
 			if(parsed['success']){
 		           window.scrollTo(0,0);
 			        document.getElementById('light_forum').style.display='block';
+			        document.getElementById('light_forum').style.zIndex='1002';
+			        document.getElementById('modal_forum').style.zIndex='1';
 			        document.getElementById('light_forum').className='alert alert-success fade_forum in';
 			        document.getElementById('light_forum').innerHTML ='message sent';
 			        document.getElementById('fade_forum').style.display='block';  
