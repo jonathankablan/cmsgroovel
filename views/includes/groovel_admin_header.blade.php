@@ -14,7 +14,7 @@
 		            <!-- <li><a href="#">Logs</a></li>-->
 		           
 		             <li class="dropdown">
-		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Templates <span class="caret"></span></a>
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Templates Apps<span class="caret"></span></a>
 		              <ul class="dropdown-menu" role="menu">
 		                <!-- <li><a href="./admin/routes">List Routes</a></li>-->
 		                <li>{!! HTML::link('/admin/templates/create', 'Choose Template')!!}</li>
@@ -23,7 +23,7 @@
 		            
 		            
 		            <li class="dropdown">
-		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Routes <span class="caret"></span></a>
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Routes Apps<span class="caret"></span></a>
 		              <ul class="dropdown-menu" role="menu">
 		                <!-- <li><a href="./admin/routes">List Routes</a></li>-->
 		                <li>{!! HTML::link('/admin/routes/user', 'List Routes')!!}</li>
@@ -45,12 +45,12 @@
                             </li>
                              <li class="divider"></li>
                              <li class="dropdown dropdown-submenu">
-                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Content Types</a>
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Contents Templates</a>
 			                 
 			                   <ul class="dropdown-menu">
-				                   <li>{!! HTML::link('/admin/content_type/form', 'Add new contents type')!!}</li>
+				                   <li>{!! HTML::link('/admin/content_type/form', 'Add new content template')!!}</li>
 					           	    <li class="divider"></li>
-					            	 <li>{!! HTML::link('/admin/content_types', 'List Content types')!!}</li>
+					            	 <li>{!! HTML::link('/admin/content_types', 'List contents templates')!!}</li>
 					         	</ul>
 					      </li>
 			            </ul>

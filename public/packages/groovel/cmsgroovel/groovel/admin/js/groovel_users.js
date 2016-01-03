@@ -1,3 +1,106 @@
+function validateUser(form){
+document.getElementById('light').innerHTML=null;
+document.getElementById('fade').innerHTML=null;
+var ajax=	$.ajax({
+		  type: 'POST',
+		  url:'/admin/user/validate',
+		  data: form,
+		  async:false,
+		  success:function(data) {
+			var parsed=JSON.parse(data);
+			console.log(parsed);
+			  if(parsed['success']==true){
+				  document.getElementById('light').innerHTML=null;
+		    	  return true;
+              }
+               else if(parsed['success']==false){
+                  buildErrorMessage(parsed['errors']['reason']);
+                  return false;
+              }
+		  }
+		
+	  });
+return false;
+}
+
+function postPicture(){
+	 var token = $('#token').val();
+	 getFileOldList();
+	 var status=true;
+	 if($('#user_form #my-file').length){
+		$('#user_form #my-file').val('');
+		status=validateFiles(storedFiles,filesAlreadyStored);
+	 }
+	 if(status){
+		 var ajaxData = new FormData();
+		    for(i=0;i<storedFiles.length;i++){
+			    var xhr = new XMLHttpRequest();
+			    ajaxData.append("file", storedFiles[i]);
+			    ajaxData.append("_token",token);
+			    xhr.onreadystatechange = function () {
+				  	response = this.responseText;
+				  	if(response!=""){
+		     	  	var url = JSON.parse(response);
+	         		if(url['success']){
+		    		  	urlimg[storedFiles[i]['name']]=url.datas[storedFiles[i]['name']];
+		             }
+		              else if(url['success']==false){
+		            	 buildErrorMessage('Oops something wrong happen');
+		            	 return false;
+		             }
+				  }
+			  	}
+		   
+			    xhr.open("POST", "/admin/file/upload",false);
+			    xhr.send(ajaxData);
+		    }
+		    
+		    var urls=[];
+			// if exist already clean it	
+	        var rem= $('#user_form #myfiles');
+	        if(rem.length){rem.remove();}
+	
+	        //create an input files hidden to send to server
+	  		var input = document.createElement('input');
+			input.type='hidden';
+			input.name='myfiles';
+	        input.id='myfiles';
+			for(var filename in urlimg)
+			{
+	         urls.push(urlimg[filename]);
+			}
+			for(var i=0;i<filesAlreadyStored.length;i++)
+			{     urls.push(filesAlreadyStored[i].value);
+			}
+	    	//add files
+	        input.value=urls;
+	        $('#user_form #list').append(input);
+		    return true;
+	}else return false;
+}
+
+function postUser(form,action){
+	$.post('/admin/user/'+action, form, function (data, textStatus) {
+		urlimg={};
+		if(textStatus=='success'){
+			if(data!=null){
+				  var parsed = JSON.parse(data);
+				  console.log(parsed);
+			      if(parsed['success']){
+                	   buildSucessMessage('user has been added successfully');
+                   }
+                    else if(parsed['success']==false){
+                       buildErrorMessage(parsed['errors']['reason']);
+	               }
+			}else{
+				alert('data problems');
+			}
+		}else{
+			alert('something mistake...problems');
+		}
+		
+	 });
+}
 
  function DeleteUser(){
    var thArray = $("#table_users thead tr").map(function(index,elem) {

@@ -1,9 +1,6 @@
-@extends('cmsgroovel.layouts.groovel_admin_editor')
+@extends('cmsgroovel.layouts.groovel_admin_content')
 @section('content')
 <!-- place in header of your html document -->
-
-
-
 	<div class="col-sm-12 main">
 				<div class="col-md-12 col-md-offset-4">
 				   @if(Session::get('msg'))
@@ -14,7 +11,7 @@
 			    <div id='modal' class="modal fade" style="display: none;" data-keyboard="false" data-backdrop="static">
 				  <div class="modal-dialog">
 				  	<div class="modal-content">
-					 	<div class="modal-header" style='background-color: #00FF40'>
+					 	<div class="modal-header" style='background-color: #E5E4E2'>
 					 	 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      <h4 class="modal-title">Board Content</h4>
 					    </div>
@@ -35,61 +32,102 @@
 						@endif
 						<div id='light'></div>
 						<div id='fade'></div>
-					     <div id='form-modal' class="modal-body">
-							<div class="panel-body">
-			              	   {!! Form::open(array('id'=>'content_form','url' => 'admin/content/update','files'=>true)) !!}
+			            <div id='form-modal' class="modal-body">
+						 	   {!! Form::open(array('id'=>'content_form','url' => 'admin/content/update','files'=>true)) !!}
 			      
 			              	   
 		                	   {!! Form::hidden('content_id', Session::get('content_edit')['id'], array('id' => 'id')) !!}
 		                	   
 		                	    {!! Form::hidden('translation_id', Session::get('content_edit')['translation_id'], array('id' => 'translation_id')) !!}
 		                	    {!! Form::hidden('duplicate', Session::get('content_edit')['duplicate'], array('id' => 'duplicate')) !!}
-							   <div style="margin-top: 30px; margin-bottom: 15px;width: 100%; height: 60px; background-color: rgb(152, 251, 152)">
-							   <p style="margin-left: 350px;">General settings</p>
-							   </div>
-				            	<div class="form-group form-inline" data-toggle="tooltip" title="the title of your content">
-				                	{!! Form::label('Title', 'Title', array('class' => 'col-md-1 control-label required','style'=>'margin-left: auto')).Form::text('title', Session::get('content_edit')['title'],$attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:146px')) !!}
-				            	</div>
-				               
-				        
-				                <div class="form-group form-inline" data-toggle="tooltip" title="the url to access to your content">
-				                	{!! Form::label('Url', 'url', array('class' => 'col-md-3 control-label required')).Form::text('url', Session::get('content_edit')['url'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
-				            	</div>
-				            	
-				            	<div class="form-group form-inline" data-toggle="tooltip" title="the tag is the word that will be used in the search engine to find the content">
-				                	{!! Form::label('tag', 'tag', array('class' => 'col-md-2 control-label required','style'=>'margin-right:75px')).Form::text('groovelDescription', Session::get('content_edit')['groovelDescription'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
-				            	</div>
-				            	
-				            	<div class="form-group form-inline" title="the langage of the content will be used in accordance with your extension website for exemple if your site has for extension.fr the contents with langage france will be shown">
-				            			   
-							     		@if($langages= Session::get('langages'))
-								        	<?php $lang=$langages[Session::get('content_edit')['lang']];?>
-											<?php $keys=array_keys($langages);?>
-											@foreach($keys as $key)
-											     @if($lang==$langages[$key])
-											      <?php $codelang_selected=$key;?>
+		                	     <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+		                	     <input id='action' type="hidden" name="action" value="admin/content/update">
+							  	<div style='background-color:#FAFAFA'>
+								  	<div class="row">
+						            	<div class="form-group" data-toggle="tooltip" title="the title of your content">
+						                	<div class="col-md-2">
+									    		<label for="title">title</label><span class="required"></span>
+										    </div>
+										    <div class="col-md-8">
+										    	{!!Form::text('title', Session::get('content_edit')['title'],$attributes = array('class' => 'form-control')) !!}
+										    </div>
+						             	</div>
+					            	</div>
+					            	<div class="row" style="margin-top:50px">
+						            	<div class="form-group" title="the langage of the content will be used in accordance with your extension website for exemple if your site has for extension.fr the contents with langage france will be shown">
+						            			   
+									     		@if($langages= Session::get('langages'))
+										        	<?php $lang=$langages[Session::get('content_edit')['lang']];?>
+													<?php $keys=array_keys($langages);?>
+													@foreach($keys as $key)
+													     @if($lang==$langages[$key])
+													      <?php $codelang_selected=$key;?>
+													     @endif
+										                 @if($lang!=$langages[$key])
+										                 	<?php $langage_filter[$key]=$langages[$key];?>
+										                 @endif
+										             @endforeach
 											     @endif
-								                 @if($lang!=$langages[$key])
-								                 	<?php $langage_filter[$key]=$langages[$key];?>
-								                 @endif
-								             @endforeach
-									     @endif
-									      {!!Form::label('langage', 'langage',array('style'=>'margin-left:13px;margin-right:119px','class'=>'required'))!!}  
-							     		 <select name="langage[]" style="margin-right:142px;margin-left:18px" class="form-control">
-											<option value=<?php echo $codelang_selected?>><?php echo $langages[$codelang_selected]?></option>
-											<?php $keys=array_keys($langage_filter);?>
-											@foreach($keys as $key)
-											<option value=<?php echo $key?>><?php echo $langage_filter[$key]?></option>
-											@endforeach
-							     		</select>
-						        	</div>
-				             
-				               <div style="margin-top: 30px; margin-bottom: 15px;width: 100%; height: 60px; background-color: rgb(152, 251, 152)">
-							   <p style="margin-left: 350px;">Content</p>
-							   </div>
+											     <div class="col-md-2">
+									    			<label for="langage">langage</label><span class="required"></span>
+										   		 </div>
+										   		 <div class="col-md-8">
+										     		 <select name="langage[]" class="form-control">
+														<option value=<?php echo $codelang_selected?>><?php echo $langages[$codelang_selected]?></option>
+														<?php $keys=array_keys($langage_filter);?>
+														@foreach($keys as $key)
+														<option value=<?php echo $key?>><?php echo $langage_filter[$key]?></option>
+														@endforeach
+										     		</select>
+									     		</div>
+								        </div>
+					             	</div>
+					            	<div class="row" style="margin-top:50px">
+						            	<div class="form-group">
+						            		<div class="col-md-2">
+									    		<label for="weight">weight</label><span class="required"></span>
+										    </div>
+										    <div class="col-md-8">
+										    	{!!Form::text('weight',Session::get('content_edit')['weight'], array('data-toggle'=>'tooltip',"title"=>"the biggest value will be set,it means this content will be shown first",'class'=>'form-control','placeholder' => 'weight')) !!}
+										    </div>
+									   </div>
+								   </div>
+								   <div class="row" style="margin-top:50px">
+						            	<div class="form-group" data-toggle="tooltip" title="the tag is the word that will be used in the search engine to find the content">
+						               		<div class="col-md-2">
+								    			<label for="tag">tag</label><span class="required"></span>
+										    </div>
+										    <div class="col-md-8">
+										    	 	{!!Form::text('tag', Session::get('content_edit')['tag'], $attributes = array('class' => 'form-control')) !!}
+						      			    </div>
+						            	</div>
+					            	</div>
+					            	<div class="row" style="margin-top:50px">
+						                <div class="form-group" data-toggle="tooltip" title="the url to access to your content">
+						                	<div class="col-md-2">
+								    			<label for="url">url</label><span class="required"></span>
+										    </div>
+										    <div class="col-md-8">
+										    	{!! Form::text('url', Session::get('content_edit')['url'], $attributes = array('class' => 'form-control')) !!}
+						          		    </div>
+						            	</div>
+					            	</div>
+					            	<div class="row" style="margin-top:50px">
+						            	<div class="form-group">
+						            		<div class="col-md-2">
+									    		<label for="publish">publish content</label><span class="required"></span>
+										    </div>
+										    <div class="col-md-8">
+										        {!! Form::checkbox('isPublish', Input::old('isPublish'),Session::get('content_edit')['ispublish'], array('data-toggle'=>'tooltip',"title"=>"to publish your content you have to check the box",'class'=>'form-control','placeholder' => 'isPublish')) !!}
+										    </div>
+									   </div>
+								   </div>
+				           		</div>
 						        @if($node=Session::get('content_edit'))
 						            @foreach($node['content']  as $content)
-				                  	       <div  class="form-group form-inline">
+						            
+						            <div class="row" style="margin-top:50px">
+						                   <div  class="form-group">
 						                     	<br/>
 						                     		@if($content['widget']==-1)
 							                     		 @if($content['required']==0)
@@ -118,23 +156,14 @@
 						                     		 </div>    
 						                     		       
 						                  		    @endif
-				                     		</div>	
+				                     		</div>
+				                     	</div>	
 					                @endforeach
 						        @endif
 						        <br/>
 						        <br/>
-						      <div style="margin-top: 500px; margin-bottom: 15px;width: 100%; height: 60px; background-color: rgb(152, 251, 152)">
-							   <p style="margin-left: 350px;">Optional settings</p>
-							   </div>
-						         <div class="form-group form-inline" id="row_content" style="margin-top:50px;margin-bottom:50px">
-							         {!! Form::label('isPublish','Publish',array('style'=>'margin-right: 20px;margin-left: 250px')).Form::checkbox('isPublish', Input::old('isPublish'),Session::get('content_edit')['ispublish'], array('data-toggle'=>'tooltip',"title"=>"to publish your content you have to check the box",'class'=>'form-control','placeholder' => 'isPublish')) !!}
-							  	 	     
-								 	 {!! Form::label('weight','weight of your content',array('style'=>'margin-right: 20px;margin-left: 150px')).Form::text('weight',Session::get('content_edit')['weight'], array('data-toggle'=>'tooltip',"title"=>"the biggest value will be set,it means this content will be shown first",'class'=>'form-control','placeholder' => 'weight')) !!}
-					
-							
-								 </div>
-							  	
-				   			</div>
+						     
+						         
 						 </div>
 						 <div class="modal-footer">
 						     <p class='required' style='font-size:15px;margin-right:80%'>Fields are required</p>
@@ -161,8 +190,8 @@ $(document).ready(function(){
 						                     		
 
 $(document).ready(function() {
-	fileEvents();
-	 $('#modal').modal('show');
+	bindFileEvents('content_form');
+	$('#modal').modal('show');
 });
 
 
@@ -215,156 +244,24 @@ function deleteContents(){
 
 
 $("#submitForm").click(function (event) {
-	getFileOldList();
-	var status=true;
 	if(tinymce!=null){
  	 	//force to get filed value by tinymce
  		tinymce.triggerSave();
  	}
-	var form=$('#content_form').serialize();
-	if(document.getElementById('my-file')!=null){
-		document.getElementById('my-file').value='';
-	}
-	status=validateFiles(storedFiles,filesAlreadyStored);
-
-	if(status){
-	     var ajaxData = new FormData();
-	   	    for(i=0;i<storedFiles.length;++i){
-				    var xhr = new XMLHttpRequest();
-				    ajaxData.append("file", storedFiles[i]);
-				    var token =  document.getElementById('token').value;
-				    ajaxData.append("_token",token);
-				    xhr.onreadystatechange = function () {
-					  	response = this.responseText;
-					  	if(response!=""){
-				     	  	var url = JSON.parse(response);
-				     	  	if(url['success']==false){
-				        	    window.scrollTo(0,0);
-						        document.getElementById('light').style.display='block';
-						        document.getElementById('light').className='alert alert-danger fade in';
-						        document.getElementById('light').innerHTML =  url['errors']['reason'];
-						        document.getElementById('fade').style.display='block';  
-						        a=document.createElement('a');
-								a.className='closer';
-								a.href='#';
-								a.innerHTML='x';
-								a.onclick = function(e) {  
-				  				document.getElementById('light').style.display='none';
-				  				document.getElementById('fade').style.display='none';
-								    return false;
-								};
-								document.getElementById('light').appendChild(a);
-								button=document.createElement('button');
-					  			button.innerHTML='OK';
-					  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-					  			button.onclick = function(e) {  
-					  				document.getElementById('light').style.display='none';
-					  				document.getElementById('fade').style.display='none';
-					  			    return false;
-					  			};
-					  			div=document.createElement('div');
-					  			div.id='mess';
-					  			document.getElementById('light').appendChild(div);
-					  			document.getElementById('mess').appendChild(button);
-					  			status= false;
-				            }		
-						  	urlimg[storedFiles[i]['name']]=url.datas[storedFiles[i]['name']];
-					  	}
-				  	}
-				   // console.log('send file');
-				    xhr.open("POST", "/admin/file/upload",false);
-		  		    xhr.send(ajaxData);
-			    }
+	//add token form
+	document.getElementById('content_form').appendChild( document.getElementById('token'));
+	form=$('#content_form').serialize();
+	validateContent(form);
+	if($('#light').children().length==0){
+	    var status=postFiles();
 	    if(!status){
 			return false;
-	    }
-		var urls=[];	
-        var rem= document.getElementById("myfiles");
-        if(rem!=null){rem.remove();}
-  		var input = document.createElement('input');
-		input.type='hidden';
-		input.name='myfiles';
-        input.id='myfiles';
-		for(var filename in urlimg)
-		{
-         urls.push(urlimg[filename]);
 		}
-		for(var i=0;i<filesAlreadyStored.length;i++)
-		{     urls.push(filesAlreadyStored[i].value);
-		}
-    	//ajout ancienne image
-        input.value=urls;
-        if(document.getElementById('list')!=null){
-   			document.getElementById('list').insertBefore(input, null);
-        }
 		form=$('#content_form').serialize();
-		$.post('/admin/content/update', form, function (data, textStatus) {
-			urlimg={};
-			//console.log(data);
-			var parsed = JSON.parse(data);
-			if(parsed['success']){
-				window.scrollTo(0,0);
-		        document.getElementById('light').style.display='block';
-		        document.getElementById('light').className='alert alert-success fade in';
-		        document.getElementById('light').innerHTML ='content has been updated successfully';
-		        document.getElementById('fade').style.display='block';  
-		        a=document.createElement('a');
-				a.className='closer';
-				a.href='#';
-				a.innerHTML='x';
-				a.onclick = function(e) {  
-  				document.getElementById('light').style.display='none';
-  				document.getElementById('fade').style.display='none';
-				    return false;
-				};
-				document.getElementById('light').appendChild(a);
-				button=document.createElement('button');
-	  			button.innerHTML='OK';
-	  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-	  			button.onclick = function(e) {  
-	  				document.getElementById('light').style.display='none';
-	  				document.getElementById('fade').style.display='none';
-	  			    return false;
-	  			};
-	  			div=document.createElement('div');
-	  			div.id='mess';
-	  			document.getElementById('light').appendChild(div);
-	  			document.getElementById('mess').appendChild(button);
-	         }
-	          else if(parsed['success']==false){
-	        	    window.scrollTo(0,0);
-			        document.getElementById('light').style.display='block';
-			        document.getElementById('light').className='alert alert-danger fade in';
-			        document.getElementById('light').innerHTML =  parsed['errors']['reason'];
-			        document.getElementById('fade').style.display='block';  
-			        a=document.createElement('a');
-					a.className='closer';
-					a.href='#';
-					a.innerHTML='x';
-					a.onclick = function(e) {  
-	  				document.getElementById('light').style.display='none';
-	  				document.getElementById('fade').style.display='none';
-					    return false;
-					};
-					document.getElementById('light').appendChild(a);
-					button=document.createElement('button');
-		  			button.innerHTML='OK';
-		  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-		  			button.onclick = function(e) {  
-		  				document.getElementById('light').style.display='none';
-		  				document.getElementById('fade').style.display='none';
-		  			    return false;
-		  			};
-		  			div=document.createElement('div');
-		  			div.id='mess';
-		  			document.getElementById('light').appendChild(div);
-		  			document.getElementById('mess').appendChild(button);
-	         }		
-		 });
-		return false;
-	}else{
-	 return false;	
+		postContent(form,'update');
 	}
+	return false;
+
 }); 
 
 

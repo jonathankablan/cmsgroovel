@@ -18,6 +18,9 @@ use Groovel\Cmsgroovel\models\Widgets;
 class WidgetDao implements WidgetDaoInterface{
 
 	public function findByName($widget){
+		if($widget=='none'){
+			return null;
+		}
 		return  Widgets::where('name', '=', $widget)->firstOrFail();
 	}
 	

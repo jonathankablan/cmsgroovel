@@ -40,29 +40,28 @@ class GroovelContentTypeManagerBusiness implements GroovelContentTypeManagerBusi
 		$this->widgetDao =$widgetDao;
 	}
 
-	public function add($tableName,$fieldNames,$descriptions,$types,$widget,$isnullable,$required){
- 	  $type= $this->contentTypeDao->createType($tableName);
-      $this->insertIntoContent_Types($tableName,$fieldNames,$descriptions,$types,$type->id,$widget,$isnullable,$required);
+	
+	public function createContentType($title){
+		$type= $this->contentTypeDao->createType($title);
+		return $type;
 	}
-
-    private function insertIntoContent_Types($tableName,$fieldNames,$descriptions,$types,$type,$widget,$isnullable,$required){
-        for ($i = 0; $i <count($fieldNames); $i++){
-        	$res=null;
-        	$widgetid=null;
-        	if($widget[$i]!='blank'){
-        		$res=$this->widgetDao->findByName($widget[$i]);
-        		$widgetid=$res->id;
-        	}else{
-        		$widgetid=-1;
-        	}
-        	
-        	
-          $this->contentTypeDao->create($tableName,$fieldNames[$i],$descriptions[$i],$types[$i],$type,$widgetid,$isnullable[$i],$required[$i]);
-        }
-    }
-
-
-    public function getContentType($tableName){
+	
+	public function addField($title,$fieldname,$fielddescription,$fieldtype,$fieldvalue,$fieldwidget,$fieldrequired,$reftypeid){
+		$widgetid=null;
+		if(!empty($fieldwidget)){
+			$res=$this->widgetDao->findByName($fieldwidget);
+			if($res==null){
+				$widgetid=-1;
+			}else{
+				$widgetid=$res->id;
+			}
+		}else{
+			$widgetid=-1;
+		}
+		$this->contentTypeDao->create($title,$fieldname,$fielddescription,$fieldtype,$fieldvalue,$widgetid,$fieldrequired,$reftypeid);
+	}
+	
+   public function getContentType($tableName){
     	return $this->contentTypeDao->findContentTypeByName($tableName);
      }
 
@@ -78,65 +77,32 @@ class GroovelContentTypeManagerBusiness implements GroovelContentTypeManagerBusi
  
    public function editContentType($contentid){
    	$contentType= $this->contentTypeDao->findContentTypeById($contentid);
+   	$fields= array();
    	foreach ($contentType as $items) {
-			$map[$items->getId()]=array(
+   		    $widget=null;
+   		    if($items->hasWidget!=null){
+   		    	$widget=$items->hasWidget->getName();
+   		    }
+   		  	array_push($fields,array(
 					'id'=>$items->getId(),
 					'name'=>$items->getFieldName(),
 					'type'=>$items->getFieldType(),
 					'description'=>$items->getDescription(),
-					'widget'=>$items->getFieldWidget(),
-					'isnullable'=>$items->getFieldNullable(),
-					'required'=>$items->getFieldRequired()
-					
+					'widget'=>$widget,
+					'fieldvalue'=>$items->getFieldValue(),
+					'required'=>$items->getFieldRequired())
 			);
 		}
-  	return $map;
+  	return $fields;
    }
    
-   public function deleteField($fieldName){
-   	   $this->contentTypeDao->deleteField($fieldName);
-   }
+  
    
    public function paginateContentType(){
    	return  $this->contentTypeDao->paginateContentType();
    }
    
-   public function update($title,$fieldIds,$fieldNames,$typeSelecteds,$widgetSelecteds,$descriptions,$isnullable,$required){
-   	$index=0;
-   	$index_max=count($fieldNames);
-   	$tableName=null;
-   	$type=null;
-   	$contentTypePersist= $this->contentTypeDao->findContentTypeByName($title);
-   	
-   	$persistFields=array();
-   	foreach ($contentTypePersist as $fields)
-   	{
-   		$persistFields[$fields['fieldName']]=$fields['fieldName'];
-   	}
-   	$updateFields=array();
-   
-   	for($i=0;$i<$index_max;$i++){
-   		if(count($fieldIds)>$i){
-   			$field_id=$fieldIds[$i];
-   			$contentType=$this->contentTypeDao->findContentTypeByFieldId($field_id);
-   			$contentType=$this->contentTypeDao->updateContentType($contentType,$fieldNames[$i],$typeSelecteds[$i],$widgetSelecteds[$i],$descriptions[$i],$isnullable[$i],$required[$i]);
-   			$updateFields[$contentType->fieldName]=$contentType->fieldName;
-   			$tableName=$contentType->tableName;
-   			$type=$contentType->content_type;
-   		}else{
-  			$this->contentTypeDao->create($tableName,$fieldNames[$i],$descriptions[$i],$typeSelecteds[$i],$type,$widgetSelecteds[$i],$isnullable[$i],$required[$i]);
-   		}
-   	}
-   
-   	foreach($persistFields as $fieldTodelete){
-   		if(!array_key_exists ($fieldTodelete,$updateFields) && count($updateFields)>0){
-   			if($fieldTodelete!='groovelDescription'){
-   				$this->contentTypeDao->deleteField($fieldTodelete);
-   			}
-   		}
-   	}
-   	return $title;
-   }
+  
     
    public function deleteContentType($name){
    	  $contentType=$this->contentTypeDao->findContentTypeByName($name);

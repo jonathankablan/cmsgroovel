@@ -38,5 +38,6 @@ interface GroovelUserManagerBusinessInterface{
 	public function setLastTimeSeen($pseudo);
 	public function getUserRole($id);
 	public function getAllUsersAdmin();
+	public function checkUserByEmailIsUnique($email,$pseudo);
 	
 }

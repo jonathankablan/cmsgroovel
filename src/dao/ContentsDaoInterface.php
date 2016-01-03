@@ -30,4 +30,6 @@ public function getContentByType($type);
 
 public function paginateAll($langage=null);
 
+public function checkUrlUnique($idcontent,$url);
+
 }

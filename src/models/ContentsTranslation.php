@@ -29,7 +29,7 @@ class ContentsTranslation extends Model{
 
 
 
-	protected $fillable = array('refcontentid','name','content','grooveldescription','lang','updated_at','created_at');
+	protected $fillable = array('refcontentid','name','content','tag','lang','updated_at','created_at');
 	
 		
 	private static function deserialize($dataDb){
@@ -55,7 +55,7 @@ class ContentsTranslation extends Model{
 			$username=$author->username;
 			$pseudo=$author->pseudo;
 			$data=array('id'=>$content['id'],'title'=>$contentTranslation['name'],'langage'=>$contentTranslation['lang'],'author'=>$username,
-					'pseudo'=>$pseudo,'url'=>$content['url'],'grooveldescription'=>$contentTranslation['grooveldescription'],'created_at'=>$contentTranslation['created_at'],'updated_at'=>$contentTranslation['updated_at']);
+					'pseudo'=>$pseudo,'url'=>$content['url'],'tag'=>$contentTranslation['tag'],'created_at'=>$contentTranslation['created_at'],'updated_at'=>$contentTranslation['updated_at']);
 			\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@update', array('type'=>ModelConstants::$contents,'data'=>$data));
 			\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@update', array('type'=>ModelConstants::$contents,'data'=>$data));
 		});
@@ -71,7 +71,7 @@ class ContentsTranslation extends Model{
 			$username=$author->username;
 			$pseudo=$author->pseudo;
 			$data=array('id'=>$content['id'],'title'=>$contentTranslation['name'],'langage'=>$contentTranslation['lang'],'author'=>$username,
-					'pseudo'=>$pseudo,'url'=>$content['url'],'grooveldescription'=>$contentTranslation['grooveldescription'],'created_at'=>$contentTranslation['created_at'],'updated_at'=>$contentTranslation['updated_at']);
+					'pseudo'=>$pseudo,'url'=>$content['url'],'tag'=>$contentTranslation['tag'],'created_at'=>$contentTranslation['created_at'],'updated_at'=>$contentTranslation['updated_at']);
 			//\Log::info($data);
 			\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@create', array('type'=>ModelConstants::$contents,'data'=>$data));
 			\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@create', array('type'=>ModelConstants::$contents,'data'=>$data));
@@ -89,7 +89,7 @@ class ContentsTranslation extends Model{
 			$username=$author->username;
 			$pseudo=$author->pseudo;
 			$data=array('id'=>$content['id'],'title'=>$content['name'],'author'=>$username,
-					'pseudo'=>$pseudo,'url'=>$content['url'],'grooveldescription'=>$content['grooveldescription'],'created_at'=>$content['created_at'],'updated_at'=>$content['updated_at']);
+					'pseudo'=>$pseudo,'url'=>$content['url'],'tag'=>$content['tag'],'created_at'=>$content['created_at'],'updated_at'=>$content['updated_at']);
 			
 			\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@delete', array('type'=>ModelConstants::$contents,'data'=>$data));
 			\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@delete', array('type'=>ModelConstants::$contents,'data'=>$data));

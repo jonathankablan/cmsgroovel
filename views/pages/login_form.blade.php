@@ -36,31 +36,31 @@
 	        <div class="col-md-6">
 	            {!! Form::open(array('url' => 'admin/auth/login/form', 'method' => 'POST', 'class' => 'form-horizontal well')) !!}
 	                <input type='hidden' name='leave_blank'/>
-	      
-	             <div class="form-group form-inline font">
+	      			<input type="hidden" name="_token" value="{{csrf_token()}}" />
+	             <div class="form-group form-inline">
 	                {!! Form::label('pseudo', 'Pseudo :', array('class' => 'col-md-5 control-label required')) !!}
 	                <div class="col-md-5">
 	                    {!! Form::text('pseudo', '', $attributes = array('class' => 'form-control')) !!}
 	                </div>
 	            </div>
-	            <div class="form-group form-inline font">
+	            <div class="form-group form-inline">
 	                {!! Form::label('password', 'Password :', array('class' => 'col-md-5 control-label required')) !!}
 	                <div class="col-md-5">
 	                    {!! Form::password('password', $attributes = array('class' => 'form-control')) !!}
 	                </div>
 	            </div>
-	            <div class="checkbox pull-right font">
+	            <div class="checkbox pull-right">
 	                {!! Form::checkbox('rememberme') !!}Remember me
 	            </div>
 	            <div class="form-group" style='margin-top:50px'>
 	                <div class="col-md-2">
-	                    {!! Form::submit('Connect', array('class' => 'btn btn-success font')) !!}
+	                    {!! Form::submit('Connect', array('class' => 'btn btn-success')) !!}
 	                </div>
 	                 <div class="col-md-2">
-				         {!! link_to('admin/auth/subscribe/form', 'I subscribe !', array('class' => 'btn btn-info font')) !!}
+				         {!! link_to('admin/auth/subscribe/form', 'I subscribe !', array('class' => 'btn btn-info')) !!}
 				    </div>
-		             <div class="col-md-2">
-		                {!! link_to('admin/auth/login/remind/form', 'I forget my password...', array('class' => 'btn btn-success font')) !!}
+		             <div class="col-md-2  col-md-offset-1">
+		                {!! link_to('admin/auth/login/remind/form', 'I forget my password...', array('class' => 'btn btn-success')) !!}
 				    </div>
 				   
 			     </div>

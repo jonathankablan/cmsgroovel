@@ -6,8 +6,7 @@
 
   <body>
       @include('cmsgroovel.includes.groovel_admin_header')
-     <div class="container-fluid">
-     <div class="col-md-12"  style='margin-top:150px'>
+     <div class="col-md-12"  style='margin-top:50px'>
  	 	<div id='light'></div>
 		<div id='fade'></div>
 	</div>

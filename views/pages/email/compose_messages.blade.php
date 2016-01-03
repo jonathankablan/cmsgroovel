@@ -6,7 +6,7 @@
         <div id='modal' class="modal fade" style="display: none" data-keyboard="false" data-backdrop="static">
 				  <div class="modal-dialog">
 				  	<div class="modal-content" style='width:700px;height:600px'>
-					 	<div class="modal-header" style='background-color: #00FF40'>
+					 	<div class="modal-header" style='background-color:#E5E4E2'>
 					 	 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      <h4 class="modal-title">Compose Message</h4>
 					    </div>

@@ -38,7 +38,7 @@
 				                <div class="form-group form-inline" id="method" data-toggle="tooltip" title="method name which will be called and which will do some stuffs before to render your page">
 				                {!! Form::label('method', 'method',array('class'=>'col-md-2')).Form::text('method', Input::old('method'), array('class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				                <div class="form-group form-inline" id="action" data-toggle="tooltip" title="action is when you want to access to a page is it for doing some update or save data or..action will be used to set some permissions rules">
+				                <div class="form-group form-inline" id="action" data-toggle="tooltip" title="action it is when you want to access to a page in order to update or save data or..action will be used to set some permissions rules">
 				                 {!!Form::label('action', 'action',array('class'=>'col-md-2')).Form::select('action[]',
 										        array(
 										         'op_retrieve' => 'retrieve',
@@ -54,16 +54,11 @@
 				                <div class="form-group form-inline" id="view" data-toggle="tooltip" title="the name of your view (page name) that will be called">
 				                {!! Form::label('view', 'view',array('class'=>'col-md-2')).Form::text('view', Input::old('view'), array('class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				                <div class="form-group form-inline" id="before_filter" data-toggle="tooltip" title="filter settings name that will be called before to render data to a view">
-				                {!! Form::label('before_filter', 'before_filter',array('class'=>'col-md-2')).Form::text('before_filter', Input::old('before_filter'), array('class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
-				              </div>
-				                <div class="form-group form-inline" id="after_filter" data-toggle="tooltip" title="filter settings name that will be called after data rendered in view">
-				                {!! Form::label('after_filter', 'after_filter',array('class'=>'col-md-2')).Form::text('after_filter', Input::old('after_filter'), array('class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
-				              </div>
+				               
 				               <div class="form-group form-inline"  id="type" data-toggle="tooltip" title="name of your application it is optional but it will be easy to find your route if you have got a lot of routes">
 				                {!! Form::label('type', 'type',array('class'=>'col-md-2')).Form::text('type', Input::old('type'), array('class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				              <div class="form-group form-inline" id="subtype" data-toggle="tooltip" title="what type of content is your page is it a view,some contents, a route.., it will be used to set permissions rules">
+				              <div class="form-group form-inline" id="subtype" data-toggle="tooltip" title="what type of content is your page: is it a view?,some contents?, a route..,? it will be used to set permissions rules">
 				               {!!Form::label('subtype', 'subtype',array('class'=>'required col-md-2'))!!}  
 								<select name="subtype[]" class='form-control' style='width:50%'>
 								    @foreach ($subtypes as $subtype)
@@ -71,7 +66,7 @@
 									@endforeach
 								</select>
 				              </div>
-				               <div class="form-group form-inline" id="audit_url" data-toggle="tooltip" title="if you want some statistics on access this uri enable it">
+				               <div class="form-group form-inline" id="audit_url" data-toggle="tooltip" title="if you want some statistics on access this uri you can enable it">
 				                {!! Form::label('audit url', 'audit_url',array('class'=>'col-md-2'))!!}
 				               		<select name="audit_tracking_url_enable"  class='form-control'>
 										<option value='0'>disabled</option>

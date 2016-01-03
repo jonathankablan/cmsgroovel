@@ -1,5 +1,4 @@
   /** js for structure routes page**/
-var generateFormTinyMCE=[];
       $(function(){
           //Add, Save, Edit and Delete functions code
           $(".btnDeleteRoute").bind("click", DeleteRoute);
@@ -43,7 +42,6 @@ function any2url(prefix, obj) {
         }
         else
             args[args.length]=prefix+'='+encodeURIComponent(obj);
-        //   //console.log(args);
         return args.join('&');
     }
 

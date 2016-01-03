@@ -22,15 +22,19 @@ class ContentTypes extends Model{
 
 	public $timestamps = true;
 
+	protected $casts = [
+			'required' => 'boolean',
+	];
 
-
-	protected $fillable = array('tableName','fieldName','description','type','content_type','widget','isnullable','required','updated_at','created_at');
+	protected $fillable = array('tableName','fieldName','description','type','fieldValue','content_type','widget','required','updated_at','created_at');
 
 	public function contents() {
-		return $this->hasMany('Groovel\Cmsgroovel\model\Contents'); // this matches the Eloquent model
+		return $this->hasMany('Groovel\Cmsgroovel\models\Contents'); // this matches the Eloquent model
 	}
 	
-	
+	public function hasWidget(){
+		return $this->hasOne('Groovel\Cmsgroovel\models\Widgets','id');
+	}
 
 	public function getTableName()
     {
@@ -51,12 +55,13 @@ class ContentTypes extends Model{
     {
         return $this->attributes['type'];
     }
-
-    public function getFieldNullable()
+    
+    public function getFieldValue()
     {
-        return $this->attributes['isnullable'];
+    	return $this->attributes['fieldValue'];
     }
 
+   
      public function getFieldWidget()
     {
         return $this->attributes['widget'];

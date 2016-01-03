@@ -16,7 +16,7 @@ namespace Groovel\Cmsgroovel\business\groovel\admin\contents;
 
 interface GroovelContentManagerBusinessInterface{
 
-	public function addContent($title,$data,$url,$grooveldescription,$langage,$contentType,$userid,$publish,$weight);
+	public function addContent($title,$data,$url,$tag,$langage,$contentType,$userid,$publish,$weight);
 	public function getContent($name);
 	public function editContent($contentid,$contentTranslationid);
     public function paginateContent($langage);
@@ -30,7 +30,7 @@ interface GroovelContentManagerBusinessInterface{
     public function getPageTemplateElementsByType($type,$langage);
     public function getPageTemplateElementsByTitleAndType($title,$type,$langage);
     public function paginateAllContent();
-    
+    public function checkUrlUnique($idcontent,$url);
     
     
     

@@ -36,6 +36,8 @@
 							     <div id='form-modal' class="modal-body">
 												<div class="panel-body">
 												{!! Form::open(array('id'=>'user_form','url' => 'admin/user/add', 'method' => 'POST', 'class' => 'form-horizontal well ')) !!}
+									 	  	     <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+		                						<input id='action' type="hidden" name="action" value="admin/user/add">
 										 	  	<div class="form-group form-inline">
 												  @include('cmsgroovel.sections.picture_new_user')
 												</div>
@@ -81,130 +83,23 @@
 	 </div>
 <script>
 $(document).ready(function() {
-	 $('#modal').modal('show');
-	 fileEvents();
-	 $("#loading").hide();
+	bindFileEvents("user_form");
+	$('#modal').modal('show');
 });
 
 $("#submitForm").click(function (event) {
-	var token = $(this).data('token');
-	var divSuccess = document.getElementById('success_message');
-	var divError = document.getElementById('error_message');
-	if(divSuccess!=null){
-		divSuccess.innerHTML =null;
-	}
-	if(divError!=null){
-		divError.innerHTML =null;
-	}
-getFileOldList();
-var status=true;
-var form=$('#user_form').serialize();
-//console.log(form);
-document.getElementById('my-file').value='';
-status=validateFiles(storedFiles,filesAlreadyStored);
-
-if(status){
-	 $("#loading").show();
-     var ajaxData = new FormData();
-		    for(i=0;i<storedFiles.length;i++){
-			    var xhr = new XMLHttpRequest();
-			    ajaxData.append("file", storedFiles[i]);
-			    ajaxData.append("_token",token);
-			    xhr.onreadystatechange = function () {
-				  	response = this.responseText;
-				  	//console.log(response);
-		     	  	if(response!=""){
-			     	  	var url = JSON.parse(response);
-			    	  	urlimg[storedFiles[i]['name']]=url.datas[storedFiles[i]['name']];
-				  	}
-			  	}
-			    xhr.open("POST", "/admin/file/upload",false);
-	  		    xhr.send(ajaxData);
-		    }
-	var urls=[];	
-    var rem= document.getElementById("myfiles");
-    if(rem!=null){rem.remove();}
-	var input = document.createElement('input');
-	input.type='hidden';
-	input.name='myfiles';
-    input.id='myfiles';
-	for(var filename in urlimg)
-	{
-     urls.push(urlimg[filename]);
-	}
-	for(var i=0;i<filesAlreadyStored.length;i++)
-	{     urls.push(filesAlreadyStored[i].value);
-	}
-	//ajout ancienne image
-    input.value=urls;
-    document.getElementById('list').insertBefore(input, null);
+	//add token form
 	form=$('#user_form').serialize();
-	$.post('/admin/user/add', form, function (data, textStatus) {
-		urlimg={};
-		var parsed = JSON.parse(data);
-		if(parsed['success']){
-	            window.scrollTo(0,0);
-		        document.getElementById('light').style.display='block';
-		        document.getElementById('light').className='alert alert-success fade in';
-		        document.getElementById('light').innerHTML ='user has been added successfully';
-		        document.getElementById('fade').style.display='block';  
-		        a=document.createElement('a');
-				a.className='closer';
-				a.href='#';
-				a.innerHTML='x';
-				a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-				    return false;
-				};
-				document.getElementById('light').appendChild(a);
-				button=document.createElement('button');
-	  			button.innerHTML='OK';
-	  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-	  			button.onclick = function(e) {  
-	  				document.getElementById('light').style.display='none';
-	  				document.getElementById('fade').style.display='none';
-	  			    return false;
-	  			};
-	  			div=document.createElement('div');
-	  			div.id='mess';
-	  			document.getElementById('light').appendChild(div);
-	  			document.getElementById('mess').appendChild(button);
-	         }
-	          else if(parsed['success']==false){
-	        	  window.scrollTo(0,0);
-			        document.getElementById('light').style.display='block';
-			        document.getElementById('light').className='alert alert-danger fade in';
-			        document.getElementById('light').innerHTML =  parsed['errors']['reason'];
-			        document.getElementById('fade').style.display='block';  
-			        a=document.createElement('a');
-					a.className='closer';
-					a.href='#';
-					a.innerHTML='x';
-					a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-					    return false;
-					};
-					document.getElementById('light').appendChild(a);
-					button=document.createElement('button');
-		  			button.innerHTML='OK';
-		  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-		  			button.onclick = function(e) {  
-		  				document.getElementById('light').style.display='none';
-		  				document.getElementById('fade').style.display='none';
-		  			    return false;
-		  			};
-		  			div=document.createElement('div');
-		  			div.id='mess';
-		  			document.getElementById('light').appendChild(div);
-		  			document.getElementById('mess').appendChild(button);
-	         }
-	 });
+	validateUser(form);
+	if($('#light').children().length==0){
+	    var status=postPicture();
+	    if(!status){
+			return false;
+		}
+		form=$('#user_form').serialize();
+		postUser(form,'add');
+	}
 	return false;
-}else{
- return false;	
-}
 }); 
 
 

@@ -116,15 +116,15 @@
  }
 
 .panel-primary {
-    border-color: #00FF40;
+    border-color: #E5E4E2;
   
 }
 
 
 .panel-primary > .panel-heading {
-    color: #FFF;
-    background-color:  #00FF40;
-    border-color:  #00FF40;
+    color: #E5E4E2;
+    background-color:  #E5E4E2;
+    border-color:  #E5E4E2;
 }
 
 

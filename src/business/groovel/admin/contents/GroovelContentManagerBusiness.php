@@ -57,9 +57,9 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 		$this->routeDao->create($title,$url,$name);
 	}
 
-	public function addContent($title,$data,$url,$grooveldescription,$langage,$contentType,$userid,$publish,$weight){
+	public function addContent($title,$data,$url,$tag,$langage,$contentType,$userid,$publish,$weight){
 		 $contents= $this->contentDao->create($url,$contentType,$userid,$publish,$weight);
-		 $contentsTranslation=$this->contentTranslationDao->create($contents->id, $title, $data, $grooveldescription, $langage);
+		 $contentsTranslation=$this->contentTranslationDao->create($contents->id, $title, $data, $tag, $langage);
 		 $this->createUrlView($title,$url,$contentType);
 		 return $contentsTranslation->getId();
 	}  
@@ -80,7 +80,7 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 		$contentTranslation= $this->contentTranslationDao->find($contentTranslationid);
 		$content= $this->contentDao->find($contentTranslation->refcontentid);
 		$blob=$this->deserialize($contentTranslation['content']);
-		$res=array('title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'url'=>$content['url'],'groovelDescription'=>$contentTranslation->grooveldescription,'contentType'=>$content->type->name,'content'=>$blob,'ispublish'=>$content->ispublish,'weight'=>$content->weight);
+		$res=array('title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'url'=>$content['url'],'tag'=>$contentTranslation->tag,'contentType'=>$content->type->name,'content'=>$blob,'ispublish'=>$content->ispublish,'weight'=>$content->weight);
 		return $res;
 	}
 
@@ -185,6 +185,10 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
    		}
    	}
    	return $result;
+   }
+   
+   public function checkUrlUnique($idcontent,$url){
+   	 return $this->contentDao->checkUrlUnique($idcontent,$url);
    }
    
  

@@ -125,6 +125,11 @@ public function getContentByType($type){
 	return $result;
 }
 
-
+	public function checkUrlUnique($idcontent,$url){
+		$exist=Contents::where('id',"!=",$idcontent)->where('url','=',$url)->first();
+		if($exist!=null){
+			return false;
+		}else return true;
+}
 
 }

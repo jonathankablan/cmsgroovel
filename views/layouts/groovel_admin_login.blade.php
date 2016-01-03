@@ -7,7 +7,7 @@
   <body>
 	 <div id='wrap' class="container-fluid">
 		 <div class="row-fluid">
-			 <div class="col-md-10 col-md-offset-3 title" style="margin-bottom:50px;">
+			 <div class="col-md-10 col-md-offset-3 title" style="margin-bottom:50px;font-family: times new roman;color:#0489B1">
 			   Welcome to groovel platform
 			 </div>
 		</div>

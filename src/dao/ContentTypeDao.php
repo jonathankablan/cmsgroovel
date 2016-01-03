@@ -40,23 +40,26 @@ class ContentTypeDao implements ContentTypeDaoInterface{
 	}
 	
 	
-	public function create($tableName,$fieldNames,$descriptions,$types,$type,$widget,$isnullable,$required){
+	public function create($title,$fieldName,$fielddescription,$fieldtype,$fieldvalue,$widgetid,$fieldrequired,$reftypeid){
 	 		$contentType= new ContentTypes();
-            $contentType->tableName=$tableName;
-            $contentType->fieldName=$fieldNames;
-            $contentType->description=$descriptions;
-            $contentType->type=$types;
-            $contentType->widget=$widget;
-            $contentType->content_type=$type;
-            $contentType->isnullable=$isnullable;
-            $contentType->required=$required;
+            $contentType->tableName=$title;
+            $contentType->fieldName=$fieldName;
+            $contentType->description=$fielddescription;
+            $contentType->type=$fieldtype;
+            $contentType->fieldvalue=$fieldvalue;
+            $contentType->widget=$widgetid;
+            $contentType->content_type=$reftypeid;
+            if($fieldrequired=='true'){
+    	       	$contentType->required=1;
+            }else{
+            	$contentType->required=0;
+            }
             $contentType->save();
             return $contentType;
 	}
 	
 	public function findContentTypeByName($tableName){
 		$contentType= new ContentTypes();
-		//$result=$contentType->find($tableName);
 		$result=ContentTypes::where('tableName', '=', $tableName)->get();
 		return $result;
 	}

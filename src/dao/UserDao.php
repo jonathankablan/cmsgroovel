@@ -139,4 +139,11 @@ class UserDao implements UserDaoInterface{
 		$user->activate=0;
 		$user->save();
 	}
+	
+	public function checkUserByEmailIsUnique($email,$pseudo){
+		$user = User::where('email', '=', $email)->where('pseudo', '!=', $pseudo)->first();
+		if($user!=null){
+			return false;
+		}else return true;
+	}
 }

@@ -1,5 +1,5 @@
 
-
+var generateFormTinyMCE=[];
 var pleaseWaitDiv =$('#pleaseWaitDialog');
 var timer=null;
 function modifValues(){
@@ -8,6 +8,205 @@ function modifValues(){
   var newVal = val+20;
   bar.css('width',newVal);
 }
+
+
+function buildErrorMessage($error){
+    window.scrollTo(0,0);
+    document.getElementById('light').innerHTML=null;
+    document.getElementById('light').style.display='block';
+    document.getElementById('light').className='alert alert-danger fade in';
+    document.getElementById('fade').style.display='block';  
+    
+    div=document.createElement('div');
+    div.className='row';
+    div.style='margin-left:99%'
+    a=document.createElement('a');
+		a.className='closer';
+	a.href='#';
+	a.innerHTML='x';
+	a.onclick = function(e) {  
+		document.getElementById('light').style.display='none';
+		document.getElementById('fade').style.display='none';
+	    return false;
+	};
+	div.appendChild(a);
+	document.getElementById('light').appendChild(div);
+	
+	 div=document.createElement('div');
+     div.className='row';
+     div.innerHTML = $error;
+     document.getElementById('light').appendChild(div);
+	
+	
+	button=document.createElement('button');
+		button.innerHTML='OK';
+		//button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
+		button.onclick = function(e) {  
+			document.getElementById('light').style.display='none';
+			document.getElementById('fade').style.display='none';
+		    return false;
+		};
+		div=document.createElement('div');
+		div.className='row';
+		div.style='margin-left:50%';
+		div.id='mess';
+		document.getElementById('light').appendChild(div);
+		document.getElementById('mess').appendChild(button);
+}
+
+function buildSucessMessage($message){
+   window.scrollTo(0,0);
+   document.getElementById('light').innerHTML=null;
+   document.getElementById('light').style.display='block';
+   document.getElementById('light').className='alert alert-success fade in';
+   document.getElementById('fade').style.display='block';  
+   
+   div=document.createElement('div');
+   div.className='row';
+   div.style='margin-left:99%'
+   a=document.createElement('a');
+	a.className='closer';
+	a.href='#';
+	a.innerHTML='x';
+	a.onclick = function(e) {  
+		document.getElementById('light').style.display='none';
+		document.getElementById('fade').style.display='none';
+	    return false;
+	};
+	div.appendChild(a);
+	document.getElementById('light').appendChild(div);
+	
+	 div=document.createElement('div');
+     div.className='row';
+     div.innerHTML = $message;
+     document.getElementById('light').appendChild(div);
+	
+	
+	button=document.createElement('button');
+		button.innerHTML='OK';
+		button.onclick = function(e) {  
+			document.getElementById('light').style.display='none';
+			document.getElementById('fade').style.display='none';
+		    return false;
+		};
+		div=document.createElement('div');
+		div.className='row';
+		div.style='margin-left:50%';
+		div.id='mess';
+		document.getElementById('light').appendChild(div);
+		document.getElementById('mess').appendChild(button);
+}
+
+function validateContent(form){
+document.getElementById('light').innerHTML=null;
+document.getElementById('fade').innerHTML=null;
+var ajax=	$.ajax({
+		  type: 'POST',
+		  url:'/admin/content/validate',
+		  data: form,
+		  async:false,
+		  success:function(data) {
+			var parsed=JSON.parse(data);
+			  if(parsed['success']==true){
+				  document.getElementById('light').innerHTML=null;
+		    	  return true;
+              }
+               else if(parsed['success']==false){
+                  buildErrorMessage(parsed['errors']['reason']);
+                  return false;
+              }
+		  }
+		
+	  });
+return false;
+	}
+
+
+function postContent(form,action){
+	$.post('/admin/content/'+action, form, function (data, textStatus) {
+		urlimg={};
+		if(textStatus=='success'){
+			if(data!=null){
+				  var parsed = JSON.parse(data);
+			      if(parsed['success']){
+                	   buildSucessMessage('content has been added successfully');
+                   }
+                    else if(parsed['success']==false){
+                       buildErrorMessage(parsed['errors']['reason']);
+	               }
+			}else{
+				if(tinymce!=null){
+		            	tinymce.remove();
+				}
+				alert('data problems');
+			}
+		}else{
+			if(tinymce!=null){
+	            	tinymce.remove();
+			}
+			alert('something mistake...problems');
+		}
+		
+	 });
+}
+
+function postFiles(){
+	 getFileOldList();
+	 var status=true;
+	 if($('#content_form #my-file').length){
+		$('#content_form #my-file').val('');
+		status=validateFiles(storedFiles,filesAlreadyStored);
+	 }
+	 if(status){
+		 var ajaxData = new FormData();
+		    for(i=0;i<storedFiles.length;i++){
+			    var xhr = new XMLHttpRequest();
+			    ajaxData.append("file", storedFiles[i]);
+			    var token =  document.getElementById('token').value;
+			    ajaxData.append("_token",token);
+			    xhr.onreadystatechange = function () {
+				  	response = this.responseText;
+				  	if(response!=""){
+		     	  	var url = JSON.parse(response);
+	         		if(url['success']){
+		    		  	urlimg[storedFiles[i]['name']]=url.datas[storedFiles[i]['name']];
+		             }
+		              else if(url['success']==false){
+		            	 buildErrorMessage('Oops something wrong happen');
+		            	 return false;
+		             }
+				  }
+			  	}
+		   
+			    xhr.open("POST", "/admin/file/upload",false);
+			    xhr.send(ajaxData);
+		    }
+		    
+		    var urls=[];
+			// if exist already clean it	
+	        var rem= $('#content_form #myfiles');
+	        if(rem.length){rem.remove();}
+	
+	        //create an input files hidden to send to server
+	  		var input = document.createElement('input');
+			input.type='hidden';
+			input.name='myfiles';
+	        input.id='myfiles';
+			for(var filename in urlimg)
+			{
+	         urls.push(urlimg[filename]);
+			}
+			for(var i=0;i<filesAlreadyStored.length;i++)
+			{     urls.push(filesAlreadyStored[i].value);
+			}
+	    	//add files
+	        input.value=urls;
+	        $('#content_form #list').append(input);
+		    return true;
+	}else return false;
+}
+
+
 
 function showContentType(str,url){
 	
@@ -27,7 +226,7 @@ function showContentType(str,url){
                  success: function(data) {
                 	 var parsed = JSON.parse(data);
                 	  if(parsed.datas[0].length!=0){
-                		  setDataJSON(data,url);	
+                		  generateContent(data,url);	
                 	  }
                 	  
                 	
@@ -40,349 +239,179 @@ function showContentType(str,url){
             });
   }
 
-fileEvents = function() {
-	var fileInput  = document.querySelector( ".input-file" ),    
-    button     = document.querySelector( ".input-file-trigger" ),  
-    the_return = document.querySelector(".file-return");  
-	if(button!=null){
-		button.addEventListener( "keydown", function( event ) {  
-			    if ( event.keyCode == 13 || event.keyCode == 32 ) {  
-			        fileInput.focus();  
-			    }  
-			});
-		   
-		// action lorsque le label est cliqué  
-		button.addEventListener( "click", function( event ) {  
-		   fileInput.focus();  
-		   return false;  
-		});  
-	}
-	if(fileInput!=null){
-		// affiche un retour visuel dès que input:file change  
-		fileInput.addEventListener( "change", function( event ) {    
-		   // the_return.innerHTML = this.value;    
-			   fileSelect('my-file');
-			   
-		});  
-	}
+
+
+
+function generateContent(req,url){
+	 var fiedTinyMCE = new Array();
+	 
+	 var parsed = JSON.parse(req);
+	 $contentForm=$("#content_form");
+	//clear all
+	 document.getElementById('content_form').innerHTML='';
+	 
+	
+	 
+	 var divHead=document.createElement('div');
+	 divHead.className='row';
+	 divHead.style='background-color:#FAFAFA';
+	 divHead.id='head';
+	 $contentForm.append(divHead);
+	 
+	 var div=document.createElement('div');
+	 div.style='margin-top:50px;margin-left:15px';
+	 div.className='row';
+	 var title=$("#form-fields #title").clone(true,true);
+	 div.innerHTML= title.html();
+	 $contentForm.find('#head').append(div);
+	 
+	 
+	 var langage=$("#form-fields #langage #langage");
+	 var output = [];
+	 for(var key in langages){
+		output.push('<option value="'+ key +'">'+ langages[key] +'</option>');
+	  }
+	 
+	 langage.html(output.join(''));
+	 
+	 var div=document.createElement('div');
+     div.className='row';
+     div.style='margin-top:50px;margin-left:15px';
+     div.innerHTML= $("#form-fields #langage").clone(true,true).html();
+     $contentForm.find('#head').append(div);
+	  
+	 var div=document.createElement('div');
+	 div.className='row';
+	 div.style='margin-top:50px;margin-left:15px';
+	 var weight=$("#form-fields #weight").clone(true,true);
+	 div.innerHTML= weight.html();
+	 $contentForm.find('#head').append(div);
+	 
+	 var div=document.createElement('div');
+	 div.className='row';
+	 div.style='margin-top:50px;margin-left:15px';
+	 var tag=$("#form-fields #tag").clone(true,true);
+	 div.innerHTML= tag.html();
+	 $contentForm.find('#head').append(div);
+	 
+	 var div=document.createElement('div');
+	 div.className='row';
+	 div.style='margin-top:50px;margin-left:15px';
+	 var url=$("#form-fields #url").clone(true,true);
+	 div.innerHTML= url.html();
+	 $contentForm.find('#head').append(div);
+	 
+	 var div=document.createElement('div');
+	 div.className='row';
+	 div.style='margin-top:50px;margin-left:15px';
+	 var publish=$("#form-fields #publish").clone(true,true);
+	 div.innerHTML= publish.html();
+	 $contentForm.find('#head').append(div);
+	 
+	 //start fields template
+	 for(var i=0;i<parsed['datas'].length;i++){
+		 for(var j=0;j<parsed['datas'][i].length;j++){
+			 var field=null;
+			 var newField=null;
+			 if(parsed['datas'][i][j]['fieldtype']=='date'){
+				 field=$("#form-fields #date");
+				 newField=field.clone(true,true);
+				 var id=newField.find("input");
+				 id.attr("id", parsed['datas'][i][j]['fieldname']);
+				 id.attr("name", parsed['datas'][i][j]['fieldname']);
+				
+			 }
+			 else if(parsed['datas'][i][j]['fieldtype']=='checkbox'){
+		    	 field=$("#form-fields #checkbox");
+		    	 newField=field.clone(true,true);
+		    	 var id=newField.find("input");
+				 id.attr("id", parsed['datas'][i][j]['fieldname']);
+				 id.attr("name", parsed['datas'][i][j]['fieldname']);
+		     }
+			 else  if(parsed['datas'][i][j]['fieldtype']=='radio'){
+		    	 field=$("#form-fields #radio");
+		    	 newField=field.clone(true,true);
+		    	 var id=newField.find("input");
+				 id.attr("id", parsed['datas'][i][j]['fieldname']);
+				 id.attr("name", parsed['datas'][i][j]['fieldname']);
+		     }
+		     if(parsed['datas'][i][j]['fieldtype']=='textarea'){
+		    	 field=$("#form-fields #textarea");
+		    	 newField=field.clone(true,true);
+		    	 var id=newField.find("textarea");
+				 id.attr("id", parsed['datas'][i][j]['fieldname']);
+				 id.attr("name", parsed['datas'][i][j]['fieldname']);
+				 if (parsed.datas[i][j]['fieldwidget']=='11'){//editor html tinyMCE
+			       	    generateFormTinyMCE.push(parsed['datas'][i][j]['fieldname']);
+		 	     }
+		     }
+		     else if(parsed['datas'][i][j]['fieldtype']=='select'){
+		    	 field=$("#form-fields #select");
+		    	 newField=field.clone(true,true);
+		    	 var id=newField.find("select");
+				 id.attr("id", parsed['datas'][i][j]['fieldname']);
+				 id.attr("name", parsed['datas'][i][j]['fieldname']);
+		     }
+		     else if(parsed['datas'][i][j]['fieldtype']=='text'){
+		    	 field=$("#form-fields #text");
+		    	 newField=field.clone(true,true);
+		    	 var id=newField.find("input");
+				 id.attr("id", parsed['datas'][i][j]['fieldname']);
+				 id.attr("name", parsed['datas'][i][j]['fieldname']);
+		     }
+		     else if(parsed['datas'][i][j]['fieldtype']=='file'){
+		    	 field=$("#form-fields #uploadfile");
+		    	 newField=field.clone(true,true);
+		    	 var id=newField.find("div[id='name']");
+		    	 id.attr("id", parsed['datas'][i][j]['fieldname']);
+				 id.attr("name", parsed['datas'][i][j]['fieldname']);
+				 waitForElementToDisplay(parsed['datas'][i][j]['fieldname'],5000);
+		     }
+		     if(newField!=null){
+			     var name=newField.find("label[for='name']");
+			     name.html(parsed['datas'][i][j]['fieldname']);
+			     newField.appendTo('#content_form');
+			     if(parsed.datas[i][j]['fieldrequired']=='1'){
+		            //do nothing is by default required
+		          }else{
+		            	 spanrequired=newField.find("span[class='required']");
+		            	 spanrequired.remove();
+		          }
+		     }
+		 }
+	 }
+	 
+	 //in case of a field has same title name need to put here and prevent from loosing event on loading files system
+	 input=document.createElement('input');
+	 input.type='hidden';
+	 input.name='ContentType';
+	 input.value=parsed.datas[0][0]['title']
+	 input.id=parsed.datas[0][0]['title'];
+	 $contentForm.append(input);
+	 
+     setTimeout(function() {
+       	clearInterval(timer);
+      	$('#pleaseWaitDialog').modal('hide');
+     	$('#modal').modal('show');
+     	var bar = $('#progress-bar');
+       	bar.css('width',0);
+       }, 5000); // milliseconds
+	
 }
 
 
-function setDataJSON(req,url)
-{
-
-  var parsed = JSON.parse(req);
-  var my_form= document.getElementById('content_form');
-  document.getElementById('content_form').innerHTML='';
-  my_form.name='myForm';
-  my_form.method='POST';
-  my_form.action=url.replace('form/view_update','add');
-  
-  sidebarHead = document.createElement('div');
-  sidebarHead.style = "margin-top:30px;margin-bottom:15px;width:100%;height:60px;background-color: #98FB98;";
-  p=document.createElement('p');
-  p.style.color='black';
-  p.innerHTML='General settings';
-  p.style='margin-left:350px';
-  sidebarHead.appendChild(p);
-  my_form.appendChild( sidebarHead);
-
-  form_group1 = document.createElement('div');
-  form_group1.className = "form-group form-inline";
-  form_group1.style="margin-top:50px";
-  var label1='<label for=\'title\' class="required">Title</label>';
-  form_group1.innerHTML=label1;
-
-  input1=document.createElement('input');
-  input1.type='text';
-  input1.name='title';
-  input1.style='margin-left:115px;margin-bottom:0px;width:350px;height:30px';
-  input1.className="form-control";
-  form_group1.appendChild(input1); 
-  my_form.appendChild(form_group1); 
-  
-  form_group2 = document.createElement('div');
-  form_group2.className = "form-group form-inline";  
-  form_group2.style="margin-top:50px"
-  var label2='<label for=\'url\' class="required">url</label>';
-  form_group2.innerHTML=label2;
-  input2=document.createElement('input');
-  input2.type='text';
-  input2.name='url';
-  input2.style='margin-left:125px;margin-bottom:0px;width:350px;height:30px';
-  input2.className="form-control form-inline";
-  form_group2.appendChild(input2); 
-  my_form.appendChild(form_group2); 
-
-  form_group3 = document.createElement('div');
-  form_group3.className = "form-group form-inline";
-  form_group3.style="margin-top:50px";
-  var label3='<label for=\'tag\' class="required">tag</label>';
-  form_group3.innerHTML=label3;
-
-  input3=document.createElement('input');
-  input3.type='text';
-  input3.name='groovelDescription';
-  input3.style='margin-left:25px;margin-bottom:0px;width:350px;height:30px';
-  input3.className="form-control";
-  form_group3.appendChild(input3); 
-  my_form.appendChild(form_group3); 
-  
-  form_group4 = document.createElement('div');
-  form_group4.className = "form-group form-inline";
-  form_group4.style="margin-top:50px";
-  var label4='<label for=\'langage\' class="required">langage</label>';
-  form_group4.innerHTML=label4;
-
-   
-  var input4 = document.createElement("select");
-  input4.id = "langage";
-  input4.name= "langage";
-  input4.style='margin-left:95px;margin-bottom:0px;width:350px;height:30px';
-  input4.className="form-control";
-  
-  //Create and append the options
-  for(var key in langages){
-      var option = document.createElement("option");
-      option.value = key;
-      option.text = langages[key];
-      input4.appendChild(option);
-  }
-  form_group4.appendChild(input4); 
-  my_form.appendChild(form_group4); 
- 
-  
-  
-  
-  sidebarIntro = document.createElement('div');
-  sidebarIntro.style = "margin-top:40px;margin-bottom:40px;width:100%;height:60px;background-color: #98FB98;";
-  p=document.createElement('p');
-  p.style.color='black';
-  p.innerHTML='Content';
-  p.style='margin-left:350px';
-//  form_group.appendChild(p);
-  sidebarIntro.appendChild(p);
-  my_form.appendChild( sidebarIntro);
-  
-  input=document.createElement('input');
-  input.type='hidden';
-  input.name='ContentType';
-  input.value=parsed.datas[0][0]['tableName']
-  input.id=parsed.datas[0][0]['tableName'];
-  my_form.appendChild(input);
- 
-  var fiedTinyMCE = new Array();
-  var numberFieldTinyMCE=0;
-  var required='required';
-  var lastInputid=null;
-  var sidebar=null;
-  for (var i=0;i<parsed.datas.length;i++)
-    {
-      for( var j=0;j<parsed.datas[i].length;j++){
-         if(parsed.datas[i][j]['type']=='string'){
-        
-          form_group = document.createElement('div');
-          form_group.className = "form-group form-inline";
-	      if (parsed.datas[i][j]['widget']=='11'){
-	          form_group.style='margin-left:150px'
-	      	}
-          form_group.id=parsed.datas[i][j]['name'];
-          var label=null;
-      
-	      if(parsed.datas[i][j]['required']=='0'){
-	          label='<label for='+parsed.datas[i][j]['name'] +' style="width:100px"'+'>'+parsed.datas[i][j]['name']+'</label>';
-	         }else{
-	          label='<label for='+parsed.datas[i][j]['name'] +' class='+required +' style="width:150px"'+'>'+parsed.datas[i][j]['name']+'</label>';
-	      }
-	      
-	     if (parsed.datas[i][j]['widget']!='11'){ 
-	          form_group.innerHTML=label;
-         }else{
-        	 form_group_label = document.createElement('div');
-        	 form_group_label.className = "form-group form-inline";
-        	 form_group_label.innerHTML=label;
-        	 my_form.appendChild(form_group_label);   
-         }
-	     
-	      input=document.createElement('textarea');
-          input.name=parsed.datas[i][j]['name'];
-          input.className = "form-control form-inline";
-          input.id=parsed.datas[i][j]['name'];
-          
-          	if (parsed.datas[i][j]['widget']=='11'){//editor html tinyMCE
-	      		fiedTinyMCE[numberFieldTinyMCE]=parsed.datas[i][j]['name'];
-          	    numberFieldTinyMCE++;
- 	        }else{
-	        	 input=document.createElement('textarea');
-	             input.type='text';
-	             if(parsed.datas[i][j]['required']=='0'){
-	             input.style='width:350px;margin-left:50px';
-	             }else{
-	            	 input.style='width:350px';
-	             }
-	             input.name=parsed.datas[i][j]['name'];
-	             input.value='';
-	             input.className = "form-control form-inline";
-
-	        }
-          	 form_group.appendChild(input);
-          	 my_form.appendChild(form_group);        
-	          document.body.appendChild(my_form);
-	          document.getElementById('form-modal').appendChild(my_form);
-	          lastInputid=input.id;
-        }
-        else if (parsed.datas[i][j]['type']=='double' || parsed.datas[i][j]['type']=='integer'){
-          form_group = document.createElement('div');
-          form_group.className = "form-group form-inline";
-          form_group.style='width:550px;margin-top:50px';
-          var label=null;
-          if(parsed.datas[i][j]['required']=='0'){
-              label='<label for='+parsed.datas[i][j]['name'] +' style="width:150px"'+'>'+parsed.datas[i][j]['name']+'</label>';
-             }else{
-              label='<label for='+parsed.datas[i][j]['name'] +' class='+required +' style="width:150px"'+'>'+parsed.datas[i][j]['name']+'</label>';
-          }
-          form_group.innerHTML=label;
-
-          input=document.createElement('input');
-          input.type='double';
-          input.name=parsed.datas[i][j]['name'];
-          input.value='';
-          input.className = "form-control";
-          input.style='margin-left:115px';
-          input.id=parsed.datas[i][j]['name'];
-
-          form_group.appendChild(input);
-
-          my_form.appendChild(form_group);        
-          document.body.appendChild(my_form);
-          document.getElementById('form-modal').appendChild(my_form);
-          lastInputid=input.id;
-
-        }else if (parsed.datas[i][j]['widget']=='12'){//send files
-        	sidebar='not null';
-        	  $.ajax({
-	                type: 'get',
-	                data :"",
-	                dateType:'json',
-	                url: "file/upload/widget",
-	                 success: function(data) {
-	                	 form_group_label =document.createElement('div');
-	                     form_group_label.className = "form-group";
-	                     var label1='<label for=\'files\'>Files Attachements</label>';
-	                     form_group_label.innerHTML=label1;
-	                     my_form.appendChild(form_group_label);
-	                	 
-	                     form_group =document.createElement('div');
-	                     form_group.className = "form-group form-inline";
-	                     form_group.style='margin-left:250px';
-	                     form_group.innerHTML=data.html;
-	                     my_form.appendChild(form_group);   
-	                     document.body.appendChild(my_form);
-	                     document.getElementById('form-modal').appendChild(my_form);
-	                     fileEvents();
-	                     //add sidebar
-	                     sidebar = document.createElement('div');
-	                     sidebar.style = "margin-top:30px;margin-bottom:15px;width:100%;height:60px;background-color: #98FB98;";
-	                     p=document.createElement('p');
-	                     p.style.color='black';
-	                     p.innerHTML='Optional settings';
-	                     p.style='margin-left:300px';
-	                     sidebar.appendChild(p);
-	                     my_form.appendChild( sidebar);
-	                     form_group = document.createElement('div');
-	                     form_group.className = "form-group";
-	                     form_group.style='margin-left:50px;margin-top:70px;margin-bottom:75px';
-	                     var label='<label for='+'isPublish' +' style="font-size: 20px">Publish</label>';
-	                     form_group.innerHTML=label;
-	                     input=document.createElement('input');
-	                     input.type='checkbox';
-	                     input.name='isPublish';
-	                     input.value='';
-	                     input.style='margin-left:175px';
-	                     input.id='isPublish';
-	                     form_group.appendChild(input);
-	                     my_form.appendChild(form_group);
-	                     
-	                     form_group = document.createElement('div');
-	                     form_group.className = "form-group";
-	                     form_group.style='margin-left:50px';
-	                     var label='<label for='+'weight' +' style="font-size: 20px">position of your content</label>';
-	                     form_group.innerHTML=label;
-	                     input=document.createElement('input');
-	                     input.type='text';
-	                     input.name='weight';
-	                     input.value='';
-	                     input.style='margin-left:130px';
-	                     input.id='weight';
-	                     form_group.appendChild(input);
-	                     my_form.appendChild(form_group);
-	                     
-	                     
-	                },
-	                error: function(xhr, textStatus, thrownError) {
-	                    alert(thrownError);
-	                    alert('Something went to wrong.Please Try again later...');
-	                }
-	               
-	            }); 
-         }
-      }
+function waitForElementToDisplay(selector, time) {
+   if($('#'+selector).length) {
+    	bindFileEvents(selector);
+        return;
     }
-    
-    for(var i=0;i<numberFieldTinyMCE;i++){
-    	generateFormTinyMCE.push(fiedTinyMCE[i]);
+    else {
+        setTimeout(function() {
+            waitForElementToDisplay(selector, time);
+        }, time);
     }
- 
-    if(sidebar==null){
-	    sidebar = document.createElement('div');
-	    sidebar.style = "margin-top:30px;margin-bottom:15px;width:100%;height:60px;background-color: #98FB98;";
-	    p=document.createElement('p');
-	    p.style.color='black';
-	    p.innerHTML='Optional settings';
-	    p.style='margin-left:300px';
-	    sidebar.appendChild(p);
-	    my_form.appendChild( sidebar);
-	    
-	    //select publish, ontop
-	    form_group = document.createElement('div');
-	    form_group.className = "form-group";
-	    form_group.style='margin-left:50px;margin-top:70px;margin-bottom:75px';
-	    var label='<label for='+'isPublish' +' style="font-size: 20px">Publish</label>';
-	    form_group.innerHTML=label;
-	    input=document.createElement('input');
-	    input.type='checkbox';
-	    input.name='isPublish';
-	    input.value='';
-	    input.style='margin-left:175px';
-	    input.id='isPublish';
-	    form_group.appendChild(input);
-	    my_form.appendChild(form_group);
-	    
-	    form_group = document.createElement('div');
-        form_group.className = "form-group";
-        form_group.style='margin-left:50px';
-        var label='<label for='+'weight' +' style="font-size: 20px">weight content</label>';
-        form_group.innerHTML=label;
-        input=document.createElement('input');
-        input.type='text';
-        input.name='weight';
-        input.value='';
-        input.style='margin-left:130px;margin-top:50px';
-        input.id='weight';
-        form_group.appendChild(input);
-        my_form.appendChild(form_group);
-    }
-   
-    
-    setTimeout(function() {
-    	clearInterval(timer);
-    	$('#pleaseWaitDialog').modal('hide');
-    	$('#modal').modal('show');
-    	var bar = $('#progress-bar');
-      	bar.css('width',0);
-      }, 5000); // milliseconds
-    
 }
+
 
 
 
@@ -730,3 +759,44 @@ for(var i=0;i<generateFormTinyMCE.length;i++){
          var par = $(this).parent().parent(); //tr
          par.remove();
    }; 
+   
+  function TranslateContent(){
+	  var thArray = $("#table_contents thead tr").map(function(index,elem) {
+	                var ret = [];
+	                var x = $(this);
+	                var cells = x.find('th#col_content');
+	                $(cells, this).each(function () {
+	                    var d = $(this).val()||$(this).text();
+	                    ret.push(d);
+	                });
+	                return ret;
+	              });
+
+	    var tdArray=new Array();
+	    var parent=$(this).parent().parent();
+	        $(parent).children('td#row_content').each(function(i,td) {
+	            tdArray.push($(this).text());
+	        });
+
+	    var inputData = new Array();
+	    for (i = 0; i < thArray.length; i++){ 
+	         inputData[thArray[i]]=tdArray[i];
+	    }
+	    
+	    $.ajax({
+	                type: 'get',
+	                data : any2url('q',inputData),
+	                dateType:'json',
+	                url: "content/translate",
+	                 success: function(data) {
+	                     var parsed = JSON.parse(data);
+	                     window.location.href = parsed.datas.uri;
+	                },
+	                error: function(xhr, textStatus, thrownError) {
+	                    alert(thrownError);
+	                    alert('Something went to wrong.Please Try again later...');
+	                }
+	               
+	            });
+	  }
+

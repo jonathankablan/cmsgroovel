@@ -48,20 +48,14 @@ class GroovelContentTypeFormController extends GroovelFormController {
 	public function processForm(){
 		$messages=\Input::all();
 		if (\Request::is('*/content_type/add')){
-			$this->add();
-			return $this->jsonResponse(array('content_type added done'),false,true,false);
-		}
-		else if(\Request::is('*/content_type/fields/delete')){
-			return $this->deleteField();
+			$id=$this->saveOrUpdate();
+			return $this->jsonResponse(array('id'=>$id,'content_type added done'),false,true,false);
 		}
 		else if(\Request::is('*/content_type/delete')){
 			 $this->delete();
 			 return $this->jsonResponse(array('content_type deleted done'),false,true,false);
 		}
-		else if(\Request::is('*/content_type/update')){
-			$this->update();
-			return $this->jsonResponse(array('content_type updated done'),false,true,false);
-		}
+		
 		else if(\Request::is('*/content_type')){
 			$content_type=\ContentTypes::findAll();
 			\Session::flash('messages', $content_type);
@@ -75,86 +69,28 @@ class GroovelContentTypeFormController extends GroovelFormController {
 	
 	public function validateForm($params)
 	{
-			if (\Request::is('*/content_type/add')||\Request::is('*/content_type/update'))
+		if (\Request::is('*/content_type/add')||\Request::is('*/content_type/update'))
 			{
 				$this->checkToken();
-				$rules=array();
-				$rules['title']= 'required';
-				$i=0;
-				$inputs=\Input::get('fieldName');
-				$inputstovalidate=array();
-				$inputstovalidate['title']=\Input::get('title');
-				$field_description=false;
-				foreach(\Input::get('fieldName') as $val)
-				{
-					if(strcasecmp($val, 'groovelDescription') == 0){
-						$field_description=true;
-					}
-					$rules['fieldName '.$i] = 'required|alpha';
-					$inputstovalidate['fieldName '.$i]=$val;
-					$i++;
+				if(!$this->checkUploaderExistsOnlyOnce(\Input::all())){
+					return $this->jsonResponse('Only one file type is possible',false,true,true);
 				}
-				$validation = \Validator::make($inputstovalidate, $rules);
-				if($validation->passes()){
-					if($field_description){
-						$validation->getMessageBag()->add('contentType', 'groovelDescription is a specific reserved words you can not use it');
-					}
-					if($this->has_duplicates(\Input::get('fieldName'))){
-						$validation->getMessageBag()->add('contentType', 'fieldName must be unique');
-					}
-					$contentType=$this->contentTypeManager->getContentType(\Input::get('title'));
-					if( count($contentType)!=0 && !\Request::is('*/content_type/update')){
-						$validation->getMessageBag()->add('contentType', 'contentType already exists!');
-					}
-					if(!\Request::is('*/content_type/update')){
-						if(!$this->checkTinyMCEeditorExistsOnlyOnce(\Input::get('widget'))){
-							$validation->getMessageBag()->add('contentType', 'Editor HTML can only be choice once');
-						}
-						
-						if(!$this->checkUploaderExistsOnlyOnce(\Input::get('widget'))){
-							$validation->getMessageBag()->add('contentType', 'Uploader files can only be choice once');
-						}
-					}else if(\Request::is('*/content_type/update')){
-						$this->checkToken();
-						$wid=array();
-						$i=0;
-						foreach(\Input::get('widget_selected') as $widgetid){
-							$widgets= $this->contentTypeManager->getWidget($widgetid);
-							if($widgets!=null){
-								$wid[$i]=$widgets->getName();
-								$i++;
-							}
-						}
-						if(!$this->checkTinyMCEeditorExistsOnlyOnce($wid)){
-							$validation->getMessageBag()->add('contentType', 'Editor HTML can only be choice once');
-						}
-						if(!$this->checkUploaderExistsOnlyOnce($wid)){
-							$validation->getMessageBag()->add('contentType', 'Uploader files can only be choice once');
-						}
-					}
-					$messages=$validation->messages();
-					if(count($messages)>0){
-						$formatMess=null;
-						foreach ($messages->all() as $message)
-						{
-							$formatMess=$message.'- '.$formatMess;
-						}
-						return $this->jsonResponse($formatMess,false,true,true);
+				if(\Request::is('*/content_type/add')){
+					$template=\Input::all();
+					$contentType=$this->contentTypeManager->findAllContentTypeByName($template['template']['title']);
+					if($contentType!=null){
+						return $this->jsonResponse('content type with the same name already exists choose another name',false,true,true);
 					}
 				}
-				if($validation->fails()){
-					$messages=$validation->messages();
-					$formatMess=null;
-					foreach ($messages->all() as $message)
-					{
-						$formatMess=$message.'- '.$formatMess;
-					}
-					return $this->jsonResponse($formatMess,false,true,true);
-				}
+				
 			}
-			else if(\Request::is('*/content_type/delete')){
+		else if(\Request::is('*/content_type/delete')){
 				$input=\Input::get('q');
-				$iscontent=$this->contentTypeManager->existContents($input['title']);
+				$iscontent=false;
+				if(!empty($input['id'])){
+			        $contentType=$this->contentTypeManager->find($input['id']);
+					$iscontent=$this->contentTypeManager->existContents( $contentType->name);
+				}
 				$rules=array();
 				$inputstovalidate=array();
 				$validation = \Validator::make($inputstovalidate, $rules);
@@ -171,10 +107,11 @@ class GroovelContentTypeFormController extends GroovelFormController {
 		return count( array_keys( array_flip( $array ) ) ) !== count( $array );
 	}
 	
-	private function checkUploaderExistsOnlyOnce($widgets){
+	private function checkUploaderExistsOnlyOnce($template){
 		$count=0;
-		foreach($widgets as $widget){
-			if($widget	=='uploader'){
+		$body=$template['template']['body'];
+		foreach($body as $field){
+			if($field['fieldtype']=='file'){
 				$count++;
 			}
 		}
@@ -195,42 +132,44 @@ class GroovelContentTypeFormController extends GroovelFormController {
     	}else return true;
     } 
 	
-	private function deleteField(){
-		$input = \Input::get('q');
-		$this->contentTypeManager->deleteField($input);
-	}
+	
 	
 	private function delete(){
-		$input = \Input::get('q');
-		$this->contentTypeManager->deleteContentType($input['title']);
-	}
-	
-	private function add(){
- 		$this->contentTypeManager->add(\Input::get('title'),\Input::get('fieldName'),\Input::get('description'),\Input::get('type'),\Input::get('widget'),\Input::get('isnullable'),\Input::get('required')); 
-	}
-
-
-	private function update(){
-		$tableName=$this->contentTypeManager->update(\Input::get('title'),$_POST['field_id'],$_POST['fieldName'],$_POST['type_selected'],$_POST['widget_selected'],$_POST['description'],$_POST['isnullable'],$_POST['required']);
-		$this->refreshContent(\Input::get('title'),\Input::get('content_type_id'));
-		return \Redirect::to('/admin/content_type/editform');
-	}
-	
-	
-
-	private function refreshContent($title,$contentTypeid){
-		$contentType=$this->contentTypeManager->editContentType($contentTypeid);
-		$res=array('id'=>$contentTypeid,'title'=>$title,'fields'=>$contentType);
-		\Session::flash('content_type_edit', $res);
-		$widgets=\Widgets::all();
-		$w=array();
-		$w['-1']='';
-		foreach ($widgets as $widget){
-			$w[$widget->getId()]=$widget->name;
+		$input=\input::get('q');
+		if(!empty($input['id'])){
+			$contentType=$this->contentTypeManager->find($input['id']);
+			$contentType=$this->contentTypeManager->findAllContentTypeByName($contentType->name);
+			if(!empty($contentType)){
+				$this->contentTypeManager->deleteContentType($contentType->name);
+			}
 		}
-		\Session::flash('widgets',$w);
-		\Session::flash('msg', 'content type has been updated');
 	}
+	
+	
+	private function saveOrUpdate(){
+		$input=\Input::all();
+		$title=$input['template']['title'];
+		$body=$input['template']['body'];
+		$content_type_id=$input['id'];
+		$contentType=$this->contentTypeManager->find($content_type_id);
+		if(empty($contentType)){
+			$contentType=$this->contentTypeManager->createContentType($title);
+			foreach($body as $field){
+				$this->contentTypeManager->addField($title,$field['fieldname'],$field['fielddescription'],$field['fieldtype'],$field['fieldvalue'],$field['fieldwidget'],$field['fieldrequired'],$contentType->id);
+			}
+		}else{//update
+			//clean all
+			$this->contentTypeManager->deleteContentType($contentType->name);
+			$contentType=$this->contentTypeManager->createContentType($title);
+			foreach($body as $field){
+				$this->contentTypeManager->addField($title,$field['fieldname'],$field['fielddescription'],$field['fieldtype'],$field['fieldvalue'],$field['fieldwidget'],$field['fieldrequired'],$contentType->id);
+			}
+		}
+		return $contentType->id;
+	}
+
+
+	
 	
 	
 	//action called when you are in the list content types and you edit one
@@ -291,6 +230,7 @@ class GroovelContentTypeFormController extends GroovelFormController {
 	
 		return $out;
 	}
+	
 	
 
 }

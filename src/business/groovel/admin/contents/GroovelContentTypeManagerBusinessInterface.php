@@ -20,7 +20,8 @@ interface GroovelContentTypeManagerBusinessInterface{
 	public function getListContentType();
 	public function editContentType($contentid);
 	public function paginateContentType();
-	public function add($tableName,$fieldNames,$descriptions,$types,$widget,$isnullable,$required);
+	public function createContentType($title);
+	public function addField($title,$fieldname,$fielddescription,$fieldtype,$fieldvalue,$fieldwidget,$fieldrequired,$reftypeid);
 	public function deleteContentType($name);
 	public function existContents($contenttype);
 	public function getWidget($id);

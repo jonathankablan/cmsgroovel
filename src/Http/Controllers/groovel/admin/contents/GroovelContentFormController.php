@@ -45,9 +45,60 @@ class GroovelContentFormController extends GroovelFormController {
     	$this->contentTypeManager=$contentTypeManager;
     	$this->beforeFilter('auth');
     }
-	
-   
     
+    public function makeValidation($params){
+    		$this->checkToken();
+    		$field_requireds=$this->contentManager->getFieldRequired(\Input::get('ContentType'));
+    		$rules=array();
+    		foreach($field_requireds as $key=>$input)
+    		{
+    			$rules[$key] = 'required';
+    		}
+    		$rules['title']='required';
+    		$rules['url']='required|url';
+    		$rules['tag']='required';
+    			
+    		$url=\Input::get('url');
+    		$validInput=\Input::all();
+    		if($url!=null){
+    			$urlvalid='http://localhost/'.$url;
+    			$validInput['url']=$urlvalid;
+    		}
+    		$validation = \Validator::make($validInput, $rules);
+    		if($validation->passes()){
+    			$rules=array();
+    			if('admin/content/add'==\Input::get('action')){
+	    			$rules['url']='required|unique:routes_groovel,uri';
+    			}
+    			if('admin/content/update'==\Input::get('action')){
+    				if(!$this->contentManager->checkUrlUnique(\Input::get('content_id'),$url)){
+    					return $this->jsonResponse(array("url must be unique"),false,true,true);
+    				}
+    			}    			
+    			$validation = \Validator::make(array('url'=>\Input::get('url')), $rules);
+    			if($validation->passes()){
+    				return $this->jsonResponse(true,false,true,false);
+    			}else if($validation->fails()){
+    				$validation->getMessageBag()->add('content', 'Please check errors');
+    				$messages=$validation->messages();
+    				$formatMess=null;
+    				foreach ($messages->all() as $message)
+    				{
+    					$formatMess=$message.'- '.$formatMess;
+    				}
+    				return $this->jsonResponse($formatMess,false,true,true);
+    			}
+    		}else if($validation->fails()){
+    			$validation->getMessageBag()->add('content', 'Please check errors');
+    			$messages=$validation->messages();
+    			$formatMess=null;
+    			foreach ($messages->all() as $message)
+    			{
+    				$formatMess=$message.'- '.$formatMess;
+    			}
+    			return $this->jsonResponse($formatMess,false,true,true);
+    		}
+    }
     
 	public function validateForm($params)
 	{
@@ -61,7 +112,7 @@ class GroovelContentFormController extends GroovelFormController {
 			}
 			$rules['title']='required';
 			$rules['url']='required|url';
-			$rules['groovelDescription']='required';
+			$rules['tag']='required';
 			
 			$url=\Input::get('url');
 			$validInput=\Input::all();
@@ -108,7 +159,7 @@ class GroovelContentFormController extends GroovelFormController {
 			}
 			$rules['title']='required';
 			$rules['url']='required|url';
-			$rules['groovelDescription']='required';
+			$rules['tag']='required';
 			$url=\Input::get('url');
 			$validInput=\Input::all();
 			if($url!=null){
@@ -198,7 +249,7 @@ class GroovelContentFormController extends GroovelFormController {
     
 	private function addContent(){
 	    $query_string = "";
-		if ($_POST) {
+	 	if ($_POST) {
 			  $kv = array();
 			  foreach ($_POST as $key => $value) {
 			    $kv[] = "$key=$value";
@@ -207,46 +258,35 @@ class GroovelContentFormController extends GroovelFormController {
 		}
 		else {
 		  $query_string = $_SERVER['QUERY_STRING'];
-		}	 
+		}	
 	   	$data = explode("&", $query_string);
-		$title_parse = explode("=", $data[0]);
-		$title=$title_parse[1];
-
-		$contentType_parse = explode("=", $data[4]);
-		$contentType=$contentType_parse[1];
-		
-		$url_parse = explode("=", $data[1]);
-		$url=$url_parse[1];
+		$title=$_POST['title'];
+		$contentType=$_POST['ContentType'];
+		$url=$_POST['url'];
 		$type=AllContentTypes::where('name','=',$contentType)->firstOrFail();
-		
-		$groovelDescription_parse = explode("=", $data[2]);
-		$groovelDescription=$groovelDescription_parse[1];
-		$langage_parse = explode("=", $data[3]);
-		$langage=$langage_parse[1];
-		
-        $arr=array();
-        $ispublish=0;
-        $ontop=0;
-        $weight;
+		$tag=$_POST['tag'];
+		$langage=$_POST['langage'];
+	    $ispublish=0;
+	    if(array_key_exists('isPublish',$_POST)){
+	    	if($_POST['isPublish']=='on'){
+	    		$ispublish=1;
+	    	}
+	    }
+       $weight=$_POST['weight'];
+       $arr=array();
        foreach ($data as $elt){
        	    $entite=htmlentities($elt);
        	 	$elt_parse=preg_split('#\=+#', $entite);
-         	if('title'!=$elt_parse[0] && 'ContentType'!=$elt_parse[0] && 'groovelDescription'!=$elt_parse[0] 
+         	if('title'!=$elt_parse[0] && 'ContentType'!=$elt_parse[0] && 'tag'!=$elt_parse[0] 
          			&& 'isPublish'!=$elt_parse[0] &&'url'!=$elt_parse[0] &&'weight'!=$elt_parse[0] && '_token'!=$elt_parse[0]
          			&&'langage'!=$elt_parse[0]){
          		$arr[$elt_parse[0]]=$elt_parse[1];
          	}
-         	if('isPublish'==$elt_parse[0]){
-         		$ispublish=1;
-         	}
-         	
-         	if('weight'==$elt_parse[0]){
-         		$weight=$elt_parse[1];
-         	}
         }
+        
         $content=$this->contentManager->serialize($arr);
      	$userid=\Auth::id();
-    	$id=$this->contentManager->addContent($title,$content,$url,$groovelDescription,$langage,$type->id,$userid,$ispublish,$weight);
+    	$id=$this->contentManager->addContent($title,$content,$url,$tag,$langage,$type->id,$userid,$ispublish,$weight);
 	}
 
 	private function deleteContent(){
@@ -259,7 +299,7 @@ class GroovelContentFormController extends GroovelFormController {
    		if($input['duplicate']=='yes'){//duplicate and create new translation content
    			$content_translation= new ContentsTranslation;
 			$content_translation->name=$input['title'];
-			$content_translation->grooveldescription=$input['groovelDescription'];
+			$content_translation->tag=$input['tag'];
 			$content_translation->lang=$input['langage'][0];
 			$content_translation->refcontentid=$input['content_id'];
 			
@@ -274,7 +314,7 @@ class GroovelContentFormController extends GroovelFormController {
 			$data=array();
 			foreach (array_keys($input) as $key){
 				if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
-		    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='url' && $key!='groovelDescription' && $key!='langage' && $key!='weight' && $key!='isPublish'){
+		    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='url' && $key!='tag' && $key!='langage' && $key!='weight' && $key!='isPublish'){
 					$data[$key]=$input[$key];
 					if('myfiles'==$key && array_key_exists('myfiles',$input)){
 						if(empty($input['myfiles'])){
@@ -303,13 +343,13 @@ class GroovelContentFormController extends GroovelFormController {
 		    $content->weight=$input['weight'];
 		    $content_translation= ContentsTranslation::where('id','=',$input['translation_id'])->first();
 		    $content_translation->name=$input['title'];
-		    $content_translation->grooveldescription=$input['groovelDescription'];
+		    $content_translation->tag=$input['tag'];
 		    $content_translation->lang=$input['langage'][0];
 		    $content_translation->updated_at=time();
 		    $blob=$this->contentManager->deserialize( $content_translation['content']);
 		    foreach (array_keys($input) as $key){
 		    	if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
-		    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='url' && $key!='groovelDescription' && $key!='langage' && $key!='weight' && $key!='isPublish'){
+		    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='url' && $key!='tag' && $key!='langage' && $key!='weight' && $key!='isPublish'){
 		    		$blob[$key]=$input[$key];
 		    		if('myfiles'==$key && array_key_exists('myfiles',$input)){
 		    			if(empty($input['myfiles'])){
@@ -349,7 +389,7 @@ class GroovelContentFormController extends GroovelFormController {
 		foreach ($contentItems as $items) {
     	 	$map[$items->getFieldName()][]=array(
     			 'type'=>$items->getFieldType(),
-    			 'isnullable'=>$items->getFieldNullable(),
+    	 		 'value'=>$items->getFieldValue(),
     	 		 'required'=>$items->getFieldRequired(),	
     			 'widget'=>$items->getFieldWidget());
     	 	$element=null;
@@ -382,15 +422,14 @@ class GroovelContentFormController extends GroovelFormController {
     	 		'content'=>$element,
     	 		'type'=>$items->getFieldType(),
     	 		'widget'=>$items->getFieldWidget(),
-    	 		'isnullable'=>$items->getFieldNullable(),
-    	 		'required'=>$items->getFieldRequired()	
+    	 		'required'=>$items->getFieldRequired(),
+    	 		'value'=>$items->getFieldValue()
     	 		);
     	 	$i++;
     	}
     	
-   		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'no','translation_id'=>$input['translation_id'],'title'=>$content['title'],'url'=>$input['url'],'groovelDescription'=>$content['groovelDescription'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight']);
+   		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'no','translation_id'=>$input['translation_id'],'title'=>$content['title'],'url'=>$input['url'],'tag'=>$content['tag'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight']);
    		\Session::put('content_edit', $ct);
-    	
     	$countries=$this->contentManager->getAllCountries();
     	$lang=array();
     	foreach($countries as $country){
@@ -420,13 +459,13 @@ class GroovelContentFormController extends GroovelFormController {
    		foreach ($contentItems as $items) {
     	 	$response[$i][]=array(
     			 'id' => $i,
-    			 'tableName'=>$items->getTableName(),
-    			 'name'=>$items->getFieldName(),
-    			 'type'=>$items->getFieldType(),
-    			 'description'=>$items->getDescription(),
-    			 'widget'=>$items->getFieldWidget(),
-    	 		 'isnullable'=>$items->getFieldNullable(),
-    	 		 'required'=>$items->getFieldRequired()
+    			 'title'=>$items->getTableName(),
+    			 'fieldname'=>$items->getFieldName(),
+    			 'fieldtype'=>$items->getFieldType(),
+    			 'fielddescription'=>$items->getDescription(),
+    			 'fieldwidget'=>$items->getFieldWidget(),
+    	 		 'fieldvalue'=>$items->getFieldValue(),
+    	 		 'fieldrequired'=>$items->getFieldRequired()
     	 	);
     		$i=$i+1;
 		}
@@ -502,9 +541,10 @@ class GroovelContentFormController extends GroovelFormController {
 		foreach ($contentItems as $items) {
 			$map[$items->getFieldName()][]=array(
 					'type'=>$items->getFieldType(),
-					'isnullable'=>$items->getFieldNullable(),
 					'required'=>$items->getFieldRequired(),
-					'widget'=>$items->getFieldWidget());
+					'widget'=>$items->getFieldWidget(),
+					'value'=>$items->getFieldValue()
+			);
 			$element=null;
 			if(array_key_exists($items->getFieldName(),$content['content'])){
 				if($items->getFieldType()=='file'  && array_key_exists(self::$FILES,$content['content'])){
@@ -535,12 +575,12 @@ class GroovelContentFormController extends GroovelFormController {
 					'content'=>$element,
 					'type'=>$items->getFieldType(),
 					'widget'=>$items->getFieldWidget(),
-					'isnullable'=>$items->getFieldNullable(),
+					'value'=>$items->getFieldValue(),
 					'required'=>$items->getFieldRequired()
 			);
 			$i++;
 		}
-		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'yes','translation_id'=>null,'title'=>$content['title'],'url'=>$input['url'],'groovelDescription'=>$content['groovelDescription'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight']);
+		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'yes','translation_id'=>null,'title'=>$content['title'],'url'=>$input['url'],'tag'=>$content['tag'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight']);
 		\Session::flash('content_edit', $ct);
 		
 		$countries=$this->contentManager->getAllCountries();

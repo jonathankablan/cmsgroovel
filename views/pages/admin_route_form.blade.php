@@ -58,7 +58,7 @@
 						                 	<?php $actions_filter[$action]=$value;?>
 						                 @endif
 									@endforeach
-									<div class="form-group form-inline" id="action" data-toggle="tooltip" title="action is when you want to access to a page is it for doing some update or save data or..action will be used to set some permissions rules">
+									<div class="form-group form-inline" id="action" data-toggle="tooltip" title="action it is when you want to access to a page in order to update or save data or..action will be used to set some permissions rules">
 									{!! Form::label('action', 'action',array('style'=>'margin-right:70px'))!!}
 										<select name="action[]" class='form-control' style='width:450px;margin-left:85px'>
 											<option value=<?php echo  Session::get('route_edit')['action']?>><?php echo $actions[Session::get('route_edit')['action']]?></option>
@@ -70,12 +70,7 @@
 								<div class="form-group form-inline" id="view" data-toggle="tooltip" title="the name of your view (page name) that will be called">
 								{!! Form::label('view', 'view',array('style'=>'margin-right:70px')).Form::text('view', Session::get('route_edit')['view'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:100px')) !!}
 								</div>
-								<div class="form-group form-inline" id="before_filter" data-toggle="tooltip" title="filter settings name that will be called before to render data to a view">
-								{!! Form::label('before_filter', 'before_filter',array('style'=>'margin-right:73px')).Form::text('before_filter',Session::get('route_edit')['before_filter'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:50px')) !!}
-								</div>
-								<div class="form-group form-inline" id="after_filter" data-toggle="tooltip" title="filter settings name that will be called after data rendered in view">
-								{!! Form::label('after_filter', 'after_filter',array('style'=>'margin-right:70px')).Form::text('after_filter', Session::get('route_edit')['after_filter'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:65px')) !!}
-								</div>
+							
 								<div class="form-group form-inline" id="type" data-toggle="tooltip" title="name of your application it is optional but it will be easy to find your route if you have got a lot of routes">
 								{!! Form::label('type', 'type',array('style'=>'margin-right:74px')).Form::text('type', Session::get('route_edit')['type'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:100px')) !!}
 								</div>
@@ -85,7 +80,7 @@
 						                 	<?php $subtypes_filter[$subtype]=$subtype;?>
 						                 @endif
 									@endforeach
-									<div class="form-group form-inline" id="subtype" data-toggle="tooltip" title="what type of content is your page is it a view,some contents, a route.., it will be used to set permissions rules">
+									<div class="form-group form-inline" id="subtype" data-toggle="tooltip" title="what type of content is your page: is it a view?,some contents?, a route.., it will be used to set permissions rules">
 									{!! Form::label('subtype', 'subtype',array('style'=>'margin-right:70px','class'=>'required'))!!}
 									<select name="subtype[]" class='form-control' style='width:450px;margin-left:60px'>
 											<option value=<?php echo  Session::get('route_edit')['subtype']?>><?php echo Session::get('route_edit')['subtype']?></option>
@@ -95,7 +90,7 @@
 							     		</select>	
 									</div>
 				               
-				                <div class="form-group form-inline" id="audit_url" data-toggle="tooltip" title="if you want some statistics on access this uri enable it">
+				                <div class="form-group form-inline" id="audit_url" data-toggle="tooltip" title="if you want some statistics on access this uri, you can enable it">
 				                <?php   $states=['0'=>'Disabled','1'=>'Enabled'];
 									$state_filter=array();
 									$audit_tracking_url_enable=Session::get('route_edit')['audit_tracking_url_enable'];

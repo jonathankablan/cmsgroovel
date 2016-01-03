@@ -135,7 +135,7 @@ class GroovelRoutesFormController extends GroovelFormController {
  		  	if(empty($input)){
 	     		$input=\Input::all();
 	     		}
-           $this->routeBusiness->updateRoute($input['id'],$input['domain'],$input['uri'],$input['name'],$input['controller'],$input['method'],$input['action'][0],$input['view'],$input['before_filter'],$input['after_filter'],$input['type'],$input['subtype'][0],$input['audit_tracking_url_enable'],$input['activate_route']);
+           $this->routeBusiness->updateRoute($input['id'],$input['domain'],$input['uri'],$input['name'],$input['controller'],$input['method'],$input['action'][0],$input['view'],null,null,$input['type'],$input['subtype'][0],$input['audit_tracking_url_enable'],$input['activate_route']);
            $this->refreshRoute($input['id']);
   	}
 

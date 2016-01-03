@@ -21,7 +21,7 @@ public function find($contentTypeid);
 
 public function createType($tableName);
 
-public function create($tableName,$fieldNames,$descriptions,$types,$type,$widget,$isnullable,$required);
+public function create($title,$fieldName,$fielddescription,$fieldtype,$fieldvalue,$widgetid,$fieldrequired,$reftypeid);
 
 public function findContentTypeByName($tableName);
 

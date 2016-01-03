@@ -1,218 +1,203 @@
-@extends('cmsgroovel.layouts.groovel_admin_default')
+@extends('cmsgroovel.layouts.groovel_admin_content_type')
 @section('content')
 
-<div class="col-md-12" style="margin-top:15px">
-	<div id='modal' class="modal fade" style="display: none;" data-keyboard="false" data-backdrop="static">
-		  <div class="modal-dialog">
-		  	<div class="modal-content">
-			 	<div class="modal-header" style='background-color: #00FF40'>
-			 	  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			      <h4 class="modal-title">Board Content Types</h4>
-			    </div>
-				 @if($errors->has()|| Session::get('messages'))
-									<div class="span3">
-										<div class="col-md-12 col-md-offset-2">
-										 
-									           @foreach ($errors->all() as $error)
-									              <div style="color:#FF0000;">{!! $error !!}</div>
-									          @endforeach
-									     
-									       @if(Session::get('messages'))
-									             <div>{!!var_dump(Session::get('messages'))!!}</div>
-									        @endif
-									    </div>
-									</div>
-				@endif
-			   <div id='light'></div>
-				<div id='fade'></div>
-		
-			     <div id='form-modal' class="modal-body">
-			     <div class="panel-body">
-				{!!Form::open(array('id'=>'content_type_form','url' => 'admin/content_type/add', 'method' => 'post'))!!}
-					<div class="span3">
-						<div class="col-md-12 form-inline">
-							{!! Form::label('Title', 'Title', array('class'=>'required','style'=>'margin-right:50px')).Form::text('title', Input::old('title'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'title')) !!}
-						</div>
-					</div>
-					<div class="span3">
-						<div class="col-md-10">
-							<INPUT type="button" value="Add Fields" onclick="addRow('dataTable')" />
-						 
-						    <INPUT type="button" value="Delete Fields" onclick="deleteRow('dataTable')" />
-						 
-						    <table id="dataTable" class="line-items editable table table-bordered">
-						        <thead class="panel-heading">
-							        	<th></th>
-							            <th class='required'>FieldName</th>
-							            <th>Description</th>
-							            <th>type</th>
-							            <th>widget</th>
-							            <th>is Nullable?</th>
-							            <th>required</th>
-							    </thead>
-							 
-						        <tr>
-				          	        <td class="col-sm-1"><INPUT type="checkbox" name="chk[]"/></td>
-						            <td class="col-sm-4">
-	      								{!! Form::text('fieldName[]', Input::old('fieldName[]'), array('class'=>'form-control','placeholder' => 'fieldName')) !!}
-						            </td>
-						            <td class="col-sm-4">
-										{!! Form::text('description[]', Input::old('description[]'), array('class'=>'form-control','placeholder' => 'description')) !!}
-						            </td>
-						            <td class="col-sm-3">
-						            {!!Form::select('type[]',
-								        array('string' => 'String',
-								            'integer' => 'Integer',
-								            'double' => 'Double',
-								            'time' => 'Time',
-								            'blob'=>'Binary',
-								             'image'=>'Image',
-								             'File'=>'File'
-								            )
-								        );
-							    	!!}
-						            </td>
-						              <td class="col-sm-3">
-						            {!!Form::select('widget[]',Session::get('widgets'));!!}
-						            </td>
-						          <!--     <td class="col-sm-3">
-										{!! Form::text('size[]', Input::old('size[]'), array('class'=>'form-control','placeholder' => 'size')) !!}
-							
-						             </td>-->
-						            <td class="col-sm-4">
-										{!! Form::select('isnullable[]',['0'=>'No','1'=>'Yes']) !!}
-						            </td>
-						            
-						             <td class="col-sm-4">
-										{!! Form::select('required[]',['0'=>'No','1'=>'Yes']) !!}
-						            </td>
-								          
-						        </tr>
-						    </table>
-						</div>
-					</div>
+<div class="container-fluid" style="margin-top:100px;height:700px">
+ <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+<input id='content_type_id' type="hidden" name='content_type_id' value=''>
+ <div id='light'></div>
+<div id='fade'></div>
+	<div class="col-md-2" style="margin-top:100px">
 				
-	        	  </div><!-- panel body -->
-	        	  	<p class='required' style='font-size:15px'>Fields are required</p>
-	        	   <div class="modal-footer">
-	        			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		       			  <input type="submit" id="submitForm" value="Save Changes"  class="btn btn-default"/>
-		           </div>
-	        	 {!! Form::close() !!}
-	        	 
-	        	 </div><!-- form modal -->
-	 		</div><!-- modal content -->
-		 </div><!-- modal diag -->
-	</div><!-- modal -->
-</div><!-- col -->
-<script>
-$("#submitForm").click(function (event) {
-	form=$('#content_type_form').serialize();
-	$.post('/admin/content_type/add', form, function (data, textStatus) {
-		var parsed = JSON.parse(data);
-		if(parsed['success']){
-            window.scrollTo(0,0);
-	        document.getElementById('light').style.display='block';
-	        document.getElementById('light').className='alert alert-success fade in';
-	        document.getElementById('light').innerHTML ='content_type has been added successfully';
-	        document.getElementById('fade').style.display='block';  
-	        a=document.createElement('a');
-			a.className='closer';
-			a.href='#';
-			a.innerHTML='x';
-			a.onclick = function(e) {  
-				document.getElementById('light').style.display='none';
-				document.getElementById('fade').style.display='none';
-			    return false;
-			};
-			document.getElementById('light').appendChild(a);
-			button=document.createElement('button');
-  			button.innerHTML='OK';
-  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-  			button.onclick = function(e) {  
-  				document.getElementById('light').style.display='none';
-  				document.getElementById('fade').style.display='none';
-  			    return false;
-  			};
-  			div=document.createElement('div');
-  			div.id='mess';
-  			document.getElementById('light').appendChild(div);
-  			document.getElementById('mess').appendChild(button);
-         }
-          else if(parsed['success']==false){
-        		window.scrollTo(0,0);
-		        document.getElementById('light').style.display='block';
-		        document.getElementById('light').className='alert alert-danger fade in';
-		        document.getElementById('light').innerHTML =  parsed['errors']['reason'];
-		        document.getElementById('fade').style.display='block';  
-		        a=document.createElement('a');
-				a.className='closer';
-				a.href='#';
-				a.innerHTML='x';
-				a.onclick = function(e) {  
-				document.getElementById('light').style.display='none';
-				document.getElementById('fade').style.display='none';
-				    return false;
-				};
-				document.getElementById('light').appendChild(a);
-				button=document.createElement('button');
-	  			button.innerHTML='OK';
-	  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-	  			button.onclick = function(e) {  
-	  				document.getElementById('light').style.display='none';
-	  				document.getElementById('fade').style.display='none';
-	  			    return false;
-	  			};
-	  			div=document.createElement('div');
-	  			div.id='mess';
-	  			document.getElementById('light').appendChild(div);
-	  			document.getElementById('mess').appendChild(button);
-         }
-	 });
-	return false;
-});
-$(document).ready(function() {
-	 $('#modal').modal('show');
-});
-</script>
-<style>
-#fade{
-    display: none;
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    z-index:1001;
-    -moz-opacity: 0.7;
-    opacity:.70;
-    filter: alpha(opacity=70);
-}
-#light{
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 200px;
-    margin-left: -150px;
-    margin-top: -100px;                 
-    padding: 10px;
-    border: 2px solid #FFF;
-    z-index:1002;
-    overflow:visible;
-}		
-.closer {
- position: absolute;
-top: 0px;
-right: 10px;
-transition: all 200ms ease 0s;
-font-size: 20px;
-font-weight: bold;
-text-decoration: none;
-color: #333;
-}	
+		<ul id="form-fields">
+	    		<li class="glyphicon glyphicon-calendar" style='margin-top: 25px;width:100%'><span>Date Field</span>
+	    		 <input type="date" name="textbox"  class="val"/>
+		    		 <div class="toggle-view panel">
+	            		<div class="row" style='margin-bottom:25px'>
+		            		<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px'/></div>
+		            		<div class="col-md-4">Description<input type="text" id="description" name="description" style='margin-left:4px'/></div>
+		            		<div class="col-md-1">Required<input type="checkbox" id="required" name="required" style='margin-left:2px'/></div>
+		            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='date'/></div>
+		            	</div>
+	        		</div>
+	    		</li>
+				<!--<li class="glyphicon glyphicon-check" style='margin-top: 25px;width:100%'><span>Checkbox</span> <input type="checkbox" name="textbox"  class="val"/>
+					<div class="toggle-view panel">
+						<div class="row" style='margin-bottom:25px'>
+		            		<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px'/></div>
+		            		<div class="col-md-4">Description<input type="text" id="description" name="description" style='margin-left:4px'/></div>
+		            		<div class="col-md-1">Required<input type="checkbox" id="required" name="required" style='margin-left:2px'/></div>
+		            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='checkbox'/></div>
+		            	</div>
+	            	</div>
+				</li>
+				-->
+				<!-- <li class="glyphicon glyphicon-th-list" style='margin-top: 25px;width:100%'><span>Radio Group</span><input type="radio" name="textbox"  class="val"/>
+					<div class="toggle-view panel">
+						<div class="row" style='margin-bottom:25px'>
+		            		<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px'/></div>
+		            		<div class="col-md-4">Description<input type="text" id="description" name="description" style='margin-left:4px'/></div>
+		            		<div class="col-md-1">Required<input type="checkbox" id="required" name="required" style='margin-left:2px'/></div>
+		            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='radio group'/></div>
+		            	</div>
+	            	</div>
+				</li>
+				 -->
+				<li class="glyphicon glyphicon-pencil" style='margin-top: 25px;width:100%'><span>Rich Text Editor</span><textarea rows="4" cols="50" class="val" style='overflow:true'></textarea>
+					<div class="toggle-view panel" style='margin-bottom:25px'>
+						<div class="row">
+		            		<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px;width:100px'/></div>
+		            		<div class="col-md-4">Description<input type="text" id='description' name="description" style='margin-left:4px;width:100px'/></div>
+		            		<div class="col-md-1">Required<input id='required' type="checkbox" name="required" style='margin-left:2px'/></div>
+		            		<div class="col-md-1" style='margin-left:30px'>widget<select id='widget' name="widget"><option value="tinymce">tinymce</option><option value="none">none</option></select></div>
+							<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='textarea'/></div>	            	
+		            	</div>
+	            	</div>
+				</li>
+				<!-- <li class="glyphicon glyphicon-list-alt" style='margin-top: 25px;width:100%'><span>Select</span><select class="val"><option value="option1">option1</option></select>
+					<div class="toggle-view panel">
+						<div class="row" style='margin-bottom:25px'>
+		            		<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px'/></div>
+		            		<div class="col-md-4">Description<input type="text" id="description" name="description" style='margin-left:4px'/></div>
+		            		<div class="col-md-1">Required<input type="checkbox" id="required" name="required" style='margin-left:2px'/></div>
+		            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='select'/></div>
+		            	</div>
+		            	<table id="table" class="table table-striped" style='margin-bottom:25px'>
+		            	  <thead>
+		            	  	<tr>
+			            	    <th>name</th>
+			            	    <th>value</th>
+			            	    <th></th>
+			            	    <th></th>
+			            	</tr>
+		            	   </thead>
+		            	   <tbody>
+			            	    <tr class='tr_clone'>
+			            	    	<td><input type="text" id="optional_name" style='width:100px' val=''/></td>
+			            	    	<td><input type="text" id="optional_value" style='width:100px' val=''/></td>
+			            	     	<td><div class="glyphicon glyphicon-plus"></div></td>
+			            	     	<td><div class="glyphicon glyphicon-minus"></div></td>
+			            	     	<td></td>
+			              	    </tr>
+		              	     </tbody>
+		            	</table>
+		            	<div class='col-md-2' style='margin-top:10px'><button id="refresh_list" type="button" class="btn btn-success">refresh list</button></div>
+	            	</div>
+				</li>
+				 -->
+				<li class="glyphicon glyphicon-text-width" style='margin-top: 25px;width:100%'><span>Text Field</span><input type="text" name="textbox" class="val" />
+					<div class="toggle-view panel">
+						<div class="row" style='margin-bottom:25px'>
+		            		<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px'/></div>
+		            		<div class="col-md-4">Description<input type="text" id="description" name="description" style='margin-left:4px'/></div>
+		            		<div class="col-md-1">Required<input type="checkbox" id="required" name="required" style='margin-left:2px'/></div>
+		            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='text'/></div>
+		            	</div>
+	            	</div>
+				</li>
+				<li class="glyphicon glyphicon-upload" style='margin-top: 25px;width:100%'><span>upload files</span><div class='val'> @include('cmsgroovel.sections.uploadfile')</div>
+					<div class="toggle-view panel">
+						<div class="row" style='margin-bottom:25px'>
+		            	<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px'/></div>
+		            		<div class="col-md-4">Description<input type="text" id="description" name="description" style='margin-left:4px'/></div>
+		            		<div class="col-md-1">Required<input type="checkbox" id="required" name="required" style='margin-left:2px'/></div>
+		            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='file'/></div>
+		            	</div>
+	            	</div>
+				</li>
+	    </ul>
+	</div>
 
-</style>	
+	<!-- where you drag and drop your content -->
+	<div class="col-md-9">
+		  <div class='row' style='margin-bottom:50px;background-color:#FAFAFA;z-index:2'>
+		  	<div class='col-md-2'><button type="button" class="btn btn-success" onclick='saveTemplate()'>Save Template</button></div>
+		  	<div class='col-md-2'><button type="button" class="btn btn-danger" onclick='deleteTemplate()'>Delete Template</button></div>
+		  	<div class='col-md-2'>
+		  	<button id='helpinfo' class="btn btn-info" title='You have to drag and drop components in the surface area below, you must put a unique title for each field by clicking on the pencil, menu will toogle and you will fill each field, name is mandatory'>Help info</button>
+		   </div>
+		  	<!-- <div class='col-md-2'><button type="button" class="btn btn-primary" onclick='previewTemplate()'>Preview Template</button></div> -->
+		  </div>
+		  <div class='row' style='margin-bottom:50px;background-color:#FAFAFA;z-index:2'>
+		   <div class='col-md-1'>
+		   <span class="required">Title</span> 
+		   </div>
+		    <div class='col-md-8'>
+				<input class="form-control" placeholder="Title" id="form-title" type="text">
+			</div>
+		  </div>
+		 <div class='row' style='margin-bottom:50px;background-color:#FAFAFA;z-index:2'>
+			 <div class='col-md-12' id="selected-content" style="height:100%">
+				<div class="droppedFields" class='background-color:grey' style="height:600px;background-color:#FAFAFA;z-index:2;border: 2px groove rgb(0,0,102);overflow:scroll"></div>
+							
+			</div>
+		</div>
+	</div>
+
+</div>
+<style>
+	.title{
+	 font-size:1.1em;
+	}
+	#form-fields li .val{display: none;}
+	
+	.droppedFields li .val{display: inline-block}
+	
+	.droppedFields li .txt{display: none}
+	
+	.ui-draggable-dragging .val{display: none !important}
+	
+	.field div{cursor: pointer;}
+	
+	.field{
+		margin-left:100px;
+		margin-top:50px;
+		margin-bottom:50px;
+	}		
+	.val{
+	 width:100%;
+	 margin-bottom:50px;
+	 margin-top:25px;
+	}	
+	
+	<!--toggle panels for edit properties-->
+	
+	.toggle-view {
+    list-style:none;    
+    font-family:arial;
+    font-size:11px;
+    margin:0;
+    padding:0;
+    width:300px;
+	}
+	
+	 .panel {
+        margin:5px 0;
+        margin-bottom:25px;
+        display:none;
+    }    
+	
+	
+</style>
+
+
+
+<!-- End of templates -->
+
+
+<script>
+$(document).ready(dragContentType());   
+ $(document).ready(function(){
+	    $( "#helpinfo" )
+      .tooltip({
+        content: $( "#helpinfo" ).attr( "title" ),
+        items: 'button'
+        })
+      .off( "mouseover" )
+      .on( "click", function(){
+          $( this ).tooltip( "open" );
+          return false;
+        })
+      .attr( "title", "" ).css({ cursor: "pointer" });
+	});
+</script>
 @stop

@@ -33,6 +33,65 @@ class GroovelUserFormController extends GroovelFormController {
 		$this->beforeFilter('auth');
 	}
 	
+	public function makeValidation($params){
+		
+			$this->checkToken();
+			$rules=array();
+			$rules['username']= 'required|alpha_num';
+			$rules['email']= 'required|email';
+			$rules['pseudo']= 'required|alpha_num';
+			$input =   \Input::all();
+			$validation = \Validator::make($input, $rules);
+			if($validation->fails()){
+				$validation->getMessageBag()->add('user', 'Please check errors');
+				$messages=$validation->messages();
+				$formatMess=null;
+				foreach ($messages->all() as $message)
+				{
+					$formatMess=$message.'- '.$formatMess;
+				}
+				return $this->jsonResponse($formatMess,false,true,true);
+			}else if($validation->passes()){
+				if('admin/user/add'==\Input::get('action')){
+					$pseudo=$this->userManager->getUserByPseudo(\Input::get('pseudo'));
+					if($pseudo!=null){
+						$validation->getMessageBag()->add('user', 'pseudo is already used');
+						$messages=$validation->messages();
+						$formatMess=null;
+						foreach ($messages->all() as $message)
+						{
+							$formatMess=$message.'- '.$formatMess;
+						}
+						return $this->jsonResponse($formatMess,false,true,true);
+					}
+					$email=$this->userManager->getUserByEmail(\Input::get('email'));
+					if($email!=null){
+						$validation->getMessageBag()->add('user', 'email is already used');
+						$messages=$validation->messages();
+						$formatMess=null;
+						foreach ($messages->all() as $message)
+						{
+							$formatMess=$message.'- '.$formatMess;
+						}
+						return $this->jsonResponse($formatMess,false,true,true);
+					}
+				}
+				if('admin/user/update'==\Input::get('action')){
+					$email=$this->userManager->checkUserByEmailIsUnique(\Input::get('email'),\Input::get('pseudo'));
+						if(!$email){
+							$validation->getMessageBag()->add('user', 'email is already used');
+							$messages=$validation->messages();
+							$formatMess=null;
+							foreach ($messages->all() as $message)
+							{
+								$formatMess=$message.'- '.$formatMess;
+							}
+							return $this->jsonResponse($formatMess,false,true,true);
+						}
+					}
+				}
+			return $this->jsonResponse(array('user has been updated'),false,true,false);
+	}
 
 	public function validateForm($params)
 	{
@@ -81,7 +140,6 @@ class GroovelUserFormController extends GroovelFormController {
 			//test password
 			
 		}else if (\Request::is('*/user/update')){
-			\Log::info('updaettetet');
 			$this->checkToken();
 			$rules=array();
 			$rules['username']= 'required|alpha_num';

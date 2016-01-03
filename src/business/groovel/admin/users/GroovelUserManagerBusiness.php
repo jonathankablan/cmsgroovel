@@ -149,6 +149,9 @@ class GroovelUserManagerBusiness implements GroovelUserManagerBusinessInterface{
    public function getAllUsersAdmin(){
    	return $this->userDao->getAllUsersAdmin();
    }
-    
+   
+   public function checkUserByEmailIsUnique($email,$pseudo){
+   	return $this->userDao->checkUserByEmailIsUnique($email,$pseudo);
+   }
    
 }

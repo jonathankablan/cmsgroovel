@@ -16,7 +16,7 @@ namespace Groovel\Cmsgroovel\dao;
 
 interface ContentsTranslationDaoInterface{
 
-public function create($refid,$title,$data,$grooveldescription,$langage);
+public function create($refid,$title,$data,$tag,$langage);
 
 public function delete($id);
 

@@ -1,7 +1,7 @@
 
 normalMode = function() {
 	var normalFieldMode=['uri','name','view','type','subtype','activate_route'];
-	var expertFieldMode=['controller','method','before_filter','after_filter','audit_url'];
+	var expertFieldMode=['controller','method','audit_url'];
     for(i = 0; i < expertFieldMode.length; i++){
         document.getElementById(expertFieldMode[i]).style.display = 'none';
 	 }
@@ -9,7 +9,7 @@ normalMode = function() {
 
 expertMode = function() {
 	var normalFieldMode=['uri','name','view','type','subtype','activate_route'];
-	var expertFieldMode=['controller','method','before_filter','after_filter','audit_url'];
+	var expertFieldMode=['controller','method','audit_url'];
     for(i = 0; i < expertFieldMode.length; i++){
         document.getElementById(expertFieldMode[i]).style.display = 'block';
 	 }

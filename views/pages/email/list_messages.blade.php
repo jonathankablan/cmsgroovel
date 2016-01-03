@@ -1,27 +1,31 @@
-@extends('cmsgroovel.layouts.groovel_admin_default')
+@extends('cmsgroovel.layouts.groovel_admin_messages')
 @section('content')
-	 <div class="col-md-12 col-md-offset-2">
+	 <div class="col-md-12" style="margin-top:70px">
 	       	@if(Session::get('messages'))
 	             <div>{!!var_dump(Session::get('messages'))!!}</div>
 	        @endif
-	        <h2>Messages Board</h2>
-	            <div class="row" id='messages'>
+	           <div class="row" id='messages'>
 	                <div class="col-lg-12">
-	                    <div class="panel panel-primary">
+	                    <div class="panel panel-default">
 	                        <div class="panel-heading">
 	                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Messages</h3>
 	                        </div>
-	                        <div class="span2">      
-	            				{!! HTML::link('/messages/compose', 'Write Message',array('class' => 'btn btn-default'))!!}
-	          				</div>
-	                        <div class="panel-body">
-	                         <div style='margin-bottom: 10px' >
-		                        	<input class="search" placeholder="Search" style="height:30px" />
-							  		<button class="sort" data-sort="name" style="height:30px">
-							    		Sort by subject
-							  		</button>
-						  		</div>
-	            				<table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-striped table-bordered " id="table_messages">
+	                         <div class="panel-body">
+		            	  		<div class='row' style='margin-bottom: 10px' >
+			                         	<div class="col-md-2">  
+				                        	<input class="search" placeholder="Search" style="height:30px" />
+				                        </div>
+				                        <div class="col-md-2"> 
+									  		<button class="sort" data-sort="name" style="height:30px">
+									    		Sort by name
+									  		</button>
+									  	</div>
+									  	<div class="col-md-2">      
+			            						{!! HTML::link('/messages/compose', 'Write Message',array('class' => 'btn btn-default'))!!}
+			          					</div>
+							  		</div>
+							  	</div>
+	            				<table class="table table-hover table-striped table-bordered " id="table_messages">
 										<thead>
 											 <tr>
 					                          <th id="col_message">id</th>
@@ -52,7 +56,6 @@
           							  <ul class="pagination">
 						                {!! $messages->render() !!}
 	               					 </ul>
-	                          </div>
 	                    </div>
 	                </div>
  				</div>
