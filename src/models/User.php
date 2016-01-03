@@ -168,7 +168,7 @@ public static function boot()
 	User::updating(function($user)
 	{
 		$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
-				'url'=>'','grooveldescription'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
+				'url'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
 	   
 		\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@update', array('type'=>ModelConstants::$user,'data'=>$data));
 		\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@update', array('type'=>ModelConstants::$user,'data'=>$data));
@@ -178,7 +178,7 @@ public static function boot()
 	{
 			
 		$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
-				'url'=>'','grooveldescription'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
+				'url'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
 			
 		\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@create', array('type'=>ModelConstants::$user,'data'=>$data));
 		\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@create', array('type'=>ModelConstants::$user,'data'=>$data));
@@ -187,7 +187,7 @@ public static function boot()
 	User::deleting(function($user)
 	{
 		$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
-				'url'=>'','grooveldescription'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
+				'url'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
 		
 		\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@delete', array('type'=>ModelConstants::$user,'data'=>$data));
 		\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@delete', array('type'=>ModelConstants::$user,'data'=>$data));

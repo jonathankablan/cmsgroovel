@@ -59,6 +59,10 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 		]);
 		
 		$this->publishes([
+				__DIR__.'/../public/images' => base_path('public/images'),
+		]);
+		
+		$this->publishes([
 				__DIR__.'/../templates' => base_path('templates'),
 		]);
 		
