@@ -159,7 +159,7 @@
 				</div>	
 				<div class='col-md-5'>	
 					{!! Form::select('content_types',Session::get('content_types'),'default',
-				 array('class' => 'form-control','id'=> 'a','onchange'=>'showContentType(this.value,"http://"+window.location.hostname+"/admin/content/form/view_update");clearFileOldList()')) !!}
+				 array('class' => 'form-control','id'=> 'a','onchange'=>'showContentType(this.value,"/admin/content/form/view_update");clearFileOldList()')) !!}
 				</div>
 			</div>
 	</div>
