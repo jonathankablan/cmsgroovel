@@ -130,52 +130,75 @@
 						                     	<br/>
 						                     	
 						                     	  @if($content['type']=='file')
-						                     	   <label style='margin-left:20px'>Files attachments</label>
-						                     		<div style='margin-left:200px'>
-						                     		       @include('cmsgroovel.sections.uploadfile')
-						                     		       <input type="hidden" id="token" value="{{ csrf_token() }}">
-						                     		</div>    
+												   <div class="row">
+													  <div class="col-md-3" style="margin-left:10px">
+													   <label>Files attachments</label>
+													   </div>
+														<div class="col-md-3">
+															   @include('cmsgroovel.sections.uploadfile')
+															   <input type="hidden" id="token" value="{{ csrf_token() }}">
+														</div> 
+												</div>	
 						                      	  @elseif($content['type']=='text')
-						                     	   	<div class="col-md-3">
-							                     		 @if($content['required']==0)
-							                    			{!! Form::label('name',$content['name'], array('class' => 'col-md-3 control-label')).Form::textarea($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
-							                    		 @endif
+						                      	     <div class="row">
+													    <div class="col-md-2" style="margin-left:10px">
+								                  		 @if($content['required']==0)
+						                         				{!! Form::label('name',$content['name'], array('class' => 'control-label'))!!}
+								                  		 @endif
 							                    		 @if($content['required']==1)
-							                    		 	{!!Form::label('name',$content['name'], array('class' => 'col-md-3 control-label required')).Form::textarea($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
-							                    		 @endif
-							                    	</div>
-						                     	  @elseif($content['type']=='textarea')
+							                       			{!! Form::label('name',$content['name'], array('class' => 'control-label required'))!!}
+								                 		 @endif
+														  </div>
+								                		 <div class="col-md-8">
+								                    		{!!Form::text($content['name'],$content['content'], $attributes = array('class' => 'form-control')) !!}
+								                    	 </div>
+							                    	   </div>
+							                
+							                  	  @elseif($content['type']=='textarea')
 						                     		@if($content['widget']==-1)
-						                     		<div class="col-md-3">
+						                     		 <div class="row">
+						                     		   	 <div class="col-md-2" style="margin-left:10px">
 							                     		 @if($content['required']==0)
-							                    			{!! Form::label('name',$content['name'], array('class' => 'col-md-3 control-label')).Form::textarea($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
-							                    		 @endif
+						                         			{!! Form::label('name',$content['name'], array('class' => 'control-label'))!!}
+								                    	 @endif
 							                    		 @if($content['required']==1)
-							                    		 	{!!Form::label('name',$content['name'], array('class' => 'col-md-3 control-label required')).Form::textarea($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
-							                    		 @endif
-							                    	</div>
+							                     			{!! Form::label('name',$content['name'], array('class' => 'control-label required'))!!}
+								                    	 @endif
+								                    	 </div>
+								                		 <div class="col-md-8">
+								                    		{!!Form::textarea($content['name'],$content['content'], $attributes = array('class' => 'form-control')) !!}
+								                    	 </div>
+							                    	   </div>
 						                     		@elseif($content['widget']==11)
-						                     		<div class="col-md-3">
-							                     		 @if($content['required']==0)
-							                     			{!! Form::label('name',$content['name'], array('class' => 'control-label'))	!!}
-							                     		 @endif
-							                     		 @if($content['required']==1)
-							                     		 	{!! Form::label('name',$content['name'], array('class' => 'control-label required'))	!!}
-							                     		 @endif
-						                     		</div>
-						                     		@endif
-						                     		<div class="col-md-8" style='margin-bottom:50px'>
-						                     			<textarea  id="elm1" name={!!$content['name']!!}>{!!$content['content']!!}</textarea>
-						                     		</div>
+						                     		 <div class="row">
+							                     		<div class="col-md-2" style="margin-left:10px">
+								                     		 @if($content['required']==0)
+								                     			{!! Form::label('name',$content['name'], array('class' => 'control-label'))	!!}
+								                     		 @endif
+								                     		 @if($content['required']==1)
+								                     		 	{!! Form::label('name',$content['name'], array('class' => 'control-label required'))	!!}
+								                     		 @endif
+							                     		</div>
+							                    		<div class="col-md-8" style='margin-bottom:50px'>
+							                     			<textarea  id="elm1" name={!!$content['name']!!}>{!!$content['content']!!}</textarea>
+							                     		</div>
+							                     	</div>
+							                     	 @endif
+							                 
 						                     	 @elseif($content['type']=='date')
-						                     			<div class="col-md-3">
-							                     		 @if($content['required']==0)
-							                    			{!! Form::label('name',$content['name'], array('class' => 'col-md-3 control-label')).Form::text($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
-							                    		 @endif
+						                     		<div class="row">
+														 <div class="col-md-2" style="margin-left:10px">
+														@if($content['required']==0)
+						                         	 			{!! Form::label('name',$content['name'], array('class' => 'control-label'))!!}
+														@endif
 							                    		 @if($content['required']==1)
-							                    		 	{!!Form::label('name',$content['name'], array('class' => 'col-md-3 control-label required')).Form::text($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
-							                    		 @endif
-							                    		</div>
+																{!! Form::label('name',$content['name'], array('class' => 'control-label required'))!!}
+								                 		 @endif
+												   		 </div>
+								                		 <div class="col-md-8">
+								                    		{!!Form::input('date',$content['name'],$content['content'], $attributes = array('class' => 'form-control')) !!}
+								                    	 </div>
+							                    	   </div>
 						                     	 @endif
 						              		</div>
 				                     	</div>	

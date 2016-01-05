@@ -110,7 +110,6 @@
 			  <div class='row' style='margin-bottom:50px;background-color:#FAFAFA;z-index:2'>
 			  	<div class='col-md-2'><button type="button" class="btn btn-success" onclick='saveTemplate()'>Save Template</button></div>
 			  	<div class='col-md-2'><button type="button" class="btn btn-danger" onclick='deleteTemplate()'>Delete Template</button></div>
-			  	<div class='col-md-2'><button type="button" class="btn btn-primary" onclick='previewTemplate()'>Preview Template</button></div>
 			  </div>
 			  <div class='row' style='margin-bottom:50px;background-color:#FAFAFA;z-index:2'>
 			   <div class='col-md-1'>
