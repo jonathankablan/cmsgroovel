@@ -125,17 +125,35 @@
 				           		</div>
 						        @if($node=Session::get('content_edit'))
 						            @foreach($node['content']  as $content)
-						            
 						            <div class="row" style="margin-top:50px">
 						                   <div  class="form-group">
 						                     	<br/>
-						                     		@if($content['widget']==-1)
+						                     	
+						                     	  @if($content['type']=='file')
+						                     	   <label style='margin-left:20px'>Files attachments</label>
+						                     		<div style='margin-left:200px'>
+						                     		       @include('cmsgroovel.sections.uploadfile')
+						                     		       <input type="hidden" id="token" value="{{ csrf_token() }}">
+						                     		</div>    
+						                      	  @elseif($content['type']=='text')
+						                     	   	<div class="col-md-3">
 							                     		 @if($content['required']==0)
 							                    			{!! Form::label('name',$content['name'], array('class' => 'col-md-3 control-label')).Form::textarea($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
 							                    		 @endif
 							                    		 @if($content['required']==1)
 							                    		 	{!!Form::label('name',$content['name'], array('class' => 'col-md-3 control-label required')).Form::textarea($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
 							                    		 @endif
+							                    	</div>
+						                     	  @elseif($content['type']=='textarea')
+						                     		@if($content['widget']==-1)
+						                     		<div class="col-md-3">
+							                     		 @if($content['required']==0)
+							                    			{!! Form::label('name',$content['name'], array('class' => 'col-md-3 control-label')).Form::textarea($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
+							                    		 @endif
+							                    		 @if($content['required']==1)
+							                    		 	{!!Form::label('name',$content['name'], array('class' => 'col-md-3 control-label required')).Form::textarea($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
+							                    		 @endif
+							                    	</div>
 						                     		@elseif($content['widget']==11)
 						                     		<div class="col-md-3">
 							                     		 @if($content['required']==0)
@@ -145,18 +163,21 @@
 							                     		 	{!! Form::label('name',$content['name'], array('class' => 'control-label required'))	!!}
 							                     		 @endif
 						                     		</div>
+						                     		@endif
 						                     		<div class="col-md-8" style='margin-bottom:50px'>
 						                     			<textarea  id="elm1" name={!!$content['name']!!}>{!!$content['content']!!}</textarea>
 						                     		</div>
-						                     		@elseif($content['widget']==12)
-						                     		<label style='margin-left:20px'>Files attachments</label>
-						                     		<div style='margin-left:200px'>
-						                     		       @include('cmsgroovel.sections.uploadfile')
-						                     		       <input type="hidden" id="token" value="{{ csrf_token() }}">
-						                     		 </div>    
-						                     		       
-						                  		    @endif
-				                     		</div>
+						                     	 @elseif($content['type']=='date')
+						                     			<div class="col-md-3">
+							                     		 @if($content['required']==0)
+							                    			{!! Form::label('name',$content['name'], array('class' => 'col-md-3 control-label')).Form::text($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
+							                    		 @endif
+							                    		 @if($content['required']==1)
+							                    		 	{!!Form::label('name',$content['name'], array('class' => 'col-md-3 control-label required')).Form::text($content['name'],$content['content'], $attributes = array('class' => 'form-control','style'=>'width:450px')) !!}
+							                    		 @endif
+							                    		</div>
+						                     	 @endif
+						              		</div>
 				                     	</div>	
 					                @endforeach
 						        @endif

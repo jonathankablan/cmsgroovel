@@ -69,14 +69,15 @@ class GroovelContentTypeFormController extends GroovelFormController {
 	
 	public function validateForm($params)
 	{
-		if (\Request::is('*/content_type/add')||\Request::is('*/content_type/update'))
+		if (\Request::is('*/content_type/add'))
 			{
 				$this->checkToken();
 				if(!$this->checkUploaderExistsOnlyOnce(\Input::all())){
 					return $this->jsonResponse('Only one file type is possible',false,true,true);
 				}
-				if(\Request::is('*/content_type/add')){
-					$template=\Input::all();
+				$template=\Input::all();
+				$content_type_id=$template['id'];
+				if(empty($content_type_id)){
 					$contentType=$this->contentTypeManager->findAllContentTypeByName($template['template']['title']);
 					if($contentType!=null){
 						return $this->jsonResponse('content type with the same name already exists choose another name',false,true,true);
