@@ -21,7 +21,7 @@
 		            	</div>
 	        		</div>
 	    		</li>
-				<li class="glyphicon glyphicon-check" style='margin-top: 25px;width:100%'><span>Checkbox</span> <input type="checkbox" name="textbox"  class="val"/>
+				<!--<li class="glyphicon glyphicon-check" style='margin-top: 25px;width:100%'><span>Checkbox</span> <input type="checkbox" name="textbox"  class="val"/>
 					<div class="toggle-view panel">
 						<div class="row" style='margin-bottom:25px'>
 		            		<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px'/></div>
@@ -40,7 +40,7 @@
 		            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='radio group'/></div>
 		            	</div>
 	            	</div>
-				</li>
+				</li>-->
 				<li class="glyphicon glyphicon-pencil" style='margin-top: 25px;width:100%'><span>Rich Text Editor</span><textarea rows="4" cols="50" class="val"></textarea>
 					<div class="toggle-view panel" style='margin-bottom:25px'>
 						<div class="row">
@@ -52,7 +52,7 @@
 		            	</div>
 	            	</div>
 				</li>
-				<li class="glyphicon glyphicon-list-alt" style='margin-top: 25px;width:100%'><span>Select</span><select class="val"><option value="option1">option1</option></select>
+				<!-- <li class="glyphicon glyphicon-list-alt" style='margin-top: 25px;width:100%'><span>Select</span><select class="val"><option value="option1">option1</option></select>
 					<div class="toggle-view panel">
 						<div class="row" style='margin-bottom:25px'>
 		            		<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px'/></div>
@@ -81,7 +81,7 @@
 		            	</table>
 		            	<div class='col-md-2' style='margin-top:10px'><button id="refresh_list" type="button" class="btn btn-success">refresh list</button></div>
 	            	</div>
-				</li>
+				</li>-->
 				<li class="glyphicon glyphicon-text-width" style='margin-top: 25px;width:100%'><span>Text Field</span><input type="text" name="textbox" class="val" />
 					<div class="toggle-view panel">
 						<div class="row" style='margin-bottom:25px'>
