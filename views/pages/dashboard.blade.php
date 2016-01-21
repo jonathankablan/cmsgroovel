@@ -21,7 +21,7 @@
 	            <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Traffic Estimations for last 30 days</h3>
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Traffic Estimations for last 30 days</font></h3>
                         </div>
                         <div class="panel-body">
                    
@@ -32,7 +32,7 @@
                   <div class="col-lg-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Number of users</h3>
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i><font color='black'> Number of users</font></h3>
                         </div>
                         <div class="panel-body">
                             <div style='margin-left:70px;font-size:50px'>
@@ -44,7 +44,7 @@
                  <div class="col-lg-5">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Number of users sessions connected</h3>
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Number of users sessions connected</font></h3>
                         </div>
                         <div class="panel-body">
                           <div style='margin-left:100px;font-size:50px'>
@@ -56,7 +56,7 @@
                  <div class="col-lg-4">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Number of messages sent</h3>
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Number of messages sent</font></h3>
                         </div>
                         <div class="panel-body">
                         	 <div style='margin-left:100px;font-size:50px'>
