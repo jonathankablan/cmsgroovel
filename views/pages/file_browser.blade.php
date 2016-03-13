@@ -5,9 +5,9 @@
 <link rel="stylesheet" type="text/css" href="styles.css" />
 <!-- <script type="text/javascript" src="ajax.js"></script>-->
 <!-- <script type="text/javascript" src="browser.js"></script>-->
-{!! HTML::script('packages/groovel/cmsgroovel/groovel/browser/ajax.js') !!}
-{!! HTML::script('packages/groovel/cmsgroovel/groovel/browser/browser.js') !!}
-{!!HTML::style('packages/groovel/cmsgroovel/groovel/browser/styles.css')!!}
+{!! HTML::script('groovel/cmsgroovel/groovel/browser/ajax.js') !!}
+{!! HTML::script('groovel/cmsgroovel/groovel/browser/browser.js') !!}
+{!!HTML::style('groovel/cmsgroovel/groovel/browser/styles.css')!!}
  
 <script type="text/javascript">
 function init(){

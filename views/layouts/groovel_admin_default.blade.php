@@ -15,6 +15,11 @@
 	  @endif
 	@endif
     <div class="container-fluid">
+          @if(Session::get('user_privileges')!=null)
+        	@if(Session::get('user_privileges')['role']=='ADMIN')
+      			@include('cmsgroovel.includes.groovel_admin_sidebar')
+      	    @endif
+		@endif
       <div class="row">
         <div class="col-xs-12 col-md-11 col-md-offset-0.75">
  			   @yield('content')

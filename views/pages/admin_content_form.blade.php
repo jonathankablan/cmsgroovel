@@ -8,7 +8,7 @@
 			        @endif
 			    </div>
 			    	
-			    <div id='modal' class="modal fade" style="display: none;" data-keyboard="false" data-backdrop="static">
+			    <div id='modal' class="modal fade" style="display: none;" data-keyboard="true" data-backdrop="static" tabindex='-1'>
 				  <div class="modal-dialog">
 				  	<div class="modal-content">
 					 	<div class="modal-header" style='background-color: #E5E4E2'>
@@ -30,8 +30,8 @@
 								    </div>
 								</div>
 						@endif
-						<div id='light'></div>
-						<div id='fade'></div>
+						<div id='error' style='display:none'></div>
+			
 			            <div id='form-modal' class="modal-body">
 						 	   {!! Form::open(array('id'=>'content_form','url' => 'admin/content/update','files'=>true)) !!}
 			      
@@ -103,19 +103,19 @@
 						            	</div>
 					            	</div>
 					            	<div class="row" style="margin-top:50px">
-						                <div class="form-group" data-toggle="tooltip" title="the url to access to your content">
+						                <div class="form-group" data-toggle="tooltip" title="the description of your content">
 						                	<div class="col-md-2">
-								    			<label for="url">url</label><span class="required"></span>
+								    			<label for="description">description</label><span class="required"></span>
 										    </div>
 										    <div class="col-md-8">
-										    	{!! Form::text('url', Session::get('content_edit')['url'], $attributes = array('class' => 'form-control')) !!}
+										    	{!! Form::textarea('description', Session::get('content_edit')['description'], $attributes = array('class' => 'form-control')) !!}
 						          		    </div>
 						            	</div>
 					            	</div>
 					            	<div class="row" style="margin-top:50px">
 						            	<div class="form-group">
-						            		<div class="col-md-2">
-									    		<label for="publish">publish content</label><span class="required"></span>
+						            		<div class="col-md-3">
+									    		<label for="publish">publish content</label>
 										    </div>
 										    <div class="col-md-8">
 										        {!! Form::checkbox('isPublish', Input::old('isPublish'),Session::get('content_edit')['ispublish'], array('data-toggle'=>'tooltip',"title"=>"to publish your content you have to check the box",'class'=>'form-control','placeholder' => 'isPublish')) !!}
@@ -274,7 +274,14 @@ function deleteContents(){
            data : any2url('q',args),
            url: "/admin/content/delete",
             success: function(data) {
-               alert('content deleted successfull');
+               $("#alertmsg").css("color","green");
+			   $("#alertmsg").text('content deleted successfully');
+			   $("#error").empty();
+               $("#popupModal").modal({                    // wire up the actual modal functionality and show the dialog
+                   "backdrop"  : "static",
+                   "keyboard"  : true,
+                   "show"      : true                     // ensure the modal is shown immediately
+                 });
                $('#modal').modal('hide');
            },
            error: function(xhr, textStatus, thrownError) {
@@ -293,10 +300,10 @@ $("#submitForm").click(function (event) {
  		tinymce.triggerSave();
  	}
 	//add token form
-	document.getElementById('content_form').appendChild( document.getElementById('token'));
+
 	form=$('#content_form').serialize();
 	validateContent(form);
-	if($('#light').children().length==0){
+	if (!$('#error').text().trim().length){
 	    var status=postFiles();
 	    if(!status){
 			return false;
@@ -310,44 +317,5 @@ $("#submitForm").click(function (event) {
 
 
 </script>
-<style>
-#fade{
-    display: none;
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    z-index:1001;
-    -moz-opacity: 0.7;
-    opacity:.70;
-    filter: alpha(opacity=70);
-}
-#light{
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 200px;
-    margin-left: -150px;
-    margin-top: -100px;                 
-    padding: 10px;
-    border: 2px solid #FFF;
-    z-index:1002;
-    overflow:visible;
-}		
-.closer {
- position: absolute;
-top: 0px;
-right: 10px;
-transition: all 200ms ease 0s;
-font-size: 20px;
-font-weight: bold;
-text-decoration: none;
-color: #333;
-}	
 
-</style>
 @stop

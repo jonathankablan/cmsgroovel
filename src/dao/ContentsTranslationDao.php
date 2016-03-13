@@ -19,7 +19,6 @@ use Groovel\Cmsgroovel\models\Contents;
 
 class ContentsTranslationDao implements ContentsTranslationDaoInterface{
 
-//public function create($title,$data,$url,$tag,$contentType,$userid,$publish,$topPublish){
 public function create($refid,$title,$data,$tag,$langage){
 	$contents= new ContentsTranslation();
 	$contents->refcontentid=$refid;

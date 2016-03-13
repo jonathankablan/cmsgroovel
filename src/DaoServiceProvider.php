@@ -33,6 +33,8 @@ use Groovel\Cmsgroovel\dao\LocationGeoCountriesDao;
 use Groovel\Cmsgroovel\dao\MessageDao;
 use Groovel\Cmsgroovel\dao\ElasticSearchDao;
 use Groovel\Cmsgroovel\dao\ForumDao;
+use Groovel\Cmsgroovel\dao\MenuDao;
+use Groovel\Cmsgroovel\dao\MenuDaoInterface;
 use Groovel\Cmsgroovel\handlers\DatabaseSearchHandler;
 use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentManagerBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentTypeManagerBusiness;
@@ -44,10 +46,18 @@ use Groovel\Cmsgroovel\business\groovel\admin\search\GroovelSearchManagerBusines
 use Groovel\Cmsgroovel\business\groovel\admin\configuration\GroovelConfigurationBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\trackers\GroovelUserTrackingBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\messages\GroovelUserMessageBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\menu\GroovelMenuBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusiness;
 use Groovel\Cmsgroovel\config\ElasticSearchConnection;
 use Groovel\Cmsgroovel\business\groovel\admin\forum\GroovelForumBusiness;
 use Groovel\Cmsgroovel\dao\ContentsTranslationDaoInterface;
 use Groovel\Cmsgroovel\dao\ContentsTranslationDao;
+use Groovel\Cmsgroovel\dao\LayoutDao;
+use Groovel\Cmsgroovel\dao\LayoutDaoInterface;
+use Groovel\Cmsgroovel\dao\CommentsDao;
+use Groovel\Cmsgroovel\dao\CommentsDaoInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusinessInterface;
 
 
 class DaoServiceProvider extends \Illuminate\View\ViewServiceProvider {
@@ -74,11 +84,17 @@ class DaoServiceProvider extends \Illuminate\View\ViewServiceProvider {
     	\App::bind('Groovel\Cmsgroovel\dao\ElasticSearchDaoInterface','Groovel\Cmsgroovel\dao\ElasticSearchDao');
     	\App::bind('Groovel\Cmsgroovel\dao\ForumDaoInterface','Groovel\Cmsgroovel\dao\ForumDao');
     	\App::bind('Groovel\Cmsgroovel\dao\ContentsTranslationDaoInterface','Groovel\Cmsgroovel\dao\ContentsTranslationDao');
+    	\App::bind('Groovel\Cmsgroovel\dao\MenuDaoInterface','Groovel\Cmsgroovel\dao\MenuDao');
+    	\App::bind('Groovel\Cmsgroovel\dao\LayoutDaoInterface','Groovel\Cmsgroovel\dao\LayoutDao');
+    	\App::bind('Groovel\Cmsgroovel\dao\CommentsDaoInterface','Groovel\Cmsgroovel\dao\CommentsDao');
     	 
     	 
+    	\App::bind('Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusiness',function(){
+    		return new GroovelCommentBusiness(new CommentsDao);
+    	});
     	
     	\App::bind('Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentManagerBusiness',function(){
-    	 return new GroovelContentManagerBusiness(new ContentsDao,new RouteDao,new ContentTypeDao,new CountryDao,new ContentsTranslationDao);
+    	 return new GroovelContentManagerBusiness(new ContentsDao,new RouteDao,new ContentTypeDao,new CountryDao,new ContentsTranslationDao,new CommentsDao);
     	 });
     	
     	\App::bind('Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentTypeManagerBusiness',function(){
@@ -129,6 +145,17 @@ class DaoServiceProvider extends \Illuminate\View\ViewServiceProvider {
        \App::bind('Groovel\Cmsgroovel\business\groovel\admin\forum\GroovelForumBusiness',function(){
         		return new GroovelForumBusiness(new ForumDao,new UserDao,new ConfigurationDao);
         	});
+       
+
+       	\App::bind('Groovel\Cmsgroovel\business\groovel\admin\menu\GroovelMenuBusiness',function(){
+       		return new GroovelMenuBusiness(new MenuDao,new CountryDao);
+       	});
+       	
+       	
+       		\App::bind('Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusiness',function(){
+       			return new GroovelLayoutBusiness(new LayoutDao,new CountryDao);
+       		});
+       
         
         }
     

@@ -19,27 +19,36 @@ use models;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelFormController;
 use Groovel\Cmsgroovel\business\groovel\admin\routes\GroovelRoutesBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\routes\GroovelRoutesBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusinessInterface;
 
 class GroovelRoutesFormController extends GroovelFormController {
 
 	
 	protected $routeBusiness;
+	private $layoutManager;
 	
 	
-	public function __construct( GroovelRoutesBusinessInterface $routeBusiness)
+	public function __construct( GroovelRoutesBusinessInterface $routeBusiness,GroovelLayoutBusinessInterface $layoutManager)
 	{
 		$this->routeBusiness =$routeBusiness;
+		$this->layoutManager=$layoutManager;
 		$this->beforeFilter('auth');
 	}
 	
 	public function init(){
 		$subtypes=$this->routeBusiness->getSubtypeList();
-		return \View::make('cmsgroovel.pages.admin_form_route',['subtypes'=>$subtypes]);
+		$layouts=$this->layoutManager->layouts();
+		array_push($layouts,'Groovel');
+		return \View::make('cmsgroovel.pages.admin_form_route',['subtypes'=>$subtypes,'layouts'=>$layouts]);
 	}
 	
 	
 	public function validateForm($params)
 	{
+		if(\Request::is('admin/pages/code/save')){
+			return $this->processForm();
+		}
 		$rulesadd = array(
 				'name' => 'required',
 				'uri' => 'required|unique:routes_groovel',
@@ -114,20 +123,51 @@ class GroovelRoutesFormController extends GroovelFormController {
 		}
 		else if(\Request::is('*/routes/delete')){
 			$this->deleteRoute();
-			return \Response::json(array('status' => 'route has been deleted',"errors"=>''));
+			return $this->jsonResponse(array('route has been deleted'),false,true,false);
 		}
 		else if(\Request::is('*/routes/update')){
 			 $this->updateRoute();
 			return $this->jsonResponse(array('route has been updated'),false,true,false);
+		}else if(\Request::is('admin/pages/code/save')){
+			$this->updateCodePage();
+			return $this->jsonResponse(array('code has been updated'),false,true,false);
 		}
 		
 		return \Redirect::to('/admin/routes');
 	
 	}
 	
+	
+	private function updateCodePage(){
+		$this->saveFilePage(\Input::get('page_name'),\Input::get('page'));
+	}
+	
+	
+	function deleteFile($layoutName,$pageName){
+		$dst_base=base_path () . '/resources/views/'.$layoutName.'/base';
+		$dst_includes=base_path () . '/resources/views/'.$layoutName.'/includes';
+		$page=base_path () . '/resources/views/'.$layoutName.'/pages/'.$pageName;
+		if(file_exists($page)){
+			unlink($page);
+		}
+	}
+	
  	private function deleteRoute(){
- 		 $input = \Input::get('q');
-	     $this->routeBusiness->deleteRoute($input['id']);
+ 		 $input = null;
+ 		 if(\Input::get('q')!=null){
+ 		 	$input=\Input::get('q');
+ 		 }else{
+ 		 	$input=\Input::all();
+ 		 }
+ 		 $route=$this->routeBusiness->find($input['id']);
+ 		 \Session::forget('route_edit');
+ 		 if($route!=null){
+ 		 	$view= explode('.',$route->view);
+ 		 	$ln=count($view);
+ 		 	$this->deleteFile($route->type, $view[$ln-1].'.'.'blade.php');
+ 		 }
+ 		 
+ 		 $this->routeBusiness->deleteRoute($input['id']);
 	}
 
  	private function updateRoute(){
@@ -140,6 +180,7 @@ class GroovelRoutesFormController extends GroovelFormController {
   	}
 
 	private function addRoute(){
+		\Log::info(\Input::all());
 		$this->routeBusiness->addRoute(\Input::get('domain'), \Input::get('uri'),\Input::get('name'), \Input::get('controller'), \Input::get('method'), \Input::get('action')[0], \Input::get('view'), \Input::get('before_filter'),\Input::get('after_filter'),\Input::get('type'),\Input::get('subtype')[0],\Input::get('audit_tracking_url_enable'),\Input::get('activate_route'));
 	}
 
@@ -187,8 +228,12 @@ class GroovelRoutesFormController extends GroovelFormController {
 				'activate_route'=>$routegroovel->activate_route
 		);
 		$subtypes=$this->routeBusiness->getSubtypeList();
+		$layouts=$this->layoutManager->layouts();
+		$layouts=array_merge($layouts,array('Groovel'=>'Groovel'));
+		\Session::put('layouts', $layouts);
 		\Session::put('route_edit', $route);
 		\Session::put('subtypes', $subtypes);
+		\Session::put('page',$this->getFilePage($routegroovel->view));
 		$uri=array();
 		$uri['uri']= url('admin/routes/editform', $parameters = array(), $secure = null);
 		return $this->jsonResponse($uri);
@@ -233,6 +278,35 @@ class GroovelRoutesFormController extends GroovelFormController {
 		}
 	
 		return $out;
+	}
+	
+	public function saveFilePage($viewName,$content){
+		$view= explode('.',$viewName);
+		$dir_pages=base_path () . '/resources/views/'.$view[0].'/pages';
+		$ln=count($view);
+		$page_name=$view[$ln-1];
+		//$data = file_get_contents($dir_pages.'/'.$page_name.'.blade.php');
+		$myfile = fopen($dir_pages.'/'.$page_name.'.blade.php', "w");
+		fwrite($myfile, htmlspecialchars_decode($content));
+		//file_put_contents($data, $content);
+		
+	}
+	
+	
+	
+	
+	public function getFilePage($viewName){
+		$view= explode('.',$viewName);
+		$dir_pages=base_path () . '/resources/views/'.$view[0].'/pages';
+		$ln=count($view);
+		$page_name=$view[$ln-1];
+		$data =null;
+		if($page_name!=null){
+			if(file_exists($dir_pages.'/'.$page_name.'.blade.php')){
+			$data = file_get_contents($dir_pages.'/'.$page_name.'.blade.php');
+			}
+		}
+	    return $data;
 	}
 
 }

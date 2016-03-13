@@ -19,7 +19,7 @@ interface ContentTypeDaoInterface{
 
 public function find($contentTypeid);
 
-public function createType($tableName);
+public function createType($tableName,$template);
 
 public function create($title,$fieldName,$fielddescription,$fieldtype,$fieldvalue,$widgetid,$fieldrequired,$reftypeid);
 

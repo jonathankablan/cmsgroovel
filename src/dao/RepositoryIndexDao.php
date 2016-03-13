@@ -18,17 +18,17 @@ use Groovel\Cmsgroovel\models\RepositoryIndex;
 
 class RepositoryIndexDao implements RepositoryIndexDaoInterface{
 
-	public function create($type,$id,$data,$title,$url){
+	public function create($type,$id,$data,$title,$description){
 	    $index= new RepositoryIndex();
 		$index->type=$type;
 		$index->refid=$id;
 		$index->data=$data;
 		$index->title=$title;
-		$index->url=$url;
+		$index->description=$description;
 		$index->save();
 	}
 
-	public function update($type,$id,$data,$title,$url){
+	public function update($type,$id,$data,$title,$description){
 		$index=RepositoryIndex::find($id);
 		if($index==null){
 			$index= new RepositoryIndex();
@@ -36,14 +36,14 @@ class RepositoryIndexDao implements RepositoryIndexDaoInterface{
 			$index->refid=$id;
 			$index->data=$data;
 			$index->title=$title;
-			$index->url=$url;
+			$index->description=$description;
 			$index->save();
 		}else{
 			$index->type=$type;
 			$index->refid=$id;
 			$index->data=$data;
 			$index->title=$title;
-			$index->url=$url;
+			$index->description=$description;
 			$index->save();
 		}
 	}

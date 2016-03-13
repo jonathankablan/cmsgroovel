@@ -20,9 +20,9 @@ use Groovel\Cmsgroovel\models\ContentsTranslation;
 use DB;
 class ContentsDao implements ContentsDaoInterface{
 
-public function create($url,$contentType,$userid,$publish,$weight=null){
+public function create($description,$contentType,$userid,$publish,$weight=null){
 	$contents= new Contents();
-	$contents->url=$url;
+	$contents->description=$description;
 	$contents->type_id=$contentType;
 	$contents->author_id=$userid;
 	$contents->ispublish=$publish;
@@ -44,7 +44,7 @@ public function find($id){
 	return Contents::find($id);
 }
 
-public function paginate($langage=null){
+public function paginate($langage=null,$layout=null){
 	$contents=null;
 	if($langage!=null){
 		$contents = DB::table('contents')
@@ -54,9 +54,10 @@ public function paginate($langage=null){
 		->select('contents.id as content_id','contents.*', 'contents_translation.id as translation_id','contents_translation.*','all_contents_type.name as type','users.pseudo as author')
 		->where('contents.ispublish','=',1)
 		->where('contents_translation.lang','=',$langage)
+		->where('all_contents_type.name','=',$layout)
 		->orderBy('contents.weight','desc')
-		->orderBy('contents.created_at', 'desc')
-		->paginate(15);
+		->orderBy('contents.created_at', 'desc')->get();
+	
 	}else {
 		$contents = DB::table('contents')
 		->join('contents_translation', 'contents.id', '=', 'contents_translation.refcontentid')
@@ -64,9 +65,10 @@ public function paginate($langage=null){
 		->join('users', 'users.id', '=', 'contents.author_id')
 		->select('contents.id as content_id','contents.*', 'contents_translation.id as translation_id','contents_translation.*','all_contents_type.name as type','users.pseudo as author')
 		->where('contents.ispublish','=',1)
+		->where('all_contents_type.name','=',$layout)
 		->orderBy('contents.weight','desc')
-		->orderBy('contents.created_at', 'desc')
-		->paginate(15);
+		->orderBy('contents.created_at', 'desc')->get();
+	
 	}
 	return  $contents;
 }

@@ -22,6 +22,10 @@ class CountryDao implements CountryDaoInterface{
 		return Country::where('code','=',$country)->first();
 	}
 	
+	public function findByName($country){
+		return Country::where('name_en','=',$country)->first();
+	}
+	
 	public function all(){
 		return Country::all();
 	}

@@ -30,9 +30,10 @@ class ContentTypeDao implements ContentTypeDaoInterface{
 		return $type;
 	}
 	
-	public function createType($tableName){
+	public function createType($tableName,$template){
 		$type=new AllContentTypes();
 		$type->name=$tableName;
+		$type->template=$template;
 		$type->type='content';
 		$type->author_id=\Auth::id();
 		$type->save();

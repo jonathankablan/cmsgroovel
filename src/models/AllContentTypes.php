@@ -24,7 +24,7 @@ class AllContentTypes extends Model{
 
 
 
-	protected $fillable = array('name','type','author_id','updated_at','created_at');
+	protected $fillable = array('name','type','template','author_id','updated_at','created_at');
 
 	public function author()
 	{

@@ -32,8 +32,8 @@
 					                          <th id="col_content" class="col-md-1">id</th>
 					                          <th id="col_content" class="col-md-1">translation_id</th>
 					                          <th id="col_content" class="col-md-1">title</th>
+					                          <th id="col_content" class="col-md-1" style='display:none'>description</th>
 					                          <th id="col_content" class="col-md-1">type</th>
-					                          <th id="col_content" class="col-md-1">url</th>
 					                          <th id="col_content" class="col-md-1">author</th>
 					                          <th id="col_content" class="col-md-1">published</th>
 					                          <th id="col_content" class="col-md-1">weight</th>
@@ -49,8 +49,8 @@
 						                            <td id="row_content"  class="col-md-1">{!!$content->content_id!!}</td>
 						                            <td id="row_content" class="col-md-1">{!!$content->translation_id!!}</td>
 						                            <td id="row_content" class='name col-md-1'>{!!$content->name!!}</td>
+						                            <td id="row_content" class="col-md-1"  style='display:none'>{!!$content->description!!}</td>
 						                            <td id="row_content" class="col-md-1">{!!$content->type!!}</td>
-						                            <td id="row_content" class="col-md-1">{!!$content->url!!}</td>
 						                            <td id="row_content" class="col-md-1">{!!$content->author!!}</td>
 						                             <?php if($content->ispublish==1) :?>
 						                              <td id="row_content" class="col-md-1">yes</td>
@@ -63,10 +63,10 @@
 						                             <td id="row_content" class="col-md-1">{!!$content->created_at!!}</td>
 						                             <td id="row_content" class="col-md-1">{!!$content->updated_at!!}</td>
 						                            <td id="edit" class="col-md-1">
-						                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditContent')) !!}
+						                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditContent')) !!}
 						                            </td>
 						                            <td id="del" class="col-md-1">
-						                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteContent')) !!}
+						                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteContent')) !!}
 						                            </td>
 						                             <td id="translate" class="col-md-1">
 						                            <button id="dump" class="btn btn-success btnTranslateContent">translate in a new langage</button>

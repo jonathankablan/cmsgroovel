@@ -43,10 +43,10 @@
 					                            <td id="row_content"  class="col-md-1">{!!$content->created_at!!}</td>
 					                            <td id="row_content"  class="col-md-1">{!!$content->updated_at!!}</td>
 					                            <td id="edit"  class="col-md-1">
-					                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditContentType')) !!}
+					                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditContentType')) !!}
 					                            </td>
 					                            <td id="del"  class="col-md-1">
-					                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteContentType')) !!}
+					                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteContentType')) !!}
 					                            </td>
 					                          </tr>
                          					 @endforeach

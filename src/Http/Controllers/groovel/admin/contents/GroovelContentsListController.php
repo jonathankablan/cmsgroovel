@@ -19,13 +19,15 @@ use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelController;
 use Monolog\Logger;
 use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentManagerBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentManagerBusinessInterface;
-
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 
 class GroovelContentsListController extends GroovelController {
 
 	protected $contentManager;
 	
+	private static $perPage = 2;
 	
 
 	public function __construct( GroovelContentManagerBusinessInterface $contentManager)
@@ -34,17 +36,30 @@ class GroovelContentsListController extends GroovelController {
 		$this->beforeFilter('auth');
 	}
 
+	
 	//load all contents into a view
-	public function loadContents($site_extension){
-		$lang=null;
-		if($site_extension=='com'){
-			$lang='US';
-		}else if($site_extension=='fr'){
-			$lang='FR';
-		}else if($site_extension=='uk'){
-			$lang='GB';
-		}
-		return $this->contentManager->paginateFullContentDeserialize($lang);
+	public function loadContents($site_extension,$lang=null,$layout=null){
+		if($lang==null){
+			if($site_extension=='com'){
+				$lang='US';
+			}else if($site_extension=='fr'){
+				$lang='FR';
+			}else if($site_extension=='uk'){
+				$lang='GB';
+			}
+		}   
+			$contents= $this->contentManager->paginateFullContentDeserialize($lang,$layout);
+			$currentPage = \Input::get('page')-1;
+			if($currentPage<0){
+				$currentPage=0;
+			}
+			$pagedData = array_slice( $contents, $currentPage * self::$perPage, self::$perPage);
+			$currentPage = LengthAwarePaginator::resolveCurrentPage() ?: 1;
+			$paginator = new LengthAwarePaginator($pagedData, count( $contents),  self::$perPage, $currentPage, [
+					'path'  => Paginator::resolveCurrentPath()
+			
+			]);
+		return $paginator;
 	}
 	
 	

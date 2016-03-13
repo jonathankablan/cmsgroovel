@@ -8,7 +8,7 @@
 	                <div class="col-md-12">
 	                    <div class="panel  panel-default">
 	                        <div class="panel-heading">
-	                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Routes System</h3>
+	                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Pages</h3>
 	                        </div>
 	                        <div class="panel-body">
 	                        	<div class='rows' style='margin-bottom: 10px' > 
@@ -21,7 +21,7 @@
 								  		</button>
 							  		</div>
 							  		  <div class="col-md-2">      
-            							{!! HTML::link('/admin/routes/form', 'Add route',array('class' => 'btn btn-default'))!!}
+            							{!! HTML::link('/admin/pages/form', 'Add page',array('class' => 'btn btn-default'))!!}
          							 </div>
         				  		</div>
 						  	</div>
@@ -31,7 +31,7 @@
 				                          <th id="col_route" class="col-md-1">id</th>
 				                          <th id="col_route" class="col-md-1">uri</th>
 				                          <th id="col_route" class="col-md-1">name</th>
-				                            <th id="col_route" class="col-md-1">view</th>
+				                            <th id="col_route" class="col-md-1">page</th>
 				                          </tr>
 				                      </thead>
 				                      <tbody  class="list">
@@ -42,10 +42,10 @@
 				                            <td id="row_route" class="name col-md-1">{!!$route->name!!}</td>
 				                            <td id="row_route" class="view col-md-1">{!!$route->view!!}</td>
 				                           <td id="del" class="col-md-1">
-				                           {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteRoute')) !!}
+				                           {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteRoute')) !!}
 				                            </td>
 				                             <td id="edit" class="col-md-1">
-					                           {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditRoute')) !!}
+					                           {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditRoute')) !!}
 					                         </td>
 				                          </tr>
 				                          @endforeach

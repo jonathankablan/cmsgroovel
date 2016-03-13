@@ -10,56 +10,11 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li>{!! HTML::link('/admin/dashboard', 'Dashboard')!!}</li>
-		            <!-- <li><a href="#">Logs</a></li>-->
-		           
-		             <li class="dropdown">
-		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Templates Apps<span class="caret"></span></a>
-		              <ul class="dropdown-menu" role="menu">
-		                <!-- <li><a href="./admin/routes">List Routes</a></li>-->
-		                <li>{!! HTML::link('/admin/templates/create', 'Choose Template')!!}</li>
-		              </ul>
-		            </li>
-		            
-		            
-		            <li class="dropdown">
-		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Routes Apps<span class="caret"></span></a>
-		              <ul class="dropdown-menu" role="menu">
-		                <!-- <li><a href="./admin/routes">List Routes</a></li>-->
-		                <li>{!! HTML::link('/admin/routes/user', 'List Routes')!!}</li>
-		                <li class="divider"></li>
-		                <li>{!! HTML::link('/admin/routes/form', 'Add Routes')!!}</li>
-		               </ul>
-		            </li>
-		         
-		          <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contents<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown dropdown-submenu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Contents</a>
-                            <ul class="dropdown-menu">
-                                 <li>{!! HTML::link('/admin/contents', 'List Contents')!!}</li>
-		                  	   	<li class="divider"></li>
-			              	 	<li>{!! HTML::link('/admin/content/form', 'Add new contents')!!}</li>
-			                </ul>
-                            </li>
-                             <li class="divider"></li>
-                             <li class="dropdown dropdown-submenu">
-                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Contents Templates</a>
-			                 
-			                   <ul class="dropdown-menu">
-				                   <li>{!! HTML::link('/admin/content_type/form', 'Add new content template')!!}</li>
-					           	    <li class="divider"></li>
-					            	 <li>{!! HTML::link('/admin/content_types', 'List contents templates')!!}</li>
-					         	</ul>
-					      </li>
-			            </ul>
-		           </li>
-		          
-		          
-		          
-		         <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Users<b class="caret"></b></a>
+                  <li>
+                  <a href="{{ url('/admin/dashboard') }}"><span><i class="glyphicon glyphicon-dashboard"></i></span> Dashboard</a>
+                  </li>
+		          <li class="dropdown" style='margin-left:60px'>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-user'></span>Users<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Users</a>
@@ -91,7 +46,7 @@
 				         </ul>
 		           </li>
 		            <li class="dropdown">
-		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">System Kernel <span class="caret"></span></a>
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-wrench'></span>System Kernel<span class="caret"></span></a>
 		              <ul class="dropdown-menu" role="menu">
 		                       
 		                 <li class="dropdown dropdown-submenu">
@@ -117,31 +72,53 @@
 		                
 		                 <li class="divider"></li>
 		                <li class="dropdown dropdown-submenu">
-			                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage System Routes </a>
+			                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage System Pages </a>
 			                   <ul class="dropdown-menu">
-				              	   <li>{!! HTML::link('/admin/routes', 'List Routes System')!!}</li>
+				              	   <li>{!! HTML::link('/admin/routes', 'List Pages System')!!}</li>
 		          		    	   <li class="divider"></li>
-				               		<li>{!! HTML::link('/admin/routes/form', 'Add Routes System')!!}</li>
+				               		<li>{!! HTML::link('/admin/routes/form', 'Add Pages System')!!}</li>
 		          		   		</ul>
 				        </li>
 				        </ul>
 		             </li>    
 		             
 		              <li class="dropdown">
-		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Forums <span class="caret"></span></a>
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-th-list'></span>Forums <span class="caret"></span></a>
 		              <ul class="dropdown-menu" role="menu">
 		                <!-- <li><a href="./admin/routes">List Routes</a></li>-->
 		                <li>{!! HTML::link('/forums/view', 'List all forums')!!}</li>
 		              </ul>
 		            </li>
 		            
+		            <li class="dropdown">
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-book'></span>Blog <span class="caret"></span></a>
+		              <ul class="dropdown-menu" role="menu">
+		              	<li>
+		              	<a href={!! url('/blogs') !!} target="_blank">Blog Home</a>
+		              	</li>
+		              	<li class="divider"></li>
+		                <li>{!! HTML::link('/blog/posts', 'Quick Post')!!}</li>
+		              </ul>
+		            </li>
+		            
 		             
-		              <li>{!! HTML::link('/search', 'Search')!!}</li>
+		              <!-- <li>{!! HTML::link('/search', 'Search')!!}</li>-->
 		             
          	 </ul>
-         	  <ul class="nav navbar-nav navbar-right navbar-user" style='margin-right:50px'>
+         	 <div class="col-sm-2 col-md-2 col-md-offset-1">
+		       <form id='search_form' class="navbar-form" role="search" action='/admin/search/execute' method='post'>
+		        <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+		        <div class="input-group">
+		            <input id='search' type="text" class="form-control" placeholder="Search" name="srch-term" >
+		            <div class="input-group-btn">
+		                <button id="srch-term" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+		            </div>
+		        </div>
+		       </form>
+        	</div>
+         	  <ul class="nav navbar-nav navbar-right navbar-user" style='margin-right:10px'>
                     <li class="dropdown user-dropdown">
-                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>@if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif<b class="caret"></b></a>
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>@if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif<b class="caret"></b></a>
                        <ul class="dropdown-menu">
                             <li>{!! HTML::link('user/view/profile', 'Settings')!!}</li>
                             <li class="divider"></li>
@@ -152,7 +129,10 @@
      					@endif
                        </ul>
                    </li>
+                </ul>
             </div>
           
         </nav>
-                    
+<!-- <script>
+$(document).ready(bindSearch());
+</script> -->

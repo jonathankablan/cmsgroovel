@@ -15,6 +15,16 @@
 				</div>
 			 </li>
 			 <li>
+				<div id='layout' class="form-group">
+	    						<div class="col-md-2">
+							    	<label for="layout">layout</label><span class="required"></span>
+							    </div>
+							    <div class="col-md-8">
+							    	<input type="text" value="default" class="form-control" id="inputlayout" name='layout' disabled/>
+							    </div>
+				</div>
+			 </li>
+			 <li>
 				<div id='weight' class="form-group">
 	    						<div class="col-md-2">
 							    	<label for="title">weight</label>
@@ -55,12 +65,12 @@
 				  </div>
 				  </li>
 				  <li>
-				 <div id='url' class="form-group">
+				 <div id='description' class="form-group">
 	    						<div class="col-md-2">
-							    	<label for="url">url</label><span class="required"></span>
+							    	<label for="description">description</label><span class="required"></span>
 							    </div>
 							    <div class="col-md-8">
-							    	<input type="text" class="form-control" id="url" name='url'/>
+							    	<textarea class="form-control" id="description" name='description'></textarea>
 							    </div>
 				</div>
 				</li>
@@ -154,7 +164,7 @@
 	</div>
 	<div class="col-md-10" style='margin-top: 100px'>
 			<div class='row'>
-				<div class='col-md-3 col-md-offset-3'>
+				<div class='col-md-3 col-md-offset-1'>
 					 {!!Form::label('Choose your content template', 'Choose your content template',array('class'=>'required'))!!}  
 				</div>	
 				<div class='col-md-5'>	
@@ -165,14 +175,13 @@
 	</div>
 		
     @include('cmsgroovel.sections.loadingwindow')
-    <div id='modal' class="modal fade" style="display: none;overflow:scroll" data-keyboard="false" data-backdrop="static">
-	  <div class="modal-dialog">
-	  	<div class="modal-content">
+    <div id='modal' class="modal fade" style="display: none;overflow:scroll" data-keyboard="true" data-backdrop="static" tabindex='-1'>
+       <div class="modal-dialog">
+     	<div class="modal-content">
 		 	<div class="modal-header" style='background-color: #E5E4E2'>
 		 	  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		      <h4 class="modal-title">New content</h4>
 		    </div>
-		    
 			 @if($errors->has()|| Session::get('messages'))
 					<div class="span3">
 						<div class="col-md-12 col-md-offset-2">
@@ -186,10 +195,11 @@
 					    </div>
 					</div>
 			@endif
-			<div id='light'></div>
-			<div id='fade'></div>
+			<div id='error' style='display:none'></div>
 			 <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 			 <input id='action' type="hidden" name="action" value="admin/content/add">
+			 <input id='content_id' type="hidden" name="content_id">
+		
 		     <div id='form-modal' class="modal-body">
 				<form id="content_form" role="form">	
 				
@@ -206,15 +216,6 @@
 	</div>
 
 	<script>
-	window.document.onkeydown = function (e)
-	{
-	    if (!e){
-	        e = event;
-	    }
-	    if (e.keyCode == 27){
-	        lightbox_close();
-	    }
-	}
 	
 	
 	$("#submitForm").click(function (event) {
@@ -223,9 +224,10 @@
 	 		tinymce.triggerSave();
 	 	}
 	 	document.getElementById('content_form').appendChild( document.getElementById('token'));
+	 	document.getElementById('content_form').appendChild( document.getElementById('content_id'));
 		form=$('#content_form').serialize();
 		validateContent(form);
-		if($('#light').children().length==0){
+		if (!$('#error').text().trim().length){
 		    var status=postFiles();
 		    if(!status){
 				return false;
@@ -257,45 +259,6 @@ $( "#modal" ).on( "hidden.bs.modal", function(e) {
 
  
 </script>
-<style>
-#fade{
-    display: none;
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    z-index:1001;
-    -moz-opacity: 0.7;
-    opacity:.70;
-    filter: alpha(opacity=70);
-}
-#light{
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 200px;
-    margin-left: -150px;
-    margin-top: -100px;                 
-    padding: 10px;
-    border: 2px solid #FFF;
-    z-index:1002;
-    overflow:visible;
-}		
-.closer {
- position: absolute;
-top: 0px;
-right: 10px;
-transition: all 200ms ease 0s;
-font-size: 20px;
-font-weight: bold;
-text-decoration: none;
-color: #333;
-}	
 
-</style>
 
 @stop

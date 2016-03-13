@@ -34,7 +34,7 @@ class DatabaseSearchHandler
 		}else if(ModelConstants::$user==$data['type']){
 			$index='users';
 		}
-		$this->reposearch->create($data['type'],$data['data']['id'],$data['data']['tag'],$data['data']['title'],$data['data']['url']);
+		$this->reposearch->create($data['type'],$data['data']['id'],$data['data']['tag'],$data['data']['title'],$data['data']['description']);
 	}
 	
 	public function update($job, $data)
@@ -46,7 +46,7 @@ class DatabaseSearchHandler
 			$index='users';
 		}
 		//\Log::info($data);
-		$this->reposearch->update($data['type'],$data['data']['id'],$data['data']['tag'],$data['data']['title'],$data['data']['url']);
+		$this->reposearch->update($data['type'],$data['data']['id'],$data['data']['tag'],$data['data']['title'],$data['data']['description']);
 		
 	}
 	

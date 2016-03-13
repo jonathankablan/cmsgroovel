@@ -5,7 +5,7 @@
         <div id='light' style='margin-left: 500px;margin-top:100px'></div>
 		<div id='fade'></div>
         
-        <div id='modal' class="modal fade" style="display: none" data-keyboard="false" data-backdrop="static">
+        <div id='modal' class="modal fade" style="display: none" data-keyboard="true" data-backdrop="static" tabindex='-1'>
 				  <div class="modal-dialog">
 				  	<div class="modal-content" style='width:700px;height:600px'>
 					 	<div class="modal-header" style='background-color: #E5E4E2'>

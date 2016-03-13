@@ -22,7 +22,7 @@ public function delete($id);
 
 public function find($id);
 
-public function paginate($langage);
+public function paginate($langage,$layout);
 
 public function getContentByTitleAndType($title,$type);
 

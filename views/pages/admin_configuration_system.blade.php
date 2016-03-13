@@ -10,236 +10,175 @@
  	 	<div id='light'></div>
 		<div id='fade'></div>
 	</div>
-	   <div class="col-md-6"  style='margin-top:50px'>
-		
-		<div class="panel panel-primary">
-		   <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-clock-o"></i>Tracking user config</h3>
-		    </div>
-		    
-			<div class="row" style='margin-top:25px'>
-			 {!! Form::open(array('id'=>'admin_config_form_location','url' => 'admin/configuration/update_audit', 'method' => 'POST')) !!}
-				<div class="row">
-					<div class="col-md-5 col-md-offset-1" ><p class="text-left" style='font-size:18px'>enable audit users tracking</p></div>
+ <div class='container-fluid' style='margin-top:50px'>
+	 <div class='row'>
+	  	<div class="col-md-6">
+	 		<div class="panel panel-primary">
+			   <div class="panel-heading">
+			        <h3 class="panel-title"><i class="fa fa-clock-o"></i><font color='black'>Tracking user config</font></h3>
+			    </div>
+			    
+				<div class="row" style='margin-top:25px'>
+				 {!! Form::open(array('id'=>'admin_config_form_location','url' => 'admin/configuration/update_audit', 'method' => 'POST')) !!}
+					<div class="row">
+						<div class="col-md-5 col-md-offset-1" ><p class="text-left" style='font-size:18px'>enable audit users tracking</p></div>
+						<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
+						$state_filter=array();
+						$audit_tracking=Session::get('configuration')['audit_tracking'];
+				 		?>		
+						<div class="col-md-3">
+							  @foreach($states as $key=>$state)
+				                 @if(Session::get('configuration')['audit_tracking']!=$key)
+				                 	<?php $state_filter[$key]=$state;?>
+				                 @endif
+				             @endforeach
+			                <select name="tracking_service"  class='form-control'>
+								<option value=<?php echo $audit_tracking?>><?php echo $states[$audit_tracking]?></option>
+								@foreach($state_filter as $key=>$state)
+								<option value=<?php echo $key?>><?php echo $state?></option>
+								@endforeach
+				     		</select>
+						</div>
+					</div>
+					<div class="row" style='margin-top:50px;margin-bottom:25px'>
+						<div class="col-md-3 col-md-offset-4">
+							<input type="submit" id="admin_config_form_location" value="Save Configuration"  class="btn btn-primary"/>
+						</div>
+					</div>
+					{!! Form::close() !!}	
+				</div>
+			</div>
+		</div>
+			<div class="col-md-6">
+				<div class="panel panel-primary" >
+					  	    <div class="panel-heading">
+					        	<h3 class="panel-title"><i class="fa fa-clock-o"></i><font color='black'>Audit tracking history</font></h3>
+							</div>
+					        <div class="row">
+						        <div class="panel-body">
+						    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>clear history</p></div>
+									<div class="col-md-3 col-md-offset-2"><button class="btn btn-primary" id="clearHistoryTrackingUser" >clear history</button></div>
+								</div>
+							</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">	
+				<div class="panel panel-primary" >
+			  	    <div class="panel-heading">
+			        	<h3 class="panel-title"><i class="fa fa-clock-o"></i><font color='black'>Activate automatically users at registration</font></h3>
+					</div>
+					 <div class="row">
+					  {!! Form::open(array('id'=>'admin_config_activate_user_form','url' => 'admin/configuration/activate/users', 'method' => 'POST')) !!}
+					 
+						<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
+								$state_filter=array();
+								$activate_users=Session::get('configuration')['activate_users'];
+						 ?>							      
+					      <div class="panel-body">
+				    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>Users function activate at registration</p></div>
+							<div class="col-md-4">
+							    	  @foreach($states as $key=>$state)
+						                 @if(Session::get('configuration')['activate_users']!=$key)
+						                 	<?php $state_filter[$key]=$state;?>
+						                 @endif
+						             @endforeach
+					                <select name="activate_users"  class='form-control'>
+										<option value=<?php echo $activate_users?>><?php echo $states[$activate_users]?></option>
+										@foreach($state_filter as $key=>$state)
+										<option value=<?php echo $key?>><?php echo $state?></option>
+										@endforeach
+						     		</select>
+							</div>
+						</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-md-offset-4">
+								<input type="submit" id="admin_config_activate_user_form" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
+							</div>
+							{!! Form::close() !!}
+						</div>
+					
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-primary">
+				 		<div class="panel-heading">
+					        <h3 class="panel-title"><i class="fa fa-clock-o"></i><font color='black'>Maintenance site</font></h3>
+					   </div>
+					 <div class="row">
+					  {!! Form::open(array('id'=>'admin_config_maintenance_form','url' => 'admin/configuration/maintenance', 'method' => 'POST')) !!}
+					 	<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
+								$state_filter=array();
+								$maintenance=Session::get('configuration')['maintenance'];
+						 ?>							      
+					      <div class="panel-body">
+				    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>Maintenance</p></div>
+							<div class="col-md-4">
+							    	  @foreach($states as $key=>$state)
+						                 @if(Session::get('configuration')['maintenance']!=$key)
+						                 	<?php $state_filter[$key]=$state;?>
+						                 @endif
+						             @endforeach
+					                <select name="maintenance_service"  class='form-control'>
+										<option value=<?php echo $maintenance?>><?php echo $states[$maintenance]?></option>
+										@foreach($state_filter as $key=>$state)
+										<option value=<?php echo $key?>><?php echo $state?></option>
+										@endforeach
+						     		</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-md-offset-4 ">
+								<input type="submit" id="admin_config_maintenance_form" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
+							</div>
+							{!! Form::close() !!}
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+	 <div class='row'>
+	 	<div class="col-md-6">
+			<div class="panel panel-primary">
+			 		<div class="panel-heading">
+				        <h3 class="panel-title"><i class="fa fa-clock-o"></i><font color='black'>Email settings</font></h3>
+				   </div>
+				 <div class="row">
+				  {!! Form::open(array('id'=>'admin_config_email_form','url' => 'admin/configuration/email', 'method' => 'POST')) !!}
+				 
 					<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
-					$state_filter=array();
-					$audit_tracking=Session::get('configuration')['audit_tracking'];
-			 		?>		
-					<div class="col-md-3">
-						  @foreach($states as $key=>$state)
-			                 @if(Session::get('configuration')['audit_tracking']!=$key)
-			                 	<?php $state_filter[$key]=$state;?>
-			                 @endif
-			             @endforeach
-		                <select name="tracking_service"  class='form-control'>
-							<option value=<?php echo $audit_tracking?>><?php echo $states[$audit_tracking]?></option>
-							@foreach($state_filter as $key=>$state)
-							<option value=<?php echo $key?>><?php echo $state?></option>
-							@endforeach
-			     		</select>
-					</div>
-				</div>
-				
-				<div class="row">
-					<div class="col-md-3 col-md-offset-1" ><p class="text-left" style='font-size:18px'>Enable world map location</p></div>
-					<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
-					$state_filter=array();
-					$map_locate=Session::get('configuration')['map_locate'];
-			 		?>		
-					<div class="col-md-3 col-md-offset-2">
-						  @foreach($states as $key=>$state)
-			                 @if(Session::get('configuration')['map_locate']!=$key)
-			                 	<?php $state_filter[$key]=$state;?>
-			                 @endif
-			             @endforeach
-		                <select name="worldmap_service" class='form-control'>
-							<option value=<?php echo $map_locate?>><?php echo $states[$map_locate]?></option>
-							@foreach($state_filter as $key=>$state)
-							<option value=<?php echo $key?>><?php echo $state?></option>
-							@endforeach
-			     		</select>
-					</div>
-				</div>
-				<input type="submit" id="admin_config_form_location" value="Save Configuration"  class="btn btn-default" style="margin-left:490px;margin-bottom:20px"/>
-				{!! Form::close() !!}	
-			</div>
-		</div>
-		<div class="panel panel-primary" >
-			  	    <div class="panel-heading">
-			        	<h3 class="panel-title"><i class="fa fa-clock-o"></i>Audit tracking history</h3>
-					</div>
-			        <div class="row">
-				        <div class="panel-body">
-				    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>clear history</p></div>
-							<div class="col-md-3 col-md-offset-2"><button class="btn btn-default" id="clearHistoryTrackingUser" >clear history</button></div>
+							$state_filter=array();
+							$email=Session::get('configuration')['email'];
+					 ?>							      
+				      <div class="panel-body">
+			    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>Email function activate</p></div>
+						<div class="col-md-4">
+						    	  @foreach($states as $key=>$state)
+					                 @if(Session::get('configuration')['email']!=$key)
+					                 	<?php $state_filter[$key]=$state;?>
+					                 @endif
+					             @endforeach
+				                <select name="email_service"  class='form-control'>
+									<option value=<?php echo $email?>><?php echo $states[$email]?></option>
+									@foreach($state_filter as $key=>$state)
+									<option value=<?php echo $key?>><?php echo $state?></option>
+									@endforeach
+					     		</select>
 						</div>
 					</div>
-		</div>
-		<!-- <div class="panel panel-primary" >
-			  	    <div class="panel-heading">
-			        	<h3 class="panel-title"><i class="fa fa-clock-o"></i>Filtering audit tracking url</h3>
-					</div>
-			        <div class="row">
-				        <div class="panel-body">
-				    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>Choose url to audit</p></div>
-				    		<div class="col-md-1  col-md-offset-2"><button class="btn btn-default" onclick="window.location.href='/admin/routes'"  style='width:100px'>view</button></div>
+					 <div class="row">
+						 <div class="col-md-4 col-md-offset-4">
+							<input type="submit" id="admin_config_email_form" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
 						</div>
-					</div>
-		</div>-->
-		<div class="panel panel-primary" >
-			  	    <div class="panel-heading">
-			        	<h3 class="panel-title"><i class="fa fa-clock-o"></i>Activate automatically users at registration</h3>
-					</div>
-		
-		 <div class="row">
-		  {!! Form::open(array('id'=>'admin_config_activate_user_form','url' => 'admin/configuration/activate/users', 'method' => 'POST')) !!}
-		 
-			<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
-					$state_filter=array();
-					$activate_users=Session::get('configuration')['activate_users'];
-			 ?>							      
-		      <div class="panel-body">
-	    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>Users function activate at registration</p></div>
-				<div class="col-md-4">
-				    	  @foreach($states as $key=>$state)
-			                 @if(Session::get('configuration')['activate_users']!=$key)
-			                 	<?php $state_filter[$key]=$state;?>
-			                 @endif
-			             @endforeach
-		                <select name="activate_users"  class='form-control'>
-							<option value=<?php echo $activate_users?>><?php echo $states[$activate_users]?></option>
-							@foreach($state_filter as $key=>$state)
-							<option value=<?php echo $key?>><?php echo $state?></option>
-							@endforeach
-			     		</select>
-				</div>
-				<input type="submit" id="admin_config_activate_user_form" value="Save Configuration"  class="btn btn-default" style="margin-left:370px;margin-top:50px;margin-bottom:25px"/>
-				{!! Form::close() !!}
-			</div>
-		</div>
-		</div>
-	</div>
-		  		
-				
-				<!-- <div class="row">
-					<div class="panel panel-primary" style='width:624px;margin-left:32px;border:none'>
-						<div class="panel-heading">
-				        	<h3 class="panel-title"><i class="fa fa-clock-o"></i>update country files</h3>
-				        </div>
-				        <div class="panel-body">
-				    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>update country files</p></div>
-							<div class="col-md-3 col-md-offset-2"><button class="btn btn-default" id="update_country_files">update files</button></div>
-						</div>
+						{!! Form::close() !!}
 					</div>
 				</div>
-				<div class="row">
-					<div class="panel panel-primary" style='width:624px;margin-left:32px;border:none'>
-						<div class="panel-heading">
-				        	<h3 class="panel-title"><i class="fa fa-clock-o"></i>update city files</h3>
-				        </div>
-				        <div class="panel-body">
-				    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>update city files</p></div>
-							<div class="col-md-3 col-md-offset-2"><button class="btn btn-default" id="update_city_files">update files</button></div>
-						</div>
-					</div>
-				</div>-->
-	<div class="col-md-5"  style='margin-top:50px'>
-		<div class="panel panel-primary">
-		   <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-clock-o"></i>Search engine</h3>
-		   </div>
-			<div class="row" style='margin-top:25px'>
-			 {!! Form::open(array('id'=>'admin_config_search_form','url' => 'admin/configuration/update_search_engine', 'method' => 'POST')) !!}
-			
-			<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
-					$state_filter=array();
-					$elastic=Session::get('configuration')['elastic'];
-			 ?>			 	  
-				<div class="col-md-4 col-md-offset-1"><p class="text-left" style='font-size:18px'>Elasticsearch</p></div>
-				<div class="col-md-3">
-				    	  @foreach($states as $key=>$state)
-			                 @if(Session::get('configuration')['elastic']!=$key)
-			                 	<?php $state_filter[$key]=$state;?>
-			                 @endif
-			             @endforeach
-		                <select name="elasticsearch_service"  class='form-control'>
-							<option value=<?php echo $elastic?>><?php echo $states[$elastic]?></option>
-							@foreach($state_filter as $key=>$state)
-							<option value=<?php echo $key?>><?php echo $state?></option>
-							@endforeach
-			     		</select>
-				</div>
-				<input type="submit" id="admin_config_search_form" value="Save Configuration"  class="btn btn-default" style="margin-left:370px;margin-top:50px;margin-bottom:25px"/>
-				{!! Form::close() !!}
-			</div>
-		</div>
-	<div class="panel panel-primary">
-	 		<div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-clock-o"></i>Maintenance site</h3>
-		   </div>
-		 <div class="row">
-		  {!! Form::open(array('id'=>'admin_config_maintenance_form','url' => 'admin/configuration/maintenance', 'method' => 'POST')) !!}
-		 	<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
-					$state_filter=array();
-					$maintenance=Session::get('configuration')['maintenance'];
-			 ?>							      
-		      <div class="panel-body">
-	    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>Maintenance</p></div>
-				<div class="col-md-4">
-				    	  @foreach($states as $key=>$state)
-			                 @if(Session::get('configuration')['maintenance']!=$key)
-			                 	<?php $state_filter[$key]=$state;?>
-			                 @endif
-			             @endforeach
-		                <select name="maintenance_service"  class='form-control'>
-							<option value=<?php echo $maintenance?>><?php echo $states[$maintenance]?></option>
-							@foreach($state_filter as $key=>$state)
-							<option value=<?php echo $key?>><?php echo $state?></option>
-							@endforeach
-			     		</select>
-				</div>
-				<input type="submit" id="admin_config_maintenance_form" value="Save Configuration"  class="btn btn-default" style="margin-left:370px;margin-top:50px;margin-bottom:25px"/>
-				{!! Form::close() !!}
 			</div>
 		</div>
 	</div>
-	
-	
-	<div class="panel panel-primary">
-	 		<div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-clock-o"></i>Email settings</h3>
-		   </div>
-		 <div class="row">
-		  {!! Form::open(array('id'=>'admin_config_email_form','url' => 'admin/configuration/email', 'method' => 'POST')) !!}
-		 
-			<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
-					$state_filter=array();
-					$email=Session::get('configuration')['email'];
-			 ?>							      
-		      <div class="panel-body">
-	    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>Email function activate</p></div>
-				<div class="col-md-4">
-				    	  @foreach($states as $key=>$state)
-			                 @if(Session::get('configuration')['email']!=$key)
-			                 	<?php $state_filter[$key]=$state;?>
-			                 @endif
-			             @endforeach
-		                <select name="email_service"  class='form-control'>
-							<option value=<?php echo $email?>><?php echo $states[$email]?></option>
-							@foreach($state_filter as $key=>$state)
-							<option value=<?php echo $key?>><?php echo $state?></option>
-							@endforeach
-			     		</select>
-				</div>
-				<input type="submit" id="admin_config_email_form" value="Save Configuration"  class="btn btn-default" style="margin-left:370px;margin-top:50px;margin-bottom:25px"/>
-				{!! Form::close() !!}
-			</div>
-		</div>
-		
-	</div>
-      
- </div>
-
+</div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

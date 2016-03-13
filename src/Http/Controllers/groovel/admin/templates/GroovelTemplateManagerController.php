@@ -45,7 +45,7 @@ class GroovelTemplateManagerController extends GroovelController {
 	
 	
 	public function listAllTemplates(){
-		$dir_vendor= base_path () . '/templates/layouts/*';
+		$dir_vendor= base_path () . '/starter-templates/layouts/*';
 		$template_directories = glob ( $dir_vendor, GLOB_ONLYDIR );
 		$template_names=array();
 		foreach ( $template_directories as $templatenamedir ) {
@@ -135,13 +135,13 @@ class GroovelTemplateManagerController extends GroovelController {
 	}
 	
 	function copyBladeTemplatesToApp($templateName){
-		$dir_workbench_base=base_path () . '/templates/layouts/'.$templateName.'/base';
-		$dir_workbench_includes=base_path () . '/templates/layouts/'.$templateName.'/includes';
-		$dir_workbench_pages=base_path () . '/templates/layouts/'.$templateName.'/pages';
+		$dir_workbench_base=base_path () . '/starter-templates/layouts/'.$templateName.'/base';
+		$dir_workbench_includes=base_path () . '/starter-templates/layouts/'.$templateName.'/includes';
+		$dir_workbench_pages=base_path () . '/starter-templates/layouts/'.$templateName.'/pages';
 		$dst_base=base_path () . '/resources/views/'.$templateName.'/base';
 		$dst_includes=base_path () . '/resources/views/'.$templateName.'/includes';
 		$dst_pages=base_path () . '/resources/views/'.$templateName.'/pages';
-		$dir_workbench_styles=base_path () . '/templates/layouts/'.$templateName.'/styles';
+		$dir_workbench_styles=base_path () . '/starter-templates/layouts/'.$templateName.'/styles';
 		$pub=public_path() ;
 	
 		$this->recurse_copy($dir_workbench_base, $dst_base);

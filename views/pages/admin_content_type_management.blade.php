@@ -4,8 +4,7 @@
 <div class="container-fluid" style="margin-top:100px;height:700px">
  <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 <input id='content_type_id' type="hidden" name='content_type_id' value=''>
- <div id='light'></div>
-<div id='fade'></div>
+ <div id='error' style='display:none'></div>
 	<div class="col-md-2" style="margin-top:100px">
 				
 		<ul id="form-fields">
@@ -125,6 +124,26 @@
 				<input class="form-control" placeholder="Title" id="form-title" type="text">
 			</div>
 		  </div>
+		  <div class='row' style='margin-bottom:50px;background-color:#FAFAFA;z-index:2'>
+		   <div class='col-md-1'>
+		   <span class="required">Layout</span> 
+		   </div>
+		     @if($layouts!=null)
+			<div class='col-md-8' id='type'>
+				<select id="form-type" name="type" class='form-control' style='width:50%'>
+					@foreach($layouts as $layout)
+					<option value=<?php echo $layout?>><?php echo $layout?></option>
+					@endforeach
+	     		</select>
+     		</div>
+			@endif
+		  </div>
+		 
+		  
+		  
+		  
+		  
+		  
 		 <div class='row' style='margin-bottom:50px;background-color:#FAFAFA;z-index:2'>
 			 <div class='col-md-12' id="selected-content" style="height:100%">
 				<div class="droppedFields" class='background-color:grey' style="height:600px;background-color:#FAFAFA;z-index:2;border: 2px groove rgb(0,0,102);overflow:scroll"></div>

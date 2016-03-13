@@ -18,5 +18,6 @@ interface CountryDaoInterface{
 
 	public function find($country);
 	public function all();
+	public function findByName($country);
 
 }

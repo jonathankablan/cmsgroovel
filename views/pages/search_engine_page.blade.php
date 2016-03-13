@@ -18,7 +18,7 @@ $("#submitForm").click(function (event) {
 		div.innerHTML=null;
 		for (var i in data){
 			var parsed = JSON.parse(data[i]);
-			console.log(parsed);
+			//console.log(parsed);
 			if(parsed['type']=='CONTENT'){
 				var div = document.getElementById('result');
 				div.style='margin-left:200px;margin-top:10px';
@@ -37,7 +37,7 @@ $("#submitForm").click(function (event) {
 				tr.appendChild(td);
 	
 				var td=document.createElement('td');
-				td.innerHTML=parsed['url'];
+				td.innerHTML=parsed['description'];
 				tr.appendChild(td);
 	
 				var td=document.createElement('td');
@@ -66,7 +66,7 @@ $("#submitForm").click(function (event) {
 				tr.appendChild(td);
 				
 				var td=document.createElement('td');
-				td.innerHTML=parsed['url'];
+				td.innerHTML=parsed['description'];
 				tr.appendChild(td);
 	
 				var td=document.createElement('td');

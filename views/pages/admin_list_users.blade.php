@@ -55,10 +55,10 @@
 					                            <td id="row_user" class="col-md-1">{!!$user->updated_at!!}</td>
 					                            <td id="row_user" class="col-md-1">{!!$user->activate!!}</td>
 					                            <td id="edit" class="col-md-1">
-					                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditUser')) !!}
+					                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditUser')) !!}
 					                            </td>
 					                            <td id="del" class="col-md-1">
-					                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteUser')) !!}
+					                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteUser')) !!}
 					                            </td>
 					                             <td id="view" class="col-md-1">
 					                              <button id="view" class="btn btn-success btnViewUser">View</button>

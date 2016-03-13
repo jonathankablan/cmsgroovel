@@ -41,8 +41,8 @@ class GroovelContentTypeManagerBusiness implements GroovelContentTypeManagerBusi
 	}
 
 	
-	public function createContentType($title){
-		$type= $this->contentTypeDao->createType($title);
+	public function createContentType($title,$template){
+		$type= $this->contentTypeDao->createType($title,$template);
 		return $type;
 	}
 	
@@ -136,6 +136,14 @@ class GroovelContentTypeManagerBusiness implements GroovelContentTypeManagerBusi
    
    public function findContentTypeById($id){
    	return $this->contentTypeDao->findContentTypeById($id);
+   }
+   
+   public function getContentTypeNameById($id){
+   	return $this->contentTypeDao->getContentTypeNameById($id);
+   }
+   
+   public function getAllContentTypes($name){
+   	return $this->contentTypeDao->getAllContentTypes($name)->first();
    }
    
    

@@ -43,7 +43,7 @@
 					                            <td id="row_forum" class="col-md-1" style='background:#D8D8D8;border:1px solid black;' >{!!$forum['lastMessage']['pseudo']!!} {!!$forum['lastMessage']['created_at']!!} </td>
 					                             @if(Session::get('user_privileges')['role']=='ADMIN')
 					                             <td id="del" class="col-md-1" style='border:1px solid black;' >
-					                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteForum')) !!}
+					                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteForum')) !!}
 					                            </td>
 					                            @endif
 					                            </tr>

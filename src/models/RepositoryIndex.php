@@ -26,6 +26,6 @@ class RepositoryIndex extends Model{
 
 
 
-	protected $fillable = array('title','type','refid','data','url','updated_at','created_at');
+	protected $fillable = array('title','type','refid','data','description','updated_at','created_at');
 
 }

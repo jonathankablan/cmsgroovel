@@ -20,16 +20,21 @@ use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelFormControll
 use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentTypeManagerBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentTypeManagerBusinessInterface;
 use  Groovel\Cmsgroovel\models\Widgets; 
+use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusinessInterface;
 
 class GroovelContentTypeFormController extends GroovelFormController {
 
 	
 	protected $contentTypeManager;
 	
+	private $layoutManager;
 	
-	public function __construct(GroovelContentTypeManagerBusinessInterface $contentTypeManager)
+	
+	public function __construct(GroovelContentTypeManagerBusinessInterface $contentTypeManager,GroovelLayoutBusinessInterface $layoutManager)
 	{
 		$this->contentTypeManager=$contentTypeManager;
+		$this->layoutManager=$layoutManager;
 		$this->beforeFilter('auth');
 	}
 	
@@ -42,7 +47,8 @@ class GroovelContentTypeFormController extends GroovelFormController {
 			$w[$widget->name]=$widget->name;
 		}
 		\Session::flash('widgets',$w);
-		return \View::make('cmsgroovel.pages.admin_content_type_management');
+		$layouts=$this->layoutManager->layouts();
+		return \View::make('cmsgroovel.pages.admin_content_type_management',['layouts'=>$layouts]);
 	}
 
 	public function processForm(){
@@ -150,18 +156,19 @@ class GroovelContentTypeFormController extends GroovelFormController {
 	private function saveOrUpdate(){
 		$input=\Input::all();
 		$title=$input['template']['title'];
+		$template=$input['template']['type'];
 		$body=$input['template']['body'];
 		$content_type_id=$input['id'];
 		$contentType=$this->contentTypeManager->find($content_type_id);
 		if(empty($contentType)){
-			$contentType=$this->contentTypeManager->createContentType($title);
+			$contentType=$this->contentTypeManager->createContentType($title,$template);
 			foreach($body as $field){
 				$this->contentTypeManager->addField($title,$field['fieldname'],$field['fielddescription'],$field['fieldtype'],$field['fieldvalue'],$field['fieldwidget'],$field['fieldrequired'],$contentType->id);
 			}
 		}else{//update
 			//clean all
 			$this->contentTypeManager->deleteContentType($contentType->name);
-			$contentType=$this->contentTypeManager->createContentType($title);
+			$contentType=$this->contentTypeManager->createContentType($title,$template);
 			foreach($body as $field){
 				$this->contentTypeManager->addField($title,$field['fieldname'],$field['fielddescription'],$field['fieldtype'],$field['fieldvalue'],$field['fieldwidget'],$field['fieldrequired'],$contentType->id);
 			}
@@ -177,7 +184,8 @@ class GroovelContentTypeFormController extends GroovelFormController {
 	private function editContentType(){
 		$input =  \Input::get('q');
 		$contentType=$this->contentTypeManager->editContentType($input['id']);
-		$res=array('id'=>$input['id'],'title'=>$input['title'],'fields'=>$contentType);
+		$allcontentype=$this->contentTypeManager->getContentTypeNameById($input['id']);
+		$res=array('id'=>$input['id'],'title'=>$input['title'],'template'=>$allcontentype->template,'fields'=>$contentType);
 		\Session::put('content_type_edit', $res);
 		$uri=array();
 		$uri['uri']= url('admin/content_type/editform', $parameters = array(), $secure = null);
@@ -188,6 +196,8 @@ class GroovelContentTypeFormController extends GroovelFormController {
 			$w[$widget->getId()]=$widget->name;
 		}
 		\Session::put('widgets',$w);
+		$layouts=$this->layoutManager->layouts();
+		\Session::put('layouts',$layouts);
 		return $this->jsonResponse($uri);
 	}
 	

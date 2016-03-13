@@ -30,6 +30,8 @@ use Groovel\Cmsgroovel\dao\CountryDaoInterface;
 use Groovel\Cmsgroovel\dao\CountryDao;
 use Groovel\Cmsgroovel\dao\ContentsTranslationDaoInterface;
 use Groovel\Cmsgroovel\dao\ContentsTranslationDao;
+use Groovel\Cmsgroovel\dao\CommentsDao;
+use Groovel\Cmsgroovel\dao\CommentsDaoInterface;
 
 class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInterface{
 
@@ -38,29 +40,35 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 	private $contentTypeDao;
 	private $countryDao;
 	private $contentTranslationDao;
+	private $commentDao;
 	
-	public function __construct(ContentsDaoInterface $contentDao,RouteDaoInterface $routeDao,ContentTypeDaoInterface $contentTypeDao,CountryDaoInterface $countryDao,ContentsTranslationDaoInterface $contentTranslationDao)
+	public function __construct(ContentsDaoInterface $contentDao,RouteDaoInterface $routeDao,ContentTypeDaoInterface $contentTypeDao,CountryDaoInterface $countryDao,ContentsTranslationDaoInterface $contentTranslationDao,CommentsDaoInterface $commentDao)
 	{
 		$this->contentDao =$contentDao;
 		$this->routeDao = $routeDao;
 		$this->contentTypeDao =$contentTypeDao;
 		$this->countryDao=$countryDao;
 		$this->contentTranslationDao=$contentTranslationDao;
+		$this->commentDao=$commentDao;
+	}
+	
+	public function findContentTranslation($refid){
+		return $this->contentTranslationDao->find($refid);
 	}
 	
 	public function getAllCountries(){
 		return $this->countryDao->all();
 	}
 	
-	public function createUrlView($title,$url,$contentTypeid){
+	/*public function createUrlView($title,$url,$contentTypeid){
 		$name=$this->contentTypeDao->find($contentTypeid);
 		$this->routeDao->create($title,$url,$name);
-	}
+	}*/
 
-	public function addContent($title,$data,$url,$tag,$langage,$contentType,$userid,$publish,$weight){
-		 $contents= $this->contentDao->create($url,$contentType,$userid,$publish,$weight);
+	public function addContent($title,$data,$description,$tag,$langage,$contentType,$userid,$publish,$weight){
+		 $contents= $this->contentDao->create($description,$contentType,$userid,$publish,$weight);
 		 $contentsTranslation=$this->contentTranslationDao->create($contents->id, $title, $data, $tag, $langage);
-		 $this->createUrlView($title,$url,$contentType);
+		// $this->createUrlView($title,$url,$contentType);
 		 return $contentsTranslation->getId();
 	}  
 
@@ -78,9 +86,13 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 	
 	public function editContent($contentid,$contentTranslationid){
 		$contentTranslation= $this->contentTranslationDao->find($contentTranslationid);
+		$comments=array();
+		foreach($contentTranslation->comments as $comm){
+			array_push($comments,['author_picture'=>$comm->author->picture,'author_pseudo'=>$comm->author->pseudo,'comment'=>unserialize(base64_decode($comm->comment)),'created_at'=>$comm->created_at,'updated_at'=>$comm->updated_at]);
+		}
 		$content= $this->contentDao->find($contentTranslation->refcontentid);
 		$blob=$this->deserialize($contentTranslation['content']);
-		$res=array('title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'url'=>$content['url'],'tag'=>$contentTranslation->tag,'contentType'=>$content->type->name,'content'=>$blob,'ispublish'=>$content->ispublish,'weight'=>$content->weight);
+		$res=array('contentid'=>$contentid,'contenttranslationid'=>$contentTranslationid,'title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'description'=>$content['description'],'tag'=>$contentTranslation->tag,'contentType'=>$content->type->name,'content'=>$blob,'ispublish'=>$content->ispublish,'weight'=>$content->weight,'author'=>$content->author->pseudo,'created_at'=>$contentTranslation->created_at,'comments'=>$comments);
 		return $res;
 	}
 
@@ -112,6 +124,10 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
    }
 
    public function deleteContent($id,$translation_id){
+   	    if($id==null){
+   	    	$cttrans=$this->contentTranslationDao->find($translation_id);
+   	    	$id=$cttrans->refcontentid;
+   	    }
    	   $this->contentTranslationDao->delete($translation_id);
    	   $content=$this->contentDao->find($id);
    	   $translations=$content->translation;
@@ -132,8 +148,8 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
    }
 
    /**function to call in the controller to get contents by langage**/
-   public function paginateFullContentDeserialize($langage=null){
-   	$res= $this->contentDao->paginate($langage);
+   public function paginateFullContentDeserialize($langage=null,$layout=null){
+   	$res= $this->contentDao->paginate($langage,$layout);
    	$result=array();
    	foreach ($res as $contentTranslation){
    				array_push($result,$this->editContent($contentTranslation->refcontentid,$contentTranslation->id));
@@ -187,9 +203,9 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
    	return $result;
    }
    
-   public function checkUrlUnique($idcontent,$url){
+ /*  public function checkUrlUnique($idcontent,$url){
    	 return $this->contentDao->checkUrlUnique($idcontent,$url);
-   }
+   }*/
    
  
 }

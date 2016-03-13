@@ -43,10 +43,10 @@ class GroovelFilterController extends GroovelController {
 	     if (\Auth::guest() && isset($route->before_filter)&&$route->before_filter=='yes'){
 	      		return \View::make('cmsgroovel.pages.login_form');
 	     }
-	  	   $params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'before_filter'=>$route->before_filter,'subtype'=>$route->subtype,'action'=>$route->action);
+	  	   $params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'before_filter'=>$route->before_filter,'subtype'=>$route->subtype,'action'=>$route->action,'type'=>$route->type);
 	 	   $hasAccessForUser=$rulesController->checkAccessRulesURL(\Auth::user(),$params);
 	 	 
-	 	  // \Log::info($params);
+	 	 // \Log::info($params);
 	 	   if($hasAccessForUser&& $route->activate_route=='1'){
 		   	return $controller->callAction('dispatcher',array($params));
 	 	   }else{

@@ -1,0 +1,26 @@
+html,body{
+  margin:0px;
+  background-image: url(/groovel/cmsgroovel/groovel/admin/images/groovel_background.jpg);
+ height:100%;
+}
+
+.title {
+  font-family: "Myriad Pro";
+  font-size: 50px;
+}
+
+.font{
+	font-family: "Myriad Pro";
+	font-size: 14px;
+	text-align: left;
+	background-position: 200px 0px;
+	color: black;
+}
+
+
+#wrap {
+    padding: 10px;
+    min-height: -webkit-calc(100% - 50px);     /* Chrome */
+    min-height: -moz-calc(100% - 50px);     /* Firefox */
+    min-height: calc(100% - 50px);     /* native */
+}

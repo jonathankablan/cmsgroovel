@@ -35,6 +35,10 @@ class ContentTypes extends Model{
 	public function hasWidget(){
 		return $this->hasOne('Groovel\Cmsgroovel\models\Widgets','id');
 	}
+	
+	public function hasAllContentType(){
+		return $this->hasOne('Groovel\Cmsgroovel\models\AllContentTypes','content_type','id');
+	}
 
 	public function getTableName()
     {

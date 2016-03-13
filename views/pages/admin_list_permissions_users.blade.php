@@ -61,10 +61,10 @@
 						                            <td id="row_user" class="col-md-1">{!!$permission['othercontent']!!}</td>
 						                            <td id="row_user" class="col-md-1">{!!$permission['updated_at']!!}</td>
 						                            <td id="edit" class="col-md-1">
-						                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditUserPermission')) !!}
+						                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditUserPermission')) !!}
 						                            </td>
 						                            <td id="del" class="col-md-1">
-						                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteUserPermission')) !!}
+						                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteUserPermission')) !!}
 						                            </td>
 					                          </tr>
 					                  		<?php endforeach; ?>

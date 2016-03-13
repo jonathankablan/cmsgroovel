@@ -20,7 +20,7 @@ interface GroovelContentTypeManagerBusinessInterface{
 	public function getListContentType();
 	public function editContentType($contentid);
 	public function paginateContentType();
-	public function createContentType($title);
+	public function createContentType($title,$template);
 	public function addField($title,$fieldname,$fielddescription,$fieldtype,$fieldvalue,$fieldwidget,$fieldrequired,$reftypeid);
 	public function deleteContentType($name);
 	public function existContents($contenttype);
@@ -29,4 +29,6 @@ interface GroovelContentTypeManagerBusinessInterface{
 	public function  getListSystemContentType();
 	public function findAllContentTypeByName($name);
 	public function findContentTypeById($id);
+	public function getContentTypeNameById($id);
+	public function getAllContentTypes($name);
 }

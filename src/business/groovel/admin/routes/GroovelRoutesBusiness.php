@@ -68,7 +68,7 @@ class GroovelRoutesBusiness implements GroovelRoutesBusinessInterface{
 	}
 	
 	public function addRoute($domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route){
-		$this->routeDao->addRoute($domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route);
+		return $this->routeDao->addRoute($domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route);
 	}
 	
 	public function getRouteByViewName($view){

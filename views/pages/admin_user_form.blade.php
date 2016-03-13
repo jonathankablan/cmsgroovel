@@ -11,7 +11,7 @@
 			    </div>
 		 
 			    <div class="col-md-12">
-			     <div id='modal' class="modal fade" style="display: none;overflow:scroll;z-index: 1041" data-keyboard="false" data-backdrop="static" >
+			     <div id='modal' class="modal fade" style="display: none;overflow:scroll;z-index: 1041" data-keyboard="true" data-backdrop="static" tabindex='-1' >
 			     	 	  <div class="modal-dialog">
 						  	<div class="modal-content">
 							 	<div class="modal-header" style='background-color:#E5E4E2'>

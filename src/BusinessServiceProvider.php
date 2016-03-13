@@ -79,6 +79,21 @@ use Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelUserRoleManagerBusine
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\messages\GroovelMessageController;
 use Groovel\Cmsgroovel\dao\ContentsTranslationDaoInterface;
 use Groovel\Cmsgroovel\dao\ContentsTranslationDao;
+use Groovel\Cmsgroovel\business\groovel\admin\menu\GroovelMenuBusiness;
+use Groovel\Cmsgroovel\dao\MenuDaoInterface;
+use Groovel\Cmsgroovel\dao\MenuDao;
+use Groovel\Cmsgroovel\dao\LayoutDaoInterface;
+use Groovel\Cmsgroovel\dao\LayoutDao;
+use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\menu\GroovelMenuController;
+use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\layout\GroovelLayoutController;
+use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusinessInterface;
+use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\page\GroovelPageController;
+use Groovel\Cmsgroovel\dao\CommentsDao;
+use Groovel\Cmsgroovel\dao\CommentsDaoInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusinessInterface;
+use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\comments\GroovelCommentController;
 
 class BusinessServiceProvider extends \Illuminate\View\ViewServiceProvider {
 	public function register() {
@@ -98,13 +113,36 @@ class BusinessServiceProvider extends \Illuminate\View\ViewServiceProvider {
 		
 		\App::bind ( 'Groovel\Cmsgroovel\business\groovel\admin\forum\GroovelForumBusinessInterface', 'Groovel\Cmsgroovel\business\groovel\admin\forum\GroovelForumBusiness' );
 		
+		\App::bind ( 'Groovel\Cmsgroovel\business\groovel\admin\menu\GroovelMenuBusinessInterface', 'Groovel\Cmsgroovel\business\groovel\admin\menu\GroovelMenuBusiness' );
+		
+		\App::bind ( 'Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusinessInterface', 'Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusiness' );
+		
+		\App::bind ( 'Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusinessInterface', 'Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusiness' );
+		
+		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\comments\GroovelCommentController', function () {
+			return new GroovelCommentController ( new GroovelCommentBusiness (new CommentsDao()));
+		} );
+		
+		
+		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\layout\GroovelLayoutController', function () {
+			return new GroovelPageController ( new GroovelRoutesBusiness() ,new GroovelLayoutBusiness ());
+		} );
+		
+		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\layout\GroovelLayoutController', function () {
+			return new GroovelLayoutController ( new GroovelLayoutBusiness (new LayoutDao(),new CountryDao()));
+		} );
+		
+		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\menu\GroovelMenuController', function () {
+			return new GroovelMenuController ( new GroovelMenuBusiness (new MenuDao(),new CountryDao()),new GroovelLayoutBusiness (new LayoutDao(),new CountryDao()));
+		} );
+		
 		
 		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteController', function () {
-			return new GroovelRouteController ( new GroovelRoutesBusiness (new RouteDao(),new ContentTypeDao()) );
+			return new GroovelRouteController ( new GroovelRoutesBusiness (new RouteDao(),new ContentTypeDao()));
 		} );
 		
 		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRoutesFormController', function () {
-			return new GroovelRoutesFormController ( new GroovelRoutesBusiness (new RouteDao(),new ContentTypeDao()) );
+			return new GroovelRoutesFormController ( new GroovelRoutesBusiness (new RouteDao(),new ContentTypeDao()),new GroovelLayoutBusiness (new LayoutDao(),new CountryDao()));
 		} );
 		
 		// contents binding
@@ -115,15 +153,15 @@ class BusinessServiceProvider extends \Illuminate\View\ViewServiceProvider {
 		
 		
 		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\contents\GroovelContentFomController', function () {
-			return new GroovelContentFomController ( new GroovelContentManagerBusiness (new ContentsDao(),new RouteDao(),new ContentTypeDao(), new CountryDao(),new ContentsTranslationDao()), new GroovelContentTypeManagerBusiness (new ContentsDao(),new ContentTypeDao(),new WidgetDao()));
+			return new GroovelContentFomController ( new GroovelContentManagerBusiness (new ContentsDao(),new RouteDao(),new ContentTypeDao(), new CountryDao(),new ContentsTranslationDao(), new CommentsDao()), new GroovelContentTypeManagerBusiness (new ContentsDao(),new ContentTypeDao(),new WidgetDao()));
 		} );
 		
 		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\content_type\GroovelContentTypeFomController', function () {
-			return new GroovelContentTypeFomController ( new GroovelContentTypeManagerBusiness (new ContentsDao(),new ContentTypeDao(),new WidgetDao()) );
+			return new GroovelContentTypeFomController ( new GroovelContentTypeManagerBusiness (new ContentsDao(),new ContentTypeDao(),new WidgetDao()),new GroovelLayoutBusiness (new LayoutDao(),new CountryDao()));
 		} );
 		
 		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\contents\GroovelContentsListController', function () {
-			return new GroovelContentsListController ( new GroovelContentManagerBusiness (new ContentsDao(),new RouteDao(),new ContentTypeDao(),new CountryDao(),new ContentsTranslationDao()));
+			return new GroovelContentsListController ( new GroovelContentManagerBusiness (new ContentsDao(),new RouteDao(),new ContentTypeDao(),new CountryDao(),new ContentsTranslationDao(), new CommentsDao()));
 		} );
 		
 		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\content_type\GroovelContentTypesListController', function () {

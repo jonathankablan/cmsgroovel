@@ -172,6 +172,7 @@ Remove the base_dir from file paths and added to the (contents) array if it pass
 		
 	
 	public function browserFile(){
+		//\Log::info('browser');
 		return \View::make('cmsgroovel.pages.file_browser');
 	}
 	

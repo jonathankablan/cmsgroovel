@@ -5,8 +5,7 @@
  <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
  <input id='content_type_id' type="hidden" name='content_type_id' value={!!\Session::get('content_type_edit')['id']!!}>
 	
-	<div id='light'></div>
-	<div id='fade'></div>
+	<div id='error' style='display:none'></div>
 	<div class="col-md-2" style="margin-top:100px">
 				
 		<ul id="form-fields">
@@ -119,7 +118,26 @@
 					<input class="form-control" placeholder="Title" id="form-title" type="text" value={!! Session::get('content_type_edit')['title']!!}>
 				</div>
 			  </div>
-		 <div class='row' style='margin-bottom:50px;background-color:#FAFAFA;z-index:2'>
+			  
+		   <div class='row' style='margin-bottom:50px;background-color:#FAFAFA;z-index:2'>
+			   <div class='col-md-1'>
+			   <span class="required">Layout</span> 
+			   </div>
+			    <div class='col-md-8'>
+					 @if(Session::get('layouts')!=null)
+						<select id="form-type" name="type" class='form-control' style='width:56%'>
+							    @foreach(Session::get('layouts') as  $key=>$value)
+							    	@if($key!=Session::get('content_type_edit')['template'])
+							    		<option value="{!!$key!!}">{!!$value!!}</option>
+							    	@elseif($key==Session::get('content_type_edit')['template'])
+							    		<option selected='selected'value="{!!$key!!}">{!!$value!!}</option>
+							    	@endif
+							    @endforeach
+			     		</select>
+			 		@endif
+				</div>
+		  </div>
+	   	 <div class='row' style='margin-bottom:50px;background-color:#FAFAFA;z-index:2'>
 			 <div class='col-md-12' id="selected-content" style="height:100%">
 				<div class="droppedFields" class='background-color:grey' style="height:600px;background-color:#FAFAFA;z-index:2;border: 2px groove rgb(0,0,102);overflow:scroll">
 						 @if($node=Session::get('content_type_edit'))

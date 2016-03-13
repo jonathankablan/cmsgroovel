@@ -250,6 +250,9 @@ class GroovelUserFormController extends GroovelFormController {
 	//action called when you are in the list users and you edit one
 	private function editUser(){
 		$input =  \Input::get('q');
+		if($input==null){
+			$input =\Session::get('q');
+		}
 		$user=$this->userManager->getUser($input['id']);
 		\Session::put('user_edit', $user);
 		$uri=array();

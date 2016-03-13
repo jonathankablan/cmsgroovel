@@ -1,10 +1,10 @@
 @extends('cmsgroovel.layouts.groovel_admin_default')
 @section('content')
 	 <div class="col-md-12">
-        <div id='modal' class="modal fade" style="display: none" data-keyboard="false" data-backdrop="static">
+        <div id='modal' class="modal fade" style="display: none" data-keyboard="true" data-backdrop="static" tabindex='-1'>
 			<div class="modal-dialog"  style='width:960px'>
 				<div class="modal-content">
-					 <div class="modal-header" style='background-color: #00FF40'>
+					 <div class="modal-header" style='background-color: #E5E4E2'>
 					 	  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      <h4 class="modal-title">Board Permission User </h4>
 					  </div>

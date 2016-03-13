@@ -11,7 +11,7 @@
 						<div class='thumbnail'>
 							&nbsp;
 							@if($topic_author->picture==null)
-								{!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/avatar.png', $alt="default avatar") !!}
+								{!! HTML::image('groovel/cmsgroovel/groovel/admin/images/avatar.png', $alt="default avatar") !!}
 							@endif
 							@if($topic_author->picture!=null)
 								{!!HTML::image( $topic_author->picture,'')!!}
@@ -26,7 +26,7 @@
 						<td id={!!$topic_id!!} style='padding-left:10px'>
 								<!-- icon and title -->
 								<div>
-								{!! HTML::image('packages/groovel/cmsgroovel/ionicons/png/email.png', $alt="email", $attributes = array('style'=>'width:20px;height:20px')) !!}
+								{!! HTML::image('groovel/cmsgroovel/ionicons/png/email.png', $alt="email", $attributes = array('style'=>'width:20px;height:20px')) !!}
 							    {!!$topic_date!!}
 								<strong>{!!$topic!!}</strong>
 								</div>
@@ -58,7 +58,7 @@
 						<div class='thumbnail'>
 							&nbsp;
 							@if( $answer->answer_author->picture==null)
-								{!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/avatar.png', $alt="default avatar") !!}
+								{!! HTML::image('groovel/cmsgroovel/groovel/admin/images/avatar.png', $alt="default avatar") !!}
 							@endif
 							@if( $answer->answer_author->picture!=null)
 								{!!HTML::image(  $answer->answer_author->picture,'')!!}
@@ -74,7 +74,7 @@
 						<td id={!!$answer->id!!} style='padding-left:10px'>
 								<!-- icon and title -->
 								<div>
-									{!! HTML::image('packages/groovel/cmsgroovel/ionicons/png/email.png', $alt="email", $attributes = array('style'=>'width:20px;height:20px')) !!}
+									{!! HTML::image('groovel/cmsgroovel/ionicons/png/email.png', $alt="email", $attributes = array('style'=>'width:20px;height:20px')) !!}
 							         {!!$answer->created_at!!}             
 									<strong><!-- google_ad_section_start -->Re:{!!$topic!!}<!-- google_ad_section_end --></strong>
 								</div>
@@ -120,7 +120,7 @@ function loadComments(){
 	}
 
 function showModalPopUp(){
-	 var bcgDiv = document.getElementById("dialog");
+	var bcgDiv = document.getElementById("dialog");
     bcgDiv.style.display="block";
     $('#modal').modal('show');
 }

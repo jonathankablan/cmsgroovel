@@ -16,13 +16,13 @@ namespace Groovel\Cmsgroovel\business\groovel\admin\contents;
 
 interface GroovelContentManagerBusinessInterface{
 
-	public function addContent($title,$data,$url,$tag,$langage,$contentType,$userid,$publish,$weight);
+	public function addContent($title,$data,$description,$tag,$langage,$contentType,$userid,$publish,$weight);
 	public function getContent($name);
 	public function editContent($contentid,$contentTranslationid);
     public function paginateContent($langage);
     public function deleteContent($id,$translation_id);
     public function getFieldRequired($contentype);
-    public function paginateFullContentDeserialize($langage=null);
+    public function paginateFullContentDeserialize($langage=null,$layout=null);
     public function getContentTypeNameById($id);
     public function getContentTypeNameOfContent($contentid);
     public function getAllCountries();
@@ -30,7 +30,8 @@ interface GroovelContentManagerBusinessInterface{
     public function getPageTemplateElementsByType($type,$langage);
     public function getPageTemplateElementsByTitleAndType($title,$type,$langage);
     public function paginateAllContent();
-    public function checkUrlUnique($idcontent,$url);
+    public function findContentTranslation($refid);
+   /* public function checkUrlUnique($idcontent,$url);*/
     
     
     

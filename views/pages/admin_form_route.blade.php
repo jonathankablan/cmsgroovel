@@ -1,11 +1,11 @@
 @extends('cmsgroovel.layouts.groovel_admin_default')
 @section('content')
-	    <div id='modal' class="modal fade" style="display: none" data-keyboard="false" data-backdrop="static">
+	    <div id='modal' class="modal fade" style="display: none" data-keyboard="true" data-backdrop="static" tabindex='-1'>
 				  <div class="modal-dialog">
 				  	<div class="modal-content">
 					 	<div class="modal-header" style='background-color: #E5E4E2'>
 					 	 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					      <h4 class="modal-title">Board new Route </h4>
+					      <h4 class="modal-title">Board new Page </h4>
 					    </div>
 					     @if($errors->has())
 					           @foreach ($errors->all() as $error)
@@ -54,10 +54,19 @@
 				                <div class="form-group form-inline" id="view" data-toggle="tooltip" title="the name of your view (page name) that will be called">
 				                {!! Form::label('view', 'view',array('class'=>'col-md-2')).Form::text('view', Input::old('view'), array('class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
 				              </div>
-				               
-				               <div class="form-group form-inline"  id="type" data-toggle="tooltip" title="name of your application it is optional but it will be easy to find your route if you have got a lot of routes">
-				                {!! Form::label('type', 'type',array('class'=>'col-md-2')).Form::text('type', Input::old('type'), array('class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
-				              </div>
+				                
+				               @if($layouts!=null)
+									<div class="form-group form-inline" id='type' data-toggle="tooltip" title="name of your application it is optional but it will be easy to find your route if you have got a lot of routes">
+									  {!! Form::label('type', 'type',array('class'=>'required col-md-2'))!!}
+										<select name="type" class='form-control' style='width:50%'>
+											@foreach($layouts as $layout)
+											<option value=<?php echo $layout?>><?php echo $layout?></option>
+											@endforeach
+							     		</select>
+						     		</div>
+							  @endif
+				              
+				              
 				              <div class="form-group form-inline" id="subtype" data-toggle="tooltip" title="what type of content is your page: is it a view?,some contents?, a route..,? it will be used to set permissions rules">
 				               {!!Form::label('subtype', 'subtype',array('class'=>'required col-md-2'))!!}  
 								<select name="subtype[]" class='form-control' style='width:50%'>
@@ -74,7 +83,7 @@
 									</select>
 								</div>
 								 <div class="form-group form-inline" id="activate_route" data-toggle="tooltip" title="enable it to access to your page by this uri">
-				                {!! Form::label('activate_route', 'activate_route',array('class'=>'col-md-2'))!!}
+				                {!! Form::label('activate_route', 'activate',array('class'=>'col-md-2'))!!}
 				               		<select name="activate_route"  class='form-control'>
 										<option value='0'>disabled</option>
 										<option value='1'>enabled</option>

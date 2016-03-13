@@ -18,7 +18,7 @@
 	                    <h1>Dashboard</h1>
 	                </div>
 	            </div>
-	            <div class="col-lg-12">
+	            <div class="col-lg-8 col-lg-offset-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Traffic Estimations for last 30 days</font></h3>
@@ -29,7 +29,7 @@
                          </div>
                     </div>
                   </div>
-                  <div class="col-lg-3">
+                  <div class="col-lg-2 col-lg-offset-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i><font color='black'> Number of users</font></h3>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                 <div class="col-lg-5">
+                 <div class="col-lg-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Number of users sessions connected</font></h3>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                 <div class="col-lg-4">
+                 <div class="col-lg-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Number of messages sent</font></h3>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                   <div id="container"  class="col-lg-12"  style="position: relative;margin-top:50px; margin-bottom:50px; width:900px;height:500px" > </div>
+                   <!--  <div id="container"  class="col-lg-8 col-lg-offset-3"  style="position: relative;margin-top:50px; margin-bottom:50px; width:900px;height:500px" > </div>-->
 	         
              </div>
 	    </div>
@@ -98,7 +98,7 @@
  
     <script>
     $(document).ready(function() {
-    	$.ajax({
+    	/* 	$.ajax({
             type: 'get',
             data : 'test',
             dateType:'json',
@@ -133,7 +133,7 @@
             }
            
         });
-
+*/
 
 
     	$.ajax({

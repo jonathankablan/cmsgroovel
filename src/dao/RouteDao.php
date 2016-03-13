@@ -84,6 +84,7 @@ public function create($title,$url,$name){
 		$routegroovel->audit_tracking_url_enable=$audit_url_enabled;
 		$routegroovel->activate_route=$activate_route;
 		$routegroovel->save();
+		return $routegroovel->id;
 	}
 	
 	public function getRouteByViewName($view){

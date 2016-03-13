@@ -5,6 +5,8 @@
   </head>
 
   <body>
+  @include('cmsgroovel.toolkits.popup.popupModal')   
+   
   @if(Session::get('user_privileges')!=null)
 	  @if(Session::get('user_privileges')['role']==null)
 	      @include('cmsgroovel.includes.groovel_default_user_header')
@@ -15,8 +17,13 @@
 	  @endif
 	@endif
     <div class="container-fluid">
+	    @if(Session::get('user_privileges')!=null)
+        	@if(Session::get('user_privileges')['role']=='ADMIN')
+      			@include('cmsgroovel.includes.groovel_admin_sidebar')
+      	    @endif
+		@endif
       <div class="row">
-        <div class="col-xs-12 col-md-12 col-md-offset-0.75">
+        <div class="col-xs-12 col-md-12 col-md-offset-2">
  			   @yield('content')
        </div>
       </div>

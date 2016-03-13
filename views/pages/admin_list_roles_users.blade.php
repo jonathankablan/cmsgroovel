@@ -49,10 +49,10 @@
 						                            <td id="row_user"  class="col-md-1">{!!$user_role['created_at']!!}</td>
 						                            <td id="row_user"  class="col-md-1">{!!$user_role['updated_at']!!}</td>
 						                            <td id="edit"  class="col-md-1">
-						                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditUserRole')) !!}
+						                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditUserRole')) !!}
 						                            </td>
 						                            <td id="del"  class="col-md-1">
-						                            {!! HTML::image('packages/groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteUserRole')) !!}
+						                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteUserRole')) !!}
 						                            </td>
 					                          </tr>
                          					 @endforeach

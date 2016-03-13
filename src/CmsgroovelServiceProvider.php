@@ -55,7 +55,7 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 		]);
 		
 		$this->publishes([
-				__DIR__.'/../public/packages' => base_path('public/packages'),
+				__DIR__.'/../public/groovel' => base_path('public/groovel'),
 		]);
 		
 		$this->publishes([
@@ -63,8 +63,9 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 		]);
 		
 		$this->publishes([
-				__DIR__.'/../templates' => base_path('templates'),
+				__DIR__.'/../starter-templates' => base_path('starter-templates'),
 		]);
+		
 		
 		include __DIR__.'/Http/routes.php';
 		include __DIR__.'/Http/groovel.php';

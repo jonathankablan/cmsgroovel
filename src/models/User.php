@@ -44,7 +44,27 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = array('password');
 	
+	/**
+	 * Check media all access
+	 *
+	 * @return bool
+	 */
+	public function accessMediasAll()
+	{
+		// return true for access to all medias
+		return ($this->role->role->role=='ADMIN');
+	}
 	
+	/**
+	 * Check media all access
+	 *
+	 * @return bool
+	 */
+	public function accessMediasFolder()
+	{
+		// return true for access to one folder
+		return ($this->role->role->role!='ADMIN');
+	}
 	
 	public function getUserName()
 	{
@@ -146,7 +166,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	{
 		return $this->hasOne('Groovel\Cmsgroovel\models\UserRoles','userid');
 	}
-
+	
 
 	public function getId()
 	{
@@ -154,61 +174,47 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 	
 	
-public function	getEmailForPasswordReset(){
-	
-	
-}
-	
-	
-	
-public static function boot()
-	{
-		parent::boot();
-	
-	User::updating(function($user)
-	{
-		$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
-				'url'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
-	   
-		\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@update', array('type'=>ModelConstants::$user,'data'=>$data));
-		\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@update', array('type'=>ModelConstants::$user,'data'=>$data));
-	});
-	
-	User::saved(function($user)
-	{
-			
-		$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
-				'url'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
-			
-		\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@create', array('type'=>ModelConstants::$user,'data'=>$data));
-		\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@create', array('type'=>ModelConstants::$user,'data'=>$data));
-	});
-	
-	User::deleting(function($user)
-	{
-		$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
-				'url'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
+	public function	getEmailForPasswordReset(){
 		
-		\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@delete', array('type'=>ModelConstants::$user,'data'=>$data));
-		\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@delete', array('type'=>ModelConstants::$user,'data'=>$data));
-	});
-}
+		
+	}
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public static function boot()
+		{
+			parent::boot();
+		
+		User::updating(function($user)
+		{
+			$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
+					'description'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
+		   
+			\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@update', array('type'=>ModelConstants::$user,'data'=>$data));
+			\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@update', array('type'=>ModelConstants::$user,'data'=>$data));
+		});
+		
+		User::saved(function($user)
+		{
+				
+			$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
+					'description'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
+				
+			\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@create', array('type'=>ModelConstants::$user,'data'=>$data));
+			\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@create', array('type'=>ModelConstants::$user,'data'=>$data));
+		});
+		
+		User::deleting(function($user)
+		{
+			$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
+					'description'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
+			
+			\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@delete', array('type'=>ModelConstants::$user,'data'=>$data));
+			\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@delete', array('type'=>ModelConstants::$user,'data'=>$data));
+		});
+		
+		
+	}
 	
 	
 	
