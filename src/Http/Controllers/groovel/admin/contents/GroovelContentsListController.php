@@ -27,7 +27,7 @@ class GroovelContentsListController extends GroovelController {
 
 	protected $contentManager;
 	
-	private static $perPage = 10;
+	private static $perPage = 30;
 	
 
 	public function __construct( GroovelContentManagerBusinessInterface $contentManager)
