@@ -54,7 +54,7 @@ public function paginate($langage=null,$layout=null){
 		->select('contents.id as content_id','contents.*', 'contents_translation.id as translation_id','contents_translation.*','all_contents_type.name as type','users.pseudo as author')
 		->where('contents.ispublish','=',1)
 		->where('contents_translation.lang','=',$langage)
-		->where('all_contents_type.name','=',$layout)
+		->where('all_contents_type.template','=',$layout)
 		->orderBy('contents.weight','desc')
 		->orderBy('contents.created_at', 'desc')->get();
 	
@@ -65,7 +65,7 @@ public function paginate($langage=null,$layout=null){
 		->join('users', 'users.id', '=', 'contents.author_id')
 		->select('contents.id as content_id','contents.*', 'contents_translation.id as translation_id','contents_translation.*','all_contents_type.name as type','users.pseudo as author')
 		->where('contents.ispublish','=',1)
-		->where('all_contents_type.name','=',$layout)
+		->where('all_contents_type.template','=',$layout)
 		->orderBy('contents.weight','desc')
 		->orderBy('contents.created_at', 'desc')->get();
 	
