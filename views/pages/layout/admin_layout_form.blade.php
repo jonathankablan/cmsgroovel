@@ -48,7 +48,7 @@
 				 
 				 <label for="footer" class='required' style='margin-top:50px;font-size:1.6em'>Footer</label>
 			     <div class="form-group" style='margin-top:30px'>
-			              <textarea name='footer' cols='100' rows='10'><{!!$layouts['footer']!!}</textarea>
+			              <textarea name='footer' cols='100' rows='10'>{!!$layouts['footer']!!}</textarea>
 				 </div>
 				 <div class="form-group form-inline">
 				  <div class="row">
