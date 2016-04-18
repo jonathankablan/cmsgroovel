@@ -24,3 +24,10 @@ html,body{
     min-height: -moz-calc(100% - 50px);     /* Firefox */
     min-height: calc(100% - 50px);     /* native */
 }
+
+.required:after
+{
+content:"*";
+color:red;
+margin-left:10px;
+}
