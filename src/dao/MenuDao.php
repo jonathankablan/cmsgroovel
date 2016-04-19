@@ -50,10 +50,13 @@ class MenuDao implements MenuDaoInterface{
 	}
 	
 	public function paginate($langage,$layout){
-		if($langage!=null){
+	   if($langage!=null){
 			return  Menu::where('lang','=',$langage)->where('layout','=',$layout)->get();
 		}else{
-			return Menu::all();
+			$menus= Menu::all();
+			if($menus!=null){
+				return array($menus['0']);
+			}else return $menus;
 		}
 	}
 }
