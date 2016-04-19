@@ -130,7 +130,7 @@ private static $perPage = 10;
 		
 		$this->permissionDao->create($user, $action, $type, $owncontent, $othercontent);
 		
-		$type=$this->contentTypeDao->findAllContentTypeByName('demo');
+		$type=$this->contentTypeDao->findAllContentTypeByName('public');
 		$action=array();
 		$action['retrieve']=1;
 		$action['add']=0;
