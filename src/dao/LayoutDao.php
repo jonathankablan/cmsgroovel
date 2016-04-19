@@ -83,9 +83,6 @@ class LayoutDao implements LayoutDaoInterface{
 			$layoutd['logo']=$layout['logo'];
 			array_push($convlayouts,$layoutd);
 		}
-		if($lang==null && count($convlayouts)>0){
-			return array($convlayouts['0']);
-		}
 		return $convlayouts;
 	}
 
