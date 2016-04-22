@@ -80,7 +80,7 @@ class ContentTypeDao implements ContentTypeDaoInterface{
 	}
 	
 	public function findContentTypeById($id){
-		return ContentTypes::where('content_type', '=', $id)->get();
+		return ContentTypes::where('content_type', '=', $id)->orderBy('id','asc')->get();
   	}
   	
   	public function deleteField($fieldName){

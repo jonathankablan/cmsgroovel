@@ -235,7 +235,17 @@
 									            		@else
 									            		<input type="checkbox" id="required" name="required" style='margin-left:2px' value={!!$field['required']!!}></div>
 									            		@endif
-								            	  <div class="col-md-1" style='margin-left:30px'>widget<select id='widget' name="widget"><option value="tinymce">tinymce</option><option value="none">none</option></select></div>
+								            	  <div class="col-md-1" style='margin-left:30px'>widget
+									            	  <select id='widget' name="widget">
+									            	  @if($field['widget']=='')
+									            	      <option selected value="none">none</option>
+									            	      <option value="tinymce">tinymce</option>
+									   			   	  @else
+									            	  	   <option selected value="tinymce">tinymce</option>
+									            	  	   <option value="none">none</option>
+									             	  @endif
+									             	  </select>
+								             	  </div>
 												  <div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='textarea'/></div>	    
 										     	</div>
 										     </div>
