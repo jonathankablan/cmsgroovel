@@ -1,6 +1,6 @@
-## Groovel cms  version2 ##
+## Groovel cms ##
  
-### Installation ###
+### Installation manual way otherwise use the installer###
 First install laravel:
 composer create-project laravel/laravel=5.1.0 <your project name> --prefer-dist
 
