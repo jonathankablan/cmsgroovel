@@ -33,7 +33,7 @@ class GroovelFilterController extends GroovelController {
 	      $userTrackingController = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_tracking\GroovelTrackingUserAPI');
 	      $configController = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\configuration\GroovelSystemConfigurationController');
 	      
-	      if($configController->isMaintenanceWebSiteEnable()==1){
+	      if($configController->isMaintenanceWebSiteEnable()==1 &&  (!\Request::is('admin/*'))){
 	      	return \View::make('cmsgroovel.pages.page_maintenance');
 	      }
 	      //tracking user

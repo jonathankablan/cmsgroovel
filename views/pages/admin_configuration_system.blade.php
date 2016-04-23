@@ -6,11 +6,9 @@
 
   <body>
       @include('cmsgroovel.includes.groovel_admin_header')
-     <div class="col-md-12"  style='margin-top:50px'>
- 	 	<div id='light'></div>
-		<div id='fade'></div>
-	</div>
- <div class='container-fluid' style='margin-top:50px'>
+  <div class='container-fluid' style='margin-top:80px'>
+      @include('cmsgroovel.toolkits.popup.popupModal')
+ 
 	 <div class='row'>
 	  	<div class="col-md-6">
 	 		<div class="panel panel-primary">
@@ -42,7 +40,7 @@
 					</div>
 					<div class="row" style='margin-top:50px;margin-bottom:25px'>
 						<div class="col-md-3 col-md-offset-4">
-							<input type="submit" id="admin_config_form_location" value="Save Configuration"  class="btn btn-primary"/>
+							<input type="submit" id="admin_config_form_location_submit" value="Save Configuration"  class="btn btn-primary"/>
 						</div>
 					</div>
 					{!! Form::close() !!}	
@@ -53,6 +51,7 @@
 				<div class="panel panel-primary" >
 					  	    <div class="panel-heading">
 					        	<h3 class="panel-title"><i class="fa fa-clock-o"></i><font color='black'>Audit tracking history</font></h3>
+					        	 <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 							</div>
 					        <div class="row">
 						        <div class="panel-body">
@@ -95,7 +94,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-4 col-md-offset-4">
-								<input type="submit" id="admin_config_activate_user_form" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
+								<input type="submit" id="admin_config_activate_user_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
 							</div>
 							{!! Form::close() !!}
 						</div>
@@ -131,7 +130,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-4 col-md-offset-4 ">
-								<input type="submit" id="admin_config_maintenance_form" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
+								<input type="submit" id="admin_config_maintenance_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
 							</div>
 							{!! Form::close() !!}
 						</div>
@@ -170,12 +169,37 @@
 					</div>
 					 <div class="row">
 						 <div class="col-md-4 col-md-offset-4">
-							<input type="submit" id="admin_config_email_form" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
+							<input type="submit" id="admin_config_email_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
 						</div>
 						{!! Form::close() !!}
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="col-md-6">
+				<div class="panel panel-primary">
+				 		<div class="panel-heading">
+					        <h3 class="panel-title"><i class="fa fa-clock-o"></i><font color='black'>Number contents by page</font></h3>
+					   </div>
+					 <div class="row">
+					  {!! Form::open(array('id'=>'admin_config_contents_form','url' => 'admin/configuration/number_contents_by_page', 'method' => 'POST')) !!}
+					 	<?php   
+								$max_contents=Session::get('configuration')['max_contents'];
+						 ?>							      
+					      <div class="panel-body">
+				    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>max number contents</p></div>
+							<div class="col-md-4">
+							   {!!Form::text('max_contents',Session::get('configuration')['max_contents']) !!}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-md-offset-4 ">
+								<input type="submit" id="admin_config_contents_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
+							</div>
+							{!! Form::close() !!}
+						</div>
+					</div>
+				</div>
 		</div>
 	</div>
 </div>
@@ -190,68 +214,26 @@
 $("#clearHistoryTrackingUser").click(function (event) {
 	$.post('configuration/clear_history_tracking_users',
             {
+        		"_token": $('#token').val(),
                 "function": "clearHistoryTrackingUser"
              },
     function(data) {
         var parsed = JSON.parse(data);
         if(parsed['success']){
-            window.scrollTo(0,0);
-	        document.getElementById('light').style.display='block';
-	        document.getElementById('light').className='alert alert-success fade in';
-	        document.getElementById('light').innerHTML ='history cleared';
-	        document.getElementById('fade').style.display='block';  
-	        a=document.createElement('a');
-			a.className='closer';
-			a.href='#';
-			a.innerHTML='x';
-			a.onclick = function(e) {  
-				document.getElementById('light').style.display='none';
-				document.getElementById('fade').style.display='none';
-			    return false;
-			};
-			document.getElementById('light').appendChild(a);
-			button=document.createElement('button');
-  			button.innerHTML='OK';
-  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-  			button.onclick = function(e) {  
-  				document.getElementById('light').style.display='none';
-  				document.getElementById('fade').style.display='none';
-  			    return false;
-  			};
-  			div=document.createElement('div');
-  			div.id='mess';
-  			document.getElementById('light').appendChild(div);
-  			document.getElementById('mess').appendChild(button);
-         }
-          else if(parsed['success']==false){
-        	  window.scrollTo(0,0);
-		        document.getElementById('light').style.display='block';
-		        document.getElementById('light').className='alert alert-danger fade in';
-		        document.getElementById('light').innerHTML =  parsed['errors']['reason'];
-		        document.getElementById('fade').style.display='block';  
-		        a=document.createElement('a');
-				a.className='closer';
-				a.href='#';
-				a.innerHTML='x';
-				a.onclick = function(e) {  
-				document.getElementById('light').style.display='none';
-				document.getElementById('fade').style.display='none';
-				    return false;
-				};
-				document.getElementById('light').appendChild(a);
-				button=document.createElement('button');
-	  			button.innerHTML='OK';
-	  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-	  			button.onclick = function(e) {  
-	  				document.getElementById('light').style.display='none';
-	  				document.getElementById('fade').style.display='none';
-	  			    return false;
-	  			};
-	  			div=document.createElement('div');
-	  			div.id='mess';
-	  			document.getElementById('light').appendChild(div);
-	  			document.getElementById('mess').appendChild(button);
-         }
+			  $("#alertmsg").css("color","green");
+			  $("#alertmsg").text('config has been changed successfully');
+			  $("#error").empty();
+	    } else if(parsed['success']==false){
+	    	 $("#alertmsg").css("color","red");
+           	 $("#alertmsg").text(parsed['errors']['reason']);
+             $("#error").text(parsed['errors']['reason']);
+	     }
+
+		 $("#popupModal").modal({                   
+		        "backdrop"  : "static",
+		        "keyboard"  : true,
+		        "show"      : true                     
+		      });
     });
 })
 		
@@ -263,39 +245,20 @@ $("#update_country_files").click(function (event) {
     function(data) {
         var parsed = JSON.parse(data);
         if(parsed['success']){
-            window.scrollTo(0,0);
-	        document.getElementById('light').style.display='block';
-	        document.getElementById('light').className='alert alert-success fade in';
-	        document.getElementById('light').innerHTML ='permission has been updated  successfully';
-	        document.getElementById('fade').style.display='block';  
-	        a=document.createElement('a');
-			a.className='closer';
-			a.href='#';
-			a.innerHTML='x';
-			a.onclick = function(e) {  
-				document.getElementById('light').style.display='none';
-				document.getElementById('fade').style.display='none';
-			    return false;
-			};
-			document.getElementById('light').appendChild(a);
-         }
-          else if(parsed['success']==false){
-        	  window.scrollTo(0,0);
-		        document.getElementById('light').style.display='block';
-		        document.getElementById('light').className='alert alert-danger fade in';
-		        document.getElementById('light').innerHTML =  parsed['errors']['reason'];
-		        document.getElementById('fade').style.display='block';  
-		        a=document.createElement('a');
-				a.className='closer';
-				a.href='#';
-				a.innerHTML='x';
-				a.onclick = function(e) {  
-				document.getElementById('light').style.display='none';
-				document.getElementById('fade').style.display='none';
-				    return false;
-				};
-				document.getElementById('light').appendChild(a);
-         }
+			  $("#alertmsg").css("color","green");
+			  $("#alertmsg").text('config has been changed successfully');
+			  $("#error").empty();
+	    } else if(parsed['success']==false){
+	    	 $("#alertmsg").css("color","red");
+           $("#alertmsg").text(parsed['errors']['reason']);
+           $("#error").text(parsed['errors']['reason']);
+	     }
+
+		 $("#popupModal").modal({                   
+		        "backdrop"  : "static",
+		        "keyboard"  : true,
+		        "show"      : true                     
+		      });
     });
 })
 
@@ -307,105 +270,42 @@ $("#update_city_files").click(function (event) {
     function(data) {
         var parsed = JSON.parse(data);
         if(parsed['success']){
-            window.scrollTo(0,0);
-	        document.getElementById('light').style.display='block';
-	        document.getElementById('light').className='alert alert-success fade in';
-	        document.getElementById('light').innerHTML ='permission has been updated  successfully';
-	        document.getElementById('fade').style.display='block';  
-	        a=document.createElement('a');
-			a.className='closer';
-			a.href='#';
-			a.innerHTML='x';
-			a.onclick = function(e) {  
-				document.getElementById('light').style.display='none';
-				document.getElementById('fade').style.display='none';
-			    return false;
-			};
-			document.getElementById('light').appendChild(a);
-         }
-          else if(parsed['success']==false){
-        	  window.scrollTo(0,0);
-		        document.getElementById('light').style.display='block';
-		        document.getElementById('light').className='alert alert-danger fade in';
-		        document.getElementById('light').innerHTML =  parsed['errors']['reason'];
-		        document.getElementById('fade').style.display='block';  
-		        a=document.createElement('a');
-				a.className='closer';
-				a.href='#';
-				a.innerHTML='x';
-				a.onclick = function(e) {  
-				document.getElementById('light').style.display='none';
-				document.getElementById('fade').style.display='none';
-				    return false;
-				};
-				document.getElementById('light').appendChild(a);
-         }
+			  $("#alertmsg").css("color","green");
+			  $("#alertmsg").text('config has been changed successfully');
+			  $("#error").empty();
+	    } else if(parsed['success']==false){
+	    	 $("#alertmsg").css("color","red");
+           $("#alertmsg").text(parsed['errors']['reason']);
+           $("#error").text(parsed['errors']['reason']);
+	     }
+
+		 $("#popupModal").modal({                   
+		        "backdrop"  : "static",
+		        "keyboard"  : true,
+		        "show"      : true                     
+		      });
     });
 })
 
 $("#admin_config_form_location").click(function (event) {
 	form=$('#admin_config_form_location').serialize();
 	$.post('/admin/configuration/update_audit', form, function (data, textStatus) {
-		console.log(data);
 		var parsed = JSON.parse(data);
 		if(parsed['success']){
-	            window.scrollTo(0,0);
-		        document.getElementById('light').style.display='block';
-		        document.getElementById('light').className='alert alert-success fade in';
-		        document.getElementById('light').innerHTML ='config has been changed';
-		        document.getElementById('fade').style.display='block';  
-		        a=document.createElement('a');
-				a.className='closer';
-				a.href='#';
-				a.innerHTML='x';
-				a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-				    return false;
-				};
-				document.getElementById('light').appendChild(a);
-				button=document.createElement('button');
-	  			button.innerHTML='OK';
-	  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-	  			button.onclick = function(e) {  
-	  				document.getElementById('light').style.display='none';
-	  				document.getElementById('fade').style.display='none';
-	  			    return false;
-	  			};
-	  			div=document.createElement('div');
-	  			div.id='mess';
-	  			document.getElementById('light').appendChild(div);
-	  			document.getElementById('mess').appendChild(button);
-	         }
-	          else if(parsed['success']==false){
-	        	  window.scrollTo(0,0);
-			        document.getElementById('light').style.display='block';
-			        document.getElementById('light').className='alert alert-danger fade in';
-			        document.getElementById('light').innerHTML =  parsed['errors']['reason'];
-			        document.getElementById('fade').style.display='block';  
-			        a=document.createElement('a');
-					a.className='closer';
-					a.href='#';
-					a.innerHTML='x';
-					a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-					    return false;
-					};
-					document.getElementById('light').appendChild(a);
-					button=document.createElement('button');
-		  			button.innerHTML='OK';
-		  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-		  			button.onclick = function(e) {  
-		  				document.getElementById('light').style.display='none';
-		  				document.getElementById('fade').style.display='none';
-		  			    return false;
-		  			};
-		  			div=document.createElement('div');
-		  			div.id='mess';
-		  			document.getElementById('light').appendChild(div);
-		  			document.getElementById('mess').appendChild(button);
-	         }
+			  $("#alertmsg").css("color","green");
+			  $("#alertmsg").text('config has been changed successfully');
+			  $("#error").empty();
+	    } else if(parsed['success']==false){
+	    	 $("#alertmsg").css("color","red");
+           $("#alertmsg").text(parsed['errors']['reason']);
+           $("#error").text(parsed['errors']['reason']);
+	     }
+
+		 $("#popupModal").modal({                   
+		        "backdrop"  : "static",
+		        "keyboard"  : true,
+		        "show"      : true                     
+		      });
 	 });
 	return false;
 });
@@ -413,310 +313,128 @@ $("#admin_config_form_location").click(function (event) {
 $("#admin_config_search_form").click(function (event) {
 	form=$('#admin_config_search_form').serialize();
 	$.post('/admin/configuration/update_search_engine', form, function (data, textStatus) {
-		console.log(data);
 		var parsed = JSON.parse(data);
 		if(parsed['success']){
-	            window.scrollTo(0,0);
-		        document.getElementById('light').style.display='block';
-		        document.getElementById('light').className='alert alert-success fade in';
-		        document.getElementById('light').innerHTML ='config has been changed';
-		        document.getElementById('fade').style.display='block';  
-		        a=document.createElement('a');
-				a.className='closer';
-				a.href='#';
-				a.innerHTML='x';
-				a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-				    return false;
-				};
-				document.getElementById('light').appendChild(a);
-				button=document.createElement('button');
-	  			button.innerHTML='OK';
-	  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-	  			button.onclick = function(e) {  
-	  				document.getElementById('light').style.display='none';
-	  				document.getElementById('fade').style.display='none';
-	  			    return false;
-	  			};
-	  			div=document.createElement('div');
-	  			div.id='mess';
-	  			document.getElementById('light').appendChild(div);
-	  			document.getElementById('mess').appendChild(button);
-	         }
-	          else if(parsed['success']==false){
-	        	  window.scrollTo(0,0);
-			        document.getElementById('light').style.display='block';
-			        document.getElementById('light').className='alert alert-danger fade in';
-			        document.getElementById('light').innerHTML =  parsed['errors']['reason'];
-			        document.getElementById('fade').style.display='block';  
-			        a=document.createElement('a');
-					a.className='closer';
-					a.href='#';
-					a.innerHTML='x';
-					a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-					    return false;
-					};
-					document.getElementById('light').appendChild(a);
-					button=document.createElement('button');
-		  			button.innerHTML='OK';
-		  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-		  			button.onclick = function(e) {  
-		  				document.getElementById('light').style.display='none';
-		  				document.getElementById('fade').style.display='none';
-		  			    return false;
-		  			};
-		  			div=document.createElement('div');
-		  			div.id='mess';
-		  			document.getElementById('light').appendChild(div);
-	         }
+			  $("#alertmsg").css("color","green");
+			  $("#alertmsg").text('config has been changed successfully');
+			  $("#error").empty();
+	    } else if(parsed['success']==false){
+	    	 $("#alertmsg").css("color","red");
+           $("#alertmsg").text(parsed['errors']['reason']);
+           $("#error").text(parsed['errors']['reason']);
+	     }
+
+		 $("#popupModal").modal({                   
+		        "backdrop"  : "static",
+		        "keyboard"  : true,
+		        "show"      : true                     
+		      });
 	 });
 	return false;
 });
-$("#admin_config_maintenance_form").click(function (event) {
+$("#admin_config_maintenance_form_submit").click(function (event) {
 	form=$('#admin_config_maintenance_form').serialize();
 	$.post('/admin/configuration/maintenance', form, function (data, textStatus) {
 		console.log(data);
 		var parsed = JSON.parse(data);
 		if(parsed['success']){
-	            window.scrollTo(0,0);
-		        document.getElementById('light').style.display='block';
-		        document.getElementById('light').className='alert alert-success fade in';
-		        document.getElementById('light').innerHTML ='config has been changed';
-		        document.getElementById('fade').style.display='block';  
-		        a=document.createElement('a');
-				a.className='closer';
-				a.href='#';
-				a.innerHTML='x';
-				a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-				    return false;
-				};
-				document.getElementById('light').appendChild(a);
-				button=document.createElement('button');
-	  			button.innerHTML='OK';
-	  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-	  			button.onclick = function(e) {  
-	  				document.getElementById('light').style.display='none';
-	  				document.getElementById('fade').style.display='none';
-	  			    return false;
-	  			};
-	  			div=document.createElement('div');
-	  			div.id='mess';
-	  			document.getElementById('light').appendChild(div);
-	  			document.getElementById('mess').appendChild(button);
-	         }
-	          else if(parsed['success']==false){
-	        	  window.scrollTo(0,0);
-			        document.getElementById('light').style.display='block';
-			        document.getElementById('light').className='alert alert-danger fade in';
-			        document.getElementById('light').innerHTML =  parsed['errors']['reason'];
-			        document.getElementById('fade').style.display='block';  
-			        a=document.createElement('a');
-					a.className='closer';
-					a.href='#';
-					a.innerHTML='x';
-					a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-					    return false;
-					};
-					document.getElementById('light').appendChild(a);
-					button=document.createElement('button');
-		  			button.innerHTML='OK';
-		  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-		  			button.onclick = function(e) {  
-		  				document.getElementById('light').style.display='none';
-		  				document.getElementById('fade').style.display='none';
-		  			    return false;
-		  			};
-		  			div=document.createElement('div');
-		  			div.id='mess';
-		  			document.getElementById('light').appendChild(div);
-		  			document.getElementById('mess').appendChild(button);
-	         }
+			  $("#alertmsg").css("color","green");
+			  $("#alertmsg").text('config has been changed successfully');
+			  $("#error").empty();
+	    } else if(parsed['success']==false){
+	    	 $("#alertmsg").css("color","red");
+           $("#alertmsg").text(parsed['errors']['reason']);
+           $("#error").text(parsed['errors']['reason']);
+	     }
+
+		 $("#popupModal").modal({                   
+		        "backdrop"  : "static",
+		        "keyboard"  : true,
+		        "show"      : true                     
+		      });
 	 });
 	return false;
 });
 
-$("#admin_config_email_form").click(function (event) {
+$("#admin_config_email_form_submit").click(function (event) {
 	form=$('#admin_config_email_form').serialize();
 	$.post('/admin/configuration/email', form, function (data, textStatus) {
 		console.log(data);
 		var parsed = JSON.parse(data);
 		if(parsed['success']){
-	            window.scrollTo(0,0);
-		        document.getElementById('light').style.display='block';
-		        document.getElementById('light').className='alert alert-success fade in';
-		        document.getElementById('light').innerHTML ='config has been changed';
-		        document.getElementById('fade').style.display='block';  
-		        a=document.createElement('a');
-				a.className='closer';
-				a.href='#';
-				a.innerHTML='x';
-				a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-				    return false;
-				};
-				document.getElementById('light').appendChild(a);
-				button=document.createElement('button');
-	  			button.innerHTML='OK';
-	  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-	  			button.onclick = function(e) {  
-	  				document.getElementById('light').style.display='none';
-	  				document.getElementById('fade').style.display='none';
-	  			    return false;
-	  			};
-	  			div=document.createElement('div');
-	  			div.id='mess';
-	  			document.getElementById('light').appendChild(div);
-	  			document.getElementById('mess').appendChild(button);
-	         }
-	          else if(parsed['success']==false){
-	        	  window.scrollTo(0,0);
-			        document.getElementById('light').style.display='block';
-			        document.getElementById('light').className='alert alert-danger fade in';
-			        document.getElementById('light').innerHTML =  parsed['errors']['reason'];
-			        document.getElementById('fade').style.display='block';  
-			        a=document.createElement('a');
-					a.className='closer';
-					a.href='#';
-					a.innerHTML='x';
-					a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-					    return false;
-					};
-					document.getElementById('light').appendChild(a);
-					button=document.createElement('button');
-		  			button.innerHTML='OK';
-		  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-		  			button.onclick = function(e) {  
-		  				document.getElementById('light').style.display='none';
-		  				document.getElementById('fade').style.display='none';
-		  			    return false;
-		  			};
-		  			div=document.createElement('div');
-		  			div.id='mess';
-		  			document.getElementById('light').appendChild(div);
-		  			document.getElementById('mess').appendChild(button);
-	         }
+			  $("#alertmsg").css("color","green");
+			  $("#alertmsg").text('config has been changed successfully');
+			  $("#error").empty();
+	    } else if(parsed['success']==false){
+	    	 $("#alertmsg").css("color","red");
+           $("#alertmsg").text(parsed['errors']['reason']);
+           $("#error").text(parsed['errors']['reason']);
+	     }
+
+		 $("#popupModal").modal({                   
+		        "backdrop"  : "static",
+		        "keyboard"  : true,
+		        "show"      : true                     
+		      });
 	 });
 	return false;
 });
 
 
 
-$("#admin_config_activate_user_form").click(function (event) {
+$("#admin_config_activate_user_form_submit").click(function (event) {
 	form=$('#admin_config_activate_user_form').serialize();
 	$.post('/admin/configuration/activate/users', form, function (data, textStatus) {
 		console.log(data);
 		var parsed = JSON.parse(data);
 		if(parsed['success']){
-	            window.scrollTo(0,0);
-		        document.getElementById('light').style.display='block';
-		        document.getElementById('light').className='alert alert-success fade in';
-		        document.getElementById('light').innerHTML ='config has been changed';
-		        document.getElementById('fade').style.display='block';  
-		        a=document.createElement('a');
-				a.className='closer';
-				a.href='#';
-				a.innerHTML='x';
-				a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-				    return false;
-				};
-				document.getElementById('light').appendChild(a);
-				button=document.createElement('button');
-	  			button.innerHTML='OK';
-	  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-	  			button.onclick = function(e) {  
-	  				document.getElementById('light').style.display='none';
-	  				document.getElementById('fade').style.display='none';
-	  			    return false;
-	  			};
-	  			div=document.createElement('div');
-	  			div.id='mess';
-	  			document.getElementById('light').appendChild(div);
-	  			document.getElementById('mess').appendChild(button);
-	         }
-	          else if(parsed['success']==false){
-	        	  window.scrollTo(0,0);
-			        document.getElementById('light').style.display='block';
-			        document.getElementById('light').className='alert alert-danger fade in';
-			        document.getElementById('light').innerHTML =  parsed['errors']['reason'];
-			        document.getElementById('fade').style.display='block';  
-			        a=document.createElement('a');
-					a.className='closer';
-					a.href='#';
-					a.innerHTML='x';
-					a.onclick = function(e) {  
-					document.getElementById('light').style.display='none';
-					document.getElementById('fade').style.display='none';
-					    return false;
-					};
-					document.getElementById('light').appendChild(a);
-					button=document.createElement('button');
-		  			button.innerHTML='OK';
-		  			button.style='margin-left:90px;margin-top:100px;width:100px;height:40px';
-		  			button.onclick = function(e) {  
-		  				document.getElementById('light').style.display='none';
-		  				document.getElementById('fade').style.display='none';
-		  			    return false;
-		  			};
-		  			div=document.createElement('div');
-		  			div.id='mess';
-		  			document.getElementById('light').appendChild(div);
-		  			document.getElementById('mess').appendChild(button);
-	         }
+			  $("#alertmsg").css("color","green");
+			  $("#alertmsg").text('config has been changed successfully');
+			  $("#error").empty();
+	    } else if(parsed['success']==false){
+	    	 $("#alertmsg").css("color","red");
+           $("#alertmsg").text(parsed['errors']['reason']);
+           $("#error").text(parsed['errors']['reason']);
+	     }
+
+		 $("#popupModal").modal({                   
+		        "backdrop"  : "static",
+		        "keyboard"  : true,
+		        "show"      : true                     
+		      });
 	 });
 	return false;
 });
 
-</script>
-<style>
-#fade{
-    display: none;
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    z-index:1001;
-    -moz-opacity: 0.7;
-    opacity:.70;
-    filter: alpha(opacity=70);
-}
-#light{
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 200px;
-    margin-left: -150px;
-    margin-top: -100px;                 
-    padding: 10px;
-    border: 2px solid #FFF;
-    z-index:1002;
-    overflow:visible;
-}		
-.closer {
- position: absolute;
-top: 0px;
-right: 10px;
-transition: all 200ms ease 0s;
-font-size: 20px;
-font-weight: bold;
-text-decoration: none;
-color: #333;
-}	
 
-</style>
+
+
+
+$("#admin_config_contents_form_submit").click(function (event) {
+	form=$('#admin_config_contents_form').serialize();
+	$.post('/admin/configuration/number_contents_by_page', form, function (data, textStatus) {
+		console.log(data);
+		var parsed = JSON.parse(data);
+		if(parsed['success']){
+			  $("#alertmsg").css("color","green");
+			  $("#alertmsg").text('config has been changed successfully');
+			  $("#error").empty();
+	    } else if(parsed['success']==false){
+	    	 $("#alertmsg").css("color","red");
+             $("#alertmsg").text(parsed['errors']['reason']);
+             $("#error").text(parsed['errors']['reason']);
+	     }
+
+		 $("#popupModal").modal({                   
+		        "backdrop"  : "static",
+		        "keyboard"  : true,
+		        "show"      : true                     
+		      });
+	 });
+	 
+	return false;
+});
+
+</script>
+
 

@@ -93,4 +93,11 @@ class GroovelConfigurationBusiness implements GroovelConfigurationBusinessInterf
 		$this->statsUsersGeolocationDao->archivedStats();
 	}
 	
+	public function getMaxContentsNumber(){
+		return $this->systemDao->getMaxContentsNumber();
+	}
+	public function updateMaxNumberContents($maxNumber){
+		$this->systemDao->updateMaxNumberContents($maxNumber);
+	}
+	
 }

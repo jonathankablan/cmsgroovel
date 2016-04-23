@@ -21,18 +21,22 @@ use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentManagerBusi
 use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentManagerBusinessInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Groovel\Cmsgroovel\business\groovel\admin\configuration\GroovelConfigurationBusinessInterface;
 
 
 class GroovelContentsListController extends GroovelController {
 
 	protected $contentManager;
 	
-	private static $perPage = 30;
+	protected $configurationManager;
+	
+	private static $perPage = 100;
 	
 
-	public function __construct( GroovelContentManagerBusinessInterface $contentManager)
+	public function __construct( GroovelContentManagerBusinessInterface $contentManager,GroovelConfigurationBusinessInterface  $configurationManager)
 	{
 		$this->contentManager=$contentManager;
+		$this->configurationManager=$configurationManager;
 		$this->beforeFilter('auth');
 	}
 
@@ -48,7 +52,11 @@ class GroovelContentsListController extends GroovelController {
 				$lang='GB';
 			}
 		}   
+		
+			self::$perPage=$this->configurationManager->getMaxContentsNumber();
+			
 			$contents= $this->contentManager->paginateFullContentDeserialize($lang,$layout);
+			
 			$currentPage = \Input::get('page')-1;
 			if($currentPage<0){
 				$currentPage=0;

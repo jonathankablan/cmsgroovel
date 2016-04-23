@@ -32,6 +32,8 @@ interface GroovelConfigurationBusinessInterface{
 	public function isMaintenanceEnable();
 	public function isEmailEnable();
 	public function isEnableUserActivation();
+	public function getMaxContentsNumber();
+	public function updateMaxNumberContents($maxNumber);
 	
 	public function clearHistoryTrackingUser();
 }

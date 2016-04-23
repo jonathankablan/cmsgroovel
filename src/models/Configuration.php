@@ -28,7 +28,7 @@ class Configuration extends Model{
 
 
 
-	protected $fillable = array('enable_user_tracking','enable_map_location','enable_elasticsearch','enable_maintenance','enable_email','enable_user_activation');
+	protected $fillable = array('enable_user_tracking','enable_map_location','enable_elasticsearch','enable_maintenance','enable_email','enable_user_activation','maxNumberContents');
 	
 	
 }

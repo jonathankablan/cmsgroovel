@@ -32,4 +32,7 @@ public function isWorldMapLocationEnable();
 public function isElasticSearchEnable();
 public function isMaintenanceEnable();
 public function isEmailEnable();
+
+public function getMaxContentsNumber();
+public function updateMaxNumberContents($maxNumber);
 }

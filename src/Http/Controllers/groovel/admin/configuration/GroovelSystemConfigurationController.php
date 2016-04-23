@@ -50,7 +50,7 @@ class GroovelSystemConfigurationController extends GroovelController {
 			}
 		}else if (\Request::is('*/configuration/update_audit')){
 			$this->checkToken();
-			$this->configBusiness->updateConfigAuditTracking($input['tracking_service'],$input['worldmap_service']);
+			$this->configBusiness->updateConfigAuditTracking($input['tracking_service'],null);
 			return $this->jsonResponse(array('config has been updated'),false,true,false);
 		}else if (\Request::is('*/configuration/update_search_engine')){
 			$this->checkToken();
@@ -69,6 +69,10 @@ class GroovelSystemConfigurationController extends GroovelController {
 			$this->checkToken();
 			$this->configBusiness->updateEnableUserActivation($input['activate_users']);
 			return $this->jsonResponse(array('config has been updated'),false,true,false);
+		}else if(\Request::is('*/configuration/number_contents_by_page')){
+			$this->checkToken();
+			$this->configBusiness->updateMaxNumberContents($input['max_contents']);
+			return $this->jsonResponse(array('config has been updated'),false,true,false);
 		}
 		return $this->processForm();
 	}
@@ -77,7 +81,9 @@ class GroovelSystemConfigurationController extends GroovelController {
 		\Session::flash('configuration',['elastic'=>$this->configBusiness->isElasticSearchEnable(),
 				'maintenance'=>$this->configBusiness->isMaintenanceEnable(),'audit_tracking'=>$this->configBusiness->isUserAuditTrackingEnable()
 				,'map_locate'=>$this->configBusiness->isWorldMapLocationEnable()
-				,'email'=>$this->configBusiness->isEmailEnable(),'activate_users'=>$this->configBusiness->isEnableUserActivation()
+				,'email'=>$this->configBusiness->isEmailEnable(),'activate_users'=>$this->configBusiness->isEnableUserActivation(),
+				'max_contents'=>$this->configBusiness->getMaxContentsNumber()
+				
 		]);
 		return \View::make('cmsgroovel.pages.admin_configuration_system');
 	}

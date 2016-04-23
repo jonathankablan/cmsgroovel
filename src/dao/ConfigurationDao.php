@@ -123,4 +123,17 @@ class ConfigurationDao implements ConfigurationDaoInterface{
 		return $config->enable_email;
 	}
 
+	public function getMaxContentsNumber(){
+		$config=Configuration::find(0);
+		return $config->maxNumberContents;
+	}
+	
+	public function updateMaxNumberContents($maxNumber){
+		$config=Configuration::find(0);
+		if($config==null){
+			$config = new \Configuration();
+		}
+		$config->maxNumberContents=$maxNumber;
+		$config->save();
+	}
 }
