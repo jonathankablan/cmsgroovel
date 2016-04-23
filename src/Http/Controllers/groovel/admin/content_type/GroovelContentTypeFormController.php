@@ -173,11 +173,13 @@ class GroovelContentTypeFormController extends GroovelFormController {
 		}else{//update
 			//clean all
 			$this->contentTypeManager->deleteContentType($contentType->name);
-			$content=$contentType->contents[0];
+			$contents=$contentType->contents;
 			$contentType=$this->contentTypeManager->createContentType($title,$template);
 			//update id of content
-			$content->type_id=$contentType->id;
-			$content->save();
+			foreach($contents as $content ){
+				$content->type_id=$contentType->id;
+				$content->save();
+			}
 			
 			foreach($body as $field){
 				$this->contentTypeManager->addField($title,$field['fieldname'],$field['fielddescription'],$field['fieldtype'],$field['fieldvalue'],$field['fieldwidget'],$field['fieldrequired'],$contentType->id);
