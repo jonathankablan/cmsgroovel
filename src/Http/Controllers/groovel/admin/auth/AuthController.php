@@ -192,6 +192,7 @@ class AuthController extends GroovelController {
             foreach ($adminusers as $admin){
              	$this->messageManager->sendMessage('new user subscribed '.$user->pseudo,$admin,'no-reply','');
             }
+            $this->userManager->setLastTimeSeen(\Input::get('pseudo'));
             return \Redirect::to('admin')->with('flash_notice', 'Your account has been created.You will be informed soon when it will be activated');
         }
         return \Redirect::to('admin/auth/subscribe/form')->withErrors($v)->withInput();

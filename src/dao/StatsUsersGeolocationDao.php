@@ -68,7 +68,7 @@ class StatsUsersGeolocationDao implements StatsUsersGeolocationDaoInterface{
 		
 	}
 	
-	public function getTotalUsersByDay(){
+	/*public function getTotalUsersByDay(){
 		$pdo=\DB::connection()->getPdo();
 		$pdo->beginTransaction();
 		$pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
@@ -77,6 +77,18 @@ class StatsUsersGeolocationDao implements StatsUsersGeolocationDaoInterface{
 		$res=$q->fetchAll(\PDO::FETCH_ASSOC);
 		$pdo->commit();
 		return $res;
+	}*/
+	
+	public function getTotalUsersByDay(){
+		$pdo=\DB::connection()->getPdo();
+		$pdo->beginTransaction();
+		$pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+		$q=$pdo->prepare("SELECT date(lastTimeSeen) as 'date',count(username) as 'number' FROM `users` group by date(lastTimeSeen)");
+		$q->execute();
+		$res=$q->fetchAll(\PDO::FETCH_ASSOC);
+		$pdo->commit();
+		return $res;
 	}
-
+	
+	
 }
