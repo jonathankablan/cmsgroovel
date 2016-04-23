@@ -22,6 +22,8 @@ use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentTypeManager
 use  Groovel\Cmsgroovel\models\Widgets; 
 use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentManagerBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentManagerBusinessInterface;
 
 class GroovelContentTypeFormController extends GroovelFormController {
 
@@ -30,11 +32,14 @@ class GroovelContentTypeFormController extends GroovelFormController {
 	
 	private $layoutManager;
 	
+	protected $contentManager;
 	
-	public function __construct(GroovelContentTypeManagerBusinessInterface $contentTypeManager,GroovelLayoutBusinessInterface $layoutManager)
+	
+	public function __construct(GroovelContentTypeManagerBusinessInterface $contentTypeManager,GroovelLayoutBusinessInterface $layoutManager,GroovelContentManagerBusinessInterface $contentManager)
 	{
 		$this->contentTypeManager=$contentTypeManager;
 		$this->layoutManager=$layoutManager;
+		$this->contentManager=$contentManager;
 		$this->beforeFilter('auth');
 	}
 	
@@ -168,7 +173,12 @@ class GroovelContentTypeFormController extends GroovelFormController {
 		}else{//update
 			//clean all
 			$this->contentTypeManager->deleteContentType($contentType->name);
+			$content=$contentType->contents[0];
 			$contentType=$this->contentTypeManager->createContentType($title,$template);
+			//update id of content
+			$content->type_id=$contentType->id;
+			$content->save();
+			
 			foreach($body as $field){
 				$this->contentTypeManager->addField($title,$field['fieldname'],$field['fielddescription'],$field['fieldtype'],$field['fieldvalue'],$field['fieldwidget'],$field['fieldrequired'],$contentType->id);
 			}

@@ -31,6 +31,9 @@ class AllContentTypes extends Model{
 		return $this->belongsTo('Groovel\Cmsgroovel\models\User');
 	}
 	
+	public function contents() {
+		return $this->hasMany('Groovel\Cmsgroovel\models\Contents','type_id','id'); // this matches the Eloquent model
+	}
 	
 	public function getId()
 	{

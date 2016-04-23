@@ -157,7 +157,8 @@ class BusinessServiceProvider extends \Illuminate\View\ViewServiceProvider {
 		} );
 		
 		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\content_type\GroovelContentTypeFomController', function () {
-			return new GroovelContentTypeFomController ( new GroovelContentTypeManagerBusiness (new ContentsDao(),new ContentTypeDao(),new WidgetDao()),new GroovelLayoutBusiness (new LayoutDao(),new CountryDao()));
+			return new GroovelContentTypeFomController ( new GroovelContentTypeManagerBusiness (new ContentsDao(),new ContentTypeDao(),new WidgetDao()),new GroovelLayoutBusiness (new LayoutDao(),new CountryDao()), new GroovelContentManagerBusiness(
+					 new ContentsDao(), new RouteDao(),new ContentTypeDao(),new CountryDao(),new ContentsTranslationDao(),new CommentsDao()) );
 		} );
 		
 		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\contents\GroovelContentsListController', function () {

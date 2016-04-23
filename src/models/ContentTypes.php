@@ -33,7 +33,7 @@ class ContentTypes extends Model{
 	}
 	
 	public function hasWidget(){
-		return $this->hasOne('Groovel\Cmsgroovel\models\Widgets','id');
+		return $this->hasOne('Groovel\Cmsgroovel\models\Widgets','id','widget');
 	}
 	
 	public function hasAllContentType(){
