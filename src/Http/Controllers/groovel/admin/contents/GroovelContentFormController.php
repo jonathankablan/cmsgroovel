@@ -115,14 +115,6 @@ class GroovelContentFormController extends GroovelFormController {
 			$validInput=\Input::all();
 			$validation = \Validator::make($validInput, $rules);
 			if($validation->passes()){
-				$res=$this->contentManager->find($content_id, \Input::get('langage')[0]);
-				if(count($res)>0){
-					if($res['id']!=\Input::get('translation_id')){
-						$validation->getMessageBag()->add('content', 'you can not have same translation content');
-					}else if((\Input::get('translation_id')==null) && \Input::get('langage')[0]==$res['langage'][0] ){
-						$validation->getMessageBag()->add('content', 'you can not have same translation content');
-					}
-				}
 				$messages=$validation->messages();
 				if(count($messages)>0){
 					$formatMess=null;
@@ -233,40 +225,76 @@ class GroovelContentFormController extends GroovelFormController {
    private function updateContent(){
    		$input = \Input::all();
    		if($input['duplicate']=='yes'){//duplicate and create new translation content
-   			$content_translation= new ContentsTranslation;
-			$content_translation->name=$input['title'];
-			$content_translation->tag=$input['tag'];
-			$content_translation->lang=$input['langage'][0];
-			$content_translation->refcontentid=$input['content_id'];
-			
-			$content= Contents::find($input['content_id']);
-			$content->description=$input['description'];
-			$content->weight=$input['weight'];
-			if(filter_var(\Input::get('isPublish'), FILTER_VALIDATE_BOOLEAN)){
-				$content->ispublish=1;
-			}else{
-				$content->ispublish=0;
-			}
-			$data=array();
-			foreach (array_keys($input) as $key){
-				if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
-		    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight' && $key!='isPublish'){
-					$data[$key]=$input[$key];
-					if('myfiles'==$key && array_key_exists('myfiles',$input)){
-						if(empty($input['myfiles'])){
-							unset($data[$key]);
-						}else{
-							$data[$key]=$input['myfiles'];
+   			$res=$this->contentManager->find( \Input::get('content_id'), \Input::get('langage')[0]);
+   			if (\Input::get('langage')[0]!=$res['lang']){// new traduction
+   				$content_translation= new ContentsTranslation;
+				$content_translation->name=$input['title'];
+				$content_translation->tag=$input['tag'];
+				$content_translation->lang=$input['langage'][0];
+				$content_translation->refcontentid=$input['content_id'];
+				
+				$content= Contents::find($input['content_id']);
+				$content->description=$input['description'];
+				$content->weight=$input['weight'];
+				if(filter_var(\Input::get('isPublish'), FILTER_VALIDATE_BOOLEAN)){
+					$content->ispublish=1;
+				}else{
+					$content->ispublish=0;
+				}
+				$data=array();
+				foreach (array_keys($input) as $key){
+					if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
+			    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight' && $key!='isPublish'){
+						$data[$key]=$input[$key];
+						if('myfiles'==$key && array_key_exists('myfiles',$input)){
+							if(empty($input['myfiles'])){
+								unset($data[$key]);
+							}else{
+								$data[$key]=$input['myfiles'];
+							}
 						}
 					}
 				}
-			}
-			$blobout=$this->contentManager->serialize($data);
-			$content_translation->content=$blobout;
-			$content->update();
-			$content_translation->save();
-			
-			
+				$blobout=$this->contentManager->serialize($data);
+				$content_translation->content=$blobout;
+				$content->update();
+				$content_translation->save();
+   			}else{
+   				$content= Contents::find($input['content_id']);
+			    $content->description=$input['description'];
+			    if(filter_var(\Input::get('isPublish'), FILTER_VALIDATE_BOOLEAN)){
+			    	$content->ispublish=1;
+			    }else{
+			    	$content->ispublish=0;
+			    }
+			   
+			    $content->weight=$input['weight'];
+			    $content_translation= ContentsTranslation::where('id','=',$res['id'])->first();
+			    
+			    $content_translation->name=$input['title'];
+			    $content_translation->tag=$input['tag'];
+			    $content_translation->lang=$input['langage'][0];
+			    $content_translation->updated_at=time();
+			    $blob=$this->contentManager->deserialize( $content_translation['content']);
+			    foreach (array_keys($input) as $key){
+			    	if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
+			    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight' && $key!='isPublish'){
+			    		$blob[$key]=$input[$key];
+			    		if('myfiles'==$key && array_key_exists('myfiles',$input)){
+			    			if(empty($input['myfiles'])){
+			    				unset($blob[$key]);
+			    			}else{
+			    				$blob[$key]=$input['myfiles'];
+			    			}
+			    		}
+			    	}
+			    }
+			    $blobout=$this->contentManager->serialize($blob);
+			    $content_translation->content=$blobout;
+			    $content->update();
+			    $content_translation->update();
+   				
+   			}
 		}else{
 			$content= Contents::find($input['content_id']);
 		    $content->description=$input['description'];
