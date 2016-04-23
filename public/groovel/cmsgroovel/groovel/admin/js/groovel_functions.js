@@ -109,12 +109,9 @@ String.prototype.trim = function() {
       }
   }
   
- /*function bindSearch(){
-	  $('#srch-term').bind( "click", function() {
-		  alert( "User clicked on 'foo.'" );
-		  console.log($('#search').val());
-	  });
-  }*/
+  $(document).on('hidden.bs.modal', '.modal', function () {
+	    $('.modal:visible').length && $(document.body).addClass('modal-open');
+	});
   
   
   
