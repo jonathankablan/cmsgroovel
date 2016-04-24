@@ -65,7 +65,7 @@ function postContent(form,action){
 					  $("#error").empty();
                    }
                     else if(parsed['success']==false){
-                      $("#alertmsg").css("color","red");
+                       $("#alertmsg").css("color","red");
   	                  $("#alertmsg").text(parsed['errors']['reason']);
   	                  $("#error").text(parsed['errors']['reason']);
 	               }
@@ -185,6 +185,7 @@ function showContentType(str,url){
 
 function generateContent(req,url){
 	 var fiedTinyMCE = new Array();
+	 generateFormTinyMCE=[];
 	 var parsed = JSON.parse(req);
 	 $contentForm=$("#content_form");
 	//clear all
@@ -373,14 +374,14 @@ function waitForElementToDisplay(selector, time) {
 
 $(document).on('hide.bs.modal', function () {
    //tinyMCE.editors=[];
-    });
+ });
 
 $(document).on('shown.bs.modal', function(e) {
 for(var i=0;i<generateFormTinyMCE.length;i++){
 	var selector=generateFormTinyMCE[i];
 	var sel= document.getElementById(selector);
 	if(sel!=null){
-	 sel.focus();
+	sel.focus();
 	eval (tinymce.init({
 	    selector: "textarea#"+generateFormTinyMCE[i],
 		    theme: "modern",

@@ -223,8 +223,8 @@
 	 	 	//force to get filed value by tinymce
 	 		tinymce.triggerSave();
 	 	}
-	 	document.getElementById('content_form').appendChild( document.getElementById('token'));
-	 	document.getElementById('content_form').appendChild( document.getElementById('content_id'));
+	 	$( "#token" ).clone().appendTo( "#content_form" );
+	 	$( "#content_id" ).clone().appendTo( "#content_form" );
 		form=$('#content_form').serialize();
 		validateContent(form);
 		if (!$('#error').text().trim().length){
@@ -247,6 +247,9 @@ $(document).on('focusin', function(e) {
 
 
 $( "#modal" ).on( "hidden.bs.modal", function(e) {
+	//clear all data problem other wise with tinymce and remove id content otherwise it delete the prev content
+	document.getElementById('content_form').innerHTML='';
+	$("#content_id").attr("value",'');
 	if(tinymce!=null){
 		try{
 			tinymce.remove();
