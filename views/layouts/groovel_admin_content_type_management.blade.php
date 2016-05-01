@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    @include('cmsgroovel.includes.groovel_admin_package_head')
+    @include('cmsgroovel.includes.groovel_admin_content_type_head')
   </head>
 
   <body>
- <div class="container-fluid">
+   @include('cmsgroovel.toolkits.popup.popupModal')   
+ 
+  
+     <div class="container-fluid">
 	   @if(Session::get('user_privileges')!=null)
 		  @if(Session::get('user_privileges')['role']==null)
 		      @include('cmsgroovel.includes.groovel_default_user_header')
@@ -23,11 +26,12 @@
 		      		  </div>
 		      	    @endif
 				@endif
-		         <div class="col-sm-6 col-sm-offset-2 col-xs-12 col-md-9 col-md-offset-0">
+		         <div class="col-sm-6 col-sm-offset-1 col-xs-12 col-md-11 col-md-offset-0">
 		 			   @yield('content')
 		        </div>
 		  </div>
   </div>
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

@@ -4,8 +4,8 @@
         
         
         <div id='modal' class="modal fade" style="display: none" data-keyboard="false" data-backdrop="static">
-				  <div class="modal-dialog">
-				  	<div class="modal-content" style='width:700px;height:600px'>
+				  <div class="modal-dialog" style="width: 90%">
+				  	<div class="modal-content">
 					 	<div class="modal-header" style='background-color:#E5E4E2'>
 					 	 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      <h4 class="modal-title">Compose Message</h4>
@@ -25,22 +25,22 @@
 						{!!Form::open(array('id'=>'message_form','url' => 'messages/send', 'method' => 'post'))!!}
 							   <div class="form-group form-inline">
 				                @if(Session::get('reply_subject')!=null)
-				                  {!! Form::label('subject', 'Subject',array('class'=>'required','style'=>'margin-right:65px')).Form::text('subject',  Session::get('reply_subject'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'your subject','readonly')) !!}
+				                  {!! Form::label('subject', 'Subject',array('class'=>'required','style'=>'margin-right:65px')).Form::text('subject',  Session::get('reply_subject'), array('class'=>'form-control','placeholder' => 'your subject','readonly')) !!}
 				               @endif
 				                @if(Session::get('reply_subject')==null)
-				                 {!! Form::label('subject', 'Subject',array('class'=>'required','style'=>'margin-right:65px')).Form::text('subject', Input::old('subject'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'your subject')) !!}
+				                 {!! Form::label('subject', 'Subject',array('class'=>'required','style'=>'margin-right:65px')).Form::text('subject', Input::old('subject'), array('class'=>'form-control','style'=>'width:100%','placeholder' => 'your subject')) !!}
 				               @endif
 				              </div>
 				                <div class="form-group form-inline">
 				                @if(Session::get('reply_user')!=null)
-				                   {!! Form::label('recipient', 'To',array('class'=>'required','style'=>'margin-right:95px')).Form::text('recipient', Session::get('reply_user'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'pseudo','readonly')) !!}
+				                   {!! Form::label('recipient', 'To',array('class'=>'required','style'=>'margin-right:100px')).Form::text('recipient', Session::get('reply_user'), array('class'=>'form-control','style'=>'width:100%','placeholder' => 'pseudo','readonly')) !!}
 				                @endif
 				                @if(Session::get('reply_user')==null)
-				                	{!! Form::label('recipient', 'To',array('class'=>'required','style'=>'margin-right:95px')).Form::text('recipient', Input::old('recipient'), array('class'=>'form-control','style'=>'width:450px','placeholder' => 'pseudo')) !!}
+				                	{!! Form::label('recipient', 'To',array('class'=>'required','style'=>'margin-right:100px')).Form::text('recipient', Input::old('recipient'), array('class'=>'form-control','style'=>'width:100%','placeholder' => 'pseudo')) !!}
 				                @endif
 				              </div>
 				               <div class="form-group form-inline">
-				                {!! Form::label('body', 'Message',array('style'=>'margin-right:70px')).Form::textarea('body', Input::old('body'), array('class'=>'form-control','style'=>'width:450px;heigth:100px','placeholder' => 'write here your message')) !!}
+				                {!! Form::label('body', 'Message',array('style'=>'margin-right:70px')).Form::textarea('body', Input::old('body'), array('class'=>'form-control','style'=>'width:100%','placeholder' => 'write here your message')) !!}
 				              </div>
 				            </div>
 						 <div class="modal-footer">

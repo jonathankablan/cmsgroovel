@@ -119,7 +119,7 @@
 							    	<label for="name">name</label><span class="required"></span>
 							    </div>
 							    <div class="col-md-8">
-							    	<textarea id='name' rows="4" cols="50" style='overflow:true' class="form-control" name='name'></textarea>
+							    	<textarea id='name' rows="4" cols="50" style='overflow:true;width:100%' class="form-control" name='name'></textarea>
 							    </div>
 					     </div>
 				    </div>
@@ -215,6 +215,7 @@
 	  </div>
 	</div>
 
+	
 	<script>
 	
 	

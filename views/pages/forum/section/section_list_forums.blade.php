@@ -9,17 +9,17 @@
 	             </div>
 	            @endif
          </div>
-         <div class="row" class="table-responsive scrollable" >
+         <div class="row">
 	         <div class="col-md-12">
-	                       	 <table class="table table-striped table-hover table-bordered"  id="table_forums" style='background:#F2F2F2'>
+	                       	 <table class="table table-hover table-striped table-bordered table-responsive"  id="table_forums" style='background:#F2F2F2'>
 					                      <thead style='background:#D8D8D8'>
 					                        <tr>
-					                          <th id="col_forum" class="col-md-1 thead" style='border:1px solid black' >id</th>
+					                          <th id="col_forum" class="col-md-1 thead hidden-xs hidden-sm" style='border:1px solid black' >id</th>
 					                          <th id="col_forum" class="col-md-1 thead" style='border:1px solid black' >name</th>
-					                           <th id="col_forum" class="col-md-1 thead" style='border:1px solid black' >description</th>
-					                           <th id="col_forum" class="col-md-1 thead" style='border:1px solid black' >subjects</th>
+					                           <th id="col_forum" class="col-md-1 thead hidden-xs hidden-sm" style='border:1px solid black' >description</th>
+					                           <th id="col_forum" class="col-md-1 thead hidden-xs" style='border:1px solid black' >subjects</th>
 					                           <th id="col_forum" class="col-md-1 thead" style='border:1px solid black' >messages</th>
-					                           <th id="col_forum" class="col-md-1 thead" style='border:1px solid black' >last messages</th>
+					                           <th id="col_forum" class="col-md-1 thead hidden-xs hidden-sm" style='border:1px solid black' >last messages</th>
 					                            @if(Session::get('user_privileges')['role']=='ADMIN')
 					                           <th id="col_forum" class="col-md-1" style='border:1px solid black'></th>
 					                           @endif
@@ -29,7 +29,7 @@
 					                      @if(!empty($forums))
 					                       @foreach ($forums as $forum)
 					                          <tr id="rows_forums">
-					                            <td id="row_forum" class="col-md-1"  style='border:1px solid black;' >{!!$forum['forum_id']!!}</td>
+					                            <td id="row_forum" class="col-md-1 hidden-xs hidden-sm"  style='border:1px solid black;' >{!!$forum['forum_id']!!}</td>
 					                            <td id="row_forum" class="col-md-1" style='border:1px solid black;' >
 					                             @if(!isset($view))
 					                            {!! HTML::link('/forum/?forumName='.$forum['forum_name'].'&id='.$forum['forum_id'], $forum['forum_name'],array('class'=>'forumlink'))!!}</td>
@@ -38,13 +38,13 @@
 					                             {!! HTML::link('/forum/?forumName='.$forum['forum_name'].'&id='.$forum['forum_id'].'&view='.$view, $forum['forum_name'],array('class'=>'forumlink'))!!}</td>
 					                            @endif
 					                            <td id="row_forum" class="col-md-1" style='border:1px solid black;' >{!!$forum['forum_description']!!}</td> 
-					                            <td id="row_forum" class="col-md-1" style='background:#D8D8D8;border:0.2px solid black;' >{!!$forum['subjects']!!}</td>
-					                            <td id="row_forum" class="col-md-1" style='background:#D8D8D8;border:1px solid black;' >{!!$forum['messages']!!}</td>
-					                            <td id="row_forum" class="col-md-1" style='background:#D8D8D8;border:1px solid black;' >{!!$forum['lastMessage']['pseudo']!!} {!!$forum['lastMessage']['created_at']!!} </td>
+					                            <td id="row_forum" class="col-md-1 hidden-xs" style='background:#D8D8D8;border:0.2px solid black;' >{!!$forum['subjects']!!}</td>
+					                            <td id="row_forum" class="col-md-1 hidden-xs hidden-sm" style='background:#D8D8D8;border:1px solid black;' >{!!$forum['messages']!!}</td>
+					                            <td id="row_forum" class="col-md-1 hidden-xs hidden-sm" style='background:#D8D8D8;border:1px solid black;' >{!!$forum['lastMessage']['pseudo']!!} {!!$forum['lastMessage']['created_at']!!} </td>
 					                             @if(Session::get('user_privileges')['role']=='ADMIN')
-					                             <td id="del" class="col-md-1" style='border:1px solid black;' >
-					                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteForum')) !!}
-					                            </td>
+					                             <td id="del" class="col-sm-4 col-lg-1 col-xs-1">
+						                          	<span id='deleteButton' class="glyphicon glyphicon-trash btnDeleteForum" aria-hidden="true"></span>
+						                        </td> 
 					                            @endif
 					                            </tr>
 					                          @endforeach

@@ -1,13 +1,13 @@
 @extends('cmsgroovel.layouts.groovel_admin_default')
 @section('content')
 
- <div class="col-sm-4">
+ <div class="col-sm-4  col-xs-12 col-lg-5">
         <div id='light' style='margin-left: 500px;margin-top:100px'></div>
 		<div id='fade'></div>
         
         <div id='modal' class="modal fade" style="display: none" data-keyboard="true" data-backdrop="static" tabindex='-1'>
-				  <div class="modal-dialog">
-				  	<div class="modal-content" style='width:700px;height:600px'>
+				  <div class="modal-dialog" style="width: 90%">
+				  	<div class="modal-content">
 					 	<div class="modal-header" style='background-color: #E5E4E2'>
 					 	 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      <h4 class="modal-title">Message</h4>
@@ -21,24 +21,26 @@
 				             <div>{!!var_dump(Session::get('messages'))!!}</div>
 				        @endif
 				       
-			       		<div id='form-modal' class="modal-body" style='height:400px' >
+			       		<div id='form-modal' class="modal-body">
 						<!--  form email-->
 						  {!! Form::hidden('message_id', Session::get('message')['id'], array('id' => 'id')) !!}
 						{!!Form::open(array('id'=>'message_form','url' => 'messages/reply', 'method' => 'post'))!!}
 							   <div class="form-group form-inline">
-				                {!! Form::label('subject', 'Subject',array('style'=>'margin-right:65px')).Form::text('subject',Session::get('message')['subject'], array('class'=>'form-control','style'=>'width:450px','placeholder' => 'subject','readonly')) !!}
+				                {!! Form::label('subject', 'Subject',array('style'=>'margin-right:65px')).Form::text('subject',Session::get('message')['subject'], array('class'=>'form-control','style'=>'width:100%','placeholder' => 'subject','readonly')) !!}
 				              </div>
 				               <div class="form-group form-inline">
-				                {!! Form::label('author', 'from',array('style'=>'margin-right:85px')).Form::text('author', Session::get('message')['author'], array('class'=>'form-control','style'=>'width:450px','placeholder' => 'author','readonly')) !!}
+				                {!! Form::label('author', 'from',array('style'=>'margin-right:85px')).Form::text('author', Session::get('message')['author'], array('class'=>'form-control','style'=>'width:100%','placeholder' => 'author','readonly')) !!}
 				              </div>
 				               <div class="form-group form-inline">
-				                {!! Form::label('body', 'Message',array('style'=>'margin-right:60px')).Form::textarea('body', Session::get('message')['body'], array('class'=>'form-control','style'=>'width:450px;heigth:100px','placeholder' => 'message')) !!}
+				                {!! Form::label('body', 'Message',array('style'=>'margin-right:60px')).Form::textarea('body', Session::get('message')['body'], array('class'=>'form-control','style'=>'width:100%;heigth:100%','placeholder' => 'message')) !!}
 				              </div>
 				            </div>
 						 <div class="modal-footer">
+						    <div class="row">
 						    <button type="button" class="btn btn-default" onclick='deleteMessage()' data-dismiss="modal">Delete</button>
 			       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			       			 <input type="submit" id="submitForm" value="Reply"  class="btn btn-default" data-dismiss="modal"/>
+			       			 </div>
 			        	 </div>
 			        	  {!! Form::close() !!}
 					</div>

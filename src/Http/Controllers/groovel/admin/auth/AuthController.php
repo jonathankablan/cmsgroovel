@@ -135,12 +135,12 @@ class AuthController extends GroovelController {
 	          $role= $this->userManager->getUserRole($user['id']);
 	          $user_privileges=array("role"=>$role,"status"=>$user['activate']);
 	          \Session::put('user_privileges',$user_privileges);
-	          return \Redirect::intended('/admin/welcome')->with('flash_notice', 'Vous avez été correctement connecté avec le pseudo ' . \Auth::user()->pseudo);
+	          return \Redirect::intended('/admin/welcome')->with('flash_notice', 'You are connected with ' . \Auth::user()->pseudo);
 	        }
     	}else if ($v->failed()) {	
-    		return \Redirect::to('admin/failed/login')->withErrors($v)->withInput();
+    		return \Redirect::to('admin/failed/login')->with('flash_error', 'Password or Pseudo not correct !')->withInput();
       	}
-        return \Redirect::to('admin/failed/login')->with('flash_error', 'Pseudo ou mot de passe non correct !')->withInput();      
+        return \Redirect::to('admin/failed/login')->with('flash_error', 'Password or Pseudo not correct !')->withInput();      
     }
  
   /**

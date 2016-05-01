@@ -24,7 +24,7 @@
 	                           	 <table class="table table-hover table-bordered"  id="table_topics" style='background:#F2F2F2'>
 				                      <thead style='background:#D8D8D8'>
 				                        <tr>
-				                         <th id="col_topic" class="col-md-1" style='border:1px solid black;'>id</th>
+				                         <th id="col_topic" class="col-md-1 hidden-xs hidden-sm" style='border:1px solid black;'>id</th>
 				                          <th id="col_topic" class="col-md-8" style='border:1px solid black;'>Topics</th>
 				                          <th id="col_topic" class="col-md-1" style='border:1px solid black;'>replies</th>
 				                          <th id="col_topic" class="col-md-4" style='border:1px solid black;'>lastPost</th>
@@ -33,15 +33,15 @@
 				                      <tbody  class="list">
 				                       @foreach ($topics as $topic)
 				                          <tr id="rows_topics">
-				                            <td id="row_topic" class="col-md-1"  style='border:1px solid black;' >{!!$topic['topic_id']!!}</td>
+				                            <td id="row_topic" class="col-md-1 hidden-xs hidden-sm"  style='border:1px solid black;' >{!!$topic['topic_id']!!}</td>
 				                            <td id="row_topic" class="col-md-3" style='border:1px solid black;' >
 				                            {!! HTML::link('/forum/topic/?'.'id='.$topic['topic_id'].'&forumid='.$forumid, $topic['topic'],array('class'=>'forumlink'))!!}</td>
 				                             <td id="row_topic" class="col-md-1" style='background:#D8D8D8;border:0.2px solid black;' >{!!$topic['number_answers']!!}</td>
 				                            <td id="row_topic" class="col-md-1" style='background:#D8D8D8;border:1px solid black;' >{!!$topic['lastanswer']['pseudo']!!} {!!$topic['lastanswer']['created_at']!!}</td>
 				                             @if(Session::get('user_privileges')['role']=='ADMIN')
-				                             <td id="del" style='border:1px solid black;' >
-				                            {!! HTML::image('groovel/cmsgroovel/groovel/admin/images/del.png', $alt="del", $attributes = array('id' => 'deleteButton','style'=>'width:20px;height:20px','class'=>'btnDeleteTopic')) !!}
-				                            </td>
+				                             <td id="del" class="col-sm-4 col-lg-1 col-xs-1">
+						                          	<span id='deleteButton' class="glyphicon glyphicon-trash btnDeleteTopic" aria-hidden="true"></span>
+						                     </td> 
 				                            @endif
 				                            </tr>
 				                          @endforeach

@@ -1,79 +1,64 @@
 @extends('cmsgroovel.layouts.groovel_admin_default')
 @section('content')
 
-
-
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-	    <meta charset="utf-8">
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <title>Dashboard Groovel</title>
-	</head>
-	<body>
-	    <div id="wrapper">
-	         <div id="page-wrapper">
-	            <div class="row">
-	                <div class="col-lg-12">
-	                    <h1>Dashboard</h1>
+	     <div class="container-fluid" style='margin-top:100px'>
+	             <div class="row">
+		            <div class="col-lg-12 col-lg-offset-0 col-sm-12 col-sm-offset-0 col-xs-12">
+	                    <div class="panel panel-primary">
+	                        <div class="panel-heading">
+	                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Traffic Estimations for last 30 days</font></h3>
+	                        </div>
+	                        <div class="panel-body">
+	                   
+			                   <div id="chartdiv">
+			                   
+			                   </div>
+			                   
+	                         </div>
+	                    </div>
+	                  </div>
+                   </div>
+                  <div class="row"> 
+	                  <div class="col-lg-2 col-lg-offset-0 col-sm-4 col-sm-offset-0 col-xs-4">
+	                    <div class="panel panel-primary">
+	                        <div class="panel-heading">
+	                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i><font color='black'> Number of users</font></h3>
+	                        </div>
+	                        <div class="panel-body">
+	                            <div style='font-size:50px'>
+		                        {!!$total_users!!}
+		                        </div>
+	                        </div>
+	                    </div>
 	                </div>
-	            </div>
-	            <div class="col-lg-8 col-lg-offset-3">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Traffic Estimations for last 30 days</font></h3>
-                        </div>
-                        <div class="panel-body">
-                   
-                   <div id="chartdiv" style="height:400px;width:700px; "></div>
-                         </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 col-lg-offset-3">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i><font color='black'> Number of users</font></h3>
-                        </div>
-                        <div class="panel-body">
-                            <div style='margin-left:70px;font-size:50px'>
-	                        {!!$total_users!!}
+	                 <div class="col-lg-3 col-sm-4 col-xs-4">
+	                    <div class="panel panel-primary">
+	                        <div class="panel-heading">
+	                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Number of users sessions connected</font></h3>
 	                        </div>
-                        </div>
-                    </div>
-                </div>
-                 <div class="col-lg-3">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Number of users sessions connected</font></h3>
-                        </div>
-                        <div class="panel-body">
-                          <div style='margin-left:100px;font-size:50px'>
-	                        {!!$total_users_connected!!}
-	                       </div>
-                        </div>
-                    </div>
-                </div>
-                 <div class="col-lg-3">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Number of messages sent</font></h3>
-                        </div>
-                        <div class="panel-body">
-                        	 <div style='margin-left:100px;font-size:50px'>
-	                        {!!$total_message!!}
+	                        <div class="panel-body">
+	                          <div style='font-size:50px'>
+		                        {!!$total_users_connected!!}
+		                       </div>
 	                        </div>
-                        </div>
-                    </div>
-                </div>
+	                    </div>
+	                </div>
+	                 <div class="col-lg-3 col-sm-4 col-xs-4">
+	                    <div class="panel panel-primary">
+	                        <div class="panel-heading">
+	                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <font color='black'>Number of messages sent</font></h3>
+	                        </div>
+	                        <div class="panel-body">
+	                        	 <div style='font-size:50px'>
+		                        {!!$total_message!!}
+		                        </div>
+	                        </div>
+	                    </div>
+	                </div>
+	              </div>
                    <!--  <div id="container"  class="col-lg-8 col-lg-offset-3"  style="position: relative;margin-top:50px; margin-bottom:50px; width:900px;height:500px" > </div>-->
 	         
              </div>
-	    </div>
-
-  
-	     
-	</body>
-</html>
 
      <style media="screen">
            

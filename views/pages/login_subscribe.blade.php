@@ -1,11 +1,13 @@
 @extends('cmsgroovel.layouts.groovel_admin_login')
 
 @section('content')
-    <div class="col-md-12" style="margin-bottom:50px">
+    <div class="row" style="margin-bottom:30px;margin-top:50px">
+    	 <div class="col-lg-5 col-lg-offset-3 col-md-9 col-sm-6 col-sm-offset-3">
     	To subscribe Please full fill this formular
+    	 </div>
     </div>
     <br>
-    <div class="row col-md-12">
+    <div class="row">
         @if ($errors->count() > 0)
             <div class="col-md-9">
                 <div class="alert alert-danger">
@@ -15,7 +17,7 @@
                 </div>
             </div>
         @endif
-        <div class="col-md-9">
+        <div class="col-lg-6 col-lg-offset-3 col-md-9 col-xs-11 col-sm-6 col-sm-offset-3">
             {!! Form::open(array('id'=>'sub_form','url' => 'admin/auth/subscribe', 'method' => 'POST', 'class' => 'form-horizontal well')) !!}
              <input style='display:none;' type='text' id='ctrl1' name='ctrl1' value='spamcontroller'>
 			 <input style='display:none;' type='text' id='ctrl2' name='ctrl2' value=''>

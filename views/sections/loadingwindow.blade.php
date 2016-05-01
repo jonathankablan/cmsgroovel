@@ -1,9 +1,9 @@
  @section('loadingwindow')
-<div class="modal fade" id="pleaseWaitDialog">
+<div class="modal fade" id="pleaseWaitDialog" style="width:100%">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h1>Processing...Please Wait</h1>
+				<h1 style='width:50%'>Processing...Please Wait</h1>
 			</div>
 			<div class="modal-body">
 				<div class="progress">

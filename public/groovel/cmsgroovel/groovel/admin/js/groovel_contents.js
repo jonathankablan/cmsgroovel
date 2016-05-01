@@ -385,7 +385,6 @@ for(var i=0;i<generateFormTinyMCE.length;i++){
 	eval (tinymce.init({
 	    selector: "textarea#"+generateFormTinyMCE[i],
 		    theme: "modern",
-		    width: 600,
 		    height: 300,
 		    entity_encoding : "raw",
 		    mode : "exact",

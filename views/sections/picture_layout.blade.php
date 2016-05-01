@@ -1,5 +1,5 @@
  @section('uploadfile')
-<div class="input-file-container" id="dvFiles"> 
+<div class="input-file-container" id="dvFiles" style="width:100%"> 
  	 <label for="my-file" class="input-file-trigger" tabindex="0">Select a picture...</label>
 	 <input class="input-file" id="my-file" name="files" type="file">
 	  <output id="input_list" class="file-return">

@@ -31,16 +31,16 @@
 				             <input type='hidden' name='leave_blank'/>
 							
 								<div class="form-group form-inline">
-								  {!! Form::label('username', 'username',array('class'=>'required','style'=>'margin-right:50px')).Form::text('username', Input::old('username'), array('class'=>'form-control','style'=>'width:450px')) !!}
+								  {!! Form::label('username', 'username',array('class'=>'required','style'=>'margin-right:50px')).Form::text('username', Input::old('username'), array('class'=>'form-control','style'=>'width:100%')) !!}
 				         		</div>
 								<div class="form-group form-inline">
-									  {!! Form::label('email', 'email',array('class'=>'required','style'=>'margin-right:80px')).Form::text('email', Input::old('email'), array('class'=>'form-control','style'=>'width:450px')) !!}
+									  {!! Form::label('email', 'email',array('class'=>'required','style'=>'margin-right:80px')).Form::text('email', Input::old('email'), array('class'=>'form-control','style'=>'width:100%')) !!}
 				         		</div>
 				         		<div class="form-group form-inline">
-								  {!! Form::label('subject', 'subject',array('class'=>'required','style'=>'margin-right:65px')).Form::text('subject', Input::old('subject'), array('class'=>'form-control','style'=>'width:450px')) !!}
+								  {!! Form::label('subject', 'subject',array('class'=>'required','style'=>'margin-right:65px')).Form::text('subject', Input::old('subject'), array('class'=>'form-control','style'=>'width:100%')) !!}
 				         		</div>
 								<div class="form-group form-inline">
-								 {!! Form::label('message', 'message',array('class'=>'required','style'=>'margin-right:55px')).Form::textarea('message', Input::old('message'), array('class'=>'form-control','style'=>'width:450px')) !!}
+								 {!! Form::label('message', 'message',array('class'=>'required','style'=>'margin-right:55px')).Form::textarea('message', Input::old('message'), array('class'=>'form-control','style'=>'width:100%')) !!}
 								</div>
 														   
 					     </div>

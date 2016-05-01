@@ -6,20 +6,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/admin">Groovel Admin Panel</a>
+                <a class="navbar-brand hidden-sm" href="/admin">Groovel Admin Panel</a>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                   <li>
                   <a href="{{ url('/admin/dashboard') }}"><span><i class="glyphicon glyphicon-dashboard"></i></span> Dashboard</a>
                   </li>
-		          <li class="dropdown" style='margin-left:60px'>
+		          <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-user'></span>Users<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Users</a>
                             <ul class="dropdown-menu">
-                                <li>{!! HTML::link('/admin/users', 'List Users')!!}</li>
+                                <li>{!! HTML::link('/admin/users', 'View users')!!}</li>
 			              	 	 <li class="divider"></li>
 			              		 <li>{!! HTML::link('/admin/user/form', 'Add new user')!!}</li>
                             </ul>
@@ -29,7 +29,7 @@
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Users Permissions</a>
 			                 
 			                   <ul class="dropdown-menu">
-				                   <li>{!! HTML::link('/admin/users/permissions', 'List Users permissions')!!}</li>
+				                   <li>{!! HTML::link('/admin/users/permissions', 'View users permissions')!!}</li>
 					           	    <li class="divider"></li>
 					            	 <li>{!! HTML::link('/admin/user/permissions/form', 'Add user permissions')!!}</li>
 					          	</ul>
@@ -40,7 +40,7 @@
 			                   <ul class="dropdown-menu">
 				              	 <li>{!! HTML::link('/admin/user/role/form', 'Add user roles')!!}</li>
 				              	   <li class="divider"></li>
-				              	  <li>{!! HTML::link('/admin/users/roles', 'List Users roles')!!}</li>
+				              	  <li>{!! HTML::link('/admin/users/roles', 'View Users roles')!!}</li>
 				               	</ul>
 				              </li>
 				         </ul>
@@ -65,7 +65,7 @@
 		                 <li class="dropdown dropdown-submenu">
 			                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Packages Management</a>
 			                   <ul class="dropdown-menu">
-				              	 <li>{!! HTML::link('/admin/packages', 'List Packages')!!}</li>
+				              	 <li>{!! HTML::link('/admin/packages', 'View Packages')!!}</li>
 				               	</ul>
 				         </li>
 		                
@@ -74,7 +74,7 @@
 		                <li class="dropdown dropdown-submenu">
 			                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage System Pages </a>
 			                   <ul class="dropdown-menu">
-				              	   <li>{!! HTML::link('/admin/routes', 'List Pages System')!!}</li>
+				              	   <li>{!! HTML::link('/admin/routes', 'View Pages System')!!}</li>
 		          		    	   <li class="divider"></li>
 				               		<li>{!! HTML::link('/admin/routes/form', 'Add Pages System')!!}</li>
 		          		   		</ul>
@@ -86,7 +86,7 @@
 		              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-th-list'></span>Forums <span class="caret"></span></a>
 		              <ul class="dropdown-menu" role="menu">
 		                <!-- <li><a href="./admin/routes">List Routes</a></li>-->
-		                <li>{!! HTML::link('/forums/view', 'List all forums')!!}</li>
+		                <li>{!! HTML::link('/forums/view', 'View forums')!!}</li>
 		              </ul>
 		            </li>
 		            
@@ -105,7 +105,7 @@
 		              <!-- <li>{!! HTML::link('/search', 'Search')!!}</li>-->
 		             
          	 </ul>
-         	 <div class="col-sm-2 col-md-2 col-md-offset-1">
+         	 <div class="col-sm-2 col-md-2 col-md-offset-0 hidden-sm">
 		       <form id='search_form' class="navbar-form" role="search" action='/admin/search/execute' method='post'>
 		        <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 		        <div class="input-group">

@@ -24,6 +24,8 @@
     {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_permissions.js') !!}
     {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_routes.js') !!}
     {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_users.js') !!}
+      {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_layout.js') !!}
+ 
     {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_menu.js') !!}
    {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_search.js') !!}
  

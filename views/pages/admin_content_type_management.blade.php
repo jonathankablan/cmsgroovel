@@ -1,20 +1,20 @@
-@extends('cmsgroovel.layouts.groovel_admin_content_type')
+@extends('cmsgroovel.layouts.groovel_admin_content_type_management')
 @section('content')
 
 <div class="container-fluid" style="margin-top:100px;height:700px">
  <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 <input id='content_type_id' type="hidden" name='content_type_id' value=''>
  <div id='error' style='display:none'></div>
-	<div class="col-md-2" style="margin-top:100px">
+	<div class="col-md-2 col-md-offset-2" style="margin-top:100px">
 				
 		<ul id="form-fields">
-	    		<li class="glyphicon glyphicon-calendar" style='margin-top: 25px;width:100%'><span>Date Field</span>
+	    		<li class="glyphicon glyphicon-calendar" style='margin-top: 25px'><span>Date Field</span>
 	    		 <input type="date" name="textbox"  class="val"/>
 		    		 <div class="toggle-view panel">
 	            		<div class="row" style='margin-bottom:25px'>
-		            		<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px'/></div>
-		            		<div class="col-md-4">Description<input type="text" id="description" name="description" style='margin-left:4px'/></div>
-		            		<div class="col-md-1">Required<input type="checkbox" id="required" name="required" style='margin-left:2px'/></div>
+		            		<div class="col-md-4"  style='margin-left:0%'><span class="required">Name</span><input type="text" id="name"  name="name" style='witdh:100%'/></div>
+		            		<div class="col-md-4"  style='margin-left:10%'>Description<input type="text" id="description" name="description" style=witdh:100%'/></div>
+		            		<div class="col-md-1"  style='margin-left:10%'>Required<input type="checkbox" id="required" name="required"/></div>
 		            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='date'/></div>
 		            	</div>
 	        		</div>
@@ -41,13 +41,13 @@
 	            	</div>
 				</li>
 				 -->
-				<li class="glyphicon glyphicon-pencil" style='margin-top: 25px;width:100%'><span>Rich Text Editor</span><textarea rows="4" cols="50" class="val" style='overflow:true'></textarea>
+				<li class="glyphicon glyphicon-pencil" style='margin-top: 25px'><span>Rich Text Editor</span><textarea rows="4" cols="50" class="val" style='overflow:true'></textarea>
 					<div class="toggle-view panel" style='margin-bottom:25px'>
 						<div class="row">
-		            		<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px;width:100px'/></div>
-		            		<div class="col-md-4">Description<input type="text" id='description' name="description" style='margin-left:4px;width:100px'/></div>
-		            		<div class="col-md-1">Required<input id='required' type="checkbox" name="required" style='margin-left:2px'/></div>
-		            		<div class="col-md-1" style='margin-left:30px'>widget<select id='widget' name="widget"><option value="tinymce">tinymce</option><option value="none">none</option></select></div>
+		            		<div class="col-md-4" style='margin-left:0%'><span class="required">Name</span><input type="text" id="name"  name="name" style='width:100%'/></div>
+		            		<div class="col-md-4" style='margin-left:-5%'>Description<input type="text" id='description' name="description" style='width:100%'/></div>
+		            		<div class="col-md-1" style='margin-left:1%'>Required<input id='required' type="checkbox" name="required" /></div>
+		            		<div class="col-md-1" style="margin-left:7%"><span style='margin-left:5%'>widget</span><select id='widget' name="widget"><option value="tinymce">tinymce</option><option value="none">none</option></select></div>
 							<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='textarea'/></div>	            	
 		            	</div>
 	            	</div>
@@ -83,23 +83,23 @@
 	            	</div>
 				</li>
 				 -->
-				<li class="glyphicon glyphicon-text-width" style='margin-top: 25px;width:100%'><span>Text Field</span><input type="text" name="textbox" class="val" />
+				<li class="glyphicon glyphicon-text-width" style='margin-top: 25px'><span>Text Field</span><input type="text" name="textbox" class="val" />
 					<div class="toggle-view panel">
 						<div class="row" style='margin-bottom:25px'>
-		            		<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px'/></div>
-		            		<div class="col-md-4">Description<input type="text" id="description" name="description" style='margin-left:4px'/></div>
-		            		<div class="col-md-1">Required<input type="checkbox" id="required" name="required" style='margin-left:2px'/></div>
+		            		<div class="col-md-4" style='margin-left:0%;'><span class="required">Name</span><input type="text" id="name"  name="name" style='witdh:100%'/></div>
+		            		<div class="col-md-4" style='margin-left:10%'>Description<input type="text" id="description" name="description" style='witdh:100%'/></div>
+		            		<div class="col-md-1" style='margin-left:10%'>Required<input type="checkbox" id="required" name="required"/></div>
 		            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='text'/></div>
 		            	</div>
 	            	</div>
 				</li>
-				<li class="glyphicon glyphicon-upload" style='margin-top: 25px;width:100%'><span>upload files</span><div class='val'> @include('cmsgroovel.sections.uploadfile')</div>
+				<li class="glyphicon glyphicon-upload" style='margin-top: 25px'><span>upload files</span><div class='val'> @include('cmsgroovel.sections.uploadfile')</div>
 					<div class="toggle-view panel">
 						<div class="row" style='margin-bottom:25px'>
-		            	<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px'/></div>
-		            		<div class="col-md-4">Description<input type="text" id="description" name="description" style='margin-left:4px'/></div>
-		            		<div class="col-md-1">Required<input type="checkbox" id="required" name="required" style='margin-left:2px'/></div>
-		            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='file'/></div>
+		            	<div class="col-md-4"><span class="required">Name</span><input type="text" id="name"  name="name" style='witdh:100%'/></div>
+		            		<div class="col-md-4" style="margin-left:10%">Description<input type="text" id="description" name="description" style='witdh:100%'/></div>
+		            		<div class="col-md-1" style="margin-left:10%">Required<input type="checkbox" id="required" name="required"/></div>
+		            		<div class="col-md-1" style="display:none;margin-left:10%"><input id="type" type="text" name="type" value='file'/></div>
 		            	</div>
 	            	</div>
 				</li>
@@ -107,10 +107,10 @@
 	</div>
 
 	<!-- where you drag and drop your content -->
-	<div class="col-md-9">
+	<div class="col-md-8">
 		  <div class='row' style='margin-bottom:50px;background-color:#FAFAFA;z-index:2'>
 		  	<div class='col-md-2'><button type="button" class="btn btn-success" onclick='saveTemplate()'>Save Template</button></div>
-		  	<div class='col-md-2'><button type="button" class="btn btn-danger" onclick='deleteTemplate()'>Delete Template</button></div>
+		  	<div class='col-md-2 col-lg-offset-1 col-lg-3'><button type="button" class="btn btn-danger" onclick='deleteTemplate()'>Delete Template</button></div>
 		  	<div class='col-md-2'>
 		  	<button id='helpinfo' class="btn btn-info" title='You have to drag and drop components in the surface area below, you must put a unique title for each field by clicking on the pencil, menu will toogle and you will fill each field, name is mandatory'>Help info</button>
 		   </div>
@@ -186,7 +186,7 @@
     font-size:11px;
     margin:0;
     padding:0;
-    width:300px;
+    width:100%;
 	}
 	
 	 .panel {

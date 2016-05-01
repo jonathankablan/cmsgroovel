@@ -1,4 +1,4 @@
-@extends('cmsgroovel.layouts.groovel_admin_editor')  
+@extends('cmsgroovel.layouts.groovel_admin_userprofile')  
 @section('content')
 <!-- place in header of your html document -->
 	      
@@ -45,16 +45,16 @@
 				     							  @include('cmsgroovel.sections.picture_user')
 				     							</div>
 												<div class="form-group form-inline">
-													{!! Form::label('username', 'username',array('class'=>'required')).Form::text('username', Session::get('user_edit')['username'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:110px','readonly')) !!}
+													{!! Form::label('username', 'username',array('class'=>'required')).Form::text('username', Session::get('user_edit')['username'],  $attributes = array('class' => 'form-control','style'=>'width:100%','readonly')) !!}
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('pseudo', 'pseudo',array('class'=>'required')).Form::text('pseudo', Session::get('user_edit')['pseudo'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:125px','readonly')) !!}
+													{!! Form::label('pseudo', 'pseudo',array('class'=>'required')).Form::text('pseudo', Session::get('user_edit')['pseudo'],  $attributes = array('class' => 'form-control','style'=>'width:100%','readonly')) !!}
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('email', 'email',array('class'=>'required')).Form::text('email', Session::get('user_edit')['email'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:138px')) !!}
+													{!! Form::label('email', 'email',array('class'=>'required')).Form::text('email', Session::get('user_edit')['email'],  $attributes = array('class' => 'form-control','style'=>'width:100%')) !!}
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('password', 'password reset').Form::text('password', Session::get('user_edit')['password'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:90px')) !!}
+													{!! Form::label('password', 'password reset').Form::text('password', Session::get('user_edit')['password'],  $attributes = array('class' => 'form-control','style'=>'width:100%')) !!}
 												</div>
 											    <div class="form-group form-inline">
 									                <?php   $states=['0'=>'disabled','1'=>'enabled'];

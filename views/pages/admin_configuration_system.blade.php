@@ -19,12 +19,12 @@
 				<div class="row" style='margin-top:25px'>
 				 {!! Form::open(array('id'=>'admin_config_form_location','url' => 'admin/configuration/update_audit', 'method' => 'POST')) !!}
 					<div class="row">
-						<div class="col-md-5 col-md-offset-1" ><p class="text-left" style='font-size:18px'>enable audit users tracking</p></div>
+						<div class="col-md-5 col-md-offset-1 col-xs-offset-2" ><p class="text-left" style='font-size:18px'>enable audit users tracking</p></div>
 						<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
 						$state_filter=array();
 						$audit_tracking=Session::get('configuration')['audit_tracking'];
 				 		?>		
-						<div class="col-md-3">
+						<div class="col-md-3 col-xs-10 col-xs-offset-1">
 							  @foreach($states as $key=>$state)
 				                 @if(Session::get('configuration')['audit_tracking']!=$key)
 				                 	<?php $state_filter[$key]=$state;?>
@@ -39,7 +39,7 @@
 						</div>
 					</div>
 					<div class="row" style='margin-top:50px;margin-bottom:25px'>
-						<div class="col-md-3 col-md-offset-4">
+						<div class="col-md-3 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
 							<input type="submit" id="admin_config_form_location_submit" value="Save Configuration"  class="btn btn-primary"/>
 						</div>
 					</div>
@@ -56,7 +56,7 @@
 					        <div class="row">
 						        <div class="panel-body">
 						    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>clear history</p></div>
-									<div class="col-md-3 col-md-offset-2"><button class="btn btn-primary" id="clearHistoryTrackingUser" >clear history</button></div>
+									<div class="col-md-3 col-md-offset-2 col-sm-offset-2 col-xs-offset-2"><button class="btn btn-primary" id="clearHistoryTrackingUser" >clear history</button></div>
 								</div>
 							</div>
 				</div>
@@ -93,7 +93,7 @@
 						</div>
 						</div>
 						<div class="row">
-							<div class="col-md-4 col-md-offset-4">
+							<div class="col-md-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
 								<input type="submit" id="admin_config_activate_user_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
 							</div>
 							{!! Form::close() !!}
@@ -129,7 +129,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-4 col-md-offset-4 ">
+							<div class="col-md-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
 								<input type="submit" id="admin_config_maintenance_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
 							</div>
 							{!! Form::close() !!}
@@ -168,7 +168,7 @@
 						</div>
 					</div>
 					 <div class="row">
-						 <div class="col-md-4 col-md-offset-4">
+						 <div class="col-md-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
 							<input type="submit" id="admin_config_email_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
 						</div>
 						{!! Form::close() !!}
@@ -193,7 +193,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-4 col-md-offset-4 ">
+							<div class="col-md-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
 								<input type="submit" id="admin_config_contents_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
 							</div>
 							{!! Form::close() !!}

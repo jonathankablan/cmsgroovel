@@ -1,12 +1,12 @@
 @extends('cmsgroovel.layouts.groovel_admin_userprofile')
  @section('content')
 <!-- place in header of your html document -->
- 	<div class="col-md-12 col-md-offset-2" style='margin-top:100px' id='content'>
+ 	<div class="col-sm-5 col-sm-offset-4 col-md-12 col-md-offset-2" style='margin-top:100px' id='content'>
  	 <div class="panel panel-default">
 		  <div class="panel-body">
 			  <div class='row'>
 				  <div class='col-md-1'>
-			     	{!! HTML::image('groovel/cmsgroovel/groovel/admin/images/edit.jpg', $alt="edit", $attributes = array('id' => 'editButton','style'=>'width:20px;height:20px','class'=>'btnEditUserProfile')) !!}
+			     	<span id='editButton' class="glyphicon glyphicon-pencil btnEditUserProfile" aria-hidden="true"></span>
 				   </div>	 
 				 <div id="userphoto" class="col-md-3 thumbnail">
 					@if(Session::get('user')['userpicture']==null)
