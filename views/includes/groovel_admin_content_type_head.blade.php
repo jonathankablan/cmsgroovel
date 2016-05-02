@@ -15,9 +15,11 @@
     {!!HTML::style('groovel/cmsgroovel/groovel/admin/css/route.css')!!}
      
     {!! HTML::script('groovel/cmsgroovel/jquery/js/jquery-1.11.1.min.js') !!}
-     {!! HTML::script('groovel/cmsgroovel/bootstrap/js/bootstrap.js') !!}
-  
     {!! HTML::script('groovel/cmsgroovel/jquery/js/jquery-ui.js') !!}
+    {!! HTML::script('groovel/cmsgroovel/jquery/js/jquery.ui.touch-punch.min.js') !!}
+    
+    {!! HTML::script('groovel/cmsgroovel/bootstrap/js/bootstrap.js') !!}
+  
     
     {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_contents.js') !!}
     {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_forum.js') !!}
