@@ -13,7 +13,7 @@ function checkFieldTitleUniqueAndNotNull(){
 	var titles= new Array();
 	var countField=0;
 	 $(".field").each(function() {
-		 $(this).find(".toggle-view.panel .row .col-md-4").each(function() {
+		 $(this).find(".toggle-view .row .col-md-4").each(function() {
 		 	  if($(this).find("input#name").exists() && $(this).find("input#name").val().length>0){
 		 		  titles[$(this).find("input#name").val()]=$(this).find("input#name").val();
 	     	  }
@@ -123,6 +123,7 @@ function saveTemplate(){
 	 }
 	 var token =$("#token").val();
 	 var id= $("#content_type_id").val();
+	// console.log(template);
 	 $.ajax({
          type: 'post',
          data : {'id': id,'template':template, '_token': token},
@@ -176,7 +177,7 @@ function parseTemplate(){
     	  var fieldrequired=null;
     	  var fieldvalue=null;
     	  var fieldwidget=null;
-    	  $(this).find(".toggle-view.panel .row .col-md-1").each(function() {
+    	  $(this).find(".toggle-view .row .col-md-1").each(function() {
     		  if($(this).find("input#required").exists()){
     			  fieldrequired=$(this).find("input#required").is(':checked');
     			  field['fieldrequired']=fieldrequired;
@@ -190,7 +191,7 @@ function parseTemplate(){
 	    		  field['fieldwidget']=fieldwidget;
 	    	  }
 	      })
-	       $(this).find(".toggle-view.panel .row .col-md-4").each(function() {
+	       $(this).find(".toggle-view .row .col-md-4").each(function() {
 		    	  if($(this).find("input#name").exists()){
 		    		  fieldname=$(this).find("input#name").val();
 		    		  field['fieldname']=fieldname;
@@ -210,7 +211,7 @@ function parseTemplate(){
 	      if(fieldtype=="select"){
 	    	  field['fieldwidget']=null;
 	    	  var options={};
-	    	  $(this).find(".toggle-view.panel table tbody tr").each(function() {
+	    	  $(this).find(".toggle-view table tbody tr").each(function() {
 	    		  if($(this).find("input#optional_name").exists() && $(this).find("input#optional_value").exists()){
 	    			  options[$(this).find("input#optional_name").val()]=$(this).find("input#optional_value").val();
 	    		  }
@@ -241,7 +242,7 @@ function selectOption(){
 
 function dragContentType(){
 		  
-		$('#form-fields li').draggable({
+		$('#form-fields div').draggable({
 		        revert: "valid",
 		        appendTo: "body",
 		        helper: "clone",
@@ -257,27 +258,22 @@ function dragContentType(){
 		       var s =item; 
 		       var r = /<span>(.*)<\/span>/g;
 		       var newtxt=s.replace(r,""); 
-
+		       newtxt=newtxt.replace("panel",""),
+		       
 		        $("<div/>", {            
-		            "html":  "<div class=\"row\" style=\"background-color:#E6E6E6;width:100% \"><div id=\"title\" class=\"title col-md-2\">Set your title: </div>"+"<div class=\"col-md-8 \">"+newtxt+"</div>" + "<div class=\"glyphicon glyphicon-pencil col-md-1\"></div>"+ "<div id=\"del\" class=\"glyphicon glyphicon-remove col-md-1\"></div></div>",
+		            "html":  "<div class=\"row\" style=\"background-color:#E6E6E6;width:100% \"><div id=\"title\" class=\"title col-md-2\">Set your title: </div>"+ "<div id=\"del\" class=\"glyphicon glyphicon-remove pull-right\"></div>"+"<div class=\"col-md-12 \">"+newtxt+"</div>"+"</div>",
 		            "class": newclass
 		        }).appendTo(this);   
 		    }
 	    });
 			  
 		$( ".droppedFields" ).sortable();
-		$(document).delegate(".glyphicon.glyphicon-remove.col-md-1", "click", function() {
-		     $(this).parent().parent().remove();
+		$(document).delegate(".glyphicon.glyphicon-remove.pull-right", "click", function() {
+		     $(this).parent().remove();
 		    });
 		 
-		 $(document).delegate(".glyphicon.glyphicon-pencil.col-md-1", "click", function() {
-			        var text =  $(this).parents().eq(1).children('.row').children('.col-md-8').children('.toggle-view.panel');
-			        if (text.is(':hidden')) {
-			            text.slideDown('200');
-			        } else {
-			            text.slideUp('200');
-			        }
-	    });
+			
+		
 		 
 		 //set title
 		 $(document).delegate("#name", "click", function() {

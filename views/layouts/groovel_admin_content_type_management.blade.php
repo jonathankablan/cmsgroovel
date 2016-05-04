@@ -26,7 +26,7 @@
 		      		  </div>
 		      	    @endif
 				@endif
-		         <div class="col-sm-6 col-sm-offset-1 col-xs-12 col-md-11 col-md-offset-0">
+		         <div class="col-sm-6 col-sm-offset-1 col-xs-12 col-md-11 col-md-offset-1">
 		 			   @yield('content')
 		        </div>
 		  </div>
