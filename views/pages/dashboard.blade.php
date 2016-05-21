@@ -131,8 +131,10 @@
              	var input=new Array();
               	for (var i in parsed){
         	 	   var po=JSON.parse(parsed[i]);
-        		   var args=[po['date'],po['number']]
-				   input.push(args);
+        	 	   if(po['date']!='0000-00-00'){//fix worg case
+        		   	var args=[po['date'],po['number']]
+				   	input.push(args);
+        	 	   }
                 }
                	  var line1=input;
               	  var plot1 = $.jqplot('chartdiv', [line1], {
