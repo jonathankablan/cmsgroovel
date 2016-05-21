@@ -44,18 +44,20 @@
 	<div class='row'> 
 		<div class="col-md-2 col-md-offset-2 col-xs-4" style="margin-top:100px">
 			<div id="form-fields">
+			     <div class='row'> 
 		    		<div class="glyphicon glyphicon-calendar" style='margin-top: 25px'><span>Date Field</span>
 		    		 <input type="date" name="textbox"  class="val"/>
 			    		 <div class="toggle-view panel">
 		            		<div class="row" style='margin-bottom:25px'>
 			            		<div class="col-md-3"  style='margin-left:0%'><span class="required">Name</span><input type="text" id="name"  name="name" style='witdh:100%'/></div>
-			            		<div class="col-md-3"  style='margin-left:10%'>Description<input type="text" id="description" name="description" style=witdh:100%'/></div>
-			            		<div class="col-md-1"  style='margin-left:10%'>Required<input type="checkbox" id="required" name="required"/></div>
+			            		<div class="col-md-3"  style='margin-left:0%'>Description<input type="text" id="description" name="description" style=witdh:100%'/></div>
+			            		<div class="col-md-1"  style='margin-left:0%'>Required<input type="checkbox" id="required" name="required"/></div>
 			            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='date'/></div>
 			            	</div>
 		        		</div>
 		    		</div>
-					
+				 </div>
+				  <div class='row'> 	
 					<div class="glyphicon glyphicon-pencil" style='margin-top: 25px'><span>Rich Text Editor</span><textarea rows="4" cols="50" class="val" style='overflow:true'></textarea>
 						<div class="toggle-view panel" style='margin-bottom:25px'>
 							<div class="row">
@@ -73,7 +75,8 @@
 			            	</div>
 		            	</div>
 					</div>
-					
+				</div>	
+				<div class='row'> 	
 					<div class="glyphicon glyphicon-text-width" style='margin-top: 25px'><span>Text Field</span><input type="text" name="textbox" class="val" />
 						<div class="toggle-view panel">
 							<div class="row" style='margin-bottom:25px'>
@@ -84,6 +87,8 @@
 			            	</div>
 		            	</div>
 					</div>
+				</div>
+				<div class='row'> 	
 					<div class="glyphicon glyphicon-upload" style='margin-top: 25px'><span>upload files</span><div class='val'> @include('cmsgroovel.sections.uploadfile')</div>
 						<div class="toggle-view panel">
 							<div class="row" style='margin-bottom:25px'>
@@ -94,6 +99,7 @@
 			            	</div>
 		            	</div>
 					</div>
+				</div>
 		    </div>
 		</div>
 		<!-- where you drag and drop your content -->

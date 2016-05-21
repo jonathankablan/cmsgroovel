@@ -53,8 +53,8 @@
 					    		 <div class="toggle-view panel">
 				            		<div class="row" style='margin-bottom:25px'>
 					            		<div class="col-md-3" style="margin-top:10%"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:0%'/></div>
-					            		<div class="col-md-3" style="margin-top:10%">Description<input type="text" id="description" name="description" style='margin-left:0%'/></div>
-					            		<div class="col-md-1" style="margin-top:10%">Required<input type="checkbox" id="required" name="required" style='margin-left:0%'/></div>
+					            		<div class="col-md-3" style="margin-top:10%;margin-left:2%">Description<input type="text" id="description" name="description" style='margin-left:0%'/></div>
+					            		<div class="col-md-1" style="margin-top:10%;margin-left:2%">Required<input type="checkbox" id="required" name="required" style='margin-left:0%'/></div>
 					            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='date'/></div>
 					            	</div>
 				        		</div>
@@ -83,8 +83,8 @@
 							<div class="toggle-view panel">
 								<div class="row" style='margin-bottom:25px'>
 				            		<div class="col-md-3" style="margin-top:10%"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:0%'/></div>
-				            		<div class="col-md-3" style="margin-top:10%;margin-left:0%">Description<input type="text" id="description" name="description" style='margin-left:0%'/></div>
-				            		<div class="col-md-1" style="margin-top:10%;margin-left:0%">Required<input type="checkbox" id="required" name="required" style='margin-left:0%'/></div>
+				            		<div class="col-md-3" style="margin-top:10%;margin-left:2%">Description<input type="text" id="description" name="description" style='margin-left:0%'/></div>
+				            		<div class="col-md-1" style="margin-top:10%;margin-left:2%">Required<input type="checkbox" id="required" name="required" style='margin-left:0%'/></div>
 				            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='text'/></div>
 				            	</div>
 			            	</div>
@@ -181,8 +181,8 @@
 											         <div class="toggle-view">
 													 	  <div class="row" style='margin-bottom:25px'>
 											            		<div class="col-md-4" style="margin-top:10%"><span class="required">Name</span><input type="text" style="width:100%" id="name"  name="name"  value={!!$field['name']!!}></div>
-											            		<div class="col-md-4" style="margin-top:10%;margin-left:10%">Description<input style="width:100%" type="text" id="description" name="description" value={!!$field['description']!!}></div>
-											            		<div class="col-md-1" style="margin-top:10%;margin-left:10%">Required
+											            		<div class="col-md-4" style="margin-top:10%;margin-left:0%">Description<input style="width:100%" type="text" id="description" name="description" value={!!$field['description']!!}></div>
+											            		<div class="col-md-1" style="margin-top:10%;margin-left:0%">Required
 											            		@if($field['required']==1)
 											            		<input type="checkbox" id="required" name="required" value={!!$field['required']!!} checked='checked'></div>
 											            		@else
