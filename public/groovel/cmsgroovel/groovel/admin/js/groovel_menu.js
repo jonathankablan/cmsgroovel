@@ -143,8 +143,8 @@ function saveMenu(){
 	 var token =$("#token").val();
 	 var id= $("#menu_id").val();
 	 var name=$("#title").val()
+	 var type=$( "#layout option:selected" ).text();
 	 var lang=$( "#langages option:selected" ).text();
-	 var type=$( "#layouts option:selected" ).text();
 	 $.ajax({
          type: 'post',
          data : {'id': id,'name':name,'langage':lang,'menu':navBar,'layout':type, '_token': token},

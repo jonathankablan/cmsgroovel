@@ -78,7 +78,7 @@ ul li
 		   <span class="required">Layout</span> 
 		   </div>
 		    <div class='col-md-4 form-group'>
-	     		<select id='layouts' class="form-control" name='layouts'>
+	     		<select id='layout' class="form-control" name='layout'>
 					    <option name='layouts'></option>
 					    @foreach($layouts as $layout)
 					    <?php if(!empty($layout)):?>
