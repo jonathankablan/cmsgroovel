@@ -21,7 +21,7 @@
       	    @endif
 		@endif
       <div class="row">
-         <div class="col-sm-9 col-sm-offset-3 col-xs-12 col-md-9 col-md-offset-0">
+         <div class="col-sm-9 col-sm-offset-3 col-xs-12 col-md-9 col-md-offset-2">
  			   @yield('content')
        </div>
       </div>
