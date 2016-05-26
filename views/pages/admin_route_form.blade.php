@@ -74,8 +74,8 @@
 																
 								@if(Session::get('layouts')!=null)
 									<div class="form-group form-inline" id='type' data-toggle="tooltip" title="name of your application it is optional but it will be easy to find your route if you have got a lot of routes">
-									  {!! Form::label('type', 'type',array('class'=>'required col-md-2','style'=>'margin-right:70px;margin-left:-15px'))!!}
-										<select name="type" class='form-control' style='width:50%'>
+									  {!! Form::label('type', 'type',array('class'=>'required col-md-2','style'=>'margin-right:50px;margin-left:-15px'))!!}
+										<select name="type" class='form-control' style='width:45%'>
 											    @foreach(Session::get('layouts') as  $key=>$value)
 											    	@if($key!=Session::get('route_edit')['type'])
 											    		<option value="{!!$key!!}">{!!$value!!}</option>
