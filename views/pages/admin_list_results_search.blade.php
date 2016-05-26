@@ -9,6 +9,7 @@
 	                  	<table class="table table-striped table-hover table-bordered" id="table_contents">
 										<thead>
 											 <tr>
+											   <th id="col_content" class="col-xs-1 col-md-1">refid</th>
 					                          <th id="col_content" class="col-xs-1 col-md-1">title</th>
 					                          <th id="col_content" class="col-xs-1 col-md-1">type</th>
 					                          <th id="col_content" class="col-xs-1 col-md-1">data</th>
@@ -21,6 +22,7 @@
 										    @if($results!=null)
 										 	 @foreach ($results as $content)
 										 	      <tr id="rows_contents">
+										 	        <td id="row_content" class="col-xs-1 col-md-1">{!!$content['refid']!!}</td>
 						                            <td id="row_content" class="col-xs-1 col-md-1">{!!$content['title']!!}</td>
 						                            <td id="row_content" class="col-xs-1 col-md-1">{!!$content['type']!!}</td>
 						                            <td id="row_content" class="col-xs-1 col-md-1">{!!$content['data']!!}</td>
