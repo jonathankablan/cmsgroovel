@@ -47,11 +47,13 @@
 	     		<select id='layout' class="form-control" name='layout'>
 						    <option name='layouts'></option>
 						    @foreach($layouts as  $key=>$value)
+						      <?php if(!empty( $key) and  $key!='vendor' and  $key!='errors'  and  $key!='Groovel'):?>
 						    	@if($key!=$layoutselected)
 						    		<option value="{!!$key!!}">{!!$value!!}</option>
 						    	@elseif($key==$layoutselected)
 						    		<option selected='selected'value="{!!$key!!}">{!!$value!!}</option>
 						    	@endif
+						     <?php endif;?>
 						    @endforeach
 				</select>
 			</div>

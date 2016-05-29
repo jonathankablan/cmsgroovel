@@ -17,14 +17,16 @@
 		       <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 		                	
          								
-			     @foreach ($layouts as $layout)
-		       <div class="form-group">
-			     	 <div class="checkbox">
-				        <label>
-				          <input type="checkbox" name='layoutchoice' value={!!$layout!!}>{!!$layout!!}</input>
-				        </label>
-				      </div>
-				 </div>                      
+			   @foreach ($layouts as $layout)
+				   	@if($layout!='vendor' and $layout!='errors') 
+				       <div class="form-group">
+					     	 <div class="checkbox">
+						        <label>
+						          <input type="checkbox" name='layoutchoice' value={!!$layout!!}>{!!$layout!!}</input>
+						        </label>
+						      </div>
+						 </div>
+					 @endif                      
                  @endforeach	
                  
                 <div class='form-inline'>
@@ -43,7 +45,7 @@
 					  <div class="col-md-2" style="margin-top:50px;font-size:1.6em">
 					   <label>Your Logo</label>
 					   </div>
-						<div class="col-md-1" style="margin-top:50px;">
+						<div class="col-md-3" style="margin-top:50px;">
 							   @include('cmsgroovel.sections.picture_layout')
 							   <input type="hidden" id="token" value="{{ csrf_token() }}">
 						</div> 

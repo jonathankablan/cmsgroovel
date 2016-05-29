@@ -33,11 +33,13 @@
 					 @if(Session::get('layouts')!=null)
 						<select id="form-type" name="type" class='form-control' style='width:56%'>
 							    @foreach(Session::get('layouts') as  $key=>$value)
-							    	@if($key!=Session::get('content_type_edit')['template'])
-							    		<option value="{!!$key!!}">{!!$value!!}</option>
-							    	@elseif($key==Session::get('content_type_edit')['template'])
-							    		<option selected='selected'value="{!!$key!!}">{!!$value!!}</option>
-							    	@endif
+								    @if($key!='vendor' and $key!='errors')
+								    	@if($key!=Session::get('content_type_edit')['template'])
+								    		<option value="{!!$key!!}">{!!$value!!}</option>
+								    	@elseif($key==Session::get('content_type_edit')['template'])
+								    		<option selected='selected'value="{!!$key!!}">{!!$value!!}</option>
+								    	@endif
+								    @endif
 							    @endforeach
 			     		</select>
 			 		@endif

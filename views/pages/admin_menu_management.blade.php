@@ -81,7 +81,7 @@ ul li
 	     		<select id='layout' class="form-control" name='layout'>
 					    <option name='layouts'></option>
 					    @foreach($layouts as $layout)
-					    <?php if(!empty($layout)):?>
+					    <?php if(!empty($layout) and $layout!='vendor' and $layout!='errors'  and $layout!='Groovel'):?>
 					    <option value="{!!$layout!!}">{!! $layout !!}</option>
 					    <?php endif;?>
 					    @endforeach

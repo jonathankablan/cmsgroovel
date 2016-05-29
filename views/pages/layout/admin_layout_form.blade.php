@@ -55,7 +55,7 @@
 					  <div class="col-md-2" style="margin-top:50px;font-size:1.6em">
 					   <label>Your Logo</label>
 					   </div>
-						<div class="col-md-1" style="margin-top:50px;">
+						<div class="col-md-3" style="margin-top:50px;">
 							   @include('cmsgroovel.sections.picture_layout')
 							   <input type="hidden" id="token" value="{{ csrf_token() }}">
 						</div> 

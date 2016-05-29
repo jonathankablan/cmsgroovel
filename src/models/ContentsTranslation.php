@@ -50,8 +50,7 @@ class ContentsTranslation extends Model{
 		{
 			$content=Contents::find($contentTranslation['refcontentid']);
 			$contentType=AllContentTypes::find($content['type_id']);
-			$author=$contentType->author;
-			
+			$author=$content->author;
 			$username=$author->username;
 			$pseudo=$author->pseudo;
 			$data=array('id'=>$contentTranslation['id'],'title'=>$contentTranslation['name'],'langage'=>$contentTranslation['lang'],'author'=>$username,
@@ -65,13 +64,11 @@ class ContentsTranslation extends Model{
 			$data=ContentsTranslation::extractContent($contentTranslation['content']);
 			$content=Contents::find($contentTranslation['refcontentid']);
 			$contentType=AllContentTypes::find($content['type_id']);
-			$author=$contentType->author;
-				
+			$author=$content->author;
 			$username=$author->username;
 			$pseudo=$author->pseudo;
 			$data=array('id'=>$contentTranslation['id'],'title'=>$contentTranslation['name'],'langage'=>$contentTranslation['lang'],'author'=>$username,
 					'pseudo'=>$pseudo,'description'=>$content['description'],'tag'=>$contentTranslation['tag'],'created_at'=>$contentTranslation['created_at'],'updated_at'=>$contentTranslation['updated_at']);
-			//\Log::info($data);
 			\Queue::push('Groovel\Cmsgroovel\handlers\DatabaseSearchHandler@create', array('type'=>ModelConstants::$contents,'data'=>$data));
 			\Queue::push('Groovel\Cmsgroovel\handlers\ElasticSearchHandler@create', array('type'=>ModelConstants::$contents,'data'=>$data));
 					
@@ -83,8 +80,7 @@ class ContentsTranslation extends Model{
 			$data=ContentsTranslation::extractContent($contentTranslation['content']);
 			$content=Contents::find($contentTranslation['refcontentid']);
 			$contentType=AllContentTypes::find($content['type_id']);
-			$author=$contentType->author;
-			
+			$author=$content->author;
 			$username=$author->username;
 			$pseudo=$author->pseudo;
 			$data=array('id'=>$contentTranslation['id'],'title'=>$content['name'],'author'=>$username,

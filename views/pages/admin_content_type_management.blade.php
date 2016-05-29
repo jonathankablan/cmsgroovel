@@ -25,7 +25,9 @@
 				<div class='col-md-8' id='type'>
 					<select id="form-type" name="type" class='form-control' style='width:50%'>
 						@foreach($layouts as $layout)
-						<option value=<?php echo $layout?>><?php echo $layout?></option>
+							@if($layout!='vendor' and $layout!='errors') 
+								<option value=<?php echo $layout?>><?php echo $layout?></option>
+							@endif
 						@endforeach
 		     		</select>
 	     		</div>
