@@ -109,7 +109,7 @@ private static $perPage = 10;
 			
 		$type=$this->contentTypeDao->findAllContentTypeByName('user');
 		$action=array();
-		$action['retrieve']=0;
+		$action['retrieve']=1;
 		$action['add']=0;
 		$action['delete']=0;
 		$action['update']=1;
