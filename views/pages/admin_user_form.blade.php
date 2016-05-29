@@ -11,6 +11,7 @@
 			    </div>
 		 
 			    <div class="col-md-12">
+			    <div id='error' style='display:none'></div>
 			     <div id='modal' class="modal fade" style="display: none;overflow:scroll;z-index: 1041" data-keyboard="true" data-backdrop="static" tabindex='-1' >
 			     	 	  <div class="modal-dialog">
 						  	<div class="modal-content">
@@ -32,8 +33,6 @@
 										    </div>
 										</div>
 								@endif
-								<div id='light'></div>
-								<div id='fade'></div>
 							     <div id='form-modal' class="modal-body">
 									<div class="panel-body">
 												{!! Form::open(array('id'=>'user_form','url' => 'admin/user/update', 'method' => 'POST', 'class' => 'form-horizontal well ')) !!}

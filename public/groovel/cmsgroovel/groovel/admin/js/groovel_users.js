@@ -1,6 +1,4 @@
 function validateUser(form){
-document.getElementById('light').innerHTML=null;
-document.getElementById('fade').innerHTML=null;
 var ajax=	$.ajax({
 		  type: 'POST',
 		  url:'/admin/user/validate',
@@ -8,15 +6,17 @@ var ajax=	$.ajax({
 		  async:false,
 		  success:function(data) {
 			var parsed=JSON.parse(data);
-			console.log(parsed);
-			  if(parsed['success']==true){
-				  document.getElementById('light').innerHTML=null;
+            if(parsed['success']==true){
+				  $("#error").empty();
 		    	  return true;
-              }
-               else if(parsed['success']==false){
-                  buildErrorMessage(parsed['errors']['reason']);
-                  return false;
-              }
+             }
+              else if(parsed['success']==false){
+                 $("#alertmsg").css("color","red");
+                 $("#alertmsg").text(parsed['errors']['reason']);
+                 $("#error").text(parsed['errors']['reason']);
+                
+                 return false;
+             }
 		  }
 		
 	  });
@@ -87,11 +87,25 @@ function postUser(form,action){
 				  var parsed = JSON.parse(data);
 				  console.log(parsed);
 			      if(parsed['success']){
-                	   buildSucessMessage('user has been added successfully');
-                   }
+			    	  $("#error").empty();
+			    	  $("#alertmsg").css("color","green");
+ 					  $("#alertmsg").text('user has been added successfully');
+ 					  $("#popupModal").modal({                   
+ 		               	    "backdrop"  : "static",
+ 		               	    "keyboard"  : true,
+ 		               	    "show"      : true                     
+ 		               	  });
+ 		         	}
                     else if(parsed['success']==false){
-                       buildErrorMessage(parsed['errors']['reason']);
-	               }
+                      $("#alertmsg").css("color","red");
+    				  $("#alertmsg").text(parsed['errors']['reason']);
+    				  $("#error").text(parsed['errors']['reason']);
+    				  $("#popupModal").modal({                   
+    	               	    "backdrop"  : "static",
+    	               	    "keyboard"  : true,
+    	               	    "show"      : true                     
+    	               	  });
+                   }
 			}else{
 				alert('data problems');
 			}

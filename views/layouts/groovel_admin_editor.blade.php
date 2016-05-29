@@ -5,6 +5,7 @@
   </head>
 
   <body>
+     @include('cmsgroovel.toolkits.popup.popupModal')
      @if(Session::get('user_privileges')['role']==null)
       @include('cmsgroovel.includes.groovel_default_user_header')
   @elseif(Session::get('user_privileges')['role']=='ADMIN')

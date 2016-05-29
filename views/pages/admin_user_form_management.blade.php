@@ -31,6 +31,7 @@
 										    </div>
 										</div>
 								@endif
+								<div id='error' style='display:none'></div>
 								<div id='light'></div>
 								<div id='fade'></div>
 							     <div id='form-modal' class="modal-body">
@@ -91,7 +92,7 @@ $("#submitForm").click(function (event) {
 	//add token form
 	form=$('#user_form').serialize();
 	validateUser(form);
-	if($('#light').children().length==0){
+	if($('#error').text()==""){
 	    var status=postPicture();
 	    if(!status){
 			return false;
