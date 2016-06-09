@@ -43,7 +43,7 @@ class GroovelContentFormController extends GroovelFormController {
     {
     	$this->contentManager=$contentManager;
     	$this->contentTypeManager=$contentTypeManager;
-    	$this->beforeFilter('auth');
+    	$this->middleware('auth');
     }
     
     public function makeValidation($params){

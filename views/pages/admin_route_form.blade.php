@@ -18,30 +18,31 @@
 				        @endif
 				        <div id='light'></div>
 						<div id='fade'></div>
-				        <div id='form-modal' class="modal-body">
+					    <div id='form-modal' class="modal-body">
 				        	<div class="btn-group" role="group" aria-label="..." style='margin-left:400px;margin-bottom:30px'>
 								  <button type="button" class="btn btn-primary" onclick="normalMode();">Normal Mode(for beginners)</button>
 								  <button type="button" class="btn btn-primary" onclick="expertMode();">Expert Mode(for professionals)</button>
 							</div>
-						 	   {!! Form::open(array('id'=>'route_form','url' => 'admin/routes/update', 'method' => 'POST', 'class' => 'form-horizontal well ','style'=>'width:100%')) !!}
-						 	   {!! Form::hidden('id', Session::get('route_edit')['id'], array('id' => 'id')) !!}
-						     	<!-- 	<div class="form-group form-inline" >
-								{!! Form::label('domain', 'domain').Form::text('domain', Session::get('route_edit')['domain'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:80px')) !!}
-								</div>-->
-							
-								 {!! Form::hidden('domain','', array('id' => 'id')) !!}
-				  
-								<div class="form-group form-inline" data-toggle="tooltip" title="the url which you call your page example test and to get your page you call it http://yourserver//test">
-								{!! Form::label('uri', 'uri',array('class'=>'required','style'=>'margin-right:60px')).Form::text('uri', Session::get('route_edit')['uri'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:110px')) !!}
+							<form method="POST" action="{{ url('admin/routes/update') }}" accept-charset="UTF-8" id="route_form" class="form-horizontal well " style="width:100%">
+					           {{ csrf_field() }}
+						 		 <input id="id" name="id" type="hidden" value={{ Session::get('route_edit')['id']}}>
+						 		 <input id="id" name="domain" type="hidden" value="">
+				  				
+				  				<div class="form-group form-inline" data-toggle="tooltip" title="the url which you call your page example test and to get your page you call it http://yourserver//test">
+									<label for="uri" class="required" style="margin-right:0px">uri</label>
+									<input class="form-control" style="width:50%;margin-left:13.9%" name="uri" type="text" value="{{Session::get('route_edit')['uri']}}" id="uri">
 								</div>
 								<div class="form-group form-inline" id="name" data-toggle="tooltip" title="the name of your route">
-								{!! Form::label('name', 'name',array('class'=>'required','style'=>'margin-right:60px')).Form::text('name', Session::get('route_edit')['name'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:90px')) !!}
+									<label for="name" class="required" style="margin-right:0px">name</label>
+									<input class="form-control" style="width:50%;margin-left:12%" name="name" type="text" value="{{Session::get('route_edit')['name']}}" id="name">
 								</div>
 								<div class="form-group form-inline" id="controller" data-toggle="tooltip" title="specific class to give if you want develop a specific feature before to render the page">
-								{!! Form::label('controller', 'controller',array('style'=>'margin-right:70px')).Form::text('controller', Session::get('route_edit')['controller'], $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:65px')) !!}
+									<label for="controller" style="margin-right:0px">controller</label>
+									<input class="form-control" style="width:50%;margin-left:10%" name="controller" type="text" value="{{Session::get('route_edit')['controller']}}" id="controller">
 								</div>
 								<div class="form-group form-inline" id="method" data-toggle="tooltip" title="method name which will be called and which will do some stuffs before to render your page">
-								{!! Form::label('method', 'method',array('style'=>'margin-right:71px')).Form::text('method', Session::get('route_edit')['method'], $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:80px')) !!}
+									<label for="method" style="margin-right:0px">method</label>
+									<input class="form-control" style="width:50%;margin-left:12%" name="method" type="text" value="{{Session::get('route_edit')['method']}}" id="method">
 								</div>
 									<?php $actions=array(
 														'op_retrieve' => 'retrieve',
@@ -59,8 +60,8 @@
 						                 @endif
 									@endforeach
 									<div class="form-group form-inline" id="action" data-toggle="tooltip" title="action it is when you want to access to a page in order to update or save data or..action will be used to set some permissions rules">
-									{!! Form::label('action', 'action',array('style'=>'margin-right:70px'))!!}
-										<select name="action[]" class='form-control' style='width:450px;margin-left:85px'>
+									<label for="action" style="margin-right:0px">action</label>
+										<select name="action[]" class='form-control' style='width:50%;margin-left:13.1%'>
 											<option value=<?php echo  Session::get('route_edit')['action']?>><?php echo $actions[Session::get('route_edit')['action']]?></option>
 											@foreach($actions_filter as $action=>$value)
 											<option value=<?php echo $action?>><?php echo $value?></option>
@@ -68,20 +69,23 @@
 							     		</select>	
 									</div>
 								<div class="form-group form-inline" data-toggle="tooltip" title="the name of your view (page name) that will be called">
-								{!! Form::label('view', 'page',array('style'=>'margin-right:68px')).Form::text('view', Session::get('route_edit')['view'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:99px')) !!}
+							 		<label for="view" style="margin-right:0px">page</label>
+							 		<input class="form-control" style="width:50%;margin-left:13.9%" name="view" type="text" value="{{Session::get('route_edit')['view']}}" id="view">
 								</div>
 							
 																
 								@if(Session::get('layouts')!=null)
 									<div class="form-group form-inline" id='type' data-toggle="tooltip" title="name of your application it is optional but it will be easy to find your route if you have got a lot of routes">
-									  {!! Form::label('type', 'type',array('class'=>'required col-md-2','style'=>'margin-right:70px;margin-left:-15px'))!!}
-										<select name="type" class='form-control' style='width:50%'>
+									   <label for="type" class="required" style="margin-right:0px;margin-left:0px">type</label>
+							           <select name="type" class='form-control' style='width:50%;margin-left:12.9%'>
 											    @foreach(Session::get('layouts') as  $key=>$value)
+											     @if($key!='vendor' and $key!='Groovel' and $key!='errors')
 											    	@if($key!=Session::get('route_edit')['type'])
 											    		<option value="{!!$key!!}">{!!$value!!}</option>
 											    	@elseif($key==Session::get('route_edit')['type'])
 											    		<option selected='selected'value="{!!$key!!}">{!!$value!!}</option>
 											    	@endif
+											    @endif
 											    @endforeach
 							     		</select>
 						     		</div>
@@ -94,8 +98,8 @@
 						                 @endif
 									@endforeach
 									<div class="form-group form-inline" id="subtype" data-toggle="tooltip" title="what type of content is your page: is it a view?,some contents?, a route.., it will be used to set permissions rules">
-									{!! Form::label('subtype', 'subtype',array('style'=>'margin-right:68px','class'=>'required'))!!}
-									<select name="subtype[]" class='form-control' style='width:445px;margin-left:60px'>
+									<label for="subtype" style="margin-right:0px" class="required">subtype</label>
+									<select name="subtype[]" class='form-control' style='width:50%;margin-left:10%'>
 											<option value=<?php echo  Session::get('route_edit')['subtype']?>><?php echo Session::get('route_edit')['subtype']?></option>
 											@foreach($subtypes_filter as $subtype)
 											<option value=<?php echo $subtype?>><?php echo $subtype?></option>
@@ -109,13 +113,13 @@
 									$audit_tracking_url_enable=Session::get('route_edit')['audit_tracking_url_enable'];
 							 	?>	
 							 	@if(Session::get('route_edit')!=null)		
-				                {!! Form::label('audit url', 'audit_url',array('style'=>'margin-right:140px'))!!}
+				                 <label for="audit url" style="margin-right:0px">audit_url</label>
 				           			  @foreach($states as $key=>$state)
 						                 @if($audit_tracking_url_enable!=$key)
 						                 	<?php $state_filter[$key]=$state;?>
 						                 @endif
 			             			 @endforeach
-					                <select name="audit_tracking_url_enable" class='form-control'>
+					                <select name="audit_tracking_url_enable" class='form-control' style='margin-left:11.1%'>
 										<option value=<?php echo $audit_tracking_url_enable?>><?php echo $states[$audit_tracking_url_enable]?></option>
 										@foreach($state_filter as $key=>$state)
 										<option value=<?php echo $key?>><?php echo $state?></option>
@@ -129,13 +133,13 @@
 									$activate_route=Session::get('route_edit')['activate_route'];
 							 	?>	
 							 	@if(Session::get('route_edit')!=null)
-							    {!! Form::label('activate_route', 'activate',array('style'=>'margin-right:145px'))!!}
+							    <label for="activate_route" style="margin-right:0px">activate</label>
 				            		  @foreach($states as $key=>$state)
 						                 @if($activate_route!=$key)
 						                 	<?php $state_filter[$key]=$state;?>
 						                 @endif
 			             			 @endforeach
-					                <select name="activate_route" class='form-control'>
+					                <select name="activate_route" class='form-control' style="width:50%;margin-left:11.6%">
 										<option value=<?php echo $activate_route?>><?php echo $states[$activate_route]?></option>
 										@foreach($state_filter as $key=>$state)
 										<option value=<?php echo $key?>><?php echo $state?></option>
@@ -152,27 +156,25 @@
 			       			 <button type="button" class="btn btn-default" data-dismiss="modal" id='preview'>Preview</button>
 			       			 <button type="button" class="btn btn-default" data-dismiss="modal" id='delete'>Delete</button>
 			        	 </div>
-			        	  {!! Form::close() !!}
+			        	</form>
 			 
 				        <div class="form-group" style='margin-left:10px;margin-top:50px'>
 					     <span class="glyphicon glyphicon-pencil"></span> Edition Page(code view)
 						     <div class="toggle-view panel">
-						    {!! Form::open(array('id'=>'page_editcode_form','url' => 'admin/pages/code/save', 'method' => 'POST')) !!}
-						     <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-							     <div class="form-group form-inline">
-										 <!--edit page  -->
-									
-										<textarea id='page_edit' cols='130' rows='20'>{!!Session::get('page')!!}</textarea>
-										<!--{!!Form::textarea('page_edit',\Session::get('page'), $attributes = array('id'=>'page_edit','cols'=>'130','rows'=>'20')) !!}-->
-								 </div>
-					    	{!! Form::close() !!}
+						     <form method="POST" action="admin/pages/code/save" accept-charset="UTF-8" id="page_editcode_form">
+							     {{ csrf_field() }}
+							      <div class="form-group form-inline">
+							    	<textarea id='page_edit' cols='130' rows='20'>{!!Session::get('page')!!}</textarea>
+								  </div>
+					    	 </form>
 					    		<button class="btn btn-info" type="submit" id='submitFormCode'>Save modification code</button>		 	
 					        </div>
 				   		 </div>	 	 
 					</div>
+				
 				  </div>
-				</div>
-				</div>
+			</div>
+		</div>
    	</div>
 <style type="text/css">
   .CodeMirror {border-top: 1px solid #eee; border-bottom: 1px solid #eee; line-height: 1.3; height: 500px}

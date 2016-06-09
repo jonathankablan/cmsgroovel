@@ -18,47 +18,49 @@
             </div>
         @endif
         <div class="col-lg-6 col-lg-offset-3 col-md-9 col-xs-11 col-sm-6 col-sm-offset-3">
-            {!! Form::open(array('id'=>'sub_form','url' => 'admin/auth/subscribe', 'method' => 'POST', 'class' => 'form-horizontal well')) !!}
+             <form method="POST" action=" {{ url('admin/groovelcms/auth/subscribe') }}" accept-charset="UTF-8" id="sub_form" class="form-horizontal well">
+            
+             {{csrf_field()}}
+           
              <input style='display:none;' type='text' id='ctrl1' name='ctrl1' value='spamcontroller'>
 			 <input style='display:none;' type='text' id='ctrl2' name='ctrl2' value=''>
              <input type='hidden' name='leave_blank'/>
              <div class="form-group">
-                {!! Form::label('username', 'Username :', array('class' => 'col-md-4 control-label required')) !!}
+                <label for="username" class="col-md-4 control-label required">Username :</label>
                 <div class="col-md-8">
-                    {!! Form::text('username', '', $attributes = array('class' => 'form-control')) !!}
+                    <input class="form-control" name="username" type="text" value="" id="username">
                 </div>
             </div>
              <div class="form-group">
-                {!! Form::label('pseudo', 'Pseudo :', array('class' => 'col-md-4 control-label required')) !!}
+                <label for="pseudo" class="col-md-4 control-label required">Pseudo :</label>
                 <div class="col-md-8">
-                    {!! Form::text('pseudo', '', $attributes = array('class' => 'form-control')) !!}
+                    <input class="form-control" name="pseudo" type="text" value="" id="pseudo">
                 </div>
             </div>
     		<div class="form-group {!! $errors->has('email') ? 'error' : '' !!}">
-    			{!! Form::label('email', 'Mail :', array('class' => 'col-md-4 control-label required')) !!}
+    			<label for="email" class="col-md-4 control-label required">Mail :</label>
     			<div class="col-md-8">
-    				{!! Form::text('email', '', $attributes = array('class' => 'form-control')) !!}
+    				<input class="form-control" name="email" type="text" value="" id="email">
     			</div>
     		</div>
     		<div class="form-group {!! $errors->has('password') ? 'error' : '' !!}">
-    			{!! Form::label('password', 'Password :', array('class' => 'col-md-4 control-label required')) !!}
+    			<label for="password" class="col-md-4 control-label required">Password :</label>
     			<div class="col-md-8">
-    				{!! Form::password('password', $attributes = array('class' => 'form-control')) !!}
+    				<input class="form-control" name="password" type="password" value="" id="password">
     			</div>
     		</div>
     		<div class="form-group">
-    			{!! Form::label('password_confirmation', 'Password Confirm :', array('class' => 'col-md-4 control-label required')) !!}
+    			<label for="password_confirmation" class="col-md-4 control-label required">Password Confirm :</label>
     			<div class="col-md-8">
-    				{!! Form::password('password_confirmation', $attributes = array('class' => 'form-control')) !!}
+    				<input class="form-control" name="password_confirmation" type="password" value="" id="password_confirmation">
     			</div>
     		</div>
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
-                    <!-- {!! Form::submit('Send', array('id'=>'submitForm','class' => 'btn btn-success')) !!}-->
                      <input type="submit" id="submitForm" value="send"  class="btn btn-default"/>
                 </div>
             </div>
-    		{!! Form::close()!!}
+    		</form>
         </div>
     </div>
  <script>

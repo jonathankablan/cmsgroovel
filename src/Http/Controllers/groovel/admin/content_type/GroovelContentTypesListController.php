@@ -31,12 +31,12 @@ class GroovelContentTypesListController extends GroovelController {
 	public function __construct(GroovelContentTypeManagerBusinessInterface $contentTypeManager)
 	{
 		$this->contentTypeManager=$contentTypeManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 
 	public function init(){
 		//$contentTypes=\AllContentTypes::all();
-		$this->contentTypeManager->paginateContentType();
+		//$this->contentTypeManager->paginateContentType();
 		//\Log::info($contentTypes);
 		//\Session::flash('contentTypes', $contentTypes);
 		return \View::make('cmsgroovel.pages.admin_list_content_types',['contentTypes'=>$this->contentTypeManager->paginateContentType()]);

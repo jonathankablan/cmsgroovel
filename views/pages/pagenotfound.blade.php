@@ -26,7 +26,7 @@ body {
  <div class="wrap">
 	<div class="logo">
 			<p>OOPS! - Could not Find it</p>
-			 {!!HTML::image('groovel/cmsgroovel/groovel/admin/images/404-1.png')!!}
+			 <img src="/groovel/cmsgroovel/groovel/admin/images/404-1.png" style="width:100px;height:50px" alt="groovel_notfound">
 			<div class="sub">
 			  <p><a href="/">Back </a></p>
 			</div>

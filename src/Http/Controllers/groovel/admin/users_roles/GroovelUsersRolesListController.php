@@ -29,7 +29,7 @@ class GroovelUsersRolesListController extends GroovelController {
 	public function __construct( GroovelUserRoleManagerBusinessInterface $userManager)
 	{
 		$this->userManager=$userManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
 

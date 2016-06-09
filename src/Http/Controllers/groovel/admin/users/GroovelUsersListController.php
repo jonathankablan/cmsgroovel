@@ -30,7 +30,7 @@ class GroovelUsersListController extends GroovelController {
 	public function __construct( GroovelUserManagerBusinessInterface $userManager)
 	{
 		$this->userManager=$userManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
 

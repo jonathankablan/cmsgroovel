@@ -20,19 +20,25 @@
 				       @if(Session::get('messages'))
 				             <div>{!!var_dump(Session::get('messages'))!!}</div>
 				        @endif
-				       
+				       <form method="POST" action="url('/messages/reply')" accept-charset="UTF-8" id="message_form">
+						{{csrf_field()}}
 			       		<div id='form-modal' class="modal-body">
 						<!--  form email-->
-						  {!! Form::hidden('message_id', Session::get('message')['id'], array('id' => 'id')) !!}
-						{!!Form::open(array('id'=>'message_form','url' => 'messages/reply', 'method' => 'post'))!!}
+						    <input id="id" name="message_id" type="hidden">
+						
 							   <div class="form-group form-inline">
-				                {!! Form::label('subject', 'Subject',array('style'=>'margin-right:65px')).Form::text('subject',Session::get('message')['subject'], array('class'=>'form-control','style'=>'width:100%','placeholder' => 'subject','readonly')) !!}
+				                 <label for="subject" style="margin-right:65px">Subject</label>
+				                 <input class="form-control" style="width:100%" placeholder="subject" readonly="readonly" name="subject" type="text" id="subject" value={{Session::get('message')['subject']}}>
+				            
 				              </div>
 				               <div class="form-group form-inline">
-				                {!! Form::label('author', 'from',array('style'=>'margin-right:85px')).Form::text('author', Session::get('message')['author'], array('class'=>'form-control','style'=>'width:100%','placeholder' => 'author','readonly')) !!}
+				             	<label for="author" style="margin-right:85px">from</label>
+				             	<input class="form-control" style="width:100%" placeholder="author" readonly="readonly" name="author" type="text" id="author" value={{Session::get('message')['author']}}>
+				              
 				              </div>
 				               <div class="form-group form-inline">
-				                {!! Form::label('body', 'Message',array('style'=>'margin-right:60px')).Form::textarea('body', Session::get('message')['body'], array('class'=>'form-control','style'=>'width:100%;heigth:100%','placeholder' => 'message')) !!}
+					               <label for="body" style="margin-right:60px">Message</label>
+					               <textarea class="form-control" style="width:100%;heigth:100%" placeholder="message" name="body" cols="50" rows="10" id="body">{{Session::get('message')['body']}}</textarea>
 				              </div>
 				            </div>
 						 <div class="modal-footer">
@@ -42,7 +48,7 @@
 			       			 <input type="submit" id="submitForm" value="Reply"  class="btn btn-default" data-dismiss="modal"/>
 			       			 </div>
 			        	 </div>
-			        	  {!! Form::close() !!}
+			        	</form>
 					</div>
 				  </div>
 		</div>

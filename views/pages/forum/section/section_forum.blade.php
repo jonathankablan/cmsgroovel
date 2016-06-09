@@ -35,8 +35,10 @@
 				                          <tr id="rows_topics">
 				                            <td id="row_topic" class="col-md-1 hidden-xs hidden-sm"  style='border:1px solid black;' >{!!$topic['topic_id']!!}</td>
 				                            <td id="row_topic" class="col-md-3" style='border:1px solid black;' >
-				                            {!! HTML::link('/forum/topic/?'.'id='.$topic['topic_id'].'&forumid='.$forumid, $topic['topic'],array('class'=>'forumlink'))!!}</td>
-				                             <td id="row_topic" class="col-md-1" style='background:#D8D8D8;border:0.2px solid black;' >{!!$topic['number_answers']!!}</td>
+				                         	<a href="{{url('/forum/topic/?id='.$topic['topic_id'].'&forumid='.'$forumid') }}" style="margin-left:10px;color:black;font-size:1.3em" class="forumlink">
+				                   			{!!$topic['topic']!!}</a>
+				                   			</td>
+					                        <td id="row_topic" class="col-md-1" style='background:#D8D8D8;border:0.2px solid black;' >{!!$topic['number_answers']!!}</td>
 				                            <td id="row_topic" class="col-md-1" style='background:#D8D8D8;border:1px solid black;' >{!!$topic['lastanswer']['pseudo']!!} {!!$topic['lastanswer']['created_at']!!}</td>
 				                             @if(Session::get('user_privileges')['role']=='ADMIN')
 				                             <td id="del" class="col-sm-4 col-lg-1 col-xs-1">

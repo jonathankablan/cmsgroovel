@@ -10,7 +10,8 @@
 			        @endif
 			    </div>
 			    <div class="col-md-12">
-	              	 	<div id='modal' class="modal fade" style="display: none;" data-keyboard="true" data-backdrop="static" tabindex='-1'>
+			      	<form method="POST" action="{{url('admin/user/add')}}" accept-charset="UTF-8" id="user_form" class="form-horizontal">
+				   	 	<div id='modal' class="modal fade" style="display: none;" data-keyboard="true" data-backdrop="static" tabindex='-1'>
 						  <div class="modal-dialog">
 						  	<div class="modal-content">
 							 	<div class="modal-header" style='background-color: #E5E4E2'>
@@ -34,41 +35,45 @@
 								<div id='error' style='display:none'></div>
 								<div id='light'></div>
 								<div id='fade'></div>
-							     <div id='form-modal' class="modal-body">
-												<div class="panel-body">
-												{!! Form::open(array('id'=>'user_form','url' => 'admin/user/add', 'method' => 'POST', 'class' => 'form-horizontal well ')) !!}
-									 	  	     <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-		                						<input id='action' type="hidden" name="action" value="admin/user/add">
+						       <div id='form-modal' class="modal-body">
+						     					<div class="panel-body">
+												{{ csrf_field() }}
+									 	  	 	<input id='action' type="hidden" name="action" value="admin/user/add">
 										 	  	<div class="form-group form-inline">
 												  @include('cmsgroovel.sections.picture_new_user')
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('username', 'username',array('class'=>'required')).Form::text('username',Input::old('username') ,  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:50px')) !!}
+													<label for="username" class="required">username</label>
+													<input class="form-control" style="width:450px;margin-left:50px" name="username" type="text" id="username">
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('pseudo', 'pseudo',array('class'=>'required')).Form::text('pseudo',Input::old('pseudo'),  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:65px')) !!}
+													<label for="pseudo" class="required">pseudo</label>
+													<input class="form-control" style="width:450px;margin-left:65px" name="pseudo" type="text" id="pseudo">
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('email', 'email',array('class'=>'required')).Form::text('email',Input::old('email'),  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:80px')) !!}
+													<label for="email" class="required">email</label>
+													<input class="form-control" style="width:450px;margin-left:80px" name="email" type="text" id="email">
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('password', 'password reset').Form::text('password', Input::old('password'),  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:90px')) !!}
+													<label for="password">password reset</label>
+													<input class="form-control" style="width:450px;margin-left:90px" name="password" type="text" id="password">
 												</div>
 												 <div class="form-group form-inline">
-								                {!! Form::label('notification_email_enable', 'enable notification by email',array('style'=>'margin-right:80px'))!!}
-								               		<select name="notification_email_enable"  class='form-control'>
+								                 <label for="notification_email_enable" style="margin-right:80px">enable notification by email</label>
+								              		<select name="notification_email_enable"  class='form-control'>
 														<option value='0'>disabled</option>
 														<option value='1'>enabled</option>
 													</select>
 												</div>
 												<div class="form-group form-inline">
 													<span class="label label-info" style="margin-right:50px" >Status: </span>
-													<span class="label label-info" style="margin-left:50px">activate user?</span>	{!!Form::select('activate',array('default' => 'Please Select') +array('0' => 'NotActivate', '1' => 'Activate'))!!}
+													<span class="label label-info" style="margin-left:50px">activate user?</span>	
+													<select name="activate">
+														<option value="default">Please Select</option>
+														<option value="0">NotActivate</option><option value="1">Activate</option>
+													</select>
 												</div>
-									
-											<!-- {!! Form::submit('Submit',array('class'=>'btn btn-default'))!!}-->
-										
-				  				   		</div>
+									   		</div>
 								 </div>
 								 <div class="modal-footer">
 								     <p class='required' style='font-size:15px;margin-right:80%'>Fields are required</p>
@@ -77,9 +82,9 @@
 					       			 <input type="submit" id="submitForm" value="Save"  class="btn btn-default" data-dismiss="modal" data-token="{{ csrf_token() }}"/>
 					        	 </div>
 							</div>
-								{!! Form::close() !!}
 						  </div>
 						</div>
+					 </form>
 		 	 	</div>
 	 </div>
 <script>

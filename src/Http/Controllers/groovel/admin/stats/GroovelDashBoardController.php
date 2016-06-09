@@ -30,7 +30,7 @@ class GroovelDashBoardController extends GroovelController {
 	{
 	
 		$this->userTrackingManager=$userTrackingManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
 	public function getUsersLocation(){

@@ -17,50 +17,58 @@
 				        @endif
 				       <div id='light'></div>
 						<div id='fade'></div>
+			    
+			    <form method="POST" action="{{ url('admin/routes/add') }}" accept-charset="UTF-8" id="route_form">
+					
 			     <div id='form-modal' class="modal-body" >
 			     			<div class="btn-group" role="group" aria-label="..." style='margin-bottom:30px'>
 								  <button type="button" class="btn btn-primary" onclick="normalMode();">Normal Mode(for beginners)</button>
 								  <button type="button" class="btn btn-primary" onclick="expertMode();">Expert Mode(for professionals)</button>
 							</div>
-							{!!Form::open(array('id'=>'route_form','url' => 'admin/routes/add', 'method' => 'post'))!!}
-				               {!! Form::hidden('domain','', array('id' => 'id')) !!}
-				  
+						      {{ csrf_field() }}
+				      		  <input id="id" name="domain" type="hidden" value="">
+				      		  
 				              <div class="form-group form-inline" id="uri" data-toggle="tooltip" title="the url which you call your page example test and to get your page you call it http://yourserver//test">
-				                {!! Form::label('uri', 'uri',array('class'=>'required col-md-2')).Form::text('uri', Input::old('uri'), array('class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
+				              	 <label for="uri" class="required col-md-2">uri</label>
+				              	 <input class="form-control" style="width:50%" placeholder="awesome@awesome.com" name="uri" type="text" id="uri">
 				              </div>
 				              
 				              <div class="form-group form-inline" id="name" data-toggle="tooltip" title="the name of your route">
-				                {!! Form::label('name', 'name',array('class'=>'required col-md-2')).Form::text('name', Input::old('name'), array('class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
+				              	 <label for="name" class="required col-md-2">name</label>
+				              	 <input class="form-control" style="width:50%" placeholder="awesome@awesome.com" name="name" type="text" id="name">
 				              </div>
-				                <div class="form-group form-inline" id="controller" data-toggle="tooltip" title="specific class to give if you want develop a specific feature before to render the page">
-				                {!! Form::label('controller', 'controller',array('class'=>'col-md-2')).Form::text('controller', Input::old('controller'), array('id'=>'controller','class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
-				              </div>
-				                <div class="form-group form-inline" id="method" data-toggle="tooltip" title="method name which will be called and which will do some stuffs before to render your page">
-				                {!! Form::label('method', 'method',array('class'=>'col-md-2')).Form::text('method', Input::old('method'), array('class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
+				               <div class="form-group form-inline" id="controller" data-toggle="tooltip" title="specific class to give if you want develop a specific feature before to render the page">
+				                	<label for="controller" class="col-md-2">controller</label>
+				                	<input id="controller" class="form-control" style="width:50%" placeholder="awesome@awesome.com" name="controller" type="text">
+				               </div>
+				               <div class="form-group form-inline" id="method" data-toggle="tooltip" title="method name which will be called and which will do some stuffs before to render your page">
+				               		<label for="method" class="col-md-2">method</label>
+				              		<input class="form-control" style="width:50%" placeholder="awesome@awesome.com" name="method" type="text" id="method">
 				              </div>
 				                <div class="form-group form-inline" id="action" data-toggle="tooltip" title="action it is when you want to access to a page in order to update or save data or..action will be used to set some permissions rules">
-				                 {!!Form::label('action', 'action',array('class'=>'col-md-2')).Form::select('action[]',
-										        array(
-										         'op_retrieve' => 'retrieve',
-										            'op_delete' => 'delete',
-										            'op_edit' => 'edit',
-										            'op_save' => 'save',
-										            'op_update' => 'update',
-										            'op_add' => 'add'
-										             ),null,array('class'=>'form-control','style'=>'width:50%')
-										        );
-									    	!!}
+				                   <label for="action" class="col-md-2">action</label>
+				                   <select class="form-control" style="width:50%" name="action[]">
+					                   <option value="op_retrieve">retrieve</option>
+					                   <option value="op_delete">delete</option>
+					                   <option value="op_edit">edit</option>
+					                   <option value="op_save">save</option>
+					                   <option value="op_update">update</option>
+					                   <option value="op_add">add</option>
+				                   </select>
 				                </div>
 				                <div class="form-group form-inline" id="view" data-toggle="tooltip" title="the name of your view (page name) that will be called">
-				                {!! Form::label('view', 'view',array('class'=>'col-md-2')).Form::text('view', Input::old('view'), array('class'=>'form-control','style'=>'width:50%','placeholder' => 'awesome@awesome.com')) !!}
-				              </div>
+				                    <label for="view" class="col-md-2">view</label>
+				                    <input class="form-control" style="width:50%" placeholder="awesome@awesome.com" name="view" type="text" id="view">
+				               </div>
 				                
 				               @if($layouts!=null)
 									<div class="form-group form-inline" id='type' data-toggle="tooltip" title="name of your application it is optional but it will be easy to find your route if you have got a lot of routes">
-									  {!! Form::label('type', 'type',array('class'=>'required col-md-2'))!!}
+									  <label for="type" class="required col-md-2">type</label>
 										<select name="type" class='form-control' style='width:50%'>
 											@foreach($layouts as $layout)
-											<option value=<?php echo $layout?>><?php echo $layout?></option>
+												@if($layout!='vendor' and $layout!='Groovel' and $layout!='errors')
+													<option value=<?php echo $layout?>><?php echo $layout?></option>
+												@endif
 											@endforeach
 							     		</select>
 						     		</div>
@@ -68,7 +76,7 @@
 				              
 				              
 				              <div class="form-group form-inline" id="subtype" data-toggle="tooltip" title="what type of content is your page: is it a view?,some contents?, a route..,? it will be used to set permissions rules">
-				               {!!Form::label('subtype', 'subtype',array('class'=>'required col-md-2'))!!}  
+				               <label for="subtype" class="required col-md-2">subtype</label>  
 								<select name="subtype[]" class='form-control' style='width:50%'>
 								    @foreach ($subtypes as $subtype)
 									<option value={!!$subtype!!}>{!! $subtype!!}</option>
@@ -76,32 +84,29 @@
 								</select>
 				              </div>
 				               <div class="form-group form-inline" id="audit_url" data-toggle="tooltip" title="if you want some statistics on access this uri you can enable it">
-				                {!! Form::label('audit url', 'audit_url',array('class'=>'col-md-2'))!!}
+				                <label for="audit url" class="col-md-2">audit_url</label>
 				               		<select name="audit_tracking_url_enable"  class='form-control'>
 										<option value='0'>disabled</option>
 										<option value='1'>enabled</option>
 									</select>
 								</div>
 								 <div class="form-group form-inline" id="activate_route" data-toggle="tooltip" title="enable it to access to your page by this uri">
-				                {!! Form::label('activate_route', 'activate',array('class'=>'col-md-2'))!!}
+				                <label for="activate_route" class="col-md-2">activate</label>
 				               		<select name="activate_route"  class='form-control'>
 										<option value='0'>disabled</option>
 										<option value='1'>enabled</option>
 									</select>
 								</div>
-			     	        
-				           <!-- {!! Form::submit('Submit',array('class'=>'btn btn-default'))!!}-->
-				           
-						 </div>
+			 			 </div>
 						 <div class="modal-footer">
 						     <p class='required' style='font-size:15px;margin-right:80%'>Fields are required</p>
 			       		
 			       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			       			 <input type="submit" id="submitForm" value="Save Changes"  class="btn btn-default" data-dismiss="modal"/>
 			        	 </div>
-			        	  {!! Form::close() !!}
-					</div>
-				  </div>
+			        </form>
+			     </div>
+			  </div>
 		</div>
 
 <script type="text/javascript">

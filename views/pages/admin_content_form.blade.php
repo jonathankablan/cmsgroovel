@@ -2,7 +2,7 @@
 @section('content')
 <!-- place in header of your html document -->
 	<div class="col-sm-12 main">
-				<div class="col-md-12 col-md-offset-4">
+	    		<div class="col-md-12 col-md-offset-4">
 				   @if(Session::get('msg'))
 			             <div>{!!var_dump(Session::get('msg'))!!}</div>
 			        @endif
@@ -33,23 +33,21 @@
 						<div id='error' style='display:none'></div>
 			
 			            <div id='form-modal' class="modal-body">
-						 	   {!! Form::open(array('id'=>'content_form','url' => 'admin/content/update','files'=>true)) !!}
-			      
-			              	   
-		                	   {!! Form::hidden('content_id', Session::get('content_edit')['id'], array('id' => 'id')) !!}
-		                	   
-		                	    {!! Form::hidden('translation_id', Session::get('content_edit')['translation_id'], array('id' => 'translation_id')) !!}
-		                	    {!! Form::hidden('duplicate', Session::get('content_edit')['duplicate'], array('id' => 'duplicate')) !!}
-		                	     <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-		                	     <input id='action' type="hidden" name="action" value="admin/content/update">
-							  	<div style='background-color:#FAFAFA'>
+			               <form method="POST" action="{{url('admin/content/update')}}" accept-charset="UTF-8" id="content_form" enctype="multipart/form-data">
+							     {{ csrf_field() }}
+					    	     <input id='action' type="hidden" name="action" value="admin/content/update">
+		                	     <input id="id" name="content_id" type="hidden" value={!! Session::get('content_edit')['id'] !!}>
+		                	   	 <input id="translation_id" name="translation_id" type="hidden" value={!! Session::get('content_edit')['translation_id'] !!}>
+		                	     <input id="duplicate" name="duplicate" type="hidden" value= {!!Session::get('content_edit')['duplicate'] !!}>
+		     
+		     			  	<div style='background-color:#FAFAFA'>
 								  	<div class="row">
 						            	<div class="form-group" data-toggle="tooltip" title="the title of your content">
-						                	<div class="col-md-2">
+						               	    <div class="col-md-2">
 									    		<label for="title">title</label><span class="required"></span>
 										    </div>
 										    <div class="col-md-8">
-										    	{!!Form::text('title', Session::get('content_edit')['title'],$attributes = array('class' => 'form-control')) !!}
+										    	<input class="form-control" name="title" type="text" value={{ Session::get('content_edit')['title']}}>
 										    </div>
 						             	</div>
 					            	</div>
@@ -84,11 +82,11 @@
 					             	</div>
 					            	<div class="row" style="margin-top:50px">
 						            	<div class="form-group">
-						            		<div class="col-md-2">
+						       			    <div class="col-md-2">
 									    		<label for="weight">weight</label><span class="required"></span>
 										    </div>
 										    <div class="col-md-8">
-										    	{!!Form::text('weight',Session::get('content_edit')['weight'], array('data-toggle'=>'tooltip',"title"=>"the biggest value will be set,it means this content will be shown first",'class'=>'form-control','placeholder' => 'weight')) !!}
+										    	<input data-toggle="tooltip" title="the biggest value will be set,it means this content will be shown first" class="form-control" placeholder="weight" name="weight" type="text" value={{Session::get('content_edit')['weight']}}>
 										    </div>
 									   </div>
 								   </div>
@@ -98,7 +96,7 @@
 								    			<label for="tag">tag</label><span class="required"></span>
 										    </div>
 										    <div class="col-md-8">
-										    	 	{!!Form::text('tag', Session::get('content_edit')['tag'], $attributes = array('class' => 'form-control')) !!}
+										    	 	<input class="form-control" name="tag" type="text" value={{Session::get('content_edit')['tag']}} >
 						      			    </div>
 						            	</div>
 					            	</div>
@@ -108,17 +106,17 @@
 								    			<label for="description">description</label><span class="required"></span>
 										    </div>
 										    <div class="col-md-8">
-										    	{!! Form::textarea('description', Session::get('content_edit')['description'], $attributes = array('class' => 'form-control')) !!}
+										    	<textarea class="form-control" name="description" cols="50" rows="10">{{Session::get('content_edit')['description']}} </textarea>
 						          		    </div>
 						            	</div>
 					            	</div>
 					            	<div class="row" style="margin-top:50px">
 						            	<div class="form-group">
-						            		<div class="col-md-3">
+						            	    <div class="col-md-3">
 									    		<label for="publish">publish content</label>
 										    </div>
 										    <div class="col-md-8">
-										        {!! Form::checkbox('isPublish', Input::old('isPublish'),Session::get('content_edit')['ispublish'], array('data-toggle'=>'tooltip',"title"=>"to publish your content you have to check the box",'class'=>'form-control','placeholder' => 'isPublish')) !!}
+										        <input data-toggle="tooltip" title="to publish your content you have to check the box" class="form-control" placeholder="isPublish" checked={{Session::get('content_edit')['ispublish']}} name="isPublish" type="checkbox">
 										    </div>
 									   </div>
 								   </div>
@@ -143,14 +141,14 @@
 						                      	     <div class="row">
 													    <div class="col-md-2" style="margin-left:10px">
 								                  		 @if($content['required']==0)
-						                         				{!! Form::label('name',$content['name'], array('class' => 'control-label'))!!}
+						                         				<label for={{$content['name']}} class='control-label'>{{$content['name']}}</label>
 								                  		 @endif
 							                    		 @if($content['required']==1)
-							                       			{!! Form::label('name',$content['name'], array('class' => 'control-label required'))!!}
+							                       			<label for={{$content['name']}} class='control-label required'>{{$content['name']}}</label>
 								                 		 @endif
 														  </div>
 								                		 <div class="col-md-8">
-								                    		{!!Form::text($content['name'],$content['content'], $attributes = array('class' => 'form-control')) !!}
+								                    		<input class="form-control" name={{$content['name']}}  type="text" value={!!$content['content']!!} >
 								                    	 </div>
 							                    	   </div>
 							                
@@ -158,26 +156,26 @@
 						                     		@if($content['widget']==-1)
 						                     		 <div class="row">
 						                     		   	 <div class="col-md-2" style="margin-left:10px">
-							                     		 @if($content['required']==0)
-						                         			{!! Form::label('name',$content['name'], array('class' => 'control-label'))!!}
-								                    	 @endif
+							                        	 @if($content['required']==0)
+						                         				<label for={{$content['name']}} class='control-label'>{{$content['name']}}</label>
+								                  		 @endif
 							                    		 @if($content['required']==1)
-							                     			{!! Form::label('name',$content['name'], array('class' => 'control-label required'))!!}
-								                    	 @endif
+							                       			<label for="{{$content['name']}}" class='control-label required'>{{$content['name']}}</label>
+								                 		 @endif
 								                    	 </div>
 								                		 <div class="col-md-8">
-								                    		{!!Form::textarea($content['name'],$content['content'], $attributes = array('class' => 'form-control')) !!}
+								                    		<textarea name={{$content['name']}}  class="form-control">{!!$content['content']!!}</textarea>
 								                    	 </div>
 							                    	   </div>
 						                     		@elseif($content['widget']==11)
 						                     		 <div class="row">
 							                     		<div class="col-md-2" style="margin-left:10px">
 								                     		 @if($content['required']==0)
-								                     			{!! Form::label('name',$content['name'], array('class' => 'control-label'))	!!}
-								                     		 @endif
-								                     		 @if($content['required']==1)
-								                     		 	{!! Form::label('name',$content['name'], array('class' => 'control-label required'))	!!}
-								                     		 @endif
+						                         				<label for={{$content['name']}} class='control-label'>{!!$content['name']!!}</label>
+									                  		 @endif
+								                    		 @if($content['required']==1)
+								                       			<label for={{$content['name']}} class='control-label required'>{!!$content['name']!!}</label>
+									                 		 @endif
 							                     		</div>
 							                    		<div class="col-md-8" style='margin-bottom:50px'>
 							                     			<textarea  id="elm1" name={!!$content['name']!!}>{!!$content['content']!!}</textarea>
@@ -188,15 +186,15 @@
 						                     	 @elseif($content['type']=='date')
 						                     		<div class="row">
 														 <div class="col-md-2" style="margin-left:10px">
-														@if($content['required']==0)
-						                         	 			{!! Form::label('name',$content['name'], array('class' => 'control-label'))!!}
-														@endif
-							                    		 @if($content['required']==1)
-																{!! Form::label('name',$content['name'], array('class' => 'control-label required'))!!}
-								                 		 @endif
+														 	@if($content['required']==0)
+						                         				<label for={{$content['name']}} class='control-label'>{!!$content['name']!!}</label>
+									                  		 @endif
+								                    		 @if($content['required']==1)
+								                       			<label for={{$content['name']}} class='control-label required'>{!!$content['name']!!}</label>
+									                 		 @endif
 												   		 </div>
 								                		 <div class="col-md-8">
-								                    		{!!Form::input('date',$content['name'],$content['content'], $attributes = array('class' => 'form-control')) !!}
+								                    		<input class="form-control" name={{$content['name']}} type="date" value="$content['content']" >
 								                    	 </div>
 							                    	   </div>
 						                     	 @endif
@@ -212,20 +210,16 @@
 						 <div class="modal-footer">
 						     <p class='required' style='font-size:15px;margin-right:80%'>Fields are required</p>
 			       		
-			       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			       			  {!! Form::submit('Update',array('id'=>'submitForm','class'=>'btn btn-default'))!!}
-								 <!-- {!! Form::reset('Reset',array('class'=>'btn btn-default','data-dismiss'=>'modal'))!!}-->
-								<!-- {!! Form::submit('Delete',array('class'=>'btn btn-default','data-dismiss'=>'modal'))!!}-->
-								
-			    	 			{!! Form::close() !!}	
+			       			 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			       			    <input id="submitForm" class="btn btn-default" type="submit" value="Update">
+			       		 </form>
 			    	 			<button id="delete" onclick='deleteContents()' class="btn btn-default">Delete</button>
-			    	 			
 			    	 			<button id="view" onclick='viewContents()' class="btn btn-default">View code</button>
 			        	 </div>
 					</div>
 				  </div>
 				</div>	
-	</div>
+			</div>
 <script>
 
 $(document).ready(function(){

@@ -11,10 +11,10 @@
 						<div class='thumbnail'>
 							&nbsp;
 							@if($topic_author->picture==null)
-								{!! HTML::image('groovel/cmsgroovel/groovel/admin/images/avatar.png', $alt="default avatar") !!}
+								<img src="/groovel/cmsgroovel/groovel/admin/images/avatar.png" alt="default avatar">
 							@endif
 							@if($topic_author->picture!=null)
-								{!!HTML::image( $topic_author->picture,'')!!}
+								<img src="/{{$topic_author->picture}}">
 							@endif
 						</div>
 						<div >
@@ -26,7 +26,7 @@
 						<td id={!!$topic_id!!} style='padding-left:10px'>
 								<!-- icon and title -->
 								<div>
-								{!! HTML::image('groovel/cmsgroovel/ionicons/png/email.png', $alt="email", $attributes = array('style'=>'width:20px;height:20px')) !!}
+								<img src="/groovel/cmsgroovel/ionicons/png/email.png" alt="email" style='width:20px;height:20px'>
 							    {!!$topic_date!!}
 								<strong>{!!$topic!!}</strong>
 								</div>
@@ -43,12 +43,11 @@
 				</td>
 				<td class="alt1">
 					<!-- controls -->
-						<!-- {!! HTML::link('/forum/answers/?forumid='.$forumid.'&topicid='.$topic_id, 'Reply',array('style'=>'margin-left:40px;color:black;font-size:1.3em','class'=>'color:black','onclick'=>'showModalPopUp()'))!!}-->
-		        		@if(\Auth::user()!=null)
-		        		{!! HTML::link('#', 'Reply',array('style'=>'margin-left:500px;color:black;font-size:1.3em','class'=>'color:black','onclick'=>'showModalPopUp()'))!!}
+						@if(\Auth::user()!=null)
+		        			<a href="#" style="margin-left:500px;color:black;font-size:1.3em" class="color:black" onclick="showModalPopUp()">Reply</a>
 		        		@else
-		        		{!! HTML::link('#', 'Reply',array('style'=>'margin-left:500px;color:black;font-size:1.3em','class'=>'color:black','onclick'=>'pleaseConnect()'))!!}
-		         		@endif
+		        			<a href="#" style="margin-left:500px;color:black;font-size:1.3em" class="color:black" onclick="pleaseConnect()">Reply</a>
+		        		@endif
 		        		 <a style='margin-left:40px;color:black;font-size:1.3em' class='color:black' href="#" rel="nofollow" onclick='loadComments()'>More Comments</a>
 				</td>
 			</tr>
@@ -58,10 +57,10 @@
 						<div class='thumbnail'>
 							&nbsp;
 							@if( $answer->answer_author->picture==null)
-								{!! HTML::image('groovel/cmsgroovel/groovel/admin/images/avatar.png', $alt="default avatar") !!}
+								<img src="/groovel/cmsgroovel/groovel/admin/images/avatar.png" alt="default avatar">
 							@endif
 							@if( $answer->answer_author->picture!=null)
-								{!!HTML::image(  $answer->answer_author->picture,'')!!}
+								<img src="/{{$answer->answer_author->picture}}">
 							@endif
 						</div>
 						<div >
@@ -74,8 +73,8 @@
 						<td id={!!$answer->id!!} style='padding-left:10px'>
 								<!-- icon and title -->
 								<div>
-									{!! HTML::image('groovel/cmsgroovel/ionicons/png/email.png', $alt="email", $attributes = array('style'=>'width:20px;height:20px')) !!}
-							         {!!$answer->created_at!!}             
+									<img src="/groovel/cmsgroovel/ionicons/png/email.png" alt="email" style='width:20px;height:20px'>
+							        {!!$answer->created_at!!}             
 									<strong><!-- google_ad_section_start -->Re:{!!$topic!!}<!-- google_ad_section_end --></strong>
 								</div>
 							<br/>
@@ -91,15 +90,16 @@
 				</td>
 				<td class="alt1">
 					<!-- controls -->
-						<!-- {!! HTML::link('/forum/answers/?forumid='.$forumid.'&topicid='.$topic_id, 'Reply',array('style'=>'margin-left:40px;color:black;font-size:1.3em','class'=>'color:black','onclick'=>'showModalPopUp()'))!!}-->
-		        		@if(\Auth::user()!=null)
-		        		{!! HTML::link('#', 'Reply',array('style'=>'margin-left:500px;color:black;font-size:1.3em','class'=>'color:black','onclick'=>'showModalPopUp()'))!!}
+						@if(\Auth::user()!=null)
+		        			<a href="#" style="margin-left:500px;color:black;font-size:1.3em" class="color:black" onclick="showModalPopUp()">Reply</a>
 		        		@else
-		        		{!! HTML::link('#', 'Reply',array('style'=>'margin-left:500px;color:black;font-size:1.3em','class'=>'color:black','onclick'=>'pleaseConnect()'))!!}
-		         		@endif
+		        			<a href="#" style="margin-left:500px;color:black;font-size:1.3em" class="color:black" onclick="pleaseConnect()">Reply</a>
+		        		@endif
 		        		 <a style='margin-left:40px;color:black;font-size:1.3em' class='color:black' href="#" rel="nofollow" onclick='loadComments()'>More Comments</a>
 		        		 @if(Session::get('user_privileges')['role']=='ADMIN')
-		        		{!! HTML::link('forum/topic/answer/delete/?forumid='.$forumid.'&answerid='.$answer->id, 'Delete',array('style'=>'margin-left:10px;color:black;font-size:1.3em','class'=>'color:black'))!!}
+		        		<!--{!! HTML::link('forum/topic/answer/delete/?forumid='.$forumid.'&answerid='.$answer->id, 'Delete',array('style'=>'margin-left:10px;color:black;font-size:1.3em','class'=>'color:black'))!!}-->
+		        		 <a href="{{url('forum/topic/answer/delete/?forumid='.$forumid.'&answerid='.$answer->id) }}" style="margin-left:10px;color:black;font-size:1.3em" class="forumlink">Delete</a>
+					                  					
 		        		@endif
 				</td>
 			</tr>

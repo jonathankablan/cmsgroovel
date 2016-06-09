@@ -35,48 +35,41 @@
 								<div id='light'></div>
 								<div id='fade'></div>
 							     <div id='form-modal' class="modal-body">
-									<div class="panel-body">
-												{!! Form::open(array('id'=>'template_form','url' => 'admin/template/add', 'method' => 'POST', 'class' => 'form-horizontal well ')) !!}
-									
-												<!-- <div class="form-group form-inline">
-													{!! Form::label('vendor', 'vendor',array('class'=>'required')).Form::text('vendor', Session::get('template')['vendor'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:50px')) !!}
-												</div>
-												<div class="form-group form-inline">
-													{!! Form::label('package', 'package',array('class'=>'required')).Form::text('package', Session::get('template')['package'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:40px')) !!}
-												</div>-->
-												@if($templates!=null)
-													<div class="form-group form-inline">
-													  {!! Form::label('template', 'template')!!}
-												
-														<select name="template" class='form-control' style='margin-left:55px'>
-															@foreach($templates as $template)
-															<option value=<?php echo $template?>><?php echo $template?></option>
-															@endforeach
-											     		</select>
-										     		</div>
-									     		@endif
-												<div class="form-group form-inline"  id="controller" data-toggle="tooltip" title="the setting to be called and doing stuffs before rendering your page, optional field,leave it blank otherwhise">
-													{!! Form::label('controller', 'controller').Form::text('controller', Session::get('template')['controller'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:50px')) !!}
-												</div>
-												<div class="form-group form-inline" id="url" data-toggle="tooltip" title="url of your page">
-													{!! Form::label('url', 'url',array('class'=>'required')).Form::text('url', Session::get('template')['url'],  $attributes = array('class' => 'form-control','style'=>'width:450px;margin-left:80px')) !!}
-												</div>
-												
-								  		</div>
-							   		
-								 <div class="modal-footer">
-								     <input type="submit" id="submitForm" value="Create"  class="btn btn-default" data-dismiss="modal" style='margin-left:600px'/>
-					 				{!! Form::close() !!}
-							 
-					       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					      			
-					        	 </div>
+							     	<form method="POST" action="{{ url('admin/template/add') }}" accept-charset="UTF-8" id="template_form" class="form-horizontal well " style="width:100%">
+						    			<div class="panel-body">
+													@if($templates!=null)
+														<div class="form-group form-inline">
+														  {!! Form::label('template', 'template')!!}
+													
+															<select name="template" class='form-control' style='margin-left:55px'>
+																@foreach($templates as $template)
+																 	@if($template!='vendor' and $template!='errors') 
+																		<option value=<?php echo $template?>><?php echo $template?></option>
+																	@endif
+																@endforeach
+												     		</select>
+											     		</div>
+										     		@endif
+													<div class="form-group form-inline"  id="controller" data-toggle="tooltip" title="the setting to be called and doing stuffs before rendering your page, optional field,leave it blank otherwhise">
+														<label for="controller" style="margin-right:70px">controller</label>
+									                	<input class="form-control" style="width:450px;margin-left:65px" name="controller" type="text" value={{Session::get('template')['controller']}} id="controller">
+													</div>
+													<div class="form-group form-inline" id="url" data-toggle="tooltip" title="url of your page">
+														<label for="url" class="required" style="margin-left:80px">url</label>
+														<input class="form-control" style="'width:450px;margin-left:80px" name="url" type="text" value={{Session::get('template')['url']}} id="url">
+													</div>
+									  	</div>
+										 <div class="modal-footer">
+										     <input type="submit" id="submitForm" value="Create"  class="btn btn-default" data-dismiss="modal" style='margin-left:600px'/>
+							 				 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							        	 </div>
+					        	 </form>
 							</div>
-								
 						  </div>
 						</div>
 		 	 	</div>
 	 </div>
+ </div>
 <script type="text/javascript">
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();

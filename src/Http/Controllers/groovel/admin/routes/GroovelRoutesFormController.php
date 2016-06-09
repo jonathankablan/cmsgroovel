@@ -33,7 +33,7 @@ class GroovelRoutesFormController extends GroovelFormController {
 	{
 		$this->routeBusiness =$routeBusiness;
 		$this->layoutManager=$layoutManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
 	public function init(){

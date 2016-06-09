@@ -11,18 +11,21 @@
 					    </div>
 					    <div id='light'></div>
 						<div id='fade'></div>
-					     <div id='form-modal' class="modal-body">
-					    	{!! Form::open(array('id'=>'forum_form','url' => 'forum/create', 'method' => 'POST', 'class' => 'form-horizontal well ')) !!}
-						 	  <input style='display:none;' type='text' id='ctrl1' name='ctrl1' value='spamcontroller'>
-							 <input style='display:none;' type='text' id='ctrl2' name='ctrl2' value=''>
-				             <input type='hidden' name='leave_blank'/>
+					   <form method="POST"  action=" {{ url('forum/create') }}" accept-charset="UTF-8" id="forum_form" class='form-horizontal well'>
+	         		     <div id='form-modal' class="modal-body">
+					    		{{csrf_field()}}
+							 	 <input style='display:none;' type='text' id='ctrl1' name='ctrl1' value='spamcontroller'>
+								 <input style='display:none;' type='text' id='ctrl2' name='ctrl2' value=''>
+					             <input type='hidden' name='leave_blank'/>
 							
 								<div class="form-group form-inline">
-								  {!! Form::label('name', 'name',array('class'=>'required','style'=>'margin-right:65px')).Form::text('name', Input::old('name'), array('class'=>'form-control','style'=>'width:450px')) !!}
-				         		</div>
+									<label for="name" class="required" style='margin-right:70px'>name :</label>
+									<input class="form-control" name="name" type="text" id="name"  style='width:50%'>
+						 		</div>
 								<div class="form-group form-inline">
-								  {!! Form::label('description', 'description',array('class'=>'required','style'=>'margin-right:30px')).Form::text('description', Input::old('description'), array('class'=>'form-control','style'=>'width:450px')) !!}
-				     			</div>
+									<label for="description" class="required" style='margin-right:30px'>description :</label>
+									<input class="form-control" name="description" type="text" id="description"  style='width:50%'>
+								</div>
 														   
 					     </div>
 					      <div class="modal-footer">
@@ -31,7 +34,7 @@
 			       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			       			 <input type="submit" id="submitForm" value="Send"  class="btn btn-default"/>
 			        	 </div>
-			        	   {!! Form::close() !!}
+			        	</form>
 					</div>
 				</div>
 	</div>

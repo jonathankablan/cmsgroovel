@@ -17,7 +17,7 @@ namespace Groovel\Cmsgroovel;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Application;
-
+use Monolog\Logger;
 
 class CmsgroovelServiceProvider extends ServiceProvider {
 
@@ -40,7 +40,6 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 		);
 			// Get namespace
 		$nameSpace = $this->app->getNamespace();
-		
 		
 		// Routes
 		$this->app->router->group(['namespace' => $nameSpace . 'Http\Controllers'], function()
@@ -65,7 +64,6 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 		$this->publishes([
 				__DIR__.'/../starter-templates' => base_path('starter-templates'),
 		]);
-		
 		
 		include __DIR__.'/Http/routes.php';
 		include __DIR__.'/Http/groovel.php';

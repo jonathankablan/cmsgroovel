@@ -11,13 +11,18 @@
                            {{$content['title']}}
                         </h2>
 						<div>
-						{!!$content['content']['subtitle']!!}
+						@if(array_key_exists('subtitle',$content['content']) )
+							{!!$content['content']['subtitle']!!}
+						@endif
 						</div>
 						<div>
-                        {!!$content['content']['blogtitle']!!}
+						@if(array_key_exists('blogtitle',$content['content']) )
+                       	 {!!$content['content']['blogtitle']!!}
+                       	@endif
 						</div>
-               
-                    {!! HTML::image($content['content']['myfiles'],$alt='test', $attributes =array('style'=>'width:200px;height:200px')) !!}
+               		@if(array_key_exists('myfiles',$content) )
+                    	{!! HTML::image($content['content']['myfiles'],$alt='test', $attributes =array('style'=>'width:200px;height:200px')) !!}
+					@endif
 					</div>
 					
                     @endif

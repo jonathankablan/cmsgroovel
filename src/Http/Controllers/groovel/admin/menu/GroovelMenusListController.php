@@ -31,7 +31,7 @@ class GroovelMenusListController extends GroovelController {
 	public function __construct( GroovelMenuBusinessInterface $menuManager)
 	{
 		$this->menuManager=$menuManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 
 	

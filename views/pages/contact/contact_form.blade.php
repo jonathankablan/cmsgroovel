@@ -7,25 +7,37 @@
 					    </div>
 					    <div id='light'></div>
 						<div id='fade'></div>
+						<form id='contact_form' class="form-horizontal well" role="form" method="POST" action="{{ url('contact/post') }}">
+						{{csrf_field()}}
 					     <div id='form-modal' class="modal-body">
-					    	{!! Form::open(array('id'=>'contact_form','url' => 'contact/post', 'method' => 'POST', 'class' => 'form-horizontal well ')) !!}
-						 	  <input style='display:none;' type='text' id='ctrl1' name='ctrl1' value='spamcontroller'>
+					    	 <input style='display:none;' type='text' id='ctrl1' name='ctrl1' value='spamcontroller'>
 							 <input style='display:none;' type='text' id='ctrl2' name='ctrl2' value=''>
 				             <input type='hidden' name='leave_blank'/>
 							
 								<div class="form-group form-inline">
-								  {!! Form::label('username', 'username',array('class'=>'required','style'=>'margin-right:50px')).Form::text('username', Input::old('username'), array('class'=>'form-control','style'=>'width:100%')) !!}
-				         		</div>
-								<div class="form-group form-inline">
-									  {!! Form::label('email', 'email',array('class'=>'required','style'=>'margin-right:80px')).Form::text('email', Input::old('email'), array('class'=>'form-control','style'=>'width:100%')) !!}
-				         		</div>
-				         		<div class="form-group form-inline">
-								  {!! Form::label('subject', 'subject',array('class'=>'required','style'=>'margin-right:65px')).Form::text('subject', Input::old('subject'), array('class'=>'form-control','style'=>'width:100%')) !!}
-				         		</div>
-								<div class="form-group form-inline">
-								 {!! Form::label('message', 'message',array('class'=>'required','style'=>'margin-right:55px')).Form::textarea('message', Input::old('message'), array('class'=>'form-control','style'=>'width:100%')) !!}
-								</div>
-														   
+					                <label class="col-md-5 control-label required" style='margin-right:50px'>username:</label>
+					                <div class="col-md-5">
+					                    <input type='text' name='username' class="form-control" style='width:100%'/>
+					                </div>
+	            				</div>
+	            				<div class="form-group form-inline">
+					                <label class="col-md-5 control-label required" style='margin-right:80px'>email:</label>
+					                <div class="col-md-5">
+					                    <input type='email' name='email' class="form-control" style='width:100%'/>
+					                </div>
+	            				</div>
+	            				<div class="form-group form-inline">
+					                <label class="col-md-5 control-label required" style='margin-right:65px'>subject:</label>
+					                <div class="col-md-5">
+					                    <input type='text' name='subject' class="form-control" style='width:100%'/>
+					                </div>
+	            				</div>
+	            				<div class="form-group form-inline">
+					                <label class="col-md-5 control-label required" style='margin-right:55px'>message:</label>
+					                <div class="col-md-5">
+					                    <textarea name='message' class="form-control" style='width:100%'></textarea>
+					                </div>
+	            				</div>
 					     </div>
 					      <div class="modal-footer">
 						     <p class='required' style='font-size:15px;margin-right:80%'>Fields are required</p>
@@ -33,7 +45,7 @@
 			       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			       			 <input type="submit" id="submitForm" value="Send"  class="btn btn-default"/>
 			        	 </div>
-			        	   {!! Form::close() !!}
+			           </form>
 					</div>
 				</div>
 </div>

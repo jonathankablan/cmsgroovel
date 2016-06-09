@@ -11,21 +11,16 @@
                 </div>
             </div>
         @endif
-        @if (count($errors)>0)
-         <div class="col-md-7">
+         @if ($errors->count() > 0)
+            <div class="col-md-9">
                 <div class="alert alert-danger">
-                	@foreach($errors->get('username') as $message)
-                	<ul>
-	                     <li>{!! $message !!}</li>
-	           		 </ul>
-					@endforeach	@foreach($errors->get('email') as $message)
-                	<ul>
-	                     <li>{!! $message !!}</li>
-	           		 </ul>
-					@endforeach
-	           </div>
-         </div>
-         @endif
+                    @foreach($errors->all() as $message)
+                        {!! $message !!}<br />
+                    @endforeach           
+                </div>
+            </div>
+        @endif
+        
          @if (Session::has('flash_notice'))
             <div class="col-md-7">
                 <div class="alert alert-danger">
@@ -33,38 +28,38 @@
                 </div>
             </div>
         @endif
-	            {!! Form::open(array('url' => 'admin/auth/login/form', 'method' => 'POST', 'class' => 'form-horizontal well')) !!}
+	             <form class="form-horizontal well" role="form" method="POST" action="{{ url('admin/auth/login/form') }}">
 	                <input type='hidden' name='leave_blank'/>
 	      			<input type="hidden" name="_token" value="{{csrf_token()}}" />
 	             <div class="form-group form-inline">
-	                {!! Form::label('pseudo', 'Pseudo :', array('class' => 'col-md-5 control-label required')) !!}
+	                 <label class="col-md-5 control-label required">Pseudo:</label>
 	                <div class="col-md-5">
-	                    {!! Form::text('pseudo', '', $attributes = array('class' => 'form-control')) !!}
+	                    <input type='text' name='pseudo' class="form-control"/>
 	                </div>
 	            </div>
 	            <div class="form-group form-inline">
-	                {!! Form::label('password', 'Password :', array('class' => 'col-md-5 control-label required')) !!}
+	                <label class="col-md-5 control-label required">Password:</label>
 	                <div class="col-md-5">
-	                    {!! Form::password('password', $attributes = array('class' => 'form-control')) !!}
+	                    <input type="password" class="form-control" name="password">
 	                </div>
 	            </div>
 	            <div class="checkbox pull-right">
-	                {!! Form::checkbox('rememberme') !!}Remember me
+	                 <input type="checkbox" name="rememberme">Remember me
 	            </div>
 	            <div class="row" style='margin-top:50px'>
 	                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-	                    {!! Form::submit('Connect', array('class' => 'btn btn-success')) !!}
+	                      <input class="btn btn-success" value="Log in" type="submit">
 	                </div>
 	                 <div class="col-lg-2 col-sm-2 col-md-2 col-xs-5 col-xs-offset-1">
-				         {!! link_to('admin/auth/subscribe/form', 'I subscribe !', array('class' => 'btn btn-info')) !!}
+				          <a class="btn btn-info" href="{{ url('admin/auth/subscribe/form') }}">I subscribe !</a>
 				    </div>
 		             <div class="col-lg-3 col-sm-2 col-sm-offset-1 col-md-2  col-md-offset-1 col-xs-7">
-		                {!! link_to('admin/auth/login/remind/form', 'I forget my password...', array('class' => 'btn btn-success')) !!}
+		                 <a class="btn btn-success" href="{{ url('admin/auth/login/remind/form') }}">I forget my password... !</a>
 				    </div>
 				   
 			     </div>
 	      
-	            {!! Form::close()!!}
+	        </form>
       </div>   
    
     

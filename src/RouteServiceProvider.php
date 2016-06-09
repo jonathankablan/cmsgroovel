@@ -23,9 +23,13 @@ use Groovel\Cmsgroovel\models\RoutesGroovel;
 
 class RouteServiceProvider extends \Illuminate\View\ViewServiceProvider {
 
+	protected $defer = true;
+	
     public function boot()
     {
-  		$this->initCacheRoute();
+    	if(\Cache::get("routes_cache")!="loaded"){
+  			$this->initCacheRoute();
+    	}
     }
     
     public function initCacheRoute(){
@@ -35,6 +39,7 @@ class RouteServiceProvider extends \Illuminate\View\ViewServiceProvider {
     			$routes[$route->getUri()]=$route;
     			\Cache::forever($route->getUri(),$route);
     		}
+    		\Cache::forever("routes_cache","loaded");
     }    
 
 }

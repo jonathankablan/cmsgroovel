@@ -12,10 +12,11 @@
 			       
 		     <h1 class='required'>Choose your layout:</h1>     
 	 			
-	          {!! Form::open(array('id'=>'layout_form','url' => 'admin/layout/add', 'method' => 'POST')) !!}
+	          <form method="POST"  action=" {{ url('admin/layout/add') }}" accept-charset="UTF-8" id="layout_form">
+	         	{{csrf_field()}}
+		 
 		       <input id='layout_id' type="hidden" name="layout_id">
-		       <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-		                	
+		                 	
          								
 			   @foreach ($layouts as $layout)
 				   	@if($layout!='vendor' and $layout!='errors') 
@@ -64,16 +65,8 @@
 			     <div class="form-group" style='margin-top:30px'>
 			              <textarea name='footer' cols='100' rows='10'></textarea>
 				 </div>
-				 
-				 
-				 
-				 
-				 
-				 
-				           
-			 {!! Form::submit('Save Changes',array('id'=>'submitForm','class'=>'btn btn-info'))!!}
-							
-			{!! Form::close() !!}
+				 <input id="submitForm" class="btn btn-info" type="submit" value="Save Changes">			
+			</form>
 	</div>
 </div>
 <script>

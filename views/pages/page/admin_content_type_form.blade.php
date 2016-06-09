@@ -33,13 +33,11 @@
 					 @if(Session::get('layouts')!=null)
 						<select id="form-type" name="type" class='form-control' style='width:56%'>
 							    @foreach(Session::get('layouts') as  $key=>$value)
-								    @if($key!='vendor' and $key!='errors')
-								    	@if($key!=Session::get('content_type_edit')['template'])
-								    		<option value="{!!$key!!}">{!!$value!!}</option>
-								    	@elseif($key==Session::get('content_type_edit')['template'])
-								    		<option selected='selected'value="{!!$key!!}">{!!$value!!}</option>
-								    	@endif
-								    @endif
+							    	@if($key!=Session::get('content_type_edit')['template'])
+							    		<option value="{!!$key!!}">{!!$value!!}</option>
+							    	@elseif($key==Session::get('content_type_edit')['template'])
+							    		<option selected='selected'value="{!!$key!!}">{!!$value!!}</option>
+							    	@endif
 							    @endforeach
 			     		</select>
 			 		@endif
@@ -55,8 +53,8 @@
 					    		 <div class="toggle-view panel">
 				            		<div class="row" style='margin-bottom:25px'>
 					            		<div class="col-md-3" style="margin-top:10%"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:0%'/></div>
-					            		<div class="col-md-3" style="margin-top:10%;margin-left:10%">Description<input type="text" id="description" name="description" style='margin-left:0%'/></div>
-					            		<div class="col-md-1" style="margin-top:10%;margin-left:10%">Required<input type="checkbox" id="required" name="required" style='margin-left:0%'/></div>
+					            		<div class="col-md-3" style="margin-top:10%">Description<input type="text" id="description" name="description" style='margin-left:0%'/></div>
+					            		<div class="col-md-1" style="margin-top:10%">Required<input type="checkbox" id="required" name="required" style='margin-left:0%'/></div>
 					            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='date'/></div>
 					            	</div>
 				        		</div>
@@ -66,8 +64,8 @@
 						<div class="glyphicon glyphicon-pencil" style='margin-top: 25px'><span>Rich Text Editor</span><textarea rows="4" cols="50" class="val"></textarea>
 							<div class="toggle-view panel" style='margin-bottom:25px'>
 								<div class="row">
-				            		<div class="col-md-3" style='margin-left:0%'><span class="required">Name</span><input type="text" id="name"  name="name" style='width:100%'/></div>
-				            		<div class="col-md-3" style='margin-left:0%'>Description<input type="text" id='description' name="description" style='width:100%'/></div>
+				            		<div class="col-md-4" style='margin-left:0%'><span class="required">Name</span><input type="text" id="name"  name="name" style='width:100%'/></div>
+				            		<div class="col-md-4" style='margin-left:0%'>Description<input type="text" id='description' name="description" style='width:100%'/></div>
 				            		<div class="col-md-1" style='margin-left:0%'>Required<input id='required' type="checkbox" name="required" /></div>
 				            		<div class="col-md-1 col-md-offset-3" style="margin-left:0%">
 				            		<div  class="col-md-1 col-md-offset-7">widget</div>
@@ -75,8 +73,7 @@
 						            		<option value="tinymce">tinymce</option>
 						            		<option value="none">none</option>
 					            		</select>
-				            		</div> 
-				            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='textarea'/></div>    	
+				            		</div>          	
 				            	</div>
 			            	</div>
 						</div>
@@ -86,8 +83,8 @@
 							<div class="toggle-view panel">
 								<div class="row" style='margin-bottom:25px'>
 				            		<div class="col-md-3" style="margin-top:10%"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:0%'/></div>
-				            		<div class="col-md-3" style="margin-top:10%;margin-left:2%">Description<input type="text" id="description" name="description" style='margin-left:0%'/></div>
-				            		<div class="col-md-1" style="margin-top:10%;margin-left:2%">Required<input type="checkbox" id="required" name="required" style='margin-left:0%'/></div>
+				            		<div class="col-md-3" style="margin-top:10%;margin-left:0%">Description<input type="text" id="description" name="description" style='margin-left:0%'/></div>
+				            		<div class="col-md-1" style="margin-top:10%;margin-left:0%">Required<input type="checkbox" id="required" name="required" style='margin-left:0%'/></div>
 				            		<div class="col-md-1" style="display:none"><input id="type" type="text" name="type" value='text'/></div>
 				            	</div>
 			            	</div>
@@ -121,9 +118,9 @@
 												 <input type="date" name="textbox"  class="val"/>
 												     <div class="toggle-view">
 						            				 	  <div class="row" style='margin-bottom:25px'>
-												            		<div class="col-md-3" style="margin-top:10%"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px' value={!!$field['name']!!}></div>
-												            		<div class="col-md-3" style="margin-top:10%;margin-left:10%">Description<input type="text" id="description" name="description" style='margin-left:4px' value={!!$field['description']!!}></div>
-												            		<div class="col-md-1" style="margin-top:10%;margin-left:10%">Required
+												            		<div class="col-md-4" style="margin-top:10%"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px' value={!!$field['name']!!}></div>
+												            		<div class="col-md-4" style="margin-top:10%">Description<input type="text" id="description" name="description" style='margin-left:4px' value={!!$field['description']!!}></div>
+												            		<div class="col-md-1" style="margin-top:10%">Required
 												            		@if($field['required']==1)
 												            		<input type="checkbox" id="required" name="required" style='margin-left:2%' value={!!$field['required']!!} checked='checked'></div>
 												            		@else
@@ -147,9 +144,9 @@
 												 <textarea rows="4" cols="50" class="val"></textarea>
 												    <div class="toggle-view">
 													 	<div class="row" style='margin-bottom:25px'>
-															 	  <div class="col-md-3" style="margin-top:10%"><span class="required">Name</span><input type="text" style="width:100%" id="name"  name="name" style='margin-left:4px;width:100px' value={!!$field['name']!!}></div>
-												            	  <div class="col-md-3" style="margin-top:10%;margin-left:10%">Description<input type="text" id='description'  style="width:100%" name="description" style='margin-left:4px;width:100px' value={!!$field['description']!!}></div>
-												            	  <div class="col-md-1" style="margin-top:10%;margin-left:10%">Required
+															 	  <div class="col-md-4" style="margin-top:10%"><span class="required">Name</span><input type="text" style="width:100%" id="name"  name="name" style='margin-left:4px;width:100px' value={!!$field['name']!!}></div>
+												            	  <div class="col-md-4" style="margin-top:10%">Description<input type="text" id='description'  style="width:100%" name="description" style='margin-left:4px;width:100px' value={!!$field['description']!!}></div>
+												            	  <div class="col-md-1" style="margin-top:10%">Required
 												            	 	@if($field['required']==1)
 													            		<input type="checkbox" id="required" name="required" style='margin-left:2%' value={!!$field['required']!!} checked='checked'></div>
 													            		@else
@@ -171,7 +168,7 @@
 												     </div>
 										      </div>
 								          </div>
-								      </div>
+							        </div>
 						 	  @endif
 						 	
 						 	  @if($field['type']=='text')
@@ -183,8 +180,8 @@
 											<input type="text" name="textbox" class="val" />
 											         <div class="toggle-view">
 													 	  <div class="row" style='margin-bottom:25px'>
-											            		<div class="col-md-3" style="margin-top:10%"><span class="required">Name</span><input type="text" style="width:100%" id="name"  name="name"  value={!!$field['name']!!}></div>
-											            		<div class="col-md-3" style="margin-top:10%;margin-left:10%">Description<input style="width:100%" type="text" id="description" name="description" value={!!$field['description']!!}></div>
+											            		<div class="col-md-4" style="margin-top:10%"><span class="required">Name</span><input type="text" style="width:100%" id="name"  name="name"  value={!!$field['name']!!}></div>
+											            		<div class="col-md-4" style="margin-top:10%;margin-left:10%">Description<input style="width:100%" type="text" id="description" name="description" value={!!$field['description']!!}></div>
 											            		<div class="col-md-1" style="margin-top:10%;margin-left:10%">Required
 											            		@if($field['required']==1)
 											            		<input type="checkbox" id="required" name="required" value={!!$field['required']!!} checked='checked'></div>
@@ -207,8 +204,8 @@
 													 <div class='val'> @include('cmsgroovel.sections.uploadfile')</div>
 													       <div class="toggle-view">
 									    				 	  <div class="row" style='margin-bottom:25px'>
-												            		<div class="col-md-3" style="margin-top:10%"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px' value={!!$field['name']!!}></div>
-												            		<div class="col-md-3" style="margin-top:10%;margin-left:10%">Description<input type="text" id="description" name="description" style='margin-left:4px' value={!!$field['description']!!}></div>
+												            		<div class="col-md-4" style="margin-top:10%"><span class="required">Name</span><input type="text" id="name"  name="name" style='margin-left:4px' value={!!$field['name']!!}></div>
+												            		<div class="col-md-4" style="margin-top:10%;margin-left:10%">Description<input type="text" id="description" name="description" style='margin-left:4px' value={!!$field['description']!!}></div>
 												            		<div class="col-md-1" style="margin-top:10%;margin-left:10%">Required
 												            		@if($field['required']==1)
 												            		<input type="checkbox" id="required" name="required" style='margin-left:2%' value={!!$field['required']!!} checked='checked'></div>
@@ -221,6 +218,7 @@
 									           		</div>
 								               </div>
 								             </div>
+								        </div>
 							 	  @endif
 						    @endforeach
 						 @endif

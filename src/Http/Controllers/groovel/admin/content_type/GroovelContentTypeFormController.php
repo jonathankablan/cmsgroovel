@@ -40,7 +40,7 @@ class GroovelContentTypeFormController extends GroovelFormController {
 		$this->contentTypeManager=$contentTypeManager;
 		$this->layoutManager=$layoutManager;
 		$this->contentManager=$contentManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
 	

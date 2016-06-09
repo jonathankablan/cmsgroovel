@@ -29,11 +29,11 @@
 						  <div class="span3">
 			            	<div class="col-md-12">
 				            	<?php $pseudo=Session::get('pseudo')?>
-							 	{!! Form::open(array('id'=>'user_permission_form','url' => 'admin/user/permission/add', 'method' => 'POST')) !!}
-						
+							 	<form method="POST"  action="{{url('admin/user/permission/add')}}" accept-charset="UTF-8" id="user_permission_form">
+				         			  {{csrf_field()}}
 									<div class="col-sm-2 required" style="margin-bottom:20px">Username</div>
 							      	<div class="col-sm-4" style="margin-bottom:20px">
-							      	 {!!Form::text('pseudo', $pseudo,  $attributes = array('class' => 'form-control','required'=>'required')) !!}
+							       	 <input class="form-control" required="required" name="pseudo" type="text">
 							      	</div>
 									<div class="col-sm-12" style="margin-left:10px" >
 									<INPUT type="button" value="Add User permissions" onclick="addRow('table_user_permissions')" />
@@ -93,7 +93,6 @@
 											</select>
 										  </td>
 							                <td class="col-sm-3">
-								           <!--  {!!Form::select('content_types', Session::get('content_types'),'default',$attributes = array('class' => 'form-control','required'=>'required'));!!}-->
 								           
 								           <select name='content_types[]'>
 											    <option name='content_types'></option>
@@ -106,23 +105,17 @@
 								         
 								            </td>
 								             <td class="col-sm-4">
-								           	 {!!Form::select('owncontent[]',
-										        array(
-										            'yes' => 'yes',
-										            'no' => 'no'
-										              )
-										        );
-									    	!!}
+								           	 <select name="owncontent[]">
+								           	 	<option value="yes">yes</option>
+								           	 	<option value="no">no</option>
+								           	 </select>
 								            </td>
 							              <td class="col-sm-4">
-								               	 {!!Form::select('othercontent[]',
-										        array(
-										            'yes' => 'yes',
-										            'no' => 'no'
-										              )
-										        );
-									    	!!}
-										     </td>
+								         	 <select name="othercontent[]">
+								           	 	<option value="yes">yes</option>
+								           	 	<option value="no">no</option>
+								           	 </select>
+										  </td>
 										          
 								        </tr>
 								    </table>
@@ -185,7 +178,6 @@
 											</select>
 										  </td>
 										   <td class="col-sm-3">
-								           <!--  {!!Form::select('content_types', Session::get('content_types'),'default',$attributes = array('class' => 'form-control','required'=>'required'));!!}-->
 								           
 								           <select name='content_types[]'>
 											    <option name='content_types'></option>
@@ -198,29 +190,22 @@
 								         
 								            </td>
 								              <td class="col-sm-4">
-								           	 {!!Form::select('owncontent[]',
-										        array(
-										            'yes' => 'yes',
-										            'no' => 'no'
-										              )
-										        );
-									    	!!}
+								           	 <select name="owncontent[]">
+								           	 	<option value="yes">yes</option>
+								           	 	<option value="no">no</option>
+								           	 </select>
 								            </td>
 							              <td class="col-sm-4">
-								               	 {!!Form::select('othercontent[]',
-										        array(
-										            'yes' => 'yes',
-										            'no' => 'no'
-										              )
-										        );
-									    	!!}
-										     </td>
+								            <select name="othercontent[]">
+								            	<option value="yes">yes</option>
+								            	<option value="no">no</option>
+								            </select>   	
+										   </td>
 								        </tr>
 								    </table>
 								   </div> 
-								    
+							</form>			    
 						</div>
-						  {!! Form::close() !!}
 					</div>
 						<div  class="col-sm-12" style="margin-top:20px">
 							 <div class="modal-footer">

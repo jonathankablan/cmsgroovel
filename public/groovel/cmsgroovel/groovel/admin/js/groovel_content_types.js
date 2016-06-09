@@ -13,7 +13,7 @@ function checkFieldTitleUniqueAndNotNull(){
 	var titles= new Array();
 	var countField=0;
 	 $(".field").each(function() {
-		 $(this).find(".toggle-view .row .col-md-4").each(function() {
+		 $(this).find(".toggle-view .row .col-md-3").each(function() {
 		 	  if($(this).find("input#name").exists() && $(this).find("input#name").val().length>0){
 		 		  titles[$(this).find("input#name").val()]=$(this).find("input#name").val();
 	     	  }
@@ -191,7 +191,7 @@ function parseTemplate(){
 	    		  field['fieldwidget']=fieldwidget;
 	    	  }
 	      })
-	       $(this).find(".toggle-view .row .col-md-4").each(function() {
+	       $(this).find(".toggle-view .row .col-md-3").each(function() {
 		    	  if($(this).find("input#name").exists()){
 		    		  fieldname=$(this).find("input#name").val();
 		    		  field['fieldname']=fieldname;
@@ -269,7 +269,7 @@ function dragContentType(){
 			  
 		$( ".droppedFields" ).sortable();
 		$(document).delegate(".glyphicon.glyphicon-remove.pull-right", "click", function() {
-		     $(this).parent().remove();
+		     $(this).parent().parent().remove();
 		    });
 		 
 			

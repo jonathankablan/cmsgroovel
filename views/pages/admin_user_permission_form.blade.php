@@ -15,16 +15,16 @@
         	     <div id='form-modal' class="modal-body">
 					     <div class="panel-body">
 						  <div class="span3">
-			            	<div class="col-md-12">
+						   <form method="POST" action="{{url('admin/user/permission/update')}}" accept-charset="UTF-8" id="user_permission_form">
+						    {{csrf_field()}}
+						  	<div class="col-md-12">
 			                  	<div  class="col-sm-12 form-inline" style="margin-top:20px">
-									{!! Form::open(array('id'=>'user_permission_form','url' => 'admin/user/permission/update', 'method' => 'POST')) !!}
-							
 							      	<?php $permission=Session::get('user_permissions')?>
-							      	 {!!Form::label('Pseudo', 'Pseudo',array('style'=>'margin-right:50px')).Form::text('pseudo', $permission['pseudo'],  $attributes = array('class'=>'form-control','style'=>'width:250px','readonly')) !!}
-						      	</div>
+							    	 <label for="Pseudo" style="margin-right:50px">Pseudo</label>
+						      		 <input class="form-control" style="width:250px" readonly="readonly" name="pseudo" type="text" value={{$permission['pseudo']}}>
+						     	</div>
 							
-									 {!! Form::hidden('permission_id', Session::get('user_permissions')['id'], array('id' => 'id')) !!}
-				  
+									<input id="id" name="permission_id" type="hidden" value={{Session::get('user_permissions')['id']}}>
 								    <div  class="col-sm-12" style="margin-top:20px">
 								    <table id="table_user_permissions" class="line-items editable table table-bordered">
 								         <thead class="panel-heading">
@@ -116,7 +116,7 @@
 								    </table>
 									 </div>
 							   </div>
-			        	  {!! Form::close() !!}
+			        	 </form>
 					</div>
 					<div  class="col-sm-12" style="margin-top:20px">
 						<div class="modal-footer">

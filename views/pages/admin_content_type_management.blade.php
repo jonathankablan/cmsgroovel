@@ -1,7 +1,7 @@
 @extends('cmsgroovel.layouts.groovel_admin_content_type_management')
 @section('content')
 
-    <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+    {{csrf_field()}}
 	<input id='content_type_id' type="hidden" name='content_type_id' value=''>
 	<div class='row'>	 
 	 <div id='error' style='display:none'></div>
@@ -63,8 +63,8 @@
 					<div class="glyphicon glyphicon-pencil" style='margin-top: 25px'><span>Rich Text Editor</span><textarea rows="4" cols="50" class="val" style='overflow:true'></textarea>
 						<div class="toggle-view panel" style='margin-bottom:25px'>
 							<div class="row">
-			            		<div class="col-md-4" style='margin-left:0%'><span class="required">Name</span><input type="text" id="name"  name="name" style='width:100%'/></div>
-			            		<div class="col-md-4" style='margin-left:0%'>Description<input type="text" id='description' name="description" style='width:100%'/></div>
+			            		<div class="col-md-3" style='margin-left:0%'><span class="required">Name</span><input type="text" id="name"  name="name" style='width:100%'/></div>
+			            		<div class="col-md-3" style='margin-left:0%'>Description<input type="text" id='description' name="description" style='width:100%'/></div>
 			            		<div class="col-md-1" style='margin-left:0%'>Required<input id='required' type="checkbox" name="required" /></div>
 			            		<div class="col-md-1 col-md-offset-3" style="margin-left:0%">
 			            		<div  class="col-md-1 col-md-offset-7">widget</div>

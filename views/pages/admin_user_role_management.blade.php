@@ -28,8 +28,8 @@
 				      	<div class="panel-body">
 						  <div class="span3">
 			            	<div class="col-md-9">
-				             	{!! Form::open(array('id'=>'user_role_form','url' => 'admin/user/role/add', 'method' => 'POST')) !!}
-						
+				          		<form method="POST"  action="{{url('admin/user/role/add')}}" accept-charset="UTF-8" id="user_role_form">
+				         		   {{csrf_field()}}
 								   <div  class="col-sm-12" style="margin-top:20px">
 								    <table id="table_user_role" class="line-items editable table table-bordered">
 								         <thead class="panel-heading">
@@ -38,18 +38,23 @@
 									    </thead>
 								        <tr>
 								  		<td class="col-sm-4">
-								       	 {!!Form::text('pseudo', Input::old('pseudo'),  $attributes = array('class' => 'form-control','required'=>'required')) !!}
+								       	<input class="form-control" required="required" name="pseudo" type="text">
 							     		</td>	
 								          <td class="col-sm-7">
-								            {!!Form::select('roles',Session::get('roles'));!!}
+								            <select name="roles">
+								             @foreach(Session::get('roles') as $role)
+								            <option value={{$role}}>{{$role}}</option>
+								             @endforeach
+								            
+								            </select>
 								          </td>
 									       
 										          
 								        </tr>
 								    </table>
 								</div>
+							</form> 
 						</div>
-						  {!! Form::close() !!}
 					</div>
 						<div  class="col-sm-12" style="margin-top:20px">
 							 <div class="modal-footer">

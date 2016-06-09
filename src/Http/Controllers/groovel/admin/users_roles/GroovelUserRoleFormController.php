@@ -15,7 +15,7 @@
 
 namespace Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_roles;
 use Illuminate\Database\Eloquent\Model;
-use Groovel\Cmsgroovel\Http\controllers\groovel\admin\common\GroovelFormController;
+use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelFormController;
 use models;
 use Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelUserRoleManagerBusiness;
 use Monolog\Logger;
@@ -35,7 +35,7 @@ class GroovelUserRoleFormController extends GroovelFormController {
 	{
 		$this->userRoleManager=$userRoleManager;
 		$this->userManager=$userManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
 	private function loadRoles(){

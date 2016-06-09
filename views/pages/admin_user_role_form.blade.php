@@ -21,12 +21,13 @@
 				        <div id='light'></div>
 						<div id='fade'></div> 
 			     <div id='form-modal' class="modal-body">
-						 	   {!! Form::open(array('id'=>'role_form','url' => 'admin/user/role/update', 'method' => 'POST', 'class' => 'form-horizontal well ','style'=>'width:850px')) !!}
-				
-						 	   {!! Form::hidden('id', Session::get('user_role')['id'], array('id' => 'id')) !!}
-						     		<div class="form-group form-inline">
-						     		{!!Form::label('Pseudo', 'Pseudo',array('style'=>'margin-right:50px')).Form::text('pseudo', Session::get('user_role')['pseudo'],  $attributes = array('class'=>'form-control','style'=>'width:250px','readonly')) !!}
-						 		</div>
+						 	  <form method="POST" action="{{url('admin/user/role/update')}}" accept-charset="UTF-8" id="role_form" class='form-horizontal well' style='width:100%'>
+						         {{csrf_field()}}
+						 	   	<input id="id" type="hidden" value={{Session::get('user_role')['id']}}>
+						     	<div class="form-group form-inline">
+						      		 <label for="Pseudo" style="margin-right:50px">Pseudo</label>
+						      		 <input class="form-control" style="width:250px" readonly="readonly" name="pseudo" type="text" value={{ Session::get('user_role')['pseudo']}}>
+						  		</div>
 								<?php $user_role=Session::get('user_role')?>
 								<?php $roles=Session::get('roles')?>
 								<div class="form-group form-inline">
@@ -48,7 +49,7 @@
 			       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			       			 <input type="submit" id="submitForm" value="Save"  class="btn btn-default" />
 			        	 </div>
-			        	  {!! Form::close() !!}
+			        	 </form>
 					</div>
 				  </div>
 				</div>

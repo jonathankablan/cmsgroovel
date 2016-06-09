@@ -24,7 +24,7 @@
 									  		</button>
 									  </div>  		
 								  	 <div class="col-md-2 col-md-offset-0 col-sm-3 col-xs-2  col-xs-offset-6">      
-			            		       {!! HTML::link('/admin/content_type/form', 'Add new content type',array('class' => 'btn btn-default'))!!}
+			            		        <a class="btn btn-default" href="{{ url('/admin/content_type/form') }}">Add new content type</a>
 							         </div>
 							     </div>
 							 </div>

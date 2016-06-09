@@ -60,15 +60,10 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 		return $this->countryDao->all();
 	}
 	
-	/*public function createUrlView($title,$url,$contentTypeid){
-		$name=$this->contentTypeDao->find($contentTypeid);
-		$this->routeDao->create($title,$url,$name);
-	}*/
 
 	public function addContent($title,$data,$description,$tag,$langage,$contentType,$userid,$publish,$weight){
 		 $contents= $this->contentDao->create($description,$contentType,$userid,$publish,$weight);
 		 $contentsTranslation=$this->contentTranslationDao->create($contents->id, $title, $data, $tag, $langage);
-		// $this->createUrlView($title,$url,$contentType);
 		 return $contentsTranslation->getId();
 	}  
 
@@ -202,10 +197,6 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
    	}
    	return $result;
    }
-   
- /*  public function checkUrlUnique($idcontent,$url){
-   	 return $this->contentDao->checkUrlUnique($idcontent,$url);
-   }*/
    
  
 }

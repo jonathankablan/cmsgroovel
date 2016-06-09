@@ -9,10 +9,12 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 	<title>Contact form</title>
-	 {!! HTML::script('groovel/cmsgroovel/jquery/js/jquery-1.11.1.min.js') !!}
-	 {!!HTML::style('groovel/cmsgroovel/bootstrap/css/bootstrap.min.css')!!}
-	 {!! HTML::script('groovel/cmsgroovel/bootstrap/js/bootstrap.js') !!}
-	 {!!HTML::style('groovel/cmsgroovel/groovel/admin/css/dashboard.css')!!}
+	
+	<link href="/groovel/cmsgroovel/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/groovel/cmsgroovel/groovel/admin/css/dashboard.css" rel="stylesheet">
+    <script src="/groovel/cmsgroovel/jquery/js/jquery-1.11.1.min.js"></script>
+    <script src="/groovel/cmsgroovel/bootstrap/js/bootstrap.js"></script>  
+ 	 
   @show
 </head>
 <body>

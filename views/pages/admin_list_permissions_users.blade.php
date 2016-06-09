@@ -21,8 +21,8 @@
 								  		</button>
 							  		</div>
 							  		  <div class="col-md-2 col-md-offset-0 col-sm-3 col-xs-2  col-xs-offset-6">      
-            							   {!! HTML::link('/admin/user/permissions/form', 'Add new user permission',array('class' => 'btn btn-default'))!!}
-         							 </div>
+            							   <a class="btn btn-default" href="{{ url('/admin/user/permissions/form') }}">Add new user permission</a>
+									 </div>
         				  		</div>
 				             </div>
 	          

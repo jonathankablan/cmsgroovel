@@ -17,7 +17,7 @@
 			    </div>
 			    
 				<div class="row" style='margin-top:25px'>
-				 {!! Form::open(array('id'=>'admin_config_form_location','url' => 'admin/configuration/update_audit', 'method' => 'POST')) !!}
+				  <form id='admin_config_form_location'  role="form" method="POST" action="{{ url('admin/configuration/update_audit') }}">
 					<div class="row">
 						<div class="col-md-5 col-md-offset-1 col-xs-offset-2" ><p class="text-left" style='font-size:18px'>enable audit users tracking</p></div>
 						<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
@@ -37,13 +37,14 @@
 								@endforeach
 				     		</select>
 						</div>
+						 <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 					</div>
 					<div class="row" style='margin-top:50px;margin-bottom:25px'>
 						<div class="col-md-3 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
 							<input type="submit" id="admin_config_form_location_submit" value="Save Configuration"  class="btn btn-primary"/>
 						</div>
 					</div>
-					{!! Form::close() !!}	
+				  </form>	
 				</div>
 			</div>
 		</div>
@@ -68,9 +69,9 @@
 			  	    <div class="panel-heading">
 			        	<h3 class="panel-title"><i class="fa fa-clock-o"></i><font color='black'>Activate automatically users at registration</font></h3>
 					</div>
+					<form id='admin_config_activate_user_form'  role="form" method="POST" action="{{ url('admin/configuration/activate/user') }}">
+					 <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 					 <div class="row">
-					  {!! Form::open(array('id'=>'admin_config_activate_user_form','url' => 'admin/configuration/activate/users', 'method' => 'POST')) !!}
-					 
 						<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
 								$state_filter=array();
 								$activate_users=Session::get('configuration')['activate_users'];
@@ -96,9 +97,8 @@
 							<div class="col-md-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
 								<input type="submit" id="admin_config_activate_user_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
 							</div>
-							{!! Form::close() !!}
 						</div>
-					
+				    </form>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -106,8 +106,9 @@
 				 		<div class="panel-heading">
 					        <h3 class="panel-title"><i class="fa fa-clock-o"></i><font color='black'>Maintenance site</font></h3>
 					   </div>
+					<form id='admin_config_maintenance_form' role="form" method="POST" action="{{ url('admin/configuration/maintenance') }}">
+					 <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 					 <div class="row">
-					  {!! Form::open(array('id'=>'admin_config_maintenance_form','url' => 'admin/configuration/maintenance', 'method' => 'POST')) !!}
 					 	<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
 								$state_filter=array();
 								$maintenance=Session::get('configuration')['maintenance'];
@@ -132,9 +133,9 @@
 							<div class="col-md-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
 								<input type="submit" id="admin_config_maintenance_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
 							</div>
-							{!! Form::close() !!}
 						</div>
 					</div>
+					</form>
 				</div>
 			</div>
 	</div>
@@ -144,36 +145,37 @@
 			 		<div class="panel-heading">
 				        <h3 class="panel-title"><i class="fa fa-clock-o"></i><font color='black'>Email settings</font></h3>
 				   </div>
-				 <div class="row">
-				  {!! Form::open(array('id'=>'admin_config_email_form','url' => 'admin/configuration/email', 'method' => 'POST')) !!}
 				 
-					<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
-							$state_filter=array();
-							$email=Session::get('configuration')['email'];
-					 ?>							      
-				      <div class="panel-body">
-			    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>Email function activate</p></div>
-						<div class="col-md-4">
-						    	  @foreach($states as $key=>$state)
-					                 @if(Session::get('configuration')['email']!=$key)
-					                 	<?php $state_filter[$key]=$state;?>
-					                 @endif
-					             @endforeach
-				                <select name="email_service"  class='form-control'>
-									<option value=<?php echo $email?>><?php echo $states[$email]?></option>
-									@foreach($state_filter as $key=>$state)
-									<option value=<?php echo $key?>><?php echo $state?></option>
-									@endforeach
-					     		</select>
-						</div>
-					</div>
+				 <form id='admin_config_email_form' role="form" method="POST" action="{{ url('admin/configuration/email') }}">
+				  <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 					 <div class="row">
-						 <div class="col-md-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
-							<input type="submit" id="admin_config_email_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
+						<?php   $states=['0'=>'Disabled','1'=>'Enabled'];
+								$state_filter=array();
+								$email=Session::get('configuration')['email'];
+						 ?>							      
+					      <div class="panel-body">
+				    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>Email function activate</p></div>
+							<div class="col-md-4">
+							    	  @foreach($states as $key=>$state)
+						                 @if(Session::get('configuration')['email']!=$key)
+						                 	<?php $state_filter[$key]=$state;?>
+						                 @endif
+						             @endforeach
+					                <select name="email_service"  class='form-control'>
+										<option value=<?php echo $email?>><?php echo $states[$email]?></option>
+										@foreach($state_filter as $key=>$state)
+										<option value=<?php echo $key?>><?php echo $state?></option>
+										@endforeach
+						     		</select>
+							</div>
 						</div>
-						{!! Form::close() !!}
+						 <div class="row">
+							 <div class="col-md-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
+								<input type="submit" id="admin_config_email_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
+							</div>
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 		<div class="col-md-6">
@@ -182,22 +184,23 @@
 					        <h3 class="panel-title"><i class="fa fa-clock-o"></i><font color='black'>Number contents by page</font></h3>
 					   </div>
 					 <div class="row">
-					  {!! Form::open(array('id'=>'admin_config_contents_form','url' => 'admin/configuration/number_contents_by_page', 'method' => 'POST')) !!}
+					   <form id='admin_config_contents_form'  role="form" method="POST" action="{{ url('admin/configuration/number_contents_by_page') }}">
 					 	<?php   
 								$max_contents=Session::get('configuration')['max_contents'];
 						 ?>							      
 					      <div class="panel-body">
 				    		<div class="col-md-4"><p class="text-left" style='font-size:18px'>max number contents</p></div>
 							<div class="col-md-4">
-							   {!!Form::text('max_contents',Session::get('configuration')['max_contents']) !!}
+							   <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+							   <input type='text' name='max_contents' class="form-control" value={!! Session::get('configuration')['max_contents']!!}>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-2">
 								<input type="submit" id="admin_config_contents_form_submit" value="Save Configuration"  class="btn btn-primary" style="margin-top:50px;margin-bottom:25px"/>
 							</div>
-							{!! Form::close() !!}
 						</div>
+						</form>
 					</div>
 				</div>
 		</div>
@@ -335,7 +338,6 @@ $("#admin_config_search_form").click(function (event) {
 $("#admin_config_maintenance_form_submit").click(function (event) {
 	form=$('#admin_config_maintenance_form').serialize();
 	$.post('/admin/configuration/maintenance', form, function (data, textStatus) {
-		console.log(data);
 		var parsed = JSON.parse(data);
 		if(parsed['success']){
 			  $("#alertmsg").css("color","green");
@@ -411,9 +413,9 @@ $("#admin_config_activate_user_form_submit").click(function (event) {
 
 
 $("#admin_config_contents_form_submit").click(function (event) {
+	console.log("eeee");
 	form=$('#admin_config_contents_form').serialize();
 	$.post('/admin/configuration/number_contents_by_page', form, function (data, textStatus) {
-		console.log(data);
 		var parsed = JSON.parse(data);
 		if(parsed['success']){
 			  $("#alertmsg").css("color","green");

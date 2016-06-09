@@ -35,7 +35,7 @@ class GroovelUserRulesController extends GroovelController {
 		$this->permissionManager=$permissionManager;
 		$this->contentTypeManager=$contentTypeManager;
 		$this->userRoleManager=$userRoleManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
    public function checkAccessRulesURL($user,$params){

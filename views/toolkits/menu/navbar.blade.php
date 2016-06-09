@@ -17,21 +17,21 @@
 	                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>
 	                       @if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif<b class="caret"></b></a>
 	                       <ul class="dropdown-menu">
-	                            <li>{!! HTML::link('user/view/profile', 'Settings')!!}</li>
-	                            <li>   {!! HTML::link('/messages/list', 'Messages')!!}</li>                    
+	                            <li><a href="{{ url('user/view/profile') }}">Settings</a></li>
+	                            <li><a href="{{ url('messages/list') }}">Messages</a></li>                   
 	                           @if (Auth::check())
-	              				<li>{!! link_to('admin/auth/logout', 'Log out') !!}</li>
+	              				<li><a href="{{ url('/admin/auth/logout') }}">Log out</a></li>
 	     					  @endif
 	                       </ul>
 	                   </li>
 	                @elseif(\Auth::user()==null) 
-	                   <li style='margin-left:400px'>{!! link_to('admin', 'Log in or Register') !!}</li>
+	                   <li style='margin-left:400px'><a href="{{ url('admin') }}">Log in or Register</a></li>
 	                @endif
 	                
 	                
 	             	<li style='margin-left:50px'>
 	                	<form  class="form-inline" role="form" id="languagechoice" name='languagechoice' method="post" action="">
-	                	    <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+	                	    {{csrf_field()}}
 		                    <input type='hidden' name="language" id='lang' value=''>
 	                	 
 	                    	 <div class="form-group in-line">

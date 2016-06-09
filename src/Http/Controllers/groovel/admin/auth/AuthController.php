@@ -79,9 +79,9 @@ class AuthController extends GroovelController {
   	    $this->permissionManager=$permissionManager;
   	    $this->configManager=$configManager;
   	    $this->messageManager=$messageManager;
-        $this->beforeFilter('auth', array('only' => 'getLogout'));
-        $this->beforeFilter('guest', array('except' => 'getLogout'));
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        $this->middleware('auth', ['only' => 'getLogout']);
+        $this->middleware('guest',['except' => 'getLogout']);
+        $this->middleware('csrf', ['on' => 'post']);
   }
  
   /**

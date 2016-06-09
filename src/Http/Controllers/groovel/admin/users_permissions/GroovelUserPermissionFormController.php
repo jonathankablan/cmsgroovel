@@ -39,7 +39,7 @@ class GroovelUserPermissionFormController extends GroovelFormController {
 		$this->userManager=$userManager;
 		$this->contentTypeManager=$contentTypeManager;
 		$this->permissionManager=$permissionManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
 

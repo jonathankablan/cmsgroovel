@@ -165,11 +165,14 @@
 	<div class="col-md-10" style='margin-top: 100px'>
 			<div class='row'>
 				<div class='col-md-3 col-md-offset-1'>
-					 {!!Form::label('Choose your content template', 'Choose your content template',array('class'=>'required'))!!}  
-				</div>	
+					 <label class="required">Choose your content template</label>
+	    		</div>	
 				<div class='col-md-5'>	
-					{!! Form::select('content_types',Session::get('content_types'),'default',
-				 array('class' => 'form-control','id'=> 'a','onchange'=>'showContentType(this.value,"/admin/content/form/view_update");clearFileOldList()')) !!}
+				 <select class="form-control" id="a" onchange="showContentType(this.value,&quot;/admin/content/form/view_update&quot;);clearFileOldList()" name="content_types">
+					  @foreach(Session::get('content_types') as $content_type)
+					  	<option value={{$content_type}}>{{$content_type}}</option>
+					  @endforeach
+				 </select>
 				</div>
 			</div>
 	</div>

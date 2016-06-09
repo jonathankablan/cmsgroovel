@@ -22,7 +22,7 @@
 									  		</button>
 									  	</div>
 									  	<div class="col-md-2 col-md-offset-0 col-sm-3 col-xs-2  col-xs-offset-6">      
-			            						{!! HTML::link('/messages/compose', 'Write Message',array('class' => 'btn btn-default'))!!}
+			            					<a href= action="{{url('messages/compose') }}" class="btn btn-default">Write Message</a>
 			          					</div>
 							  		</div>
 							  	</div>

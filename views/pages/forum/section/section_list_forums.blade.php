@@ -5,7 +5,7 @@
          <div class="row" style="margin-bottom:50px">
 	           @if(Session::get('user_privileges')['role']=='ADMIN') 
 	              <div class="col-md-1" style='margin-top:30px'> 
-	             {!! HTML::link('/admin/forum/form', 'Create Forum',array('class' => 'btn btn-default'))!!}
+	              	<a href="{{url('/admin/forum/form')}}" class="btn btn-default">Create Forum</a>
 	             </div>
 	            @endif
          </div>
@@ -32,11 +32,11 @@
 					                            <td id="row_forum" class="col-md-1 hidden-xs hidden-sm"  style='border:1px solid black;' >{!!$forum['forum_id']!!}</td>
 					                            <td id="row_forum" class="col-md-1" style='border:1px solid black;' >
 					                             @if(!isset($view))
-					                            {!! HTML::link('/forum/?forumName='.$forum['forum_name'].'&id='.$forum['forum_id'], $forum['forum_name'],array('class'=>'forumlink'))!!}</td>
-					                            @endif
+					                            <a href="{{url('/forum/?forumName='.$forum['forum_name'].'&'.'id='.$forum['forum_id']) }}" class="forumlink">{!!$forum['forum_name']!!}</a></td>
+					                  		     @endif
 					                            @if(isset($view))
-					                             {!! HTML::link('/forum/?forumName='.$forum['forum_name'].'&id='.$forum['forum_id'].'&view='.$view, $forum['forum_name'],array('class'=>'forumlink'))!!}</td>
-					                            @endif
+					                              <a href="{{url('/forum/?forumName='.$forum['forum_name'].'&'.'id='.$forum['forum_id'].'&'.'view='.$view) }}" class="forumlink">{!!$forum['forum_name']!!}</a></td>
+					                  	        @endif
 					                            <td id="row_forum" class="col-md-1" style='border:1px solid black;' >{!!$forum['forum_description']!!}</td> 
 					                            <td id="row_forum" class="col-md-1 hidden-xs" style='background:#D8D8D8;border:0.2px solid black;' >{!!$forum['subjects']!!}</td>
 					                            <td id="row_forum" class="col-md-1 hidden-xs hidden-sm" style='background:#D8D8D8;border:1px solid black;' >{!!$forum['messages']!!}</td>
@@ -51,6 +51,8 @@
 					                          @endif
 					                        </tbody>
 					                    </table>
+					                    
+					                   
 	        		</div>    
      		</div>
  

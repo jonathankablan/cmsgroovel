@@ -40,10 +40,8 @@ class GroovelFilterController extends GroovelController {
 	      if( $configController->isAuditTrackingUserEnable()=='1' && $userTrackingController->tracking_ip()!='127.0.0.1' && $route->audit_tracking_url_enable=='1'){
 	      	$userTrackingController->saveTrackingUserInfo();
 	      }
-	     if (\Auth::guest() && isset($route->before_filter)&&$route->before_filter=='yes'){
-	      		return \View::make('cmsgroovel.pages.login_form');
-	     }
-	  	   $params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'before_filter'=>$route->before_filter,'subtype'=>$route->subtype,'action'=>$route->action,'type'=>$route->type);
+	     
+	  	   $params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'middleware'=>$route->middleware,'subtype'=>$route->subtype,'action'=>$route->action,'type'=>$route->type);
 	 	   $hasAccessForUser=$rulesController->checkAccessRulesURL(\Auth::user(),$params);
 	 	 
 	 	 // \Log::info($params);

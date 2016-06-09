@@ -10,17 +10,19 @@
 					    </div>
 					    <div id='light'></div>
 						<div id='fade'></div>
-					     <div id='form-modal' class="modal-body">
-					    	{!! Form::open(array('id'=>'topic_form','url' => 'forum/topic/reply/post', 'method' => 'POST', 'class' => 'form-horizontal well ')) !!}
-						 	  <input style='display:none;' type='text' id='ctrl1' name='ctrl1' value='spamcontroller'>
-							 <input style='display:none;' type='text' id='ctrl2' name='ctrl2' value=''>
-				             <input type='hidden' name='leave_blank'/>
-				              <input type='hidden' name='forum_id' value={!!$forumid!!}/>
-				              <input type='hidden' name='topic_id' value={!!$topic_id!!}/>
-	    						<div class="form-group form-inline">
-								 {!! Form::label('message', 'message',array('class'=>'required','style'=>'margin-right:55px')).Form::textarea('message', Input::old('message'), array('class'=>'form-control','style'=>'width:450px')) !!}
-								</div>
-														   
+						<form method="POST"  action=" {{ url('forum/topic/reply/post') }}" accept-charset="UTF-8" id="topic_form" class='form-horizontal well'>
+						 {{csrf_field()}}
+	       			     <div id='form-modal' class="modal-body">
+						     	 <input style='display:none;' type='text' id='ctrl1' name='ctrl1' value='spamcontroller'>
+								 <input style='display:none;' type='text' id='ctrl2' name='ctrl2' value=''>
+					             <input type='hidden' name='leave_blank'/>
+					             <input type='hidden' name='forum_id' value={!!$forumid!!}/>
+					             <input type='hidden' name='topic_id' value={!!$topic_id!!}/>
+		    						<div class="form-group form-inline">
+									 <label for="message" style="margin-right:55px" class='required'>message</label>
+									 <textarea class="form-control" style="width:450px" placeholder="write here your message" name="message" cols="50" rows="10" id="message">
+									 </textarea>
+				      				</div>
 					     </div>
 					      <div class="modal-footer">
 						     <p class='required' style='font-size:15px;margin-right:80%'>Fields are required</p>
@@ -28,7 +30,7 @@
 			       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			       			 <input type="submit" id="submitForm" value="Send"  class="btn btn-default"/>
 			        	 </div>
-			        	   {!! Form::close() !!}
+			        	 </form>
 					</div>
 				</div>
 </div>

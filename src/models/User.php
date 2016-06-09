@@ -217,5 +217,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 	
 	
+	public function getAuthIdentifierName(){}
 	
 }

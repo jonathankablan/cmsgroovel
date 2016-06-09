@@ -30,7 +30,7 @@ class GroovelUserFormController extends GroovelFormController {
 	public function __construct( GroovelUserManagerBusinessInterface $userManager)
 	{
 		$this->userManager=$userManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
 	public function makeValidation($params){

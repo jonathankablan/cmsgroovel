@@ -19,9 +19,9 @@
                         <li class="dropdown dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Users</a>
                             <ul class="dropdown-menu">
-                                <li>{!! HTML::link('/admin/users', 'View users')!!}</li>
+                                 <li><a href="{{ url('/admin/users') }}">View users</a></li>
 			              	 	 <li class="divider"></li>
-			              		 <li>{!! HTML::link('/admin/user/form', 'Add new user')!!}</li>
+			               		 <li><a href="{{ url('/admin/user/form') }}">Add new user</a></li>
                             </ul>
                             </li>
                              <li class="divider"></li>
@@ -29,18 +29,18 @@
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Users Permissions</a>
 			                 
 			                   <ul class="dropdown-menu">
-				                   <li>{!! HTML::link('/admin/users/permissions', 'View users permissions')!!}</li>
-					           	    <li class="divider"></li>
-					            	 <li>{!! HTML::link('/admin/user/permissions/form', 'Add user permissions')!!}</li>
+				                    <li><a href="{{ url('/admin/users/permissions') }}">View users permissions</a></li>
+				               	    <li class="divider"></li>
+					            	<li><a href="{{ url('/admin/user/permissions/form') }}">Add user permissions</a></li>
 					          	</ul>
 					      </li>
 			                <li class="divider"></li>
                              <li class="dropdown dropdown-submenu">
 			                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Users Roles </a>
 			                   <ul class="dropdown-menu">
-				              	 <li>{!! HTML::link('/admin/user/role/form', 'Add user roles')!!}</li>
-				              	   <li class="divider"></li>
-				              	  <li>{!! HTML::link('/admin/users/roles', 'View Users roles')!!}</li>
+				               	  <li><a href="{{ url('/admin/user/role/form') }}">Add user roles</a></li>
+				              	  <li class="divider"></li>
+				              	  <li><a href="{{ url('/admin/users/roles') }}">View Users roles</a></li>
 				               	</ul>
 				              </li>
 				         </ul>
@@ -52,32 +52,26 @@
 		                 <li class="dropdown dropdown-submenu">
 			                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">System configuration</a>
 			                   <ul class="dropdown-menu">
-				              	 <li>{!! HTML::link('/admin/config_system', ' Configuration')!!}</li>
+				               	  <li><a href="{{ url('/admin/config_system') }}">Configuration</a></li>
 				              	</ul>
 				         </li>
-		                      
-		                      <li class="divider"></li>
-		               
-		               
-		               
-		               
-		               
-		                 <li class="dropdown dropdown-submenu">
+	                    <li class="divider"></li>
+                        <li class="dropdown dropdown-submenu">
 			                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Packages Management</a>
 			                   <ul class="dropdown-menu">
-				              	 <li>{!! HTML::link('/admin/packages', 'View Packages')!!}</li>
-				               	</ul>
+				              	  <li><a href="{{ url('/admin/packages') }}">View Packages</a></li>
+				               </ul>
 				         </li>
 		                
 		                
-		                 <li class="divider"></li>
+		                <li class="divider"></li>
 		                <li class="dropdown dropdown-submenu">
 			                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage System Pages </a>
 			                   <ul class="dropdown-menu">
-				              	   <li>{!! HTML::link('/admin/routes', 'View Pages System')!!}</li>
+				              	   <li><a href="{{ url('/admin/routes') }}">View Pages System</a></li>
 		          		    	   <li class="divider"></li>
-				               		<li>{!! HTML::link('/admin/routes/form', 'Add Pages System')!!}</li>
-		          		   		</ul>
+		          		    	   <li><a href="{{ url('/admin/routes/form') }}">Add Pages System</a></li>
+				        		</ul>
 				        </li>
 				        </ul>
 		             </li>    
@@ -85,26 +79,19 @@
 		              <li class="dropdown">
 		              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-th-list'></span>Forums <span class="caret"></span></a>
 		              <ul class="dropdown-menu" role="menu">
-		                <!-- <li><a href="./admin/routes">List Routes</a></li>-->
-		                <li>{!! HTML::link('/forums/view', 'View forums')!!}</li>
+		                  <li><a href="{{ url('/forums/view') }}">View forums</a></li>
 		              </ul>
 		            </li>
 		            
 		            <li class="dropdown">
 		              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-book'></span>Blog <span class="caret"></span></a>
 		              <ul class="dropdown-menu" role="menu">
-		              	<li>
-		              	<a href={!! url('/blogs') !!} target="_blank">Blog Home</a>
-		              	</li>
+		              	<li><a href="{{ url('/blogs') }}" target="_blank">Blog Home</a></li>
 		              	<li class="divider"></li>
-		                <li>{!! HTML::link('/blog/posts', 'Quick Post')!!}</li>
+		                <li><a href="{{ url('/blog/posts') }}">Quick Post</a></li>
 		              </ul>
 		            </li>
-		            
-		             
-		              <!-- <li>{!! HTML::link('/search', 'Search')!!}</li>-->
-		             
-         	 </ul>
+	      	 </ul>
          	 <div class="col-sm-2 col-md-2 col-md-offset-0 hidden-sm">
 		       <form id='search_form' class="navbar-form" role="search" action='/admin/search/execute' method='post'>
 		        <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -118,14 +105,15 @@
         	</div>
          	  <ul class="nav navbar-nav navbar-right navbar-user" style='margin-right:10px'>
                     <li class="dropdown user-dropdown">
-                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>@if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif<b class="caret"></b></a>
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>
+                       @if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif<b class="caret"></b></a>
                        <ul class="dropdown-menu">
-                            <li>{!! HTML::link('user/view/profile', 'Settings')!!}</li>
+                            <li><a href="{{ url('/user/view/profile') }}">Settings</a></li>
                             <li class="divider"></li>
-                            <li>   {!! HTML::link('/messages/list', 'Messages')!!}</li>                    
+                            <li><a href="{{ url('/messages/list') }}">Messages</a></li>                  
                            <li class="divider"></li>
-                          @if (Auth::check())
-              				<li>{!! link_to('admin/auth/logout', 'Log out') !!}</li>
+                         @if (Auth::check())
+              				<li><a href="{{ url('/admin/auth/logout') }}">Log out</a></li>
      					@endif
                        </ul>
                    </li>
@@ -133,6 +121,4 @@
             </div>
           
         </nav>
-<!-- <script>
-$(document).ready(bindSearch());
-</script> -->
+>

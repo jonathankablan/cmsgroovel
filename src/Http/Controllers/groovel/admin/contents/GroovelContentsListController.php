@@ -37,7 +37,7 @@ class GroovelContentsListController extends GroovelController {
 	{
 		$this->contentManager=$contentManager;
 		$this->configurationManager=$configurationManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 
 	

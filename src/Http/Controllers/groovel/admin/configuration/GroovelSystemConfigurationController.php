@@ -30,7 +30,7 @@ class GroovelSystemConfigurationController extends GroovelController {
 	public function __construct( GroovelConfigurationBusinessInterface $configBusiness)
 	{
 		$this->configBusiness =$configBusiness;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
 	public function validateForm()

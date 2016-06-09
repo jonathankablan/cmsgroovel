@@ -7,6 +7,6 @@
 
     <title>Groovel Platform</title>
 
-    {!!HTML::style('groovel/cmsgroovel/bootstrap/css/bootstrap.min.css')!!}
-     {!!HTML::style('groovel/cmsgroovel/groovel/admin/css/login.css')!!}
-    
+    <link href="/groovel/cmsgroovel/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/groovel/cmsgroovel/groovel/admin/css/login.css" rel="stylesheet">
+     

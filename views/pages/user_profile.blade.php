@@ -10,10 +10,10 @@
 				   </div>	 
 				 <div id="userphoto" class="col-md-3 thumbnail">
 					@if(Session::get('user')['userpicture']==null)
-						{!! HTML::image('groovel/cmsgroovel/groovel/admin/images/avatar.png', $alt="default avatar") !!}
+						<img src="/admin/images/avatar.png" alt="default avatar">
 					@endif
 					@if(Session::get('user')['userpicture']!=null)
-					{!!HTML::image( Session::get('user')['userpicture'],'')!!}
+					<img src="/{{Session::get('user')['userpicture']}}">
 					@endif
 				</div>
 				 

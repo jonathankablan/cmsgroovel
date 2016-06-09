@@ -10,65 +10,63 @@
 			    <div id='light'></div>
 				<div id='fade'></div>
 			   <!-- uri name page view type subtype -->
-			    {!! Form::open(array('id'=>'page_form','url' => 'admin/pages/add', 'method' => 'POST')) !!}
+			    <form id='page_form' role="form" method="POST" action="{{ url('admin/pages/add') }}">
+	          {{ csrf_field() }}
 				<input id='page_id' type="hidden" name='page_id' value=''>
 			    
 			    <div class="form-group form-inline" id="name" data-toggle="tooltip" title="the title of your page">
-				    {!! Form::label('title', 'title',array('class'=>'required col-md-2')).Form::text('title', Input::old('title'), array('class'=>'form-control','style'=>'width:50%')) !!}
-				  </div>
-			    
-			    
+				    <label class="required col-md-2" for='title'>title</label>
+	                 <input type='text' id='title 'name='title' class="form-control" style='width:50%'/>
+	            </div>
 			     <div class="form-group form-inline" id="name" data-toggle="tooltip" title="the name of your page">
-				    {!! Form::label('view', 'page name',array('class'=>'required col-md-2')).Form::text('view', Input::old('view'), array('class'=>'form-control','style'=>'width:50%')) !!}
-				  </div>
-				
-				
+				     <label class="required col-md-2">page name</label>
+	                 <input type='text' id='view' name='view' class="form-control" style='width:50%'/>
+				 </div>
 			   	 <div class="form-group form-inline" id="uri" data-toggle="tooltip" title="the url which you call your page example test and to get your page you call it http://yourserver//test">
-				      {!! Form::label('url', 'url',array('class'=>'required col-md-2')).Form::text('url', Input::old('url'), array('class'=>'form-control','style'=>'width:50%')) !!}
+				     <label class="required col-md-2">url</label>
+	                 <input type='text' id='url' name='url' class="form-control" style='width:50%'/>
 				  </div>
 		
 		    		@if($layouts!=null)
 						<div class="form-group form-inline">
-						  {!! Form::label('type', 'type',array('class'=>'required col-md-2'))!!}
-					
-							<select name="template" class='form-control' style='width:50%'>
+					 	 <label class="required col-md-2">type</label>
+	              			<select name="template" class='form-control' style='width:50%'>
 								@foreach($layouts as $layout)
-								<option value=<?php echo $layout?>><?php echo $layout?></option>
+								    @if($layout!='vendor' and $layout!='errors')
+										<option value=<?php echo $layout?>><?php echo $layout?></option>
+									@endif
 								@endforeach
 				     		</select>
 			     		</div>
 					@endif
 				
-				<!-- public-->
 			     <div class="form-group form-inline" id="activate_route" data-toggle="tooltip" title="enable it to access to your page by this uri">
-				   {!! Form::label('activate_route', 'activate',array('class'=>'col-md-2'))!!}
+				    <label class="col-md-2">activate_route</label>
 	               		<select name="activate_route"  class='form-control'>
 							<option value='0'>disabled</option>
 							<option value='1'>enabled</option>
 						</select>
 				 </div>
-				
-				{!! Form::close() !!}
+				 </form>
+			
 				 	<button class="btn btn-info" type="submit" id='submitForm'>Save</button>
 					<button class='btn btn-info' id='delete'>delete</button>
 				    <button class='btn btn-info' id='preview'>preview</button>
-				
-		
-		       
-		     	  <div class="form-group" style='margin-left:10px;margin-top:50px'>
+			   
+				<div class="form-group" style='margin-left:10px;margin-top:50px'>
 				     <span class="glyphicon glyphicon-pencil"></span> Edition Page(code view)
 				     <div class="toggle-view panel">
-				    {!! Form::open(array('id'=>'page_editcode_form','url' => 'admin/pages/code/save', 'method' => 'POST')) !!}
-					     <div class="form-group form-inline">
-								 <!--edit page  -->
-							
-								<textarea id='page_edit' cols='130' rows='20'>{!!Session::get('page_edit')!!}</textarea>
-						 </div>
-			    	{!! Form::close() !!}
+					    <form method="POST" action="{{ url('admin/pages/code/save') }}" accept-charset="UTF-8" id="page_editcode_form">
+					     {{ csrf_field() }}
+						     <div class="form-group form-inline">
+									 <!--edit page  -->
+								
+									<textarea id='page_edit' cols='130' rows='20'></textarea>
+							 </div>
+				    	</form>
 			    		<button class="btn btn-info" type="submit" id='submitFormCode'>Save modification code</button>		 	
-			        </div>
-			    </div>	
-				
+			    	 </div>
+			     </div>		
 	</div>
 
 <style type="text/css">

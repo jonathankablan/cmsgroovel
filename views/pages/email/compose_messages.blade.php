@@ -20,27 +20,35 @@
 				        @endif
 				       <div id='light'></div>
 						<div id='fade'></div>
+						<form method="POST" action="{{ url('messages/send') }}" accept-charset="UTF-8" id="message_form">
+					
 			       		<div id='form-modal' class="modal-body" style='height:400px' >
 						<!--  form email-->
-						{!!Form::open(array('id'=>'message_form','url' => 'messages/send', 'method' => 'post'))!!}
+						{{csrf_field()}}
+					
 							   <div class="form-group form-inline">
 				                @if(Session::get('reply_subject')!=null)
-				                  {!! Form::label('subject', 'Subject',array('class'=>'required','style'=>'margin-right:65px')).Form::text('subject',  Session::get('reply_subject'), array('class'=>'form-control','placeholder' => 'your subject','readonly')) !!}
+					               	 <label for="subject" class="required" style="margin-right:65px">Subject</label>
+					               	 <input class="form-control" style="width:100%" placeholder="your subject" name="subject" type="text" id="subject" value={{Session::get('reply_subject')}}>
 				               @endif
 				                @if(Session::get('reply_subject')==null)
-				                 {!! Form::label('subject', 'Subject',array('class'=>'required','style'=>'margin-right:65px')).Form::text('subject', Input::old('subject'), array('class'=>'form-control','style'=>'width:100%','placeholder' => 'your subject')) !!}
-				               @endif
+				           	       	 <label for="subject" class="required" style="margin-right:65px">Subject</label>
+					               	 <input class="form-control" style="width:100%" placeholder="your subject" name="subject" type="text" id="subject">
+				                @endif
 				              </div>
 				                <div class="form-group form-inline">
 				                @if(Session::get('reply_user')!=null)
-				                   {!! Form::label('recipient', 'To',array('class'=>'required','style'=>'margin-right:100px')).Form::text('recipient', Session::get('reply_user'), array('class'=>'form-control','style'=>'width:100%','placeholder' => 'pseudo','readonly')) !!}
+				                    <label for="recipient" class="required" style="margin-right:100px">To</label>
+				                    <input class="form-control" style="width:100%" placeholder="pseudo" name="recipient" type="text" id="recipient" value={{Session::get('reply_user')}}>
 				                @endif
 				                @if(Session::get('reply_user')==null)
-				                	{!! Form::label('recipient', 'To',array('class'=>'required','style'=>'margin-right:100px')).Form::text('recipient', Input::old('recipient'), array('class'=>'form-control','style'=>'width:100%','placeholder' => 'pseudo')) !!}
+				               		<label for="recipient" class="required" style="margin-right:100px">To</label>
+				                    <input class="form-control" style="width:100%" placeholder="pseudo" name="recipient" type="text" id="recipient">
 				                @endif
 				              </div>
 				               <div class="form-group form-inline">
-				                {!! Form::label('body', 'Message',array('style'=>'margin-right:70px')).Form::textarea('body', Input::old('body'), array('class'=>'form-control','style'=>'width:100%','placeholder' => 'write here your message')) !!}
+				               	<label for="body" style="margin-right:70px">Message</label>
+				              	<textarea class="form-control" style="width:100%" placeholder="write here your message" name="body" cols="50" rows="10" id="body"></textarea>
 				              </div>
 				            </div>
 						 <div class="modal-footer">
@@ -49,7 +57,7 @@
 			       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			       			 <input type="submit" id="submitForm" value="Send"  class="btn btn-default" data-dismiss="modal"/>
 			        	 </div>
-			        	  {!! Form::close() !!}
+			        	</form>
 					</div>
 				  </div>
 		</div>

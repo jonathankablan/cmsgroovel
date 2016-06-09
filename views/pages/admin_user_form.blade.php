@@ -10,9 +10,11 @@
 			        @endif
 			    </div>
 		 
-			    <div class="col-md-12">
-			    <div id='error' style='display:none'></div>
-			     <div id='modal' class="modal fade" style="display: none;overflow:scroll;z-index: 1041" data-keyboard="true" data-backdrop="static" tabindex='-1' >
+	     <div class="col-md-12">
+		<div id='error' style='display:none'></div>
+		
+			 <form method="POST" action="{{url('admin/user/update')}}" accept-charset="UTF-8" id="user_form" class="form-horizontal">
+			   <div id='modal' class="modal fade" style="display: none;overflow:scroll;z-index: 1041" data-keyboard="true" data-backdrop="static" tabindex='-1' >
 			     	 	  <div class="modal-dialog">
 						  	<div class="modal-content">
 							 	<div class="modal-header" style='background-color:#E5E4E2'>
@@ -35,25 +37,28 @@
 								@endif
 							     <div id='form-modal' class="modal-body">
 									<div class="panel-body">
-												{!! Form::open(array('id'=>'user_form','url' => 'admin/user/update', 'method' => 'POST', 'class' => 'form-horizontal well ')) !!}
-										 	   {!! Form::hidden('id', Session::get('user_edit')['id'], array('id' => 'id')) !!}
-										 		 <input id='token' type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+										 	     <input id="id" name="id" type="hidden" value={{Session::get('user_edit')['id']}}>
+										 		 {{ csrf_field() }}
 										 		 <input id='action' type="hidden" name="action" value="admin/user/update">
 		                	
 										 		<div class="form-group form-inline">
 				     							  @include('cmsgroovel.sections.picture_user')
 				     							</div>
 												<div class="form-group form-inline">
-													{!! Form::label('username', 'username',array('class'=>'required')).Form::text('username', Session::get('user_edit')['username'],  $attributes = array('class' => 'form-control','style'=>'width:100%','readonly')) !!}
+													<label for="username" class="required">username</label>
+													<input class="form-control" style="width:100%" readonly="readonly" name="username" type="text" value={{Session::get('user_edit')['username']}} id="username">
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('pseudo', 'pseudo',array('class'=>'required')).Form::text('pseudo', Session::get('user_edit')['pseudo'],  $attributes = array('class' => 'form-control','style'=>'width:100%','readonly')) !!}
+													<label for="pseudo" class="required">pseudo</label>
+													<input class="form-control" style="width:100%" readonly="readonly" name="pseudo" type="text" value={{ Session::get('user_edit')['pseudo']}} id="pseudo">
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('email', 'email',array('class'=>'required')).Form::text('email', Session::get('user_edit')['email'],  $attributes = array('class' => 'form-control','style'=>'width:100%')) !!}
+													<label for="email" class="required">email</label>
+													<input class="form-control" style="width:100%" name="email" type="text" value={{Session::get('user_edit')['email']}} id="email">
 												</div>
 												<div class="form-group form-inline">
-													{!! Form::label('password', 'password reset').Form::text('password', Session::get('user_edit')['password'],  $attributes = array('class' => 'form-control','style'=>'width:100%')) !!}
+													<label for="password">password reset</label>
+													<input class="form-control" style="width:100%" name="password" type="text" value="" id="password">
 												</div>
 											    <div class="form-group form-inline">
 									                <?php   $states=['0'=>'disabled','1'=>'enabled'];
@@ -61,8 +66,8 @@
 														$notification_email_enable=Session::get('user_edit')['notification_email_enable'];
 												 	?>	
 												 	@if(Session::get('user_edit')!=null)		
-									                {!! Form::label('notification_email_enable', 'notification by email',array('style'=>'margin-right:60px'))!!}
-									           			  @foreach($states as $key=>$state)
+									                   <label for="notification_email_enable" style="margin-right:60px">notification by email</label>
+									                    @foreach($states as $key=>$state)
 											                 @if($notification_email_enable!=$key)
 											                 	<?php $state_filter[$key]=$state;?>
 											                 @endif
@@ -83,7 +88,7 @@
 														$activate=Session::get('user_edit')['activate'];
 												 	?>	
 												 	@if(Session::get('user_edit')!=null)		
-									                {!! Form::label('activate', 'activate user',array('style'=>'margin-right:105px'))!!}
+									                   <label for="activate" style="margin-right:105px">activate user</label>
 									           			  @foreach($states as $key=>$state)
 											                 @if($activate!=$key)
 											                 	<?php $state_filter[$key]=$state;?>
@@ -98,19 +103,18 @@
 											     	@endif
 											   </div>
 											   @endif
-											<!-- {!! Form::submit('Submit',array('class'=>'btn btn-default'))!!}-->
-										
-				  				   		</div>
+				 				   		</div>
 								 </div>
 								 <div class="modal-footer">
 					       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					       			 <input type="submit" id="submitForm" value="Save"  class="btn btn-default" data-dismiss="modal" data-token="{{ csrf_token() }}"/>
 					        	 </div>
+					        	 
 							</div>
-								{!! Form::close() !!}
-						  </div>
-						</div>
-		 	 	</div>
+					 </div>
+				</div>
+			</form>
+		</div>
 	 </div>
 <script>
 $(document).ready(function() {

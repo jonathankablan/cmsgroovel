@@ -7,31 +7,29 @@
 
     <title>Groovel Platform</title>
 
-    {!!HTML::style('groovel/cmsgroovel/bootstrap/css/bootstrap.min.css')!!}
-     {!!HTML::style('groovel/cmsgroovel/groovel/files/css/fileselect.css')!!}
    
-     {!!HTML::style('groovel/cmsgroovel/groovel/admin/css/common.css')!!}
-    {!!HTML::style('groovel/cmsgroovel/groovel/admin/css/content.css')!!}
-    {!! HTML::script('groovel/cmsgroovel/jquery/js/jquery-1.11.1.min.js') !!}
-    {!! HTML::script('groovel/cmsgroovel/groovel/files/js/tools-files.js') !!}
+    <link href="/groovel/cmsgroovel/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/groovel/cmsgroovel/groovel/files/css/fileselect.css" rel="stylesheet">
+  	<link href="/groovel/cmsgroovel/groovel/admin/css/common.css" rel="stylesheet">
+  	<link href="/groovel/cmsgroovel/groovel/admin/css/content.css" rel="stylesheet">
+   
+    <script src="/groovel/cmsgroovel/jquery/js/jquery-1.11.1.min.js"></script>
+    <script src="/groovel/cmsgroovel/groovel/files/js/tools-files.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/admin/js/groovel_functions.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/admin/js/groovel_contents.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/admin/js/groovel_forum.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/admin/js/groovel_langages.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/admin/js/groovel_packages.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/admin/js/groovel_permissions.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/admin/js/groovel_routes.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/admin/js/groovel_users.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/admin/js/groovel_layout.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/admin/js/groovel_menu.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/admin/js/groovel_search.js"></script>  
+    <script src="/groovel/cmsgroovel/bootstrap/js/bootstrap.js"></script>  
+    <script src="/groovel/cmsgroovel//jquery/js/jquery-ui.js"></script>  
   
-    {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_functions.js') !!}
-    
-    {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_contents.js') !!}
-    {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_forum.js') !!}
-    {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_langages.js') !!}
-    {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_packages.js') !!}
-    {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_permissions.js') !!}
-    {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_routes.js') !!}
-    {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_users.js') !!}
-      {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_layout.js') !!}
- 
-    {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_menu.js') !!}
-   {!! HTML::script('groovel/cmsgroovel/groovel/admin/js/groovel_search.js') !!}
- 
-    {!! HTML::script('groovel/cmsgroovel/bootstrap/js/bootstrap.js') !!}
-    {!! HTML::script('groovel/cmsgroovel/listjs/list.min.js') !!}
-    {!! HTML::script('groovel/cmsgroovel/tinymce/tinymce.min.js') !!}
-    {!! HTML::script('groovel/cmsgroovel/groovel/editor-tinymce-custom/js/editor-tinymce.js') !!}
-  
+    <script src="/groovel/cmsgroovel/listjs/list.min.js"></script>  
+    <script src="/groovel/cmsgroovel/tinymce/tinymce.min.js"></script>  
+    <script src="/groovel/cmsgroovel/groovel/editor-tinymce-custom/js/editor-tinymce.js"></script>  
     

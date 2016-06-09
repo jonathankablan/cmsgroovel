@@ -13,8 +13,8 @@
 	 <?php if(!empty($content['content'])&& $content!=null && array_key_exists('content', $content) && !empty($content['content'])) :?>
 	 	   @foreach($content['content'] as $name=>$file)
 	 	         <span id='{!!$name!!}' style='margin-left:0px;width:150px;height:150px;'>
-    		          {!! HTML::image($file,$alt='',$attributes = array('style'=>'width:150px;height:150px')) !!}
-  		          <a rel="nofollow" href="#" title="Remove" id='{!!$name!!}' onclick=removeFile('{!!$name!!}')>Remove</a>
+    		      <img src="/{!!$file!!}" style="width:150px;height:150px" alt="">
+    		      <a rel="nofollow" href="#" title="Remove" id='{!!$name!!}' onclick=removeFile('{!!$name!!}')>Remove</a>
   		         </span>
   		   @endforeach
       <?php endif;?>

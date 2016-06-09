@@ -22,8 +22,8 @@
 								  		</button>
 								  	</div>
 								  	<div class="col-md-2 col-md-offset-0 col-sm-3 col-xs-2  col-xs-offset-6">      
-	           								 {!! HTML::link('/admin/user/form', 'Add new user',array('class' => 'btn btn-default'))!!}
-	          						</div>
+	           						     <a class="btn btn-default" href="{{ url('/admin/user/form') }}">Add new user</a>
+									</div>
              			  		</div>
              			  	</div>
              			  	
@@ -46,8 +46,8 @@
 					                            <td id="row_user" class="col-md-1 hidden-lg hidden-sm hidden-xs">{!!$user->id!!}</td>
 					                            <td id="row_user" class="col-md-1">  
 					                             @if($user->picture!=null)
-					                            {!!HTML::image( $user->picture,'',array('width'=>'100%','height'=>'100%'))!!}
-					                            @endif
+					                            	<img src="/{!!$user->picture!!}" style="width:100%;height:100%" alt="user picture">
+											    @endif
 					                            </td>
 					                            <td id="row_user" class="username col-xs-1 col-sm-1">{!!$user->username!!}</td>
 					                            <td id="row_user" class="pseudo col-xs-1 col-sm-1 hidden-lg hidden-sm hidden-xs">{!!$user->pseudo!!}</td>

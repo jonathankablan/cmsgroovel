@@ -31,7 +31,7 @@ class GroovelLayoutsListController extends GroovelController {
 	public function __construct( GroovelLayoutBusinessInterface $layoutManager)
 	{
 		$this->layoutManager=$layoutManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 
 	

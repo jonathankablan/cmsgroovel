@@ -12,11 +12,11 @@
 		
 			    
 			    <h1>Your layout:</h1>     
-	 			
-	          {!! Form::open(array('id'=>'layout_form','url' => 'admin/layout/update', 'method' => 'POST')) !!}
-											
-		                          
-                 {!! Form::hidden('layout_id', Session::get('layoutid'), array('id' => 'id')) !!}
+	 	        <form method="POST" action=" {{ url('admin/layout/update') }}" accept-charset="UTF-8" id="layout_form">
+                 
+                 <input id="id" name="layout_id" type="hidden" value={{ Session::get('layoutid')}}>
+              	{{csrf_field()}}
+         
                 <div class='form-inline'>
                 <label for="langage" class='required' style='margin-top:50px;font-size:1.6em'>Langage</label>
 		     		<select id='langages' class="form-control" name='langages'>
@@ -63,7 +63,7 @@
 				</div>
 	
 			<button class="btn btn-info" type="submit" id='submitForm'>Update</button>
-			{!! Form::close() !!}
+			</form>
 			
 	</div>
 </div>

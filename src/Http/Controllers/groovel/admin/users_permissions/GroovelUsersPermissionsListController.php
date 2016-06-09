@@ -29,7 +29,7 @@ class GroovelUsersPermissionsListController extends GroovelController {
 	public function __construct( GroovelPermissionManagerBusinessInterface $userManager)
 	{
 		$this->userManager=$userManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
 	public function init(){

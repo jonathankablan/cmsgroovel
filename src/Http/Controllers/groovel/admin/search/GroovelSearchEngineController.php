@@ -40,7 +40,7 @@ class GroovelSearchEngineController extends GroovelFormController {
 	{
 		$this->searchManager=$searchManager;
 		$this->configManager=$configManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	
 	public function checkToken(){
@@ -81,7 +81,6 @@ class GroovelSearchEngineController extends GroovelFormController {
 			$jsonarray=array();
 			foreach($result as $res){
 				if($this->configManager->isElasticSearchEnable()!=1){
-					//$jsondata=json_encode(array('refid'=>$res['refid'],'title'=>$res['title'],'type'=>$res['type'],'data'=>$res['data'],'url'=>$res['url'],'created_at'=>$res['created_at'],'updated_at'=>$res['updated_at']));
 					$jsondata=array('refid'=>$res['refid'],'title'=>$res['title'],'type'=>$res['type'],'data'=>$res['data'],'description'=>$res['description'],'created_at'=>$res['created_at'],'updated_at'=>$res['updated_at']);
 					array_push($jsonarray, $jsondata);
 				}else if($this->configManager->isElasticSearchEnable()==1){

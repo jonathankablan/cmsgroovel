@@ -11,15 +11,47 @@
 |
 */
 
-Route::any('{all}', function($params)
-{
-	//\Log::info('startup filter url');
-    $app = App();
-    $controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\filters\GroovelFilterController');
-    return $controller->callAction('filter',array($params));
+// for backend groovel
+Route::group(['middleware' => ['web']], function () {
+	
+	Route::get('admin',function () 
+	{
+		$params=null;
+		$app = App();
+		$controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\filters\GroovelFilterController');
+		return $controller->callAction('filter',array($params));
+	
+	});
+	
+	
+	Route::group(['prefix' => 'admin'], function () {
+		Route::any('{all}', function($params)
+		{
+		    $app = App();
+		    $controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\filters\GroovelFilterController');
+		    return $controller->callAction('filter',array($params));
+		
+		})->where('all','.*');
+		
+	});
+});
 
-})->where('all', '.*');
+//only for apps
+Route::group(['middleware' => ['web']], function () {
 
+	//any apps
+	Route::group(['prefix' => '/'], function () {
+		Route::any('{all}', function($params)
+		{
+			$app = App();
+			$controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\filters\GroovelFilterController');
+			return $controller->callAction('filter',array($params));
+	
+		})->where('all','.*');
+	
+	});
+	
+});
 
-
+	
 

@@ -22,8 +22,8 @@
 									  		</button>
 									  	</div>
 									  	<div class="col-md-2 col-md-offset-0 col-sm-4 col-xs-2  col-xs-offset-6">      
-			            						{!! HTML::link('/admin/user/role/form', 'Add new user role',array('class' => 'btn btn-default'))!!}
-			          					</div>
+			            					<a class="btn btn-default" href="{{ url('/admin/user/role/form') }}">Add new user role</a>
+										</div>
 							  		</div>
 						  	   </div>
 								<table class="table table-hover table-striped table-bordered table-responsive" id="table_users">

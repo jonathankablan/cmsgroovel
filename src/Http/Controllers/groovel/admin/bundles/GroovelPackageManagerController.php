@@ -28,7 +28,7 @@ class GroovelPackageManagerController extends GroovelController {
 	
 	public function __construct(GroovelPackageManagerBusinessInterface $packageManager) {
 		$this->packageManager = $packageManager;
-		$this->beforeFilter('auth');
+		$this->middleware('auth');
 	}
 	public function validateForm() {
 		$input = \Input::get ( 'q' );

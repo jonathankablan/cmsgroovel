@@ -10,7 +10,7 @@
 	 <output id="old_list" class="file-return">
 	 <?php if(Session::get('user_edit')['userpicture']!=null) :?>
 	 	         <span id='picture' style='margin-left:10px;width:150px;height:150px;'>
-    		          {!! HTML::image(Session::get('user_edit')['userpicture'],$alt='',$attributes = array('style'=>'width:150px;height:150px')) !!}
+    		      <img src="/{{Session::get('user_edit')['userpicture']}}" style="width:150px;height:150px" alt="">
   		          <a rel="nofollow" href="#" title="Remove" id='picture' onclick=removeFile('picture')>Remove</a>
   		         </span>
       <?php endif;?>
