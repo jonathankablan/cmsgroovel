@@ -12,14 +12,14 @@
 */
 
 // for backend groovel
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web','groovel.filter']], function () {
 	
 	Route::get('admin',function () 
 	{
 		$params=null;
 		$app = App();
-		$controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\filters\GroovelFilterController');
-		return $controller->callAction('filter',array($params));
+		$controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteController');
+		return $controller->callAction('dispatcher',array($params));
 	
 	});
 	
@@ -28,8 +28,8 @@ Route::group(['middleware' => ['web']], function () {
 		Route::any('{all}', function($params)
 		{
 		    $app = App();
-		    $controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\filters\GroovelFilterController');
-		    return $controller->callAction('filter',array($params));
+		   	$controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteController');
+			return $controller->callAction('dispatcher',array($params));
 		
 		})->where('all','.*');
 		
@@ -37,15 +37,15 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 //only for apps
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web','groovel.filter','groovel.contents','groovel.layouts']], function () {
 
 	//any apps
 	Route::group(['prefix' => '/'], function () {
 		Route::any('{all}', function($params)
 		{
 			$app = App();
-			$controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\filters\GroovelFilterController');
-			return $controller->callAction('filter',array($params));
+			$controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteController');
+			return $controller->callAction('dispatcher',array($params));
 	
 		})->where('all','.*');
 	
