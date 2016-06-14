@@ -111,6 +111,16 @@
 						            	</div>
 					            	</div>
 					            	<div class="row" style="margin-top:50px">
+						                <div class="form-group" data-toggle="tooltip" title="uri of your content">
+						                	<div class="col-md-2">
+								    			<label for="uri">uri</label>
+										    </div>
+										    <div class="col-md-8">
+										    	<input class="form-control" name="uri"type='text' value={{Session::get('content_edit')['uri']}} >
+						          		    </div>
+						            	</div>
+					            	</div>
+					            	<div class="row" style="margin-top:50px">
 						            	<div class="form-group">
 						            	    <div class="col-md-3">
 									    		<label for="publish">publish content</label>

@@ -23,8 +23,8 @@
 
          $(document).delegate("#submitForm", "click", function() {
          	    form=$(this).parents().eq(0).serialize();
-          		$.post('comment/post', form, function (data, textStatus) {
-         			var parsed = JSON.parse(data);
+         		$.post('/comment/post', form, function (data, textStatus) {
+          			var parsed = JSON.parse(data);
          			if(parsed['success']){
          				 $("#alertmsg").text('Comment Posted!');
          				 $("#popupModal").modal({                    // wire up the actual modal functionality and show the dialog

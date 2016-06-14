@@ -74,6 +74,16 @@
 							    </div>
 				</div>
 				</li>
+				<li>
+				<div id='uri' class="form-group">
+	    						<div class="col-md-2">
+							    	<label for="uri">uri</label>
+							    </div>
+							    <div class="col-md-8">
+							    	<input id='uri' name='uri' type="text" class="form-control"/>
+							    </div>
+				</div>
+				</li>
 		<!-- all fields available -->
 		
 	    		<li class="glyphicon glyphicon-calendar" style='margin-top: 25px;width:100%'><span>Date Field</span>

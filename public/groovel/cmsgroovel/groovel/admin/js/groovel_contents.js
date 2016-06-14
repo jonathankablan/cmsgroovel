@@ -261,9 +261,19 @@ function generateContent(req,url){
 	 var div=document.createElement('div');
 	 div.className='row';
 	 div.style='margin-top:50px;margin-left:15px';
+	 var publish=$("#form-fields #uri").clone(true,true);
+	 div.innerHTML= publish.html();
+	 $contentForm.find('#head').append(div);
+	 
+	 var div=document.createElement('div');
+	 div.className='row';
+	 div.style='margin-top:50px;margin-left:15px';
 	 var publish=$("#form-fields #publish").clone(true,true);
 	 div.innerHTML= publish.html();
 	 $contentForm.find('#head').append(div);
+	 
+
+	 
 	 //start fields template
 	 for(var i=0;i<parsed['datas'].length;i++){
 		 for(var j=0;j<parsed['datas'][i].length;j++){

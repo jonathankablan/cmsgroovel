@@ -20,12 +20,13 @@ use Groovel\Cmsgroovel\models\ContentsTranslation;
 use DB;
 class ContentsDao implements ContentsDaoInterface{
 
-public function create($description,$contentType,$userid,$publish,$weight=null){
+public function create($description,$contentType,$userid,$publish,$weight=null,$uri){
 	$contents= new Contents();
 	$contents->description=$description;
 	$contents->type_id=$contentType;
 	$contents->author_id=$userid;
 	$contents->ispublish=$publish;
+	$contents->uri=$uri;
 	if($weight==null){
 		$contents->weight=0;
 	}else{
@@ -38,6 +39,10 @@ public function create($description,$contentType,$userid,$publish,$weight=null){
 public function delete($id){
 	$content = Contents::find($id);
 	$content->delete();
+}
+
+public function findByUri($url){
+	return Contents::where('uri','=',$url)->first();
 }
 
 public function find($id){

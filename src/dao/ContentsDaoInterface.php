@@ -16,7 +16,7 @@ namespace Groovel\Cmsgroovel\dao;
 
 interface ContentsDaoInterface{
 
-public function create($url,$contentType,$userid,$publish,$weight=null);
+public function create($url,$contentType,$userid,$publish,$weight=null,$uri);
 
 public function delete($id);
 
@@ -31,5 +31,7 @@ public function getContentByType($type);
 public function paginateAll($langage=null);
 
 public function checkUrlUnique($idcontent,$url);
+
+public function findByUri($url);
 
 }

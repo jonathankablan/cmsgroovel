@@ -135,7 +135,8 @@ class GroovelContentFormController extends GroovelFormController {
 					}
 					return $this->jsonResponse($formatMess,false,true,true);
 				}
-				
+			}else if(\Request::is('*/content/show')){
+				return $this->showContent($params);
 			}
 	  	return $this->processForm();
 	}
@@ -163,6 +164,28 @@ class GroovelContentFormController extends GroovelFormController {
 		}
     }
 
+    
+    private function showContent($params){
+    	$input =  \Input::all();
+    	if(array_key_exists('lang',$input)){
+    		$content=$this->contentManager->editContentByUri($input['url'],$input['lang']);
+    	}else{
+    		$content=$this->contentManager->editContent($input['contentid'],$input['contenttranslationid']);
+    	}
+   	    $menus=array();
+		$layouts=array();
+		if(\Session::has('menus')){
+			$menus=\Session::get('menus');
+		}
+		if(\Session::has('layouts')){
+			$layouts=\Session::get('layouts');
+		}
+		if(\Session::has('contents')){
+			$contents=\Session::get('contents');
+		}
+		return \View::make($params,['content'=>$content,'menus'=>$menus,'layouts'=>$layouts]);
+    }
+    
   
     private function viewCode(){
      	$input =  \Input::get('q');
@@ -191,6 +214,7 @@ class GroovelContentFormController extends GroovelFormController {
 		$title=$_POST['title'];
 		$contentType=$_POST['ContentType'];
 		$description=$_POST['description'];
+		$uri=$_POST['uri'];
 		$type=AllContentTypes::where('name','=',$contentType)->firstOrFail();
 		$tag=$_POST['tag'];
 		$langage=$_POST['langage'];
@@ -206,14 +230,14 @@ class GroovelContentFormController extends GroovelFormController {
         foreach($datas as $key=>$value){
         	if('title'!=$key && 'ContentType'!=$key && 'tag'!=$key
         			&& 'isPublish'!=$key &&'description'!=$key &&'weight'!=$key && '_token'!=$key
-        			&&'langage'!=$key){
+        			&&'langage'!=$key && 'uri'!=$key){
         		$arr[$key]=$value;
         		
         	}
         }
         $content=$this->contentManager->serialize($arr);
      	$userid=\Auth::id();
-    	$id=$this->contentManager->addContent($title,$content,$description,$tag,$langage,$type->id,$userid,$ispublish,$weight);
+    	$id=$this->contentManager->addContent($title,$content,$description,$tag,$langage,$type->id,$userid,$ispublish,$weight,$uri);
     	return $id;
 	}
 
@@ -236,6 +260,7 @@ class GroovelContentFormController extends GroovelFormController {
 				$content= Contents::find($input['content_id']);
 				$content->description=$input['description'];
 				$content->weight=$input['weight'];
+				$content->uri=$input['uri'];
 				if(filter_var(\Input::get('isPublish'), FILTER_VALIDATE_BOOLEAN)){
 					$content->ispublish=1;
 				}else{
@@ -244,7 +269,9 @@ class GroovelContentFormController extends GroovelFormController {
 				$data=array();
 				foreach (array_keys($input) as $key){
 					if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
-			    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight' && $key!='isPublish'){
+			    			$key!='translation_id' && $key!='duplicate' 
+							&& $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight' 
+							&& $key!='isPublish' &&$key!='uri'){
 						$data[$key]=$input[$key];
 						if('myfiles'==$key && array_key_exists('myfiles',$input)){
 							if(empty($input['myfiles'])){
@@ -269,6 +296,7 @@ class GroovelContentFormController extends GroovelFormController {
 			    }
 			   
 			    $content->weight=$input['weight'];
+			    $content->uri=$input['uri'];
 			    $content_translation= ContentsTranslation::where('id','=',$res['id'])->first();
 			    
 			    $content_translation->name=$input['title'];
@@ -278,7 +306,8 @@ class GroovelContentFormController extends GroovelFormController {
 			    $blob=$this->contentManager->deserialize( $content_translation['content']);
 			    foreach (array_keys($input) as $key){
 			    	if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
-			    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight' && $key!='isPublish'){
+			    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight' 
+			    			&& $key!='isPublish' && $key!='uri'){
 			    		$blob[$key]=$input[$key];
 			    		if('myfiles'==$key && array_key_exists('myfiles',$input)){
 			    			if(empty($input['myfiles'])){
@@ -305,6 +334,7 @@ class GroovelContentFormController extends GroovelFormController {
 		    }
 		   
 		    $content->weight=$input['weight'];
+		    $content->uri=$input['uri'];
 		    $content_translation= ContentsTranslation::where('id','=',$input['translation_id'])->first();
 		    $content_translation->name=$input['title'];
 		    $content_translation->tag=$input['tag'];
@@ -313,7 +343,8 @@ class GroovelContentFormController extends GroovelFormController {
 		    $blob=$this->contentManager->deserialize( $content_translation['content']);
 		    foreach (array_keys($input) as $key){
 		    	if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
-		    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight' && $key!='isPublish'){
+		    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight'
+		    			&& $key!='isPublish'  && $key!='uri'){
 		    		$blob[$key]=$input[$key];
 		    		if('myfiles'==$key && array_key_exists('myfiles',$input)){
 		    			if(empty($input['myfiles'])){
@@ -349,8 +380,10 @@ class GroovelContentFormController extends GroovelFormController {
 		$content=$this->contentManager->editContent($input['id'],$input['translation_id']);
 		if($id!= null){
 			$input['description']=$content['description'];
+			$input['uri']=$content['uri'];
 		}else{
 			$input['description']=$content['description'];
+			$input['uri']=$content['uri'];
 		}
 		$type=$this->contentTypeManager->findAllContentTypeByName($content['contentType']);
 		//mapping of data and type and widget
@@ -399,7 +432,7 @@ class GroovelContentFormController extends GroovelFormController {
     	 	$i++;
     	}
     	
-   		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'no','translation_id'=>$input['translation_id'],'title'=>$content['title'],'description'=>$input['description'],'tag'=>$content['tag'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight']);
+   		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'no','translation_id'=>$input['translation_id'],'title'=>$content['title'],'description'=>$input['description'],'tag'=>$content['tag'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight'],'uri'=>$content['uri']);
    		\Session::put('content_edit', $ct);
     	$countries=$this->contentManager->getAllCountries();
     	$lang=array();
@@ -558,7 +591,7 @@ class GroovelContentFormController extends GroovelFormController {
 			);
 			$i++;
 		}
-		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'yes','translation_id'=>null,'title'=>$content['title'],'description'=>$input['description'],'tag'=>$content['tag'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight']);
+		$ct=array('id'=>$input['id'],'lang'=>$content['langage'],'duplicate'=>'yes','translation_id'=>null,'title'=>$content['title'],'description'=>$input['description'],'tag'=>$content['tag'],'contentType'=>$content['contentType'],'content'=>$mapping,'ispublish'=>$content['ispublish'],'weight'=>$content['weight'],'uri'=>$content['uri']);
 		\Session::flash('content_edit', $ct);
 		
 		$countries=$this->contentManager->getAllCountries();

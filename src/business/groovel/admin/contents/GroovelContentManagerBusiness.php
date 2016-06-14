@@ -61,8 +61,8 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 	}
 	
 
-	public function addContent($title,$data,$description,$tag,$langage,$contentType,$userid,$publish,$weight){
-		 $contents= $this->contentDao->create($description,$contentType,$userid,$publish,$weight);
+	public function addContent($title,$data,$description,$tag,$langage,$contentType,$userid,$publish,$weight,$uri){
+		 $contents= $this->contentDao->create($description,$contentType,$userid,$publish,$weight,$uri);
 		 $contentsTranslation=$this->contentTranslationDao->create($contents->id, $title, $data, $tag, $langage);
 		 return $contentsTranslation->getId();
 	}  
@@ -87,7 +87,19 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 		}
 		$content= $this->contentDao->find($contentTranslation->refcontentid);
 		$blob=$this->deserialize($contentTranslation['content']);
-		$res=array('contentid'=>$contentid,'contenttranslationid'=>$contentTranslationid,'title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'description'=>$content['description'],'tag'=>$contentTranslation->tag,'contentType'=>$content->type->name,'content'=>$blob,'ispublish'=>$content->ispublish,'weight'=>$content->weight,'author'=>$content->author->pseudo,'created_at'=>$contentTranslation->created_at,'comments'=>$comments);
+		$res=array('contentid'=>$contentid,'contenttranslationid'=>$contentTranslationid,'title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'description'=>$content['description'],'tag'=>$contentTranslation->tag,'contentType'=>$content->type->name,'content'=>$blob,'ispublish'=>$content->ispublish,'weight'=>$content->weight,'uri'=>$content->uri,'author'=>$content->author->pseudo,'created_at'=>$contentTranslation->created_at,'comments'=>$comments);
+		return $res;
+	}
+	
+	public function editContentByUri($url,$lang){
+		$content=$this->contentDao->findByUri($url);
+		$contentTranslation= $this->contentTranslationDao->findTranslation($content->id,$lang);
+		$comments=array();
+		foreach($contentTranslation->comments as $comm){
+			array_push($comments,['author_picture'=>$comm->author->picture,'author_pseudo'=>$comm->author->pseudo,'comment'=>unserialize(base64_decode($comm->comment)),'created_at'=>$comm->created_at,'updated_at'=>$comm->updated_at]);
+		}
+		$blob=$this->deserialize($contentTranslation['content']);
+		$res=array('contentid'=>$content->id,'contenttranslationid'=>$contentTranslation->id,'title'=>$contentTranslation->name,'langage'=>$contentTranslation->lang,'description'=>$content['description'],'tag'=>$contentTranslation->tag,'contentType'=>$content->type->name,'content'=>$blob,'ispublish'=>$content->ispublish,'weight'=>$content->weight,'uri'=>$content->uri,'author'=>$content->author->pseudo,'created_at'=>$contentTranslation->created_at,'comments'=>$comments);
 		return $res;
 	}
 

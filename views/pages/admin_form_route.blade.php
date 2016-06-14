@@ -66,7 +66,7 @@
 									  <label for="type" class="required col-md-2">type</label>
 										<select name="type" class='form-control' style='width:50%'>
 											@foreach($layouts as $layout)
-												@if($layout!='vendor' and $layout!='Groovel' and $layout!='errors')
+												@if($layout!='vendor' and $layout!='errors')
 													<option value=<?php echo $layout?>><?php echo $layout?></option>
 												@endif
 											@endforeach

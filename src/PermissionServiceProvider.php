@@ -41,7 +41,7 @@ class PermissionServiceProvider extends \Illuminate\View\ViewServiceProvider {
 	 *
 	 */
 	protected function registerBladeExtensions() {
-		$blade = $this->app ['view']->getEngineResolver ()->resolve ( 'blade' )->getCompiler ();
+		/*$blade = $this->app ['view']->getEngineResolver ()->resolve ( 'blade' )->getCompiler ();
 		
 		$blade->extend ( function ($value, $compiler) {
 			$pattern = $compiler->createPlainMatcher ( 'controluseraccess' );
@@ -50,7 +50,7 @@ class PermissionServiceProvider extends \Illuminate\View\ViewServiceProvider {
 		$blade->extend ( function ($value, $compiler) {
 			$pattern = $compiler->createPlainMatcher ( 'endcontroluseraccess' );
 			return preg_replace ( $pattern, '$1<?php echo "test2"; ?>$2', $value );
-		} );
+		} );*/
 		
 	}
 }

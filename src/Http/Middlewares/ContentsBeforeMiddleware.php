@@ -16,7 +16,6 @@ class ContentsBeforeMiddleware
 	public function handle($request, Closure $next)
 	{
 		$params=\Session::get("params");
-		\Log::info("contents");
 		$app = App();
 		$controllerContents = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\contents\GroovelContentsListController');
 		
@@ -38,8 +37,7 @@ class ContentsBeforeMiddleware
 		}
 		$contents=$controllerContents->callAction('loadContents',array('extension'=>$site_extension,'lang'=>$lang,'layout'=>$params['type']));
 		\Session::put('contents',$contents);
-	//	\Session::put('params',$params);
-		return $next($request);
+	     return $next($request);
 	}
 
 

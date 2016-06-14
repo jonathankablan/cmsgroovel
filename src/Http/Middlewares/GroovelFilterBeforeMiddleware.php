@@ -21,7 +21,6 @@ class GroovelFilterBeforeMiddleware
 	{
 		try{
 			$app = App();
-			\Log::info("filter");
 			$controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteController');
 			$rulesController = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_rules\GroovelUserRulesController');
 			$route= $controller->getRouteFromSession();
@@ -39,8 +38,7 @@ class GroovelFilterBeforeMiddleware
 		
 			$params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'middleware'=>$route->middleware,'subtype'=>$route->subtype,'action'=>$route->action,'type'=>$route->type);
 			$hasAccessForUser=$rulesController->checkAccessRulesURL(\Auth::user(),$params);
-		
-			// \Log::info($params);
+				// \Log::info($params);
 			if($hasAccessForUser&& $route->activate_route=='1'){
 				\Session::put('params',$params);
 				return $next($request);

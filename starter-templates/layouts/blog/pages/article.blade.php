@@ -8,16 +8,9 @@
 
             <!-- Blog Entries Column -->
             <div class="col-md-12">
-            @if($contents!=null)
-        	 @foreach ($contents as $content)
-        	   <div class="col-md-12">
-		                   @if($content['contentType']=='blog')
+                       @if($content['contentType']=='blog')
 		                    <h2>
-		        			  @if($content['uri']==null)		                 	
 		                 		<a href="{{url('blog/content/show?contenttranslationid='.$content['contenttranslationid'].'&contentid='.$content['contentid'])}}"> {!!$content['title']!!}</a>
-		             		   @else
-		             	   		<a href="{{url('blog/content/show?url='.$content['uri'].'&lang='.$content['langage'])}}"> {!!$content['title']!!}</a>
-		             		   @endif
 		             		</h2>
 		             		<p class="lead">
 		                    	by {!!$content['author']!!}
@@ -29,11 +22,8 @@
 			                	<img class="img-responsive" src={!!$content['content']['myfiles']!!} alt="">
 			                	@endif	
 			         		@endif	                        
-			                <hr>
-		     	            <p>{!!$content['description']!!}</p>
-		     	            <a class="btn btn-primary" href="#" id='readmore'>Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-		     	            <hr>
-		     	            <div id='morecomments' style='display:none'>
+			                
+		     	            <div id='morecomments' style='display:block'>
 		     	            {!!$content['content']['post']!!}
 		     	            <hr>
 		     	        
@@ -65,18 +55,10 @@
 					            </div>
 					         </div>
 					      </div>
-					    </div>
 			           	@endif
-		             @endforeach
-		           @endif 
-		                <hr>
+	                <hr>
 		        </div>
-     	         <!-- Pager -->
-                 <ul class="pager">
-					{!! $contents->render() !!}
-	             </ul>
-            
-         </div>
+           </div>
         </div>  
          <style>
           .content{display :none;}

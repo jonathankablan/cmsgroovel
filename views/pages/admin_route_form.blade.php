@@ -72,14 +72,12 @@
 							 		<label for="view" style="margin-right:0px">page</label>
 							 		<input class="form-control" style="width:50%;margin-left:13.9%" name="view" type="text" value="{{Session::get('route_edit')['view']}}" id="view">
 								</div>
-							
-																
 								@if(Session::get('layouts')!=null)
 									<div class="form-group form-inline" id='type' data-toggle="tooltip" title="name of your application it is optional but it will be easy to find your route if you have got a lot of routes">
 									   <label for="type" class="required" style="margin-right:0px;margin-left:0px">type</label>
 							           <select name="type" class='form-control' style='width:50%;margin-left:12.9%'>
 											    @foreach(Session::get('layouts') as  $key=>$value)
-											     @if($key!='vendor' and $key!='Groovel' and $key!='errors')
+											     @if($key!='vendor'  and $key!='errors')
 											    	@if($key!=Session::get('route_edit')['type'])
 											    		<option value="{!!$key!!}">{!!$value!!}</option>
 											    	@elseif($key==Session::get('route_edit')['type'])

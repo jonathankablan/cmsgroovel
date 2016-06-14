@@ -15,7 +15,6 @@ class LayoutBeforeMiddleware
 	 */
 	public function handle($request, Closure $next)
 	{
-		\Log::info("layout");
 		$app = App();
 		$controllerMenu = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\menu\GroovelMenusListController');
 		$controllerLayout = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\layout\GroovelLayoutsListController');
@@ -48,7 +47,6 @@ class LayoutBeforeMiddleware
 		}
 		\Session::put("layouts",$layout);
 		\Session::put("menus",$menus);
-		//\Session::put('params',$params);
 		return $next($request);
 	}
 
