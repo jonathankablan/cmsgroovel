@@ -50,6 +50,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     	'groovel.filter'=>\Groovel\Cmsgroovel\Http\Middlewares\GroovelFilterBeforeMiddleware::class,
+    	'groovel.userrules'	=>\Groovel\Cmsgroovel\Http\Middlewares\GroovelUserRulesBeforeMiddleware::class,
     	'groovel.contents'=>\Groovel\Cmsgroovel\Http\Middlewares\ContentsBeforeMiddleware::class,
     	'groovel.layouts'=>\Groovel\Cmsgroovel\Http\Middlewares\LayoutBeforeMiddleware::class,
     ];

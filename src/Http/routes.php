@@ -12,7 +12,7 @@
 */
 
 // for backend groovel
-Route::group(['middleware' => ['web','groovel.filter']], function () {
+Route::group(['middleware' => ['web','groovel.filter','groovel.userrules']], function () {
 	
 	Route::get('admin',function () 
 	{
@@ -37,7 +37,7 @@ Route::group(['middleware' => ['web','groovel.filter']], function () {
 });
 
 //only for apps
-Route::group(['middleware' => ['web','groovel.filter','groovel.contents','groovel.layouts']], function () {
+Route::group(['middleware' => ['web','groovel.filter','groovel.userrules','groovel.contents','groovel.layouts']], function () {
 	//any apps
 	Route::group(['prefix' => '/'], function () {
 		Route::any('{all}', function($params)
