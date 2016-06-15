@@ -105,7 +105,14 @@
         	</div>
          	  <ul class="nav navbar-nav navbar-right navbar-user" style='margin-right:10px'>
                     <li class="dropdown user-dropdown">
-                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                       @if(\Auth::user()!=null) 
+	                        @if( \Auth::user()->picture==null)
+	                       		<i class="glyphicon glyphicon-user"></i>
+	                        @else
+	                       	<img src="/{{\Auth::user()->picture}}" alt="user" class="img-circle" style='width:20%;height:20%'>
+	                        @endif
+                       @endif
                        @if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif<b class="caret"></b></a>
                        <ul class="dropdown-menu">
                             <li><a href="{{ url('/user/view/profile') }}">Settings</a></li>

@@ -12,7 +12,15 @@
                 
          	  <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown user-dropdown">
-                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style='margin-right:50px'><i class="fa fa-user" ></i>  @if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif<b class="caret"></b></a>
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style='margin-right:50px'>
+                        @if(\Auth::user()!=null) 
+	                        @if( \Auth::user()->picture==null)
+	                       		<i class="glyphicon glyphicon-user"></i>
+	                        @else
+	                       	<img src="/{{\Auth::user()->picture}}" alt="user" class="img-circle" style='width:20%;height:20%'>
+	                        @endif
+                        @endif 
+                        @if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif<b class="caret"></b></a>
                        <ul class="dropdown-menu">
                             <li>{!! HTML::link('user/view/profile', 'Settings')!!}</li>
                             <li class="divider"></li>
