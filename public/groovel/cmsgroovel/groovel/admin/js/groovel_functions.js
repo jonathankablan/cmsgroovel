@@ -35,9 +35,9 @@
           $(".btnDeleteMenu").bind("click",DelMenu);
           $(".btnEditMenu").bind("click",EditMenu);
           $(".btnSearch").bind("click",EditSearch);
-          
-          
-        });
+          $(".btnEditRolePermission").bind("click",EditRolePermission);
+          $(".btnDeleteRolePermission").bind("click",DeleteRolePermission);
+       });
 
 /**encode url for json**/
 function any2url(prefix, obj) {

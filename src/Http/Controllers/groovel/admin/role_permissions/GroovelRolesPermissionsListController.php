@@ -1,4 +1,4 @@
-<?php
+<?php  
 /**********************************************************************/
 /*This file is part of Groovel.                                       */
 /*Groovel is free software: you can redistribute it and/or modify     */
@@ -12,28 +12,29 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace Groovel\Cmsgroovel\models;
+
+namespace Groovel\Cmsgroovel\Http\Controllers\groovel\admin\role_permissions;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelController;
+use Monolog\Logger;
+use Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelRolePermissionsManagerBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelRolePermissionsManagerBusiness;
 
-class Roles extends Model{
+class GroovelRolesPermissionsListController extends GroovelController {
 
+	protected $rolepermissionManager;
 
-	protected $table = 'roles';
-
-	public $timestamps = true;
-
-	protected $fillable = array('role','updated_at','created_at');
-
-	public function getId()
+	
+	
+	public function __construct( GroovelRolePermissionsManagerBusinessInterface $rolepermissionManager)
 	{
-		return $this->attributes['id'];
+		$this->rolepermissionManager=$rolepermissionManager;
+		$this->middleware('auth');
 	}
 	
-	public function rolepermissions()
-	{
-		return $this->hasMany('Groovel\Cmsgroovel\models\RolePermissions','roleid','id');
-	}
-	
-	
+	public function init(){
+	   //\Log::info($this->userManager->paginateUserPermission());
+       return \View::make('cmsgroovel.pages.admin_list_roles_permissions',['roles_permissions'=>$this->rolepermissionManager->paginateRolePermission()]);
+ 	}
+
 }

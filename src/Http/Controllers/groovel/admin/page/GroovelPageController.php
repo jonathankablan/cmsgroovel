@@ -78,7 +78,7 @@ class GroovelPageController extends GroovelFormController {
 					}
 					if($pageid==null){ 
 						$this->generateBladeTemplatesPage(\Input::get('view').'.'.'blade.php',\Input::get('template'));
-						$id= $this->createRoute(\Input::get('url'),\Input::get('title'),null,null,'op_retrieve',\Input::get('template').'.'.'pages'.'.'.\Input::get('view'),\Input::get('template'),\Input::get('activate_route'));
+						$id= $this->createRoute(\Input::get('url'),\Input::get('title'),null,null,'op_read',\Input::get('template').'.'.'pages'.'.'.\Input::get('view'),\Input::get('template'),\Input::get('activate_route'));
 						$page=$this->getFilePage(\Input::get('template').'.'.'pages'.'.'.\Input::get('view'));
 						\Session::put('page_edit',$page);
 						return $this->jsonResponse(array('id'=>$id,'url'=>\Input::get('url'),'page added done'),false,true,false);
@@ -96,7 +96,7 @@ class GroovelPageController extends GroovelFormController {
 								$ln=count($view);
 								$this->deleteFile($route->type, $view[$ln-1].'.'.'blade.php');
 							}
-							$id= $this->createRoute(\Input::get('url'),\Input::get('template'),null,null,'op_retrieve',\Input::get('template').'.'.'pages'.'.'.\Input::get('view'),\Input::get('template'),\Input::get('activate_route'));
+							$id= $this->createRoute(\Input::get('url'),\Input::get('template'),null,null,'op_read',\Input::get('template').'.'.'pages'.'.'.\Input::get('view'),\Input::get('template'),\Input::get('activate_route'));
 							$this->generateBladeTemplatesPage(\Input::get('view').'.'.'blade.php',\Input::get('template'));
 							$page=$this->getFilePage(\Input::get('view'));
 							\Session::put('page_edit',$page);

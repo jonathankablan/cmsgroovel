@@ -23,7 +23,6 @@ class GroovelFilterBeforeMiddleware
 			$app = App();
 			$controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteController');
 			$route= $controller->getRouteFromSession();
-			//\Log::info($route);
 			$userTrackingController = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_tracking\GroovelTrackingUserAPI');
 			$configController = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\configuration\GroovelSystemConfigurationController');
 			 
@@ -34,20 +33,64 @@ class GroovelFilterBeforeMiddleware
 			if( $configController->isAuditTrackingUserEnable()=='1' && $userTrackingController->tracking_ip()!='127.0.0.1' && $route->audit_tracking_url_enable=='1'){
 				$userTrackingController->saveTrackingUserInfo();
 			}
-		
-			$params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'middleware'=>$route->middleware,'subtype'=>$route->subtype,'action'=>$route->action,'type'=>$route->type);
-				// \Log::info($params);
-			if($route->activate_route=='1'){
-				\Session::put('params',$params);
-				return $next($request);
+			if($route!=null && $route->uri!='undefined'){
+				$params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'action'=>$route->action,'type'=>$route->type);
+				if($route->activate_route=='1'){
+					\Session::put('params',$params);
+					return $next($request);
+				}else{
+					return response()->view('cmsgroovel.pages.pagenotauthorized')->header('Content-Type', 'text/html');
+				}
 			}else{
-				return  \View::make('cmsgroovel.pages.pagenotauthorized');
+				if (\Request::ajax())
+				{
+					return $this->jsonResponse('error 404 page not found',false,true,true);
+				}
 			}
 		}catch (\Exception $ex){
 			\Log::info($ex);
 			return \Redirect::to('undefined');
 		}
-		return $uri;
 	}
+
 	
+	
+	
+	public function jsonResponse($param, $print = false, $header = true,$error=false) {
+		if (is_array($param) && !$error) {
+			$out = array(
+					'success' => true
+			);
+	
+			if (array_key_exists('datas',$param) && is_array($param['datas']) ) {
+				$out['datas'] = $param['datas'];
+				unset($param['datas']);
+				$out = array_merge($out, $param);
+			} else {
+				$out['datas'] = $param;
+			}
+	
+		}else if (is_bool($param) &&!$error) {
+			$out = array(
+					'success' => $param
+			);
+		} else if($error) {
+			$out = array(
+					'success' => false,
+					'errors' => array(
+							'reason' => $param
+					)
+			);
+		}
+	
+		return response()->json($out);
+		if ($print) {
+			if ($header) header('Content-type: application/json');
+	
+			echo $out;
+			return;
+		}
+	
+		return $out;
+	}
 }

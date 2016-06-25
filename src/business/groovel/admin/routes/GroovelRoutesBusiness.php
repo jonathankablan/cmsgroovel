@@ -63,15 +63,20 @@ class GroovelRoutesBusiness implements GroovelRoutesBusinessInterface{
 		return $this->routeDao->find($id);
 	}
 	
-	public function updateRoute($id,$domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route){
-		 $this->routeDao->updateRoute($id,$domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route);
+	public function updateRoute($id,$uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route){
+		 $this->routeDao->updateRoute($id,$uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
 	}
 	
-	public function addRoute($domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route){
-		return $this->routeDao->addRoute($domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route);
+	public function addRoute($uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route){
+		return $this->routeDao->addRoute($uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
 	}
 	
 	public function getRouteByViewName($view){
 		return $this->routeDao->getRouteByViewName($view);
 	}
+	
+	public function getAllUris(){
+		return $this->routeDao->getAllUris();
+	}
+	
 }

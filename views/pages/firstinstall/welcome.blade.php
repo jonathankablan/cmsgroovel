@@ -43,7 +43,11 @@
             <div class="content">
                 <div class="title">Groovel</div>
                 <img src="/images/home-bg.jpg" style='width:20%;height:20%'/>
+                 <div style='font-size:2em'>
+                 <a href='admin'>Go to admin groovel</a>
+                 </div>
              </div>
+            
         </div>
     </body>
 </html>

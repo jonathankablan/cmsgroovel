@@ -12,27 +12,17 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace Groovel\Cmsgroovel\business\groovel\admin\routes;
+namespace Groovel\Cmsgroovel\business\groovel\admin\roles;
 
-interface GroovelRoutesBusinessInterface {
+interface GroovelRolePermissionsManagerBusinessInterface{
 	
-	public function paginateRoutes();
+	public function addRolePermissions($roleid,$action,$uri,$owncontent,$othercontent);
+	public function addRole($role);
+	public function getRole($role);
+	public function paginateRolePermission();
+	public function getRoleByName($role);
 	
-	public function paginateRoutesOnlyUser();
 	
-	public function getRouteByUri($uri);
+  	
 	
-	public function addRoute($uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
-	
-	public function deleteRoute($id);
-	
-	public function find($id);
-	
-	public function updateRoute($id,$uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
-	
-	public function getSubtypeList();
-	
-	public function getRouteByViewName($view);
-	
-	public function getAllUris();
 }

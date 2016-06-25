@@ -33,15 +33,12 @@ class GroovelRouteController extends GroovelController {
 	
 	
 	private function buildRouteGroovelFromInput(){
-		$routegroovel->domain=Input::get('domain');
-    	$routegroovel->uri=Input::get('uri');
+	  	$routegroovel->uri=Input::get('uri');
     	$routegroovel->name=Input::get('name');
     	$routegroovel->controller=Input::get('controller');
     	$routegroovel->method=Input::get('method');
     	$routegroovel->action=Input::get('action');
     	$routegroovel->view=Input::get('view');
-    	$routegroovel->before_filter=Input::get('before_filter');
-    	$routegroovel->after_filter=Input::get('after_filter');
     	$routegroovel->audit_tracking_url_enable=Input::get('audit_tracking_url_enable');
        	return $routegroovel;	
 	} 
@@ -75,6 +72,7 @@ class GroovelRouteController extends GroovelController {
 	{
 		//init the uri and controller to call and view put in memory simple singleton
 		$params=\Session::get("params");
+		
 	 	if($params['controller']!=null){
 			$app = App();
 			$controller = $app->make($params['controller']);

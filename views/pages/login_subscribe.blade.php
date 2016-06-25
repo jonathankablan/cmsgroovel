@@ -18,7 +18,7 @@
             </div>
         @endif
         <div class="col-lg-6 col-lg-offset-3 col-md-9 col-xs-11 col-sm-6 col-sm-offset-3">
-             <form method="POST" action=" {{ url('admin/groovelcms/auth/subscribe') }}" accept-charset="UTF-8" id="sub_form" class="form-horizontal well">
+             <form method="POST" action=" {{ url('admin/auth/subscribe') }}" accept-charset="UTF-8" id="sub_form" class="form-horizontal well">
             
              {{csrf_field()}}
            

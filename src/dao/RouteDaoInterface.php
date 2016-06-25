@@ -24,13 +24,15 @@ public function paginateRoutesOnlyUser();
 
 public function getRouteByUri($uri);
 
-public function addRoute($domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route);
+public function addRoute($uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
 
 public function find($id);
 
 public function deleteRoute($id);
 
-public function updateRoute($id,$domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route);
+public function updateRoute($id,$uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
 
 public function getRouteByViewName($view);
+
+public function getAllUris();
 }

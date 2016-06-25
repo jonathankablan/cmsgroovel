@@ -109,6 +109,10 @@ private static $perPage = 10;
    public function getUserRoleByUserId($userid){
    	  return $this->userRoleDao->getUserRoleByUserId($userid);
    }
+   
+   public function getAllUsersThatHaveRole($roleid){
+   	return $this->userRoleDao->getAllUsersThatHaveRole($roleid);
+   }
   
     
    

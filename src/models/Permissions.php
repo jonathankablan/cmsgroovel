@@ -24,9 +24,7 @@ class Permissions extends Model{
 	public $timestamps = true;
 
 
-	//protected $fillable = array('userid','actions','contenttypeid','owncontent','othercontent','updated_at','created_at');
-
-	protected $fillable = array('userid','op_edit','op_save','op_update','op_delete','op_add','op_retrieve','contenttypeid','owncontent','othercontent','updated_at','created_at');
+	protected $fillable = array('op_create','op_read','op_update','op_delete','uri','owncontent','othercontent','updated_at','created_at');
 	
 	
 	public function user()

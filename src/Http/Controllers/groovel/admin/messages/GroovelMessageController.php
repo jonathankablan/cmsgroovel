@@ -39,10 +39,14 @@ class GroovelMessageController extends GroovelFormController {
 	
 	
 	public function validateForm($params){
+		$newmessage=$this->messageManager->countNewMessage(\Auth::user()['pseudo']);
+		\Session::flash('newmessages',$newmessage);
+		
 		if(\Request::is('messages/compose')){
 			return \View::make('cmsgroovel.pages.email.compose_messages');
 		}else if(\Request::is('messages/list')){
 			$messages=$this->messageManager->getMessagesReceivedByUserPseudo(\Auth::user()['pseudo']);
+			//count numermessage already read
 			return \View::make('cmsgroovel.pages.email.list_messages',['messages'=>$messages]);
 		}else if(\Request::is('messages/send')){
 			$this->checkToken();
@@ -77,6 +81,7 @@ class GroovelMessageController extends GroovelFormController {
 			$uri=array();
 			$uri['uri']= url('messages/read', $parameters = array(), $secure = null);
 			$message=$this->messageManager->getMessage(\Input::get('q')['id']);
+			$this->messageManager->changeStatusMessage(true,$message->id);
 			\Session::flash('message',$message);
 			return $this->jsonResponse($uri);
 		}else if(\Request::is('messages/delete')){

@@ -61,9 +61,15 @@ class UserRoleDao implements UserRoleDaoInterface{
 	public function getUserRoleByUserId($userid){
 		$role= UserRoles::where('userid','=',$userid)->first();
 		if($role!=null){
-			return $role->role['role'];
+			//return $role->role['role'];
+			return $role;
 		}
 	 return null;	
+	}
+	
+	public function getAllUsersThatHaveRole($roleid){
+		return  UserRoles::where('roleid','=',$roleid)->get();
+		
 	}
 	
 	

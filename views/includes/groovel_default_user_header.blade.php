@@ -22,20 +22,26 @@
                         @endif 
                         @if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif<b class="caret"></b></a>
                        <ul class="dropdown-menu">
-                            <li>{!! HTML::link('user/view/profile', 'Settings')!!}</li>
-                            <li class="divider"></li>
-                            <li>   {!! HTML::link('/messages/list', 'Messages')!!}</li>                    
+                           <li><a href="{{ url('user/view/profile') }}">Settings</a></li>
                            <li class="divider"></li>
-     					  <li>{!! HTML::link('/forums/view', 'Forums')!!}</li>
-     					  <li class="divider"></li>
-     					  <li>{!! HTML::link('/blogs', 'Blog')!!}</li>
+                           <li><a href="{{ url('/messages/list') }}">Messages</a></li>                  
+                           <li class="divider"></li>
+     					   <li><a href="{{ url('/forums/view') }}">Forums</a></li>                  
+                     	   <li class="divider"></li>
+     				       <li><a href="{{ url('/blogs') }}">Blog</a></li> 
      					   <li class="divider"></li>
                           @if (Auth::check())
-              				<li>{!! link_to('admin/auth/logout', 'Log out') !!}</li>
-     					@endif
-     					
-                       </ul>
-                   </li>
+              				<li><a href="{{ url('/admin/auth/logout') }}">Log out</a></li>
+              			  @endif
+              			  </ul>
+     				 </li>	
+                </ul>
+                 <ul class="nav navbar-nav navbar-right navbar-user">
+                  <li>
+                  <a href="{{ url('/messages/list') }}" style="color:#9d9d9d" >Inbox<span class="badge" style='margin-left:5px'>{!!\Session::get('newmessages')!!}</span></a>
+                  </li> 
+                 </ul>  
+             
                   
             </div>
           

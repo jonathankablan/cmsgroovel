@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**********************************************************************/
 /*This file is part of Groovel.                                       */
 /*Groovel is free software: you can redistribute it and/or modify     */
@@ -12,27 +12,22 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace Groovel\Cmsgroovel\business\groovel\admin\routes;
 
-interface GroovelRoutesBusinessInterface {
+namespace Groovel\Cmsgroovel\dao;
+
+use \Carbon\Carbon;
+use Groovel\Cmsgroovel\models\User;
+use Groovel\Cmsgroovel\models\RolePermissions;
+
+class RolePermissionsDao implements RolePermissionsDaoInterface{
+
+	public function create($roleid,$permissionid){
+		$rolePerm=new RolePermissions();
+		$rolePerm->roleid=$roleid;
+		$rolePerm->permissionid=$permissionid;
+		$rolePerm->save();
+	}
 	
-	public function paginateRoutes();
 	
-	public function paginateRoutesOnlyUser();
 	
-	public function getRouteByUri($uri);
-	
-	public function addRoute($uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
-	
-	public function deleteRoute($id);
-	
-	public function find($id);
-	
-	public function updateRoute($id,$uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
-	
-	public function getSubtypeList();
-	
-	public function getRouteByViewName($view);
-	
-	public function getAllUris();
 }

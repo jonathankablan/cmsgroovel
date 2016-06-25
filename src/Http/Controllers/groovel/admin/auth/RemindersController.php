@@ -58,13 +58,13 @@ class RemindersController extends GroovelFormController {
 	    $response = Password::sendResetLink(\Input::only('email'), function (Message $message) {
 	    	$message->subject('Password forgotten.');
 	    });
-	    
+	    	
 	    	switch ($response) {
 	    		case Password::RESET_LINK_SENT:
 	    			return redirect()->back()->with('status', trans($response));
 	    
 	    		case Password::INVALID_USER:
-	    			return redirect()->back()->with('error', trans($response));
+	      			return redirect()->back()->with('error', trans($response));
 	    	}
 	    
 	}

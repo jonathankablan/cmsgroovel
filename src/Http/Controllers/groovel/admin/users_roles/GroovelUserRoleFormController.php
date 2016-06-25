@@ -87,16 +87,14 @@ class GroovelUserRoleFormController extends GroovelFormController {
 			}
 			$valid=$this->validateUser();
 			if($valid['status']){
+				//\Log::info(\Input::all());
 				//check if already has role
 				$user=$this->userRoleManager->getUserByPseudo(\Input::get('pseudo'));
-				$roles=$this->userRoleManager->getUserRoleByUserId($user['id']);
+				$role=$this->userRoleManager->getUserRoleByUserId($user['id']);
 				if(!empty($roles)){
-					foreach($roles as $role){
 						if($role->role['role']==\Input::get('roles')){
 							return $this->jsonResponse('role already affected',false,true,true);
 						}
-						
-					}
 				}
 				return $this->processForm();
 			}else{

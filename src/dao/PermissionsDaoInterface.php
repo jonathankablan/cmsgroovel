@@ -12,27 +12,17 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace Groovel\Cmsgroovel\business\groovel\admin\routes;
+namespace Groovel\Cmsgroovel\dao;
 
-interface GroovelRoutesBusinessInterface {
+interface PermissionsDaoInterface{
+
+	public function create($action,$type,$owncontent,$othercontent);
+	/*public function updateUserPermissions($permissionid,$userid,$contenttype,$actions,$owncontent,$othercontent);
+	public function deleteUserPermission($id);
+	public function getPermissionByUserid($id);
+	public function getPermissionsByContentTypeAndActionAndUserId($userid,$typeid,$action);
+	public function getPermissionById($id);
+	public function paginate();
+	public function getPermissionsByContentTypeAndAction($typeid,$action);*/
 	
-	public function paginateRoutes();
-	
-	public function paginateRoutesOnlyUser();
-	
-	public function getRouteByUri($uri);
-	
-	public function addRoute($uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
-	
-	public function deleteRoute($id);
-	
-	public function find($id);
-	
-	public function updateRoute($id,$uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
-	
-	public function getSubtypeList();
-	
-	public function getRouteByViewName($view);
-	
-	public function getAllUris();
 }

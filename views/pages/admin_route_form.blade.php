@@ -45,13 +45,11 @@
 									<input class="form-control" style="width:50%;margin-left:12%" name="method" type="text" value="{{Session::get('route_edit')['method']}}" id="method">
 								</div>
 									<?php $actions=array(
-														'op_retrieve' => 'retrieve',
-											            'op_delete' => 'delete',
-											            'op_edit' => 'edit',
-											            'op_save' => 'save',
+														'op_create' => 'create',
+											            'op_read' => 'read',
 											            'op_update' => 'update',
-											            'op_add' => 'add',
-									           			'none'=>'none'
+											            'op_delete' => 'delete',
+											   			'op_none'=>'none'
 											            );
 									?>
 								    @foreach( $actions as $action=>$value)
@@ -89,21 +87,7 @@
 						     		</div>
 							    @endif
 					
-							    <?php $subtypes= Session::get('subtypes')?>
-								    @foreach( $subtypes as $subtype)
-						                 @if( Session::get('route_edit')['subtype']!=$subtype)
-						                 	<?php $subtypes_filter[$subtype]=$subtype;?>
-						                 @endif
-									@endforeach
-									<div class="form-group form-inline" id="subtype" data-toggle="tooltip" title="what type of content is your page: is it a view?,some contents?, a route.., it will be used to set permissions rules">
-									<label for="subtype" style="margin-right:0px" class="required">subtype</label>
-									<select name="subtype[]" class='form-control' style='width:50%;margin-left:10%'>
-											<option value=<?php echo  Session::get('route_edit')['subtype']?>><?php echo Session::get('route_edit')['subtype']?></option>
-											@foreach($subtypes_filter as $subtype)
-											<option value=<?php echo $subtype?>><?php echo $subtype?></option>
-											@endforeach
-							     		</select>	
-									</div>
+							  
 				               
 				                <div class="form-group form-inline" id="audit_url" data-toggle="tooltip" title="if you want some statistics on access this uri, you can enable it">
 				                <?php   $states=['0'=>'Disabled','1'=>'Enabled'];

@@ -48,13 +48,12 @@
 				                <div class="form-group form-inline" id="action" data-toggle="tooltip" title="action it is when you want to access to a page in order to update or save data or..action will be used to set some permissions rules">
 				                   <label for="action" class="col-md-2">action</label>
 				                   <select class="form-control" style="width:50%" name="action[]">
-					                   <option value="op_retrieve">retrieve</option>
-					                   <option value="op_delete">delete</option>
-					                   <option value="op_edit">edit</option>
-					                   <option value="op_save">save</option>
+					                   <option value="op_create">create</option>
+					                   <option value="op_read">read</option>
 					                   <option value="op_update">update</option>
-					                   <option value="op_add">add</option>
-				                   </select>
+					                   <option value="op_delete">delete</option>
+					                   <option value="op_none">none</option>
+					                </select>
 				                </div>
 				                <div class="form-group form-inline" id="view" data-toggle="tooltip" title="the name of your view (page name) that will be called">
 				                    <label for="view" class="col-md-2">view</label>
@@ -74,15 +73,7 @@
 						     		</div>
 							  @endif
 				              
-				              
-				              <div class="form-group form-inline" id="subtype" data-toggle="tooltip" title="what type of content is your page: is it a view?,some contents?, a route..,? it will be used to set permissions rules">
-				               <label for="subtype" class="required col-md-2">subtype</label>  
-								<select name="subtype[]" class='form-control' style='width:50%'>
-								    @foreach ($subtypes as $subtype)
-									<option value={!!$subtype!!}>{!! $subtype!!}</option>
-									@endforeach
-								</select>
-				              </div>
+				           
 				               <div class="form-group form-inline" id="audit_url" data-toggle="tooltip" title="if you want some statistics on access this uri you can enable it">
 				                <label for="audit url" class="col-md-2">audit_url</label>
 				               		<select name="audit_tracking_url_enable"  class='form-control'>

@@ -1,5 +1,5 @@
 function DeleteMessage(){
-    var thArray = $("#table_messages thead tr").map(function(index,elem) {
+   var thArray = $("#table_messages thead tr").map(function(index,elem) {
                 var ret = [];
                 var x = $(this);
                 var cells = x.find('th#col_message');
@@ -20,7 +20,6 @@ function DeleteMessage(){
     for (i = 0; i < thArray.length; i++){ 
          inputData[thArray[i]]=tdArray[i];
     }
-    
     $.ajax({
                 type: 'get',
                 data : any2url('q',inputData),

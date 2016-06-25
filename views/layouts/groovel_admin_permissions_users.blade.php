@@ -5,6 +5,7 @@
   </head>
 
   <body>
+  @include('cmsgroovel.toolkits.popup.popupModal')  
  <div class="container-fluid">
 	   @if(Session::get('user_privileges')!=null)
 		  @if(Session::get('user_privileges')['role']==null)

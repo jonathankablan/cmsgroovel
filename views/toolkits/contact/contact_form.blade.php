@@ -21,21 +21,21 @@
 					                </div>
 	            				</div>
 	            				<div class="form-group form-inline">
-					                <label class="col-md-5 control-label required" style='margin-right:80px'>email:</label>
+					                <label class="col-md-5 control-label required" style='margin-right:50px'>email:</label>
 					                <div class="col-md-5">
 					                    <input type='email' name='email' class="form-control" style='width:100%'/>
 					                </div>
 	            				</div>
 	            				<div class="form-group form-inline">
-					                <label class="col-md-5 control-label required" style='margin-right:65px'>subject:</label>
+					                <label class="col-md-5 control-label required" style='margin-right:50px'>subject:</label>
 					                <div class="col-md-5">
 					                    <input type='text' name='subject' class="form-control" style='width:100%'/>
 					                </div>
 	            				</div>
 	            				<div class="form-group form-inline">
-					                <label class="col-md-5 control-label required" style='margin-right:55px'>message:</label>
+					                <label class="col-md-5 control-label required" style='margin-right:50px'>message:</label>
 					                <div class="col-md-5">
-					                    <textarea name='message' class="form-control" style='width:100%'></textarea>
+					                    <textarea name='message' class="form-control" style='width:100%' rows='10' cols='20'></textarea>
 					                </div>
 	            				</div>
 														   
@@ -52,6 +52,7 @@
 </div>
 <script>
 $("#submitForm").click(function (event) {
+	
 	var form=$('#contact_form').serialize();
 	$.post('/contact/post', form, function (data, textStatus) {
 			var parsed = JSON.parse(data);

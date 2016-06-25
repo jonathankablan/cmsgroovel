@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**********************************************************************/
 /*This file is part of Groovel.                                       */
 /*Groovel is free software: you can redistribute it and/or modify     */
@@ -12,27 +12,30 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace Groovel\Cmsgroovel\business\groovel\admin\routes;
 
-interface GroovelRoutesBusinessInterface {
+namespace Groovel\Cmsgroovel\dao;
+
+use \Carbon\Carbon;
+use Groovel\Cmsgroovel\models\User;
+use Groovel\Cmsgroovel\models\Roles;
+
+class RoleDao implements RoleDaoInterface{
+
+	public function addRole($name){
+		$role= new Roles();
+		$role->role=$name;
+		$role->save();
+		return $role;
+	}
+	public function findByRoleId($role){
+		return Roles::where('id','=',$role)->first();
+	}
 	
-	public function paginateRoutes();
+	public function findByRoleName($role){
+		return Roles::where('role','=',$role)->first();
+	}
 	
-	public function paginateRoutesOnlyUser();
-	
-	public function getRouteByUri($uri);
-	
-	public function addRoute($uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
-	
-	public function deleteRoute($id);
-	
-	public function find($id);
-	
-	public function updateRoute($id,$uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
-	
-	public function getSubtypeList();
-	
-	public function getRouteByViewName($view);
-	
-	public function getAllUris();
+	public function paginate(){
+		return Roles::paginate(15);
+	}
 }

@@ -39,32 +39,44 @@ class GroovelUserRulesController extends GroovelController {
 	}
 	
    public function checkAccessRulesURL($user,$params){
-   	$isAccess=false;
+   	 $isAccess=0;
    	 try{
-  	 	$role=$this->userRoleManager->getUserRoleByUserId($user['id']);
-  	 	if($role!=null && !empty($role) && count($role)>0){
-	  	 	if($role=='ADMIN'){
-	  	 		return true;
+   	 	if(!empty($user)){
+	   	 	$role=$this->userRoleManager->getUserRoleByUserId($user->id);
+	  	 	
+	  	 	if($role!=null && !empty($role) && count($role)>0){
+		  	 	if($role->role['role']=='ADMIN'){
+		  	 		return true;
+		  	 	}
 	  	 	}
-  	 	}
-  	 	if($params['subtype']=='login'){
-  	 		return true;
-  	 	}
- 	    $permissions=$this->permissionManager->getUserPermissions($user['pseudo']);
- 	    $auth=\Auth::user();
- 	    if(empty($auth)&& empty($permissions)){
- 	    	return true;
- 	    }
- 	    if($permissions!=null && !empty($permissions)){
-	 	    foreach($permissions as $permission){
-	 	    	$content_type=$this->contentTypeManager->find( $permission['contenttypeid']);
-	 	    	 if($params['subtype']==$content_type['name'] &&  $permission[$params['action']]==1 ){
-	 	    	 	 $isAccess= true;
-	 	    	 }
+	  	    $rolePermissions=$role->role->rolepermissions;
+	 	    $permissions = array();
+	 	    foreach($rolePermissions as $permission){
+	 	    	foreach($permission->permissions as $permission){
+	 	    		$permissions[$permission['id']]=['id'=>$permission['id'],'op_create'=>$permission['op_create'],'op_read'=>$permission['op_read'],
+	 	    				'op_update'=>$permission['op_update'],'op_delete'=>$permission['op_delete'],'uri'=>$permission['uri'],'owncontent'=>$permission['owncontent'],'othercontent'=>$permission['othercontent']];
+	 	    	}
 	 	    }
- 	    }
- 	    return $isAccess;
- 	    
+	 	     
+	 	    $auth=\Auth::user();
+	 	    if(empty($auth)&& empty($permissions)|| (!empty($auth)&&$params['action']=='none')){
+	 	    	return true;
+	 	    }
+	 	    if($permissions!=null && !empty($permissions)){
+	 	    	foreach($permissions as $permission){
+	 	    		if($params['uri']==$permission['uri'] &&  $permission[$params['action']]==1 ){
+	 	    			$isAccess= true;
+	 	    			return $isAccess;
+	 	    		}
+	 	    	}
+	 	    }
+	 	    return 0;
+   	 	}else if(empty($user)){
+   	 		if($params['action']=='none'){
+   		 			return true;
+   	 		}
+   	 	
+   	 	}
       }catch (\Exception $ex){
        	   \Log::info($ex);
 	   	    return \Redirect::to('undefined');

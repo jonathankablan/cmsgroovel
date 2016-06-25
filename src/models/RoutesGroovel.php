@@ -22,7 +22,7 @@ protected $table = 'routes_groovel';
 
 public $timestamps = true;
 
-protected $fillable = array('domain','uri','name','controller','method','action','view','before_filter','after_filter','type','subtype','audit_tracking_url_enable','activate_route');
+protected $fillable = array('uri','name','controller','method','action','view','type','audit_tracking_url_enable','activate_route');
 
 	public function getUri()
     {

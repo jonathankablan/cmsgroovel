@@ -22,4 +22,6 @@ interface MessageDaoInterface{
 	public function getMessage($id);
 	public function deleteMessage($id);
 	public function getTotalMessage();
+	public function changeStatusMessage($status,$id);
+	public function countNewMessage($pseudo);
 }

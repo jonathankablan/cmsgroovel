@@ -25,7 +25,6 @@ public function create($title,$url,$name){
 	$routegroovel->action='get';
 	$routegroovel->view='cmsgroovel::pages.demo';
 	$routegroovel->type=$name['name'];
-	$routegroovel->subtype='demo';
 	$routegroovel->save();
 }
 
@@ -50,37 +49,29 @@ public function create($title,$url,$name){
 		$routegroovel->delete();
 	}
 	
-	public function updateRoute($id,$domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route){
+	public function updateRoute($id,$uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route){
 		$routegroovel = RoutesGroovel::find($id);
-		$routegroovel->domain=$domain;
 		$routegroovel->uri=$uri;
 		$routegroovel->name=$name;
 		$routegroovel->controller=$controller;
 		$routegroovel->method=$method;
 		$routegroovel->action=$action;
 		$routegroovel->view=$view;
-		$routegroovel->before_filter=$before_filter;
-		$routegroovel->after_filter=$after_filter;
 		$routegroovel->type=$type;
-		$routegroovel->subtype=$subtype;
 		$routegroovel->audit_tracking_url_enable=$audit_url_enabled;
 		$routegroovel->activate_route=$activate_route;
 		$routegroovel->save();
 	}
 	
-	public function addRoute($domain,$uri,$name,$controller,$method,$action,$view,$before_filter,$after_filter,$type,$subtype,$audit_url_enabled,$activate_route){
+	public function addRoute($uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route){
 		$routegroovel=new RoutesGroovel;
-		$routegroovel->domain=$domain;
 		$routegroovel->uri=$uri;
 		$routegroovel->name=$name;
 		$routegroovel->controller=$controller;
 		$routegroovel->method=$method;
 		$routegroovel->action=$action;
 		$routegroovel->view=$view;
-		$routegroovel->before_filter=$before_filter;
-		$routegroovel->after_filter=$after_filter;
 		$routegroovel->type=$type;
-		$routegroovel->subtype=$subtype;
 		$routegroovel->audit_tracking_url_enable=$audit_url_enabled;
 		$routegroovel->activate_route=$activate_route;
 		$routegroovel->save();
@@ -89,6 +80,10 @@ public function create($title,$url,$name){
 	
 	public function getRouteByViewName($view){
 		return RoutesGroovel::where('view','=',$view)->where('type','!=','Groovel')->get();
+	}
+	
+	public function getAllUris(){
+		return RoutesGroovel::all();
 	}
 
 }

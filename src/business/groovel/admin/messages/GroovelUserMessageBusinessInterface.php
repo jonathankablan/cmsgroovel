@@ -30,5 +30,8 @@ interface GroovelUserMessageBusinessInterface{
 	
 	public function deleteMessage($id);
 	
+	public function changeStatusMessage($status,$id);
+	
+	public function countNewMessage($pseudo);
 
 }

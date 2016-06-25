@@ -51,8 +51,8 @@ class AuthController extends GroovelController {
     	);
 	
 	private static $rulesSubscribe = array(
-			'username' => 'required|Alpha|between:6,64',
-			'pseudo' => 'required|Alpha_num|between:6,64|unique:users',
+			'username' => 'required|Alpha|between:4,64',
+			'pseudo' => 'required|Alpha_num|between:4,64|unique:users',
 			'email' => 'required|email|unique:users',
 			'password' => 'required|AlphaNum|between:6,20|confirmed'
 	);
@@ -133,7 +133,7 @@ class AuthController extends GroovelController {
 	          $this->userManager->setLastTimeSeen(\Input::get('pseudo'));
 	          $user=$this->userManager->getUserByPseudo(\Input::get('pseudo'));
 	          $role= $this->userManager->getUserRole($user['id']);
-	          $user_privileges=array("role"=>$role,"status"=>$user['activate']);
+	          $user_privileges=array("role"=>$role->role['role'],"status"=>$user['activate']);
 	          \Session::put('user_privileges',$user_privileges);
 	          return \Redirect::intended('/admin/welcome')->with('flash_notice', 'You are connected with ' . \Auth::user()->pseudo);
 	        }

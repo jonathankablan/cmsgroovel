@@ -49,5 +49,16 @@ class MessageDao implements MessageDaoInterface{
 		return \DB::table('messages')->count();
 	}
 	
+	public function changeStatusMessage($status,$id){
+		$message=Messages::where('id','=',$id)->first();
+		$message->isalreadyread=$status;
+		$message->save();
+	}
+	
+	public function countNewMessage($pseudo){
+		$message=Messages::where('recipient','=',$pseudo)->where('isalreadyread','=','0')->count();
+		return $message;
+	}
+	
 
 }

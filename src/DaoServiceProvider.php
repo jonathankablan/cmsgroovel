@@ -15,6 +15,10 @@
 namespace Groovel\Cmsgroovel;
 use Illuminate\Support\ServiceProvider;
 use Monolog\Logger;
+use Groovel\Cmsgroovel\dao\RolePermissionsDao;
+use Groovel\Cmsgroovel\dao\RolePermissionsDaoInterface;
+use Groovel\Cmsgroovel\dao\RoleDao;
+use Groovel\Cmsgroovel\dao\RoleDaoInterface;
 use Groovel\Cmsgroovel\dao\ContentsDao;
 use Groovel\Cmsgroovel\dao\RouteDao;
 use Groovel\Cmsgroovel\dao\ContentTypeDao;
@@ -58,6 +62,10 @@ use Groovel\Cmsgroovel\dao\CommentsDao;
 use Groovel\Cmsgroovel\dao\CommentsDaoInterface;
 use Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelRolePermissionsBusiness;
+use Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelRolePermissionsBusinessInterface;
+use Groovel\Cmsgroovel\dao\PermissionsDao;
+use Groovel\Cmsgroovel\dao\PermissionsDaoInterface;
 
 
 class DaoServiceProvider extends \Illuminate\View\ViewServiceProvider {
@@ -87,8 +95,16 @@ class DaoServiceProvider extends \Illuminate\View\ViewServiceProvider {
     	\App::bind('Groovel\Cmsgroovel\dao\MenuDaoInterface','Groovel\Cmsgroovel\dao\MenuDao');
     	\App::bind('Groovel\Cmsgroovel\dao\LayoutDaoInterface','Groovel\Cmsgroovel\dao\LayoutDao');
     	\App::bind('Groovel\Cmsgroovel\dao\CommentsDaoInterface','Groovel\Cmsgroovel\dao\CommentsDao');
+    	\App::bind('Groovel\Cmsgroovel\dao\RoleDaoInterface','Groovel\Cmsgroovel\dao\RoleDao');
+    	\App::bind('Groovel\Cmsgroovel\dao\RolePermissionsDaoInterface','Groovel\Cmsgroovel\dao\RolePermissionsDao');
+    	\App::bind('Groovel\Cmsgroovel\dao\PermissionsDaoInterface','Groovel\Cmsgroovel\dao\PermissionsDao');
+    	
     	 
-    	 
+    	\App::bind('Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelRolePermissionsBusiness',function(){
+    		return new GroovelRolePermissionsBusiness(new RolePermissionsDao,new RoleDao,new PermissionsDao);
+    	});
+    		 
+    	
     	\App::bind('Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusiness',function(){
     		return new GroovelCommentBusiness(new CommentsDao);
     	});
@@ -103,7 +119,7 @@ class DaoServiceProvider extends \Illuminate\View\ViewServiceProvider {
     	
 
     	\App::bind('Groovel\Cmsgroovel\business\groovel\admin\permissions\GroovelPermissionManagerBusiness',function(){
-    			return new GroovelPermissionManagerBusiness(new UserDao,new ContentTypeDao,new UserPermissionDao,new UserRoleDao);
+    			return new GroovelPermissionManagerBusiness(new UserDao,new ContentTypeDao,new UserPermissionDao,new UserRoleDao,new RoleDao);
     	});
     	
     	\App::bind('Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelUserRoleManagerBusiness',function(){

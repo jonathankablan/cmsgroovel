@@ -23,7 +23,7 @@
 			     <div id='form-modal' class="modal-body">
 						 	  <form method="POST" action="{{url('admin/user/role/update')}}" accept-charset="UTF-8" id="role_form" class='form-horizontal well' style='width:100%'>
 						         {{csrf_field()}}
-						 	   	<input id="id" type="hidden" value={{Session::get('user_role')['id']}}>
+						 	   	<input id="id" name='id' type="hidden" value={{Session::get('user_role')['id']}}>
 						     	<div class="form-group form-inline">
 						      		 <label for="Pseudo" style="margin-right:50px">Pseudo</label>
 						      		 <input class="form-control" style="width:250px" readonly="readonly" name="pseudo" type="text" value={{ Session::get('user_role')['pseudo']}}>

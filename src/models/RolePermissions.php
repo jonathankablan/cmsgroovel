@@ -12,27 +12,35 @@
 /*You should have received a copy of the GNU General Public License   */
 /*along with Groovel.  If not, see <http://www.gnu.org/licenses/>.    */
 /**********************************************************************/
-namespace Groovel\Cmsgroovel\business\groovel\admin\routes;
+namespace Groovel\Cmsgroovel\models;
+use Illuminate\Database\Eloquent\Model;
 
-interface GroovelRoutesBusinessInterface {
+
+
+class RolePermissions extends Model{
+
+
+	protected $table = 'role_permissions';
 	
-	public function paginateRoutes();
+	public $timestamps = true;
 	
-	public function paginateRoutesOnlyUser();
+	protected $fillable = array('roleid','permissionid','updated_at','created_at');
 	
-	public function getRouteByUri($uri);
+	public function role()
+	{
+		return $this->hasOne('Groovel\Cmsgroovel\models\Roles','id','roleid');
+	}
 	
-	public function addRoute($uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
+	public function permissions()
+	{
+		return $this->hasMany('Groovel\Cmsgroovel\models\Permissions','id','permissionid');
+	}
+
 	
-	public function deleteRoute($id);
+	public function getId()
+	{
+		return $this->attributes['id'];
+	}
 	
-	public function find($id);
 	
-	public function updateRoute($id,$uri,$name,$controller,$method,$action,$view,$type,$audit_url_enabled,$activate_route);
-	
-	public function getSubtypeList();
-	
-	public function getRouteByViewName($view);
-	
-	public function getAllUris();
 }

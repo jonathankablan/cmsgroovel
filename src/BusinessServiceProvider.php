@@ -94,6 +94,17 @@ use Groovel\Cmsgroovel\dao\CommentsDaoInterface;
 use Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusinessInterface;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\comments\GroovelCommentController;
+use Groovel\Cmsgroovel\dao\RolePermissionsDao;
+use Groovel\Cmsgroovel\dao\RolePermissionsDaoInterface;
+use Groovel\Cmsgroovel\dao\RoleDao;
+use Groovel\Cmsgroovel\dao\RoleDaoInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelRolePermissionsManagerBusinessInterface;
+use Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelRolePermissionsManagerBusiness;
+use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\role_permissions\GroovelRolePermissionsFormController;
+use Groovel\Cmsgroovel\dao\PermissionsDao;
+use Groovel\Cmsgroovel\dao\PermissionsDaoInterface;
+use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\role_permissions\GroovelRolesPermissionsListController;
+
 
 class BusinessServiceProvider extends \Illuminate\View\ViewServiceProvider {
 	public function register() {
@@ -118,6 +129,9 @@ class BusinessServiceProvider extends \Illuminate\View\ViewServiceProvider {
 		\App::bind ( 'Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusinessInterface', 'Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusiness' );
 		
 		\App::bind ( 'Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusinessInterface', 'Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusiness' );
+		
+		\App::bind ( 'Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelRolePermissionsManagerBusinessInterface', 'Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelRolePermissionsManagerBusiness' );
+		
 		
 		\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\comments\GroovelCommentController', function () {
 			return new GroovelCommentController ( new GroovelCommentBusiness (new CommentsDao()));
@@ -180,7 +194,7 @@ class BusinessServiceProvider extends \Illuminate\View\ViewServiceProvider {
 		} );
 
 		\App::bind('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\auth\AuthController',function(){
-				return new AuthController(new GroovelUserManagerBusiness(new UserDao(),new ContentTypeDao(),new UserPermissionDao(),new UserRoleDao()), new GroovelPermissionManagerBusiness(new UserDao(),new ContentTypeDao(),new UserPermissionDao(),new UserRoleDao()), new GroovelConfigurationBusiness(new ConfigurationDao(),new StatsUsersGeolocationDao()),
+				return new AuthController(new GroovelUserManagerBusiness(new UserDao(),new ContentTypeDao(),new UserPermissionDao(),new UserRoleDao()), new GroovelPermissionManagerBusiness(new UserDao(),new ContentTypeDao(),new UserPermissionDao(),new UserRoleDao(),new RoleDao()), new GroovelConfigurationBusiness(new ConfigurationDao(),new StatsUsersGeolocationDao()),
 						new GroovelUserMessageBusiness(new MessageDao(),new UserDao(),new ConfigurationDao()));
 		});
 		
@@ -266,6 +280,14 @@ class BusinessServiceProvider extends \Illuminate\View\ViewServiceProvider {
     	
     	\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\forum\GroovelForumController', function () {
     			return new GroovelForumController (new GroovelForumBusiness(new ForumDao,new UserDao,new ConfigurationDao),new GroovelConfigurationBusiness(new ConfigurationDao, new StatsUsersGeolocationDao),new GroovelUserManagerBusiness(new UserDao,new ContentTypeDao,new UserPermissionDao,new UserRoleDao));
+    		} );
+    	
+    	\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\role_permissions\GroovelRolePermissionsFormController', function () {
+    			return new GroovelRolePermissionsFormController(new GroovelRolePermissionsManagerBusiness(new RolePermissionsDao,new RoleDao,new PermissionsDao),new GroovelRoutesBusiness(new RouteDao, new ContentTypeDao),new GroovelContentTypeManagerBusiness(new ContentsDao(), new ContentTypeDao(),new WidgetDao()), new GroovelUserRoleManagerBusiness(new UserDao,new UserRoleDao));
+    	 });
+
+    	\App::bind ( 'Groovel\Cmsgroovel\Http\Controllers\groovel\admin\role_permissions\GroovelRolesPermissionsListController', function () {
+    			return new GroovelRolesPermissionsListController ( new GroovelRolePermissionsManagerBusiness (new RolePermissionsDao,new RoleDao,new PermissionsDao) );
     		} );
 
     }

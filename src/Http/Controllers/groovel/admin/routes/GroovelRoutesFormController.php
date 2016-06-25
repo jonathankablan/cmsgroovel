@@ -40,7 +40,7 @@ class GroovelRoutesFormController extends GroovelFormController {
 		$subtypes=$this->routeBusiness->getSubtypeList();
 		$layouts=$this->layoutManager->layouts();
 		array_push($layouts,'Groovel');
-		return \View::make('cmsgroovel.pages.admin_form_route',['subtypes'=>$subtypes,'layouts'=>$layouts]);
+		return \View::make('cmsgroovel.pages.admin_form_route',['layouts'=>$layouts]);
 	}
 	
 	
@@ -51,14 +51,12 @@ class GroovelRoutesFormController extends GroovelFormController {
 		}
 		$rulesadd = array(
 				'name' => 'required',
-				'uri' => 'required|unique:routes_groovel',
-				'subtype'=>'required'
+				'uri' => 'required|unique:routes_groovel'
 		);
 		$validation=null;
 		$rulesupdate = array(
 				'name' => 'required',
-				'uri' => 'required',
-				'subtype'=>'required'
+				'uri' => 'required'
 		);
 			
 		if(\Request::is('*/routes/add')){
@@ -175,29 +173,25 @@ class GroovelRoutesFormController extends GroovelFormController {
  		  	if(empty($input)){
 	     		$input=\Input::all();
 	     		}
-           $this->routeBusiness->updateRoute($input['id'],$input['domain'],$input['uri'],$input['name'],$input['controller'],$input['method'],$input['action'][0],$input['view'],null,null,$input['type'],$input['subtype'][0],$input['audit_tracking_url_enable'],$input['activate_route']);
+           $this->routeBusiness->updateRoute($input['id'],$input['uri'],$input['name'],$input['controller'],$input['method'],$input['action'][0],$input['view'],$input['type'],$input['audit_tracking_url_enable'],$input['activate_route']);
            $this->refreshRoute($input['id']);
   	}
 
 	private function addRoute(){
 		\Log::info(\Input::all());
-		$this->routeBusiness->addRoute(\Input::get('domain'), \Input::get('uri'),\Input::get('name'), \Input::get('controller'), \Input::get('method'), \Input::get('action')[0], \Input::get('view'), \Input::get('before_filter'),\Input::get('after_filter'),\Input::get('type'),\Input::get('subtype')[0],\Input::get('audit_tracking_url_enable'),\Input::get('activate_route'));
+		$this->routeBusiness->addRoute(\Input::get('uri'),\Input::get('name'), \Input::get('controller'), \Input::get('method'), \Input::get('action')[0], \Input::get('view'),\Input::get('type'),\Input::get('audit_tracking_url_enable'),\Input::get('activate_route'));
 	}
 
 	private function refreshRoute($id){
 	    	$routegroovel=$this->routeBusiness->find($id);
 	  		$route=array('id'=>$id,
-    				'domain'=>$routegroovel->domain,
     				'uri'=>$routegroovel->uri,
     				'name'=>$routegroovel->name,
     				'controller'=>$routegroovel->controller,
     				'method'=>$routegroovel->method,
     				'action'=>$routegroovel->action,
     				'view'=>$routegroovel->view,
-    				'before_filter'=>$routegroovel->before_filter,
-    				'after_filter'=>$routegroovel->after_filter,
     				'type'=>$routegroovel->type,
-	  				'subtype'=>$routegroovel->subtype,
 	  				'audit_tracking_url_enable'=>$routegroovel->audit_tracking_url_enable,
 	  				'activate_route'=>$routegroovel->activate_route
 	  				
@@ -213,26 +207,20 @@ class GroovelRoutesFormController extends GroovelFormController {
 		$input =  \Input::get('q');
 		$routegroovel = $this->routeBusiness->find($input['id']);
 		$route=array('id'=>$input['id'],
-				'domain'=>$routegroovel->domain,
 				'uri'=>$routegroovel->uri,
 				'name'=>$routegroovel->name,
 				'controller'=>$routegroovel->controller,
 				'method'=>$routegroovel->method,
 				'action'=>$routegroovel->action,
 				'view'=>$routegroovel->view,
-				'before_filter'=>$routegroovel->before_filter,
-				'after_filter'=>$routegroovel->after_filter,
 				'type'=>$routegroovel->type,
-				'subtype'=>$routegroovel->subtype,
 				'audit_tracking_url_enable'=>$routegroovel->audit_tracking_url_enable,
 				'activate_route'=>$routegroovel->activate_route
 		);
-		$subtypes=$this->routeBusiness->getSubtypeList();
 		$layouts=$this->layoutManager->layouts();
 		$layouts=array_merge($layouts,array('Groovel'=>'Groovel'));
 		\Session::put('layouts', $layouts);
 		\Session::put('route_edit', $route);
-		\Session::put('subtypes', $subtypes);
 		\Session::put('page',$this->getFilePage($routegroovel->view));
 		$uri=array();
 		$uri['uri']= url('admin/routes/editform', $parameters = array(), $secure = null);

@@ -24,16 +24,7 @@
 			               		 <li><a href="{{ url('/admin/user/form') }}">Add new user</a></li>
                             </ul>
                             </li>
-                             <li class="divider"></li>
-                             <li class="dropdown dropdown-submenu">
-                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Users Permissions</a>
-			                 
-			                   <ul class="dropdown-menu">
-				                    <li><a href="{{ url('/admin/users/permissions') }}">View users permissions</a></li>
-				               	    <li class="divider"></li>
-					            	<li><a href="{{ url('/admin/user/permissions/form') }}">Add user permissions</a></li>
-					          	</ul>
-					      </li>
+                            
 			                <li class="divider"></li>
                              <li class="dropdown dropdown-submenu">
 			                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Users Roles </a>
@@ -42,6 +33,15 @@
 				              	  <li class="divider"></li>
 				              	  <li><a href="{{ url('/admin/users/roles') }}">View Users roles</a></li>
 				               	</ul>
+				              </li>
+				              <li class="divider"></li>
+                             <li class="dropdown dropdown-submenu">
+			                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Roles </a>
+			                   <ul class="dropdown-menu">
+				               	  <li><a href="{{ url('/admin/roles/permissions/form')  }}">Add roles</a></li>
+				              	  <li class="divider"></li>
+				              	  <li><a href="{{ url('/admin/roles/permissions') }}">View  roles</a></li>
+				              	</ul>
 				              </li>
 				         </ul>
 		           </li>
@@ -103,29 +103,33 @@
 		        </div>
 		       </form>
         	</div>
-         	  <ul class="nav navbar-nav navbar-right navbar-user" style='margin-right:10px'>
-                    <li class="dropdown user-dropdown">
-                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        	 <ul class="nav navbar-nav navbar-right navbar-user" style='margin-right:10px'>
+                   @if (Auth::check())
+              			<li><a href="{{ url('/admin/auth/logout') }}">Log out</a></li>
+     			   @endif
+                </ul>  
+         	  <ul class="nav navbar-nav navbar-right navbar-user">
+                    <li>
+                       <a href="{{ url('/user/view/profile') }}">
                        @if(\Auth::user()!=null) 
 	                        @if( \Auth::user()->picture==null)
 	                       		<i class="glyphicon glyphicon-user"></i>
 	                        @else
 	                       	<img src="/{{\Auth::user()->picture}}" alt="user" class="img-circle" style='width:20%;height:20%'>
-	                        @endif
-                       @endif
-                       @if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif<b class="caret"></b></a>
-                       <ul class="dropdown-menu">
-                            <li><a href="{{ url('/user/view/profile') }}">Settings</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{{ url('/messages/list') }}">Messages</a></li>                  
-                           <li class="divider"></li>
-                         @if (Auth::check())
-              				<li><a href="{{ url('/admin/auth/logout') }}">Log out</a></li>
-     					@endif
-                       </ul>
+	                         @endif
+	                   @endif
+                       @if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif</a>
+                      
                    </li>
                 </ul>
-            </div>
+            
+                <ul class="nav navbar-nav navbar-right navbar-user">
+                  <li>
+                  <a href="{{ url('/messages/list') }}" style="color:#9d9d9d" >Inbox<span class="badge" style='margin-left:5px'>{!!\Session::get('newmessages')!!}</span></a>
+                  </li> 
+                 </ul> 
+                
+	         </div>
           
         </nav>
 >

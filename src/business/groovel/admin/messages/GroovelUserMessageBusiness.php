@@ -56,21 +56,25 @@ class GroovelUserMessageBusiness implements GroovelUserMessageBusinessInterface{
 		if(!empty($auth)){
 			if(\Auth::user()->notification_email_enable==1){
 				if($this->configDao->isEmailEnable()==0){
-					\Mail::pretend();
+					// don t send message
+				}else{
+					$dest=$this->userDao->getUserByPseudo($recipient);
+					\Mail::send('cmsgroovel.pages.email.email', array('pseudo'=>$dest->pseudo,'body'=>$body,'author'=>$author), function($message) use ($dest,$subject){
+						$message->to($dest->email, $dest->username)->subject($subject);
+					});
 				}
-				$dest=$this->userDao->getUserByPseudo($recipient);
-				\Mail::send('cmsgroovel.pages.email.email', array('pseudo'=>$dest->pseudo,'body'=>$body,'author'=>$author), function($message) use ($dest,$subject){
-					$message->to($dest->email, $dest->username)->subject($subject);
-				});
 			}
 		}else{
 			if($this->configDao->isEmailEnable()==0){
-					\Mail::pretend();
-				}
+				//don t send message
+				
+			}else{
 				$dest=$this->userDao->getUserByPseudo($recipient);
 				\Mail::send('cmsgroovel.pages.email.email', array('pseudo'=>$dest->pseudo,'body'=>$body,'author'=>$author), function($message) use ($dest,$subject) {
 					$message->to($dest->email, $dest->username)->subject($subject);
 				});
+			}
+				
 		}
 	}
 	
@@ -87,5 +91,13 @@ class GroovelUserMessageBusiness implements GroovelUserMessageBusinessInterface{
 	
 	public function getMessage($id){
 		return $this->messageDao->getMessage($id);
+	}
+	
+	public function changeStatusMessage($status,$id){
+		$this->messageDao->changeStatusMessage($status,$id);
+	}
+	
+	public function countNewMessage($pseudo){
+		return $this->messageDao->countNewMessage($pseudo);
 	}
 }

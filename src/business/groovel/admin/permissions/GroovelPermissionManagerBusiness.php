@@ -28,6 +28,8 @@ use Groovel\Cmsgroovel\dao\UserRoleDaoInterface;
 use Groovel\Cmsgroovel\dao\UserRoleDao;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Groovel\Cmsgroovel\dao\RoleDaoInterface;
+use Groovel\Cmsgroovel\dao\RoleDao;
 
 class GroovelPermissionManagerBusiness implements GroovelPermissionManagerBusinessInterface{
 
@@ -35,14 +37,16 @@ private $userDao;
 private $contentTypeDao;
 private $permissionDao;
 private $userRoleDao;
+private $roleDao;
 private static $perPage = 10;
 	
-	public function __construct(UserDaoInterface $userDao,ContentTypeDaoInterface $contentTypeDao,UserPermissionDaoInterface $permissionDao,UserRoleDaoInterface $userRoleDao)
+	public function __construct(UserDaoInterface $userDao,ContentTypeDaoInterface $contentTypeDao,UserPermissionDaoInterface $permissionDao,UserRoleDaoInterface $userRoleDao,RoleDaoInterface $roleDao)
 	{
 		$this->userDao =$userDao;
 		$this->contentTypeDao =$contentTypeDao;
 		$this->permissionDao=$permissionDao;
 		$this->userRoleDao=$userRoleDao;
+		$this->roleDao =$roleDao;
 	}
 	
 	public function getUserByPseudo($pseudo){
@@ -60,87 +64,12 @@ private static $perPage = 10;
 		return $type->id;
 	}
 	
+	
+	
 	public function addDefaultPermission($pseudo){
 		$user = $this->userDao->getUserByPseudo($pseudo);
-		$owncontent='yes';
-		$othercontent='no';
-		
-		$type=$this->contentTypeDao->findAllContentTypeByName('file');
-		$action=array();
-		$action['retrieve']=0;
-		$action['add']=0;
-		$action['delete']=0;
-		$action['update']=0;
-		$action['save']=1;
-		$action['edit']=1;
-		
-		$this->permissionDao->create($user, $action, $type, $owncontent, $othercontent);
-		
-		$type=$this->contentTypeDao->findAllContentTypeByName('profile');
-		$action=array();
-		$action['retrieve']=1;
-		$action['add']=0;
-		$action['delete']=0;
-		$action['update']=0;
-		$action['save']=0;
-		$action['edit']=0;
-		$this->permissionDao->create($user, $action, $type, $owncontent, $othercontent);
-		
-		$type=$this->contentTypeDao->findAllContentTypeByName('information');
-		$action=array();
-		$action['retrieve']=1;
-		$action['add']=0;
-		$action['delete']=0;
-		$action['update']=0;
-		$action['save']=0;
-		$action['edit']=0;
-		$this->permissionDao->create($user, $action, $type, $owncontent, $othercontent);
-		
-		$type=$this->contentTypeDao->findAllContentTypeByName('message');$action=array();
-		$action=array();
-		$action['retrieve']=1;
-		$action['add']=1;
-		$action['delete']=1;
-		$action['update']=1;
-		$action['save']=1;
-		$action['edit']=1;
-		
-		$this->permissionDao->create($user, $action, $type, $owncontent, $othercontent);
-			
-		$type=$this->contentTypeDao->findAllContentTypeByName('user');
-		$action=array();
-		$action['retrieve']=1;
-		$action['add']=0;
-		$action['delete']=0;
-		$action['update']=1;
-		$action['save']=1;
-		$action['edit']=1;
-		
-		$this->permissionDao->create($user, $action, $type, $owncontent, $othercontent);
-		
-		
-		$type=$this->contentTypeDao->findAllContentTypeByName('forum');
-		$action=array();
-		$action['retrieve']=1;
-		$action['add']=0;
-		$action['delete']=0;
-		$action['update']=0;
-		$action['save']=1;
-		$action['edit']=0;
-		
-		$this->permissionDao->create($user, $action, $type, $owncontent, $othercontent);
-		
-		$type=$this->contentTypeDao->findAllContentTypeByName('public');
-		$action=array();
-		$action['retrieve']=1;
-		$action['add']=0;
-		$action['delete']=0;
-		$action['update']=0;
-		$action['save']=0;
-		$action['edit']=0;
-		
-		$this->permissionDao->create($user, $action, $type, $owncontent, $othercontent);
-		
+		$role_public=$this->roleDao->findByRoleName('PUBLIC');
+		$this->userRoleDao->add($role_public->id,  $user->id);
 	}
    
    public function addUserPermissions($pseudo,$action,$contenttype,$owncontent,$othercontent){

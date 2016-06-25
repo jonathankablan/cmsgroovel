@@ -24,7 +24,7 @@
 	      		  </div>
 	      	    @endif
 			@endif
-	         <div class="col-sm-9 col-sm-offset-1 col-xs-12 col-md-9 col-md-offset-0">
+	         <div class="col-sm-9 col-sm-offset-1 col-xs-12 col-md-9 col-md-offset-1" style='margin-top:20px'>
 	 			   @yield('content')
 	        </div>
 	  </div>

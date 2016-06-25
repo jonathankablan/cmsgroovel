@@ -38,7 +38,7 @@
 							     <div id='form-modal' class="modal-body">
 									<div class="panel-body">
 										 	     <input id="id" name="id" type="hidden" value={{Session::get('user_edit')['id']}}>
-										 		 {{ csrf_field() }}
+												 <input type="hidden" name="_token" id='token' value="<?php echo csrf_token(); ?>">
 										 		 <input id='action' type="hidden" name="action" value="admin/user/update">
 		                	
 										 		<div class="form-group form-inline">
@@ -124,7 +124,6 @@ $(document).ready(function() {
 
 $("#submitForm").click(function (event) {
 	//add token form
-	document.getElementById('user_form').appendChild( document.getElementById('token'));
 	form=$('#user_form').serialize();
 	validateUser(form);
 	if($('#light').children().length==0){
@@ -132,6 +131,7 @@ $("#submitForm").click(function (event) {
 	    if(!status){
 			return false;
 		}
+		console.log("ici");
 		form=$('#user_form').serialize();
 		postUser(form,'update');
 	}

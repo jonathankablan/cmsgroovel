@@ -11,6 +11,7 @@
 |
 */
 
+
 // for backend groovel
 Route::group(['middleware' => ['web','groovel.filter','groovel.userrules']], function () {
 	

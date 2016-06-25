@@ -24,5 +24,6 @@ interface GroovelUserRoleManagerBusinessInterface{
 	public function getListRoles();
 	public function getUserRole($id);
 	public function getUserRoleByUserId($userid);
+	public function getAllUsersThatHaveRole($role);
 	
 }

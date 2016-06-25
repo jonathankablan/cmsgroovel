@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelController;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteController;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_rules\GroovelUserRulesController;
+use Illuminate\Http\Response;
 
 class GroovelUserRulesBeforeMiddleware
 {
@@ -29,14 +30,16 @@ class GroovelUserRulesBeforeMiddleware
 			$configController = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\configuration\GroovelSystemConfigurationController');
 			 
 		
-			$params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'middleware'=>$route->middleware,'subtype'=>$route->subtype,'action'=>$route->action,'type'=>$route->type);
+			$params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'action'=>$route->action,'type'=>$route->type);
 			$hasAccessForUser=$rulesController->checkAccessRulesURL(\Auth::user(),$params);
-				// \Log::info($params);
 			if($hasAccessForUser&& $route->activate_route=='1'){
 				\Session::put('params',$params);
 				return $next($request);
 			}else{
-				return  \View::make('cmsgroovel.pages.pagenotauthorized');
+				\Log::info('no access rules for');
+				\Log::info($params['uri']);
+				\Log::info($params['action']);
+				return response()->view('cmsgroovel.pages.pagenotauthorized')->header('Content-Type', 'text/html');
 			}
 		}catch (\Exception $ex){
 			\Log::info($ex);

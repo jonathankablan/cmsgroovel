@@ -24,6 +24,7 @@ interface UserRoleDaoInterface{
 	public function updateUserRole($id,$rolename);
 	public function getUserRole($id);
 	public function getUserRoleByUserId($userid);
+	public function getAllUsersThatHaveRole($role);
 	
 
 }

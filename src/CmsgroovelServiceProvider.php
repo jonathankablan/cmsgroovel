@@ -38,6 +38,9 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 		$this->mergeConfigFrom(
 				__DIR__.'/Http/groovel.php', 'groovel'
 		);
+		
+		
+		
 			// Get namespace
 		$nameSpace = $this->app->getNamespace();
 		
@@ -46,6 +49,11 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 		{
 			require __DIR__.'/Http/routes.php';
 			require __DIR__.'/Http/groovel.php';
+		});
+		
+		$this->app->router->group(['namespace' => $nameSpace . 'Http\Middlewares'], function()
+		{
+			//require __DIR__.'/Http/Kernel.php';
 		});
 		
 		// Views
@@ -65,6 +73,7 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 				__DIR__.'/../starter-templates' => base_path('starter-templates'),
 		]);
 		
+		//include __DIR__.'/Http/Kernel.php';
 		include __DIR__.'/Http/routes.php';
 		include __DIR__.'/Http/groovel.php';
 		$this->loadViewsFrom(__DIR__.'/../../views', 'cmsgroovel');
