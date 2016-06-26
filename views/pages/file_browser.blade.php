@@ -5,9 +5,12 @@
 <link rel="stylesheet" type="text/css" href="styles.css" />
 <!-- <script type="text/javascript" src="ajax.js"></script>-->
 <!-- <script type="text/javascript" src="browser.js"></script>-->
-{!! HTML::script('groovel/cmsgroovel/groovel/browser/ajax.js') !!}
-{!! HTML::script('groovel/cmsgroovel/groovel/browser/browser.js') !!}
-{!!HTML::style('groovel/cmsgroovel/groovel/browser/styles.css')!!}
+
+    <script src="/groovel/cmsgroovel/groovel/browser/ajax.js"></script>
+    <script src="/groovel/cmsgroovel/groovel/browser/browser.js"></script>  
+ 	<link href="/groovel/cmsgroovel/groovel/browser/styles.css" rel="stylesheet">
+ 
+
  
 <script type="text/javascript">
 function init(){
@@ -40,7 +43,7 @@ browser({
 	</p>
 	<p id="pPathDisplay" class="pPathDisplay">Loading...</p>
 	<div id="dvContents" class="dvContents">&nbsp;</div>
-	<input type="hidden" id="token" value="{{ csrf_token() }}">
+	<input type="hidden" name='token' id="token" value="{{ csrf_token() }}">
 </div>
 </body>
 </html>
