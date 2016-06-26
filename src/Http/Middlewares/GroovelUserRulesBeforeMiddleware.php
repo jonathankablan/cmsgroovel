@@ -28,24 +28,24 @@ class GroovelUserRulesBeforeMiddleware
 			//\Log::info($route);
 			$userTrackingController = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_tracking\GroovelTrackingUserAPI');
 			$configController = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\configuration\GroovelSystemConfigurationController');
-			 
-		
-			$params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'action'=>$route->action,'type'=>$route->type);
-			$hasAccessForUser=$rulesController->checkAccessRulesURL(\Auth::user(),$params);
-			if($hasAccessForUser&& $route->activate_route=='1'){
-				\Session::put('params',$params);
-				return $next($request);
-			}else{
-				\Log::info('no access rules for');
-				\Log::info($params['uri']);
-				\Log::info($params['action']);
-				return response()->view('cmsgroovel.pages.pagenotauthorized')->header('Content-Type', 'text/html');
-			}
+		    if($route!=null && $route->uri!='undefined'){
+				$params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'action'=>$route->action,'type'=>$route->type);
+				$hasAccessForUser=$rulesController->checkAccessRulesURL(\Auth::user(),$params);
+				if($hasAccessForUser&& $route->activate_route=='1'){
+					\Session::put('params',$params);
+					return $next($request);
+				}else{
+					\Log::info('no access rules for');
+					\Log::info($params['uri']);
+					\Log::info($params['action']);
+					return response()->view('cmsgroovel.pages.pagenotauthorized')->header('Content-Type', 'text/html');
+				}
+		    }
 		}catch (\Exception $ex){
 			\Log::info($ex);
 			return \Redirect::to('undefined');
 		}
-		return $uri;
+		return $next($request);
 	}
 	
 }

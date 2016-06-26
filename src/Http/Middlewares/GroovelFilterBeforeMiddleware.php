@@ -37,7 +37,10 @@ class GroovelFilterBeforeMiddleware
 				$params =array('uri'=>\Request::path(),'method'=>$route->method,'controller'=>$route->controller,'view'=>$route->view,'action'=>$route->action,'type'=>$route->type);
 				if($route->activate_route=='1'){
 					\Session::put('params',$params);
-					return $next($request);
+
+					$response = $next($request);
+					$response->header('Content-Type', 'text/html');
+					return $response;
 				}else{
 					return response()->view('cmsgroovel.pages.pagenotauthorized')->header('Content-Type', 'text/html');
 				}
@@ -47,6 +50,7 @@ class GroovelFilterBeforeMiddleware
 					return $this->jsonResponse('error 404 page not found',false,true,true);
 				}
 			}
+			return $next($request);
 		}catch (\Exception $ex){
 			\Log::info($ex);
 			return \Redirect::to('undefined');
