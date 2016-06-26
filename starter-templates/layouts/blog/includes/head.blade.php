@@ -9,10 +9,9 @@
  
     
     @include('cmsgroovel.toolkits.head.head')  
-   {!!HTML::style('blog/styles/css/clean-blog-addonmenu.css')!!}
-   {!!HTML::style('blog/styles/css/clean-blog.min.css')!!}
-   {!!HTML::script('blog/styles/js/clean-blog-addonmenu.js')!!}
-   
+    <link href="/blog/styles/css/clean-blog-addonmenu.css" rel="stylesheet">
+    <link href="/blog/styles/css/clean-blog.min.css" rel="stylesheet">
+    <script src="/blog/styles/js/clean-blog-addonmenu.js"></script>
    
    
   
