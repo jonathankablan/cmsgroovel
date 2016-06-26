@@ -73,6 +73,14 @@
 							    	<textarea class="form-control" id="description" name='description'></textarea>
 							    </div>
 				</div>
+				<div id='uri' class="form-group">
+	    						<div class="col-md-2">
+							    	<label for="uri">uri</label>
+							    </div>
+							    <div class="col-md-8">
+							    	<input id='uri' name='uri' type="text" class="form-control"/>
+							    </div>
+				</div>
 				</li>
 		<!-- all fields available -->
 		
