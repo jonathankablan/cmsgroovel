@@ -2,13 +2,13 @@
  
 ### Installation manual way otherwise use the installer###
 First install laravel:
-composer create-project laravel/laravel=5.1.0 <your project name> --prefer-dist
+composer create-project laravel/laravel=5.2.31 <your project name> --prefer-dist
 
 
 Add cmsgroovel to your composer.json file to require cmsgroovel :
 ```
     require : {
-        "laravel/framework": "5.1.*",
+        "laravel/framework": "5.2.31",
         "groovel/cmsgroovel": "dev-master"
     }
 ```
@@ -32,8 +32,8 @@ The next required step is to add the service provider and alias to config/app.ph
    Then add Alias to config/app.php :
     	
 ```    	
-		'Form'=> Illuminate\Html\FormFacade::class,
-		'HTML'=> Illuminate\Html\HtmlFacade::class,
+	'Input' => Illuminate\Support\Facades\Input::class,
+   
     	
 ```
 ###Config the authentification in config/auth.php#####
@@ -74,7 +74,7 @@ Download on http://groovelcms.com/download
  
 The last required step is to publish views and assets in your application with :
 ```
-    php artisan vendor:publish
+   php artisan vendor:publish —provider="Groovel\Cmsgroovel\CmsgroovelServiceProvider"
 ```
  
 Congratulations, you have successfully installed groovel !after report to http://www.groovelcms.com for sql install
