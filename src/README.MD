@@ -8,8 +8,7 @@ composer create-project laravel/laravel=5.2.31 <your project name> --prefer-dist
 Add cmsgroovel to your composer.json file to require cmsgroovel :
 ```
     require : {
-        "laravel/framework": "5.2.31",
-        "groovel/cmsgroovel": "dev-master"
+         "groovel/cmsgroovel": "3.0.1-beta"
     }
 ```
  
