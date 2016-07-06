@@ -26,6 +26,14 @@ class GroovelRouteController extends GroovelController {
 	protected $routeBusiness;
 	
 
+	private function filterBadUriApi($uri){
+		$uriex=explode('api',$uri);
+		if(count($uriex)==1){
+			return \Request::path();
+		}
+		return 'api'.$uriex[1];
+	}
+	
 	public function __construct( GroovelRoutesBusinessInterface $routeBusiness)
 	{
 		$this->routeBusiness =$routeBusiness;
@@ -44,8 +52,8 @@ class GroovelRouteController extends GroovelController {
 	} 
 
 	public function getRouteFromSession(){
-     $uri=\Request::path();
-	$route=null;
+	$uri=$this->filterBadUriApi(\Request::path());
+ 	$route=null;
      try {
 	       	if (\Cache::has($uri)){
 	       		$route=\Cache::get($uri);
@@ -72,39 +80,46 @@ class GroovelRouteController extends GroovelController {
 	{
 		//init the uri and controller to call and view put in memory simple singleton
 		$params=\Session::get("params");
-		
-	 	if($params['controller']!=null){
-			$app = App();
-			$controller = $app->make($params['controller']);
-			if(\Session::has('contents')){
-				if(\Session::has('layouts')){
-					return $controller->callAction($params['method'],array('view'=>$params['view'],'content'=>\Session::pull('contents')));
+		if(!\Request::is('api','api/*','/api/*','*/api/*')){
+		 	if($params['controller']!=null){
+				$app = App();
+				$controller = $app->make($params['controller']);
+				if(\Session::has('contents')){
+					if(\Session::has('layouts')){
+						return $controller->callAction($params['method'],array('view'=>$params['view'],'content'=>\Session::pull('contents')));
+					}
 				}
+				return $controller->callAction($params['method'],array('view'=>$params['view'],'content'=>array()));
+				
 			}
-			return $controller->callAction($params['method'],array('view'=>$params['view'],'content'=>array()));
-			
+			if($params['view']=='cmsgroovel.pages.login_form' && !\Auth::guest()){
+				return \View::make('cmsgroovel.pages.welcome');
+			}
+			//overload the view
+			$view=$params['view'];
+			if(array_key_exists('view', \Input::all())){
+				$view=\Input::get('view');
+			}
+			$menus=array();
+			$layouts=array();
+			$contents=array();
+			if(\Session::has('menus')){
+				$menus=\Session::get('menus');
+			}
+			if(\Session::has('layouts')){
+				$layouts=\Session::get('layouts');
+			}
+			if(\Session::has('contents')){
+				$contents=\Session::get('contents');
+			}
+			return \View::make($view,['contents'=>$contents,'menus'=>$menus,'layouts'=>$layouts]);
+		}else{//call api
+			if($params['controller']!=null){
+				$app = App();
+				$controller = $app->make($params['controller']);
+			}
+			return \App::call($params['controller'].'@'.$params['method']);
 		}
-		if($params['view']=='cmsgroovel.pages.login_form' && !\Auth::guest()){
-			return \View::make('cmsgroovel.pages.welcome');
-		}
-		//overload the view
-		$view=$params['view'];
-		if(array_key_exists('view', \Input::all())){
-			$view=\Input::get('view');
-		}
-		$menus=array();
-		$layouts=array();
-		$contents=array();
-		if(\Session::has('menus')){
-			$menus=\Session::get('menus');
-		}
-		if(\Session::has('layouts')){
-			$layouts=\Session::get('layouts');
-		}
-		if(\Session::has('contents')){
-			$contents=\Session::get('contents');
-		}
-		return \View::make($view,['contents'=>$contents,'menus'=>$menus,'layouts'=>$layouts]);
 	}
 
 	public function showRoutes(){
