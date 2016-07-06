@@ -1,4 +1,4 @@
-## Groovel cms ##
+## Groovel Platform ##
  
 ### Installation manual way otherwise use the installer###
 First install laravel:
