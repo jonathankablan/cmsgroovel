@@ -76,3 +76,10 @@ The last required step is to publish views and assets in your application with :
 ```
  
 Congratulations, you have successfully installed groovel !after report to http://www.groovelcms.com for sql install
+
+####Wanted the REST API###
+
+Groovel exposes a REST API,if you want to call the backend functionality.
+
+Go to https://github.com/groovel/apigroovel and follow the README
+
