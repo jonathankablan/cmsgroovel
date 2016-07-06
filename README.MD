@@ -19,7 +19,6 @@ Update Composer :
  
 The next required step is to add the service provider and alias to config/app.php :
 ```
-		Illuminate\Html\HtmlServiceProvider::class,
 		Groovel\Cmsgroovel\CmsgroovelServiceProvider::class,
     	Groovel\Cmsgroovel\DaoServiceProvider::class,
     	Groovel\Cmsgroovel\PermissionServiceProvider::class,
