@@ -32,8 +32,7 @@ class InstallDatabase
 		$dbPort = env('DB_PORT');
 		
 		$dbHost = env('DB_HOST');
-		\Log::info($dbUsername.' '.$dbPassword.' '.$dbName.' '.$dbHost.' '.$dbPort);
-		
+
 		if($this->testConnection($dbHost,$dbPort,$dbUsername,$dbPassword)){
 			if($this->testDatabaseExist($dbHost,$dbPort,$dbUsername,$dbPassword,$dbName)!=1){
 			    $this->createDatabase($dbHost,$dbPort,$dbUsername,$dbPassword,$dbName);
