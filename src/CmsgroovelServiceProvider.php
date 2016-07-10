@@ -18,6 +18,7 @@ namespace Groovel\Cmsgroovel;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Application;
 use Monolog\Logger;
+use Groovel\Cmsgroovel\config\install\groovel\database\InstallGroovel;
 
 class CmsgroovelServiceProvider extends ServiceProvider {
 
@@ -73,10 +74,14 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 				__DIR__.'/../starter-templates' => base_path('starter-templates'),
 		]);
 		
+		
 		//include __DIR__.'/Http/Kernel.php';
 		include __DIR__.'/Http/routes.php';
 		include __DIR__.'/Http/groovel.php';
 		$this->loadViewsFrom(__DIR__.'/../../views', 'cmsgroovel');
+		
+		$dbinstall=new InstallGroovel;
+		$dbinstall->installDB();
 	}
 
 	/**

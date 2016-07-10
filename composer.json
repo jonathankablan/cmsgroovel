@@ -23,6 +23,21 @@
 		"phpunit/phpunit": "~4.0",
 		"phpspec/phpspec": "~2.1"
 	},
+	
+	"extra":{
+		"copy-file":{".\\src\\config\\install\\groovel\\app\\app.php":"..\\..\\..\\config",
+					 ".\\src\\config\\install\\groovel\\app\\api.php":"..\\..\\..\\config",
+					 ".\\src\\config\\install\\groovel\\app\\jwt.php":"..\\..\\..\\config",
+					 ".\\src\\config\\install\\groovel\\kernel\\Kernel.php":"..\\..\\..\\app\\Http"					 
+		     
+		}
+	},
+	"scripts": {
+      	"post-install-cmd": [
+            "Groovel\\Cmsgroovel\\config\\install\\groovel\\composer\\InstallGroovel::copy"
+         ]
+    },
+    
 	"autoload": {
 		"psr-4": {
 			"Groovel\\Cmsgroovel\\": "src/"

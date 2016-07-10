@@ -5,31 +5,64 @@ namespace  Groovel\Cmsgroovel\config\install\groovel\composer;
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 use Monolog\Logger;
+use Composer\Script\CommandEvent;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 class InstallGroovel
 {
-    public static function postUpdate(Event $event)
-    {
-        $composer = $event->getComposer();
-        // do stuff
-    }
-
-    public static function postAutoloadDump(Event $event)
-    {
-        $vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
-        require $vendorDir . '/autoload.php';
-
-        some_function_from_an_autoloaded_file();
-    }
-
-    public static function postPackageInstall(PackageEvent $event)
-    {
-        $installedPackage = $event->getOperation()->getPackage();
-       \Log::info("i am called");
-    }
-
-    public static function warmCache(Event $event)
-    {
-        // make cache toasty
-    }
+	
+	public static function copy(CommandEvent $event)
+	{
+		$extras = $event->getComposer()->getPackage()->getExtra();
+		if (!isset($extras['copy-file'])) {
+			throw new \InvalidArgumentException('The dirs or files needs to be configured through the extra.copy-file setting.');
+		}
+	
+		$files = $extras['copy-file'];
+	
+		if ($files === array_values($files)) {
+			throw new \InvalidArgumentException('The extra.copy-file must be hash like "{<dir_or_file_from>: <dir_to>}".');
+		}
+	
+		$finder = new Finder;
+		$fs = new Filesystem;
+		$io = $event->getIO();
+	
+		foreach ($files as $from => $to) {
+			if (!is_dir($to))
+				throw new \InvalidArgumentException('Destination directory is not a directory.');
+			 
+			try {
+				$fs->mkdir($to);
+			} catch (IOException $e) {
+				throw new \InvalidArgumentException(sprintf('<error>Could not create directory %s.</error>', $to));
+			}
+			 
+			if (false === file_exists($from))
+				throw new \InvalidArgumentException(sprintf('<error>Source directory or file "%s" does not exist.</error>', $from));
+			 
+			if (is_dir($from)) {
+				$finder->files()->in($from);
+				foreach ($finder as $file) {
+					$dest = sprintf('%s/%s', $to, $file->getBaseName());
+					try {
+						$fs->copy($file, $dest);
+					} catch (IOException $e) {
+						throw new \InvalidArgumentException(sprintf('<error>Could not copy %s</error>', $file->getBaseName()));
+					}
+				}
+			} else {
+				try {
+					$fs->copy($from, $to.'/'.basename($from));
+				} catch (IOException $e) {
+					throw new \InvalidArgumentException(sprintf('<error>Could not copy %s</error>', $from));
+				}
+			}
+			 
+			$io->write(sprintf('Copied file(s) from <comment>%s</comment> to <comment>%s</comment>.', $from, $to));
+		}
+	}
+	
 }
