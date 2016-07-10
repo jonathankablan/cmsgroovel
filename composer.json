@@ -28,5 +28,15 @@
 			"Groovel\\Cmsgroovel\\": "src/"
 		}
 	},
+	 "scripts": {
+	 	"post-package-install": [
+            "Groovel\Cmsgroovel\config\install\groovel\composer\InstallGroovel::postPackageInstall"
+        ],
+        "post-install-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postInstall",
+            "php artisan jwt:generate"
+        ],
+     },
+	
 	 "minimum-stability": "dev"
 }
