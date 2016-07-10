@@ -74,6 +74,21 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 				__DIR__.'/../starter-templates' => base_path('starter-templates'),
 		]);
 		
+		$this->publishes([
+				__DIR__.'/../starter-templates/layouts/blog/base' => base_path('resources/views/blog/base'),
+		]);
+		
+		$this->publishes([
+				__DIR__.'/../starter-templates/layouts/blog/includes' => base_path('resources/views/blog/includes'),
+		]);
+		
+		$this->publishes([
+				__DIR__.'/../starter-templates/layouts/blog/pages' => base_path('resources/views/blog/pages'),
+		]);
+		
+		$this->publishes([
+				__DIR__.'/../starter-templates/layouts/blog/styles' => base_path('public/blog/styles'),
+		]);
 		
 		//include __DIR__.'/Http/Kernel.php';
 		include __DIR__.'/Http/routes.php';

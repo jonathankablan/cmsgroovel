@@ -23,18 +23,33 @@ class InstallDatabase
     
 
 	public function installDB(){
-		$value = config('app.DB_CONNECTION');
-		\Log::info($value);
+		$dbUsername = env('DB_USERNAME');
 		
+		$dbName = env('DB_DATABASE');
+		
+		$dbPassword = env('DB_PASSWORD');
+		
+		$dbPort = env('DB_PORT');
+		
+		$dbHost = env('DB_HOST');
+		\Log::info($dbUsername.' '.$dbPassword.' '.$dbName.' '.$dbHost.' '.$dbPort);
+		
+		if($this->testConnection($dbHost,$dbPort,$dbUsername,$dbPassword)){
+			if($this->testDatabaseExist($dbHost,$dbPort,$dbUsername,$dbPassword,$dbName)!=1){
+			    $this->createDatabase($dbHost,$dbPort,$dbUsername,$dbPassword,$dbName);
+				$this->loadSqlFile($dbHost,$dbPort,$dbUsername,$dbPassword,$dbName);
+				$this->createAccount("john","john","john@emailme.com","john",$dbHost,$dbPort,$dbUsername,$dbPassword,$dbName);
+			}
+		}
 		
 	}
 	
 	
 	
-	private function createAccount($username,$pseudo,$email,$password){
+	private function createAccount($username,$pseudo,$email,$password,$dbHost,$dbPort,$dbUsername,$dbPassword,$dbName){
 		try {
 			Log::info("create account");
-			$cnx =new \PDO("mysql:host=".Cache::get("hostdb").";port=".Cache::get("portdb").";dbname=".Cache::get("databasename"),Cache::get("userdb"), Cache::get("passworddb"));
+			$cnx =new \PDO("mysql:host=".$dbHost.";port=".$dbPort.";dbname=".$dbName,$dbUsername,$dbPassword);
 			$sql='INSERT INTO USERS(pseudo,username,email,password,activate) values('.'\''.$pseudo.'\''.','.'\''.$username.'\''.','.'\''.$email.'\''.','.'\''. \Hash::make($password).'\''.','.'1'.')';
 	    	$res=$cnx->exec($sql);
 		    $sql='select * from USERS WHERE PSEUDO ='.'\''.$pseudo.'\'';
@@ -97,10 +112,9 @@ class InstallDatabase
 	try {
 			$dbh = new \PDO("mysql:host=".$host.";port=".$port."dbname=".$databasename,$username, $password);
 			//$result = $dbh->query("SELECT version()");
-			$stmt=$dbh->query("SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =".$databasename);
-			
-			$res= (bool)$stmt->fetchColumn();
-			Log::info("connect to db ".$res);
+			$stmt=$dbh->prepare("SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?");
+			$stmt->execute(array($databasename));
+			$res=$stmt->fetchColumn();
 			return $res;
 		} catch(\Exception $e){
 			Log::error($e->getMessage());
