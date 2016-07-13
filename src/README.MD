@@ -1,4 +1,4 @@
-## Groovel cms ##
+## Groovel Platform ##
 
 You can use the simplecommandinstaller to automatically create a ready distrib groovel to deploy:
 
