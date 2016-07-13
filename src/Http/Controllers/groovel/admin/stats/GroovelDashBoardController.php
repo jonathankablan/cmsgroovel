@@ -57,7 +57,7 @@ class GroovelDashBoardController extends GroovelController {
 			$jsondata=json_encode($user);
 			array_push($jsonarray, $jsondata);
 		}
-		return \Response::json(json_encode($jsonarray));
+		return \Response::json($jsonarray);
 	}
 		
 	
