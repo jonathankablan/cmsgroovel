@@ -59,7 +59,7 @@ class GroovelUserRulesController extends GroovelController {
 	 	    }
 	 	     
 	 	    $auth=\Auth::user();
-	 	    if(empty($auth)&& empty($permissions)|| (!empty($auth)&&$params['action']=='none')){
+	 	    if(empty($auth)&& empty($permissions)|| (!empty($auth)&&$params['action']=='op_none')){
 	 	    	return true;
 	 	    }
 	 	    if($permissions!=null && !empty($permissions)){
@@ -72,7 +72,7 @@ class GroovelUserRulesController extends GroovelController {
 	 	    }
 	 	    return 0;
    	 	}else if(empty($user)){
-   	 		if($params['action']=='none'){
+   	 		if($params['action']=='op_none'){
    		 			return true;
    	 		}
    	 	
