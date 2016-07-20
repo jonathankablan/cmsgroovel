@@ -109,6 +109,8 @@ return [
     */
 
     'log' => env('APP_LOG', 'single'),
+		
+	'log-level' =>env('APP_LOG_LEVEL', 'info'),
 
     /*
     |--------------------------------------------------------------------------
@@ -215,6 +217,7 @@ return [
     	'Input' => Illuminate\Support\Facades\Input::class,
     	'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
     	'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+    	 'LogConsole'=>Groovel\Cmsgroovel\log\LogConsole::class,
   
     ],
 

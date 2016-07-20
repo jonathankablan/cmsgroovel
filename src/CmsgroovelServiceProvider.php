@@ -110,6 +110,11 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 	    {
 	        return new Cmsgroovel;
 	    });
+		
+
+		\App::bind ( 'logConsole', function(){
+			return new \Groovel\Cmsgroovel\log\LogConsole;
+		});
 	
 	}
 
