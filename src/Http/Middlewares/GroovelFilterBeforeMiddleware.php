@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelController;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteController;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_rules\GroovelUserRulesController;
-
+use  Groovel\Cmsgroovel\log\LogConsole;
 
 class GroovelFilterBeforeMiddleware
 {
@@ -38,7 +38,7 @@ class GroovelFilterBeforeMiddleware
 			$route= $controller->getRouteFromSession();
 			$userTrackingController = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_tracking\GroovelTrackingUserAPI');
 			$configController = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\configuration\GroovelSystemConfigurationController');
-			 \Log::info($route);
+			LogConsole::debug($route);
 			if($configController->isMaintenanceWebSiteEnable()==1 &&  (!\Request::is('admin/*'))){
 				return \View::make('cmsgroovel.pages.page_maintenance');
 			}

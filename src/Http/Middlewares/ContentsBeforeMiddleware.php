@@ -32,8 +32,10 @@ class ContentsBeforeMiddleware
 		}else{
 			$lang=\Session::get('lang');
 		}
-		if($_SERVER['SERVER_NAME']!='localhost'){
-			$site_extension=substr($_SERVER['SERVER_NAME'], strrpos($_SERVER['SERVER_NAME'], ".")+1);
+		if(array_key_exists('SERVER_NAME', $_SERVER)){
+			if($_SERVER['SERVER_NAME']!='localhost'){
+				$site_extension=substr($_SERVER['SERVER_NAME'], strrpos($_SERVER['SERVER_NAME'], ".")+1);
+			}
 		}
 		$contents=$controllerContents->callAction('loadContents',array('extension'=>$site_extension,'lang'=>$lang,'layout'=>$params['type']));
 		\Session::put('contents',$contents);
