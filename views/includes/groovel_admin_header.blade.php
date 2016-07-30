@@ -115,7 +115,7 @@
 	                        @if( \Auth::user()->picture==null)
 	                       		<i class="glyphicon glyphicon-user"></i>
 	                        @else
-	                       	<img src="/{{\Auth::user()->picture}}" alt="user" class="img-circle" style='width:25px;height:25px'>
+	                       	<img src="{{\Auth::user()->picture}}" alt="user" class="img-circle" style='width:25px;height:25px'>
 	                         @endif
 	                   @endif
                        @if(\Auth::user()!=null) {!!\Auth::user()->pseudo!!} @endif</a>
