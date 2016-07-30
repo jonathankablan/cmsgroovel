@@ -3,6 +3,11 @@ tinymce.init({
     theme: "modern",
     width: 600,
     height: 300,
+    elements : 'abshosturls',
+    relative_urls : false,
+    remove_script_host : false,
+
+
     file_browser_callback : function GroovelFileBrowser (field_name, url, type, win) {
 
         // alert("Field_Name: " + field_name + "nURL: " + url + "nType: " + type + "nWin: " + win); // debug/testing

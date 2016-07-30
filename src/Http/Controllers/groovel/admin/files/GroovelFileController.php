@@ -16,6 +16,7 @@ namespace Groovel\Cmsgroovel\Http\Controllers\groovel\admin\files;
 use Illuminate\Database\Eloquent\Model;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelController;
 use Monolog\Logger;
+use Groovel\Cmsgroovel\log\LogConsole;
 
 
 
@@ -178,7 +179,7 @@ Remove the base_dir from file paths and added to the (contents) array if it pass
 	
 	public function generateUrlFile($files){
 		 $array_url=array();
-		 $path='images/';
+		 $path=url('/images/').'/';
 		 foreach($files as $file){
 		 	$array_url[$file['name']]=$path.$file['name'];
 		 }
@@ -193,6 +194,7 @@ Remove the base_dir from file paths and added to the (contents) array if it pass
 		$uploadfile = $uploaddir . basename($_FILES['file']['name']);
 	 	$upload_success=move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile);
 		if ($upload_success) {
+		   LogConsole::debug($urls);
 		   return $this->jsonResponse($urls,false,true,false);
 		} else {
 			echo "Attaque potentielle par téléchargement de fichiers.
