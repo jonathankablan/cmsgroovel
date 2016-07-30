@@ -916,6 +916,12 @@ INSERT INTO `routes_groovel` (`id`, `uri`, `name`, `controller`, `method`, `acti
 INSERT INTO `routes_groovel` (`id`, `uri`, `name`, `controller`, `method`, `action`, `view`, `type`, `audit_tracking_url_enable`, `activate_route`, `updated_at`, `created_at`) VALUES
 (566, 'api/getContents', 'get all contents', 'Groovel\\Restapi\\Http\\Controllers\\api\\contents\\ContentController', 'getContents', 'op_none', '', 'Groovel', 0, 1, '2016-07-28 20:36:31', '2016-07-28 20:33:15');
 
+INSERT INTO `routes_groovel` (`id`, `uri`, `name`, `controller`, `method`, `action`, `view`, `type`, `audit_tracking_url_enable`, `activate_route`, `updated_at`, `created_at`) VALUES
+(567, 'api/getProfile', 'get profile', 'Groovel\\Restapi\\Http\\Controllers\\api\\profile\\ProfileController', 'getProfile', 'op_read', '', 'Groovel', 0, 1, '2016-07-30 13:14:56', '2016-07-30 13:14:56'),
+(568, 'api/updatePictureProfile', 'update picture profile', 'Groovel\\Restapi\\Http\\Controllers\\api\\profile\\ProfileController', 'updatePictureProfile', 'op_update', '', 'Groovel', 0, 1, '2016-07-30 14:12:40', '2016-07-30 13:16:28'),
+(569, 'api/updateEmailProfile', 'update email profile', 'Groovel\\Restapi\\Http\\Controllers\\api\\profile\\ProfileController', 'updateEmailProfile', 'op_update', '', 'Groovel', 0, 1, '2016-07-30 14:13:02', '2016-07-30 13:17:54'),
+(570, 'api/resetPasswordProfile', 'reset password profile', 'Groovel\\Restapi\\Http\\Controllers\\api\\profile\\ProfileController', 'resetPasswordProfile', 'op_update', '', 'Groovel', 0, 1, '2016-07-30 14:13:20', '2016-07-30 13:18:56'),
+(571, 'api/getContent', 'get one content', 'Groovel\\Restapi\\Http\\Controllers\\api\\contents\\ContentController', 'getContent', 'op_read', '', 'Groovel', 0, 1, '2016-07-30 14:13:20', '2016-07-30 13:18:56');
 
 -- --------------------------------------------------------
 
