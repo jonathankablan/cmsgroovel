@@ -913,6 +913,8 @@ INSERT INTO `routes_groovel` (`id`, `uri`, `name`, `controller`, `method`, `acti
 (564, 'api/editMessage', 'edit message api', 'Groovel\\Restapi\\Http\\Controllers\\api\\messages\\MessageController', 'editMessage', 'op_none', '', 'Groovel', 0, 1, '2016-07-27 20:15:59', '2016-07-27 20:12:38'),
 (565, 'api/deleteMessage', 'delete msg api', 'Groovel\\Restapi\\Http\\Controllers\\api\\messages\\MessageController', 'deleteMessage', 'op_none', '', 'Groovel', 0, 1, '2016-07-27 20:58:38', '2016-07-27 20:58:38');
 
+INSERT INTO `routes_groovel` (`id`, `uri`, `name`, `controller`, `method`, `action`, `view`, `type`, `audit_tracking_url_enable`, `activate_route`, `updated_at`, `created_at`) VALUES
+(566, 'api/getContents', 'get all contents', 'Groovel\\Restapi\\Http\\Controllers\\api\\contents\\ContentController', 'getContents', 'op_none', '', 'Groovel', 0, 1, '2016-07-28 20:36:31', '2016-07-28 20:33:15');
 
 
 -- --------------------------------------------------------
