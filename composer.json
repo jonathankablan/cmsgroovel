@@ -25,10 +25,10 @@
 	},
 	
 	"extra":{
-		"copy-file":{".\\src\\config\\install\\groovel\\app\\app.php":"..\\..\\..\\config",
-					 ".\\src\\config\\install\\groovel\\app\\api.php":"..\\..\\..\\config",
-					 ".\\src\\config\\install\\groovel\\app\\jwt.php":"..\\..\\..\\config",
-					 ".\\src\\config\\install\\groovel\\kernel\\Kernel.php":"..\\..\\..\\app\\Http"					 
+		"copy-file":{"./src/config/install/groovel/app/app.php":"../../../config",
+					 "./src/config/install/groovel/app/api.php":"../../../config",
+					 "./src/config/install/groovel/app/jwt.php":"../../../config",
+					 "./src/config/install/groovel/kernel/Kernel.php":"../../../app/Http"					 
 		     
 		}
 	},
