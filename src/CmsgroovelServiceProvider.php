@@ -19,6 +19,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Application;
 use Monolog\Logger;
 use Groovel\Cmsgroovel\config\install\groovel\database\InstallDatabase;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger as Monolog;
+use Groovel\Cmsgroovel\log\LogConsole;
 
 class CmsgroovelServiceProvider extends ServiceProvider {
 
@@ -27,7 +30,7 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 	 *
 	 * @var bool
 	 */
-	protected $defer = false;
+	protected $defer = true;
 
 	/**
 	 * Bootstrap the application events.
@@ -36,6 +39,11 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+	    if(!file_exists(base_path('resources/views/cmsgroovel'))){
+	    	$dbinstall=new InstallDatabase;
+	    	$dbinstall->installDB();
+	    }
+	    
 		$this->mergeConfigFrom(
 				__DIR__.'/Http/groovel.php', 'groovel'
 		);
@@ -95,8 +103,6 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 		include __DIR__.'/Http/groovel.php';
 		$this->loadViewsFrom(__DIR__.'/../../views', 'cmsgroovel');
 		
-		$dbinstall=new InstallDatabase;
-		$dbinstall->installDB();
 	}
 
 	/**
@@ -106,15 +112,20 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+		
 		$this->app['cmsgroovel'] = $this->app->share(function($app)
 	    {
 	        return new Cmsgroovel;
 	    });
 		
 
+
 		\App::bind ( 'logConsole', function(){
 			return new \Groovel\Cmsgroovel\log\LogConsole;
 		});
+		
+		
+		
 	
 	}
 
