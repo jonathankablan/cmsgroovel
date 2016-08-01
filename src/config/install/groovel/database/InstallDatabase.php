@@ -55,8 +55,8 @@ class InstallDatabase
 			$userid=null;
 			foreach( $cnx->query($sql,\PDO::FETCH_OBJ) as $row)
 			{    
-			        Log::info ('Utilisateur : '.$row['id']);
-			        $userid=$row['id'];
+			        Log::info ('Utilisateur : '.$row->id);
+			        $userid=$row->id;
 			}
 			
 			$sql='select count(*) from USER_ROLES WHERE userid ='.'\''.$userid.'\'';
