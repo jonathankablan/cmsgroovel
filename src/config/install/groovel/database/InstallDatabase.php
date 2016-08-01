@@ -52,8 +52,8 @@ class InstallDatabase
 			$sql='INSERT INTO USERS(pseudo,username,email,password,activate) values('.'\''.$pseudo.'\''.','.'\''.$username.'\''.','.'\''.$email.'\''.','.'\''. \Hash::make($password).'\''.','.'1'.')';
 	    	$res=$cnx->exec($sql);
 		    $sql='select * from USERS WHERE PSEUDO ='.'\''.$pseudo.'\'';
-			$resultats=$cnx->query($sql);
-			$resultats->setFetchMode(\PDO::FETCH_OBJ);
+			$resultats=$cnx->query($sql)->setFetchMode(\PDO::FETCH_OBJ);
+			Log::info ('fetch user');
 			$userid=null;
 			while( $resultat = $resultats->fetch() )
 			{    
