@@ -15,13 +15,14 @@
 
 namespace Groovel\Cmsgroovel;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Application;
 use Monolog\Logger;
 use Groovel\Cmsgroovel\config\install\groovel\database\InstallDatabase;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
 use Groovel\Cmsgroovel\log\LogConsole;
+use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class CmsgroovelServiceProvider extends ServiceProvider {
 
@@ -30,15 +31,17 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 	 *
 	 * @var bool
 	 */
-	protected $defer = true;
+	protected $defer = false;
 
 	/**
 	 * Bootstrap the application events.
 	 *
 	 * @return void
 	 */
-	public function boot()
+	public function boot(DispatcherContract $events)
 	{
+		parent::boot($events);
+
 	    if(!file_exists(base_path('resources/views/cmsgroovel'))){
 	    	$dbinstall=new InstallDatabase;
 	    	$dbinstall->installDB();
@@ -102,7 +105,6 @@ class CmsgroovelServiceProvider extends ServiceProvider {
 		include __DIR__.'/Http/routes.php';
 		include __DIR__.'/Http/groovel.php';
 		$this->loadViewsFrom(__DIR__.'/../../views', 'cmsgroovel');
-		
 	}
 
 	/**
