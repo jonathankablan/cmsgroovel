@@ -179,7 +179,8 @@ Remove the base_dir from file paths and added to the (contents) array if it pass
 	
 	public function generateUrlFile($files){
 		 $array_url=array();
-		 $path=url('/images/').'/';
+		 //$path=url('/images/').'/';
+		 $path='images/';
 		 foreach($files as $file){
 		 	$array_url[$file['name']]=$path.$file['name'];
 		 }

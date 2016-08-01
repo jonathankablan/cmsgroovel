@@ -14,6 +14,7 @@
 /**********************************************************************/
 namespace Groovel\Cmsgroovel\dao;
 use Groovel\Cmsgroovel\models\RepositoryIndex;
+use Groovel\Cmsgroovel\log\LogConsole;
 
 
 class RepositoryIndexDao implements RepositoryIndexDaoInterface{
@@ -29,8 +30,8 @@ class RepositoryIndexDao implements RepositoryIndexDaoInterface{
 	}
 
 	public function update($type,$id,$data,$title,$description){
-		$index=RepositoryIndex::find($id);
-		if($index==null){
+		$index=RepositoryIndex::where("refid",'=',$id)->first();
+		if(empty($index)){
 			$index= new RepositoryIndex();
 			$index->type=$type;
 			$index->refid=$id;
@@ -61,7 +62,19 @@ class RepositoryIndexDao implements RepositoryIndexDaoInterface{
 	}
 	
 	public function search($body){
-		return RepositoryIndex::where('data', 'LIKE', '%'.$body.'%')->get();
+		LogConsole::debug('search input args '.$body);
+		$res= RepositoryIndex::where('data', '=', $body)->get();
+		LogConsole::debug($res);
+		if(count($res)==0){
+			$res= RepositoryIndex::where('data', 'LIKE', '%'.$body)->get();
+		}
+		if(count($res)==0){
+			$res= RepositoryIndex::where('data', 'LIKE', $body.'%')->get();
+		}
+		if(count($res)==0){
+			$res= RepositoryIndex::where('data', 'LIKE','%'.$body.'%')->get();
+		}
+		return $res;
 	}
 	
 }

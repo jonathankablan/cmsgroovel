@@ -10,10 +10,10 @@
 				   </div>	 
 				 <div id="userphoto" class="col-md-3 thumbnail">
 					@if(Session::get('user')['userpicture']==null)
-						<img src="{{url('/admin/images/avatar.png')}}" alt="default avatar">
+						<i class="glyphicon glyphicon-user"></i>
 					@endif
 					@if(Session::get('user')['userpicture']!=null)
-					<img src="{{Session::get('user')['userpicture']}}">
+					<img src="/{{Session::get('user')['userpicture']}}">
 					@endif
 				</div>
 				 

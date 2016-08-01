@@ -10,7 +10,7 @@
 	 <output id="old_list" class="file-return">
 	 <?php if($logo!=null) :?>
 	 	         <span id='logo' style='margin-left:10px;width:150px;height:150px;'>
-    		      	<img src={{$logo}} style="width:150px;height:150px" alt="">
+    		      	<img src={{url($logo)}} style="width:150px;height:150px" alt="">
 		          	<a rel="nofollow" href="#" title="Remove" id='logo' onclick=removeFile('logo')>Remove</a>
   		         </span>
       <?php endif;?>

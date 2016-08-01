@@ -398,6 +398,9 @@ for(var i=0;i<generateFormTinyMCE.length;i++){
 		    height: 300,
 		    entity_encoding : "raw",
 		    mode : "exact",
+		    elements : 'abshosturls',
+		    relative_urls : false,
+		    remove_script_host : false,
 		    file_browser_callback : function GroovelFileBrowser (field_name, url, type, win) {
          var cmsURL = window.location.toString()+'/file/browser';    // script URL - use an absolute path!
          tinyMCE.activeEditor.windowManager.open({

@@ -16,6 +16,7 @@ namespace Groovel\Cmsgroovel\handlers;
 use Groovel\Cmsgroovel\commons\ModelConstants;
 use Groovel\Cmsgroovel\dao\RepositoryIndexDao;
 use Groovel\Cmsgroovel\dao\RepositoryIndexDaoInterface;
+use Groovel\Cmsgroovel\models\RepositoryIndex;
 
 class DatabaseSearchHandler
 {
@@ -34,7 +35,10 @@ class DatabaseSearchHandler
 		}else if(ModelConstants::$user==$data['type']){
 			$index='users';
 		}
-		$this->reposearch->create($data['type'],$data['data']['id'],$data['data']['tag'],$data['data']['title'],$data['data']['description']);
+		$content=RepositoryIndex::where("refid",'=',$data['data']['id'])->first();
+		if(empty($content)){
+			$this->reposearch->create($data['type'],$data['data']['id'],$data['data']['tag'],$data['data']['title'],$data['data']['description']);
+		}
 	}
 	
 	public function update($job, $data)
@@ -45,7 +49,6 @@ class DatabaseSearchHandler
 		}else if(ModelConstants::$user==$data['type']){
 			$index='users';
 		}
-		//\Log::info($data);
 		$this->reposearch->update($data['type'],$data['data']['id'],$data['data']['tag'],$data['data']['title'],$data['data']['description']);
 		
 	}
