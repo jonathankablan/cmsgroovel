@@ -52,20 +52,18 @@ class InstallDatabase
 			$sql='INSERT INTO USERS(pseudo,username,email,password,activate) values('.'\''.$pseudo.'\''.','.'\''.$username.'\''.','.'\''.$email.'\''.','.'\''. \Hash::make($password).'\''.','.'1'.')';
 	    	$res=$cnx->exec($sql);
 		    $sql='select * from USERS WHERE PSEUDO ='.'\''.$pseudo.'\'';
-			$resultats=$cnx->query($sql)->setFetchMode(\PDO::FETCH_OBJ);
-			Log::info ('fetch user');
 			$userid=null;
-			while( $resultat = $resultats->fetch() )
+			foreach( $cnx->query($sql,\PDO::FETCH_OBJ) as $row)
 			{    
-			        Log::info ('Utilisateur : '.$resultat->id);
-			        $userid=$resultat->id;
+			        Log::info ('Utilisateur : '.$row['id']);
+			        $userid=$row['id'];
 			}
-			$resultats->closeCursor();
 			
 			$sql='select count(*) from USER_ROLES WHERE userid ='.'\''.$userid.'\'';
 			$resultats=$cnx->query($sql)->fetchColumn();
 			if($resultats==0){
 			//add admin role
+				Log::info ('Utilisateur insert admin role');
 				$sql='INSERT INTO USER_ROLES(userid,roleid) values('.'\''.$userid.'\''.','.'1'.')';
 				$res=$cnx->exec($sql);
 			}
