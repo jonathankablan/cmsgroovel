@@ -83,11 +83,9 @@ class GroovelUserManagerBusiness implements GroovelUserManagerBusinessInterface{
 	
 	public function deleteUser($id){
 		$this->userDao->delete($id);
-		$permissions=$this->permissionDao->getPermissionByUserid($id);
-		if($permissions!=null){
-			foreach($permissions as $permission){
-				$permission->delete();
-			}
+		$role=$this->userRoleDao-> getUserRoleByUserId($id);
+		if($role!=null){
+			$role->delete();
 		}
 	}
    

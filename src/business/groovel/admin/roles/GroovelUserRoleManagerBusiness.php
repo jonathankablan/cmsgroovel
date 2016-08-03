@@ -28,6 +28,8 @@ use Groovel\Cmsgroovel\dao\UserDao;
 use Groovel\Cmsgroovel\dao\UserDaoInterface;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Groovel\Cmsgroovel\log\LogConsole;
+use Groovel\Cmsgroovel\models\User;
 
 
 class GroovelUserRoleManagerBusiness implements GroovelUserRoleManagerBusinessInterface{
@@ -62,7 +64,7 @@ private static $perPage = 10;
   }
    
    public function paginateUserRole(){
-   		$users=$this->userDao->paginate();
+   		$users=User::all();
    		$users_role=array();
    		$i=0;
    		foreach($users as $user){
@@ -75,6 +77,7 @@ private static $perPage = 10;
    			}
    				
  		}
+ 		LogConsole::debug(count($users_role));
    		$currentPage = \Input::get('page') - 1;
  		$pagedData = array_slice( $users_role, $currentPage * self::$perPage, self::$perPage);
  		$currentPage = LengthAwarePaginator::resolveCurrentPage() ?: 1;

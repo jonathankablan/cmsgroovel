@@ -21,6 +21,7 @@ use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteControl
 use Groovel\Cmsgroovel\business\groovel\admin\permissions\GroovelPermissionManagerBusinessInterface;
 use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentTypeManagerBusinessInterface;
 use Groovel\Cmsgroovel\business\groovel\admin\roles\GroovelUserRoleManagerBusinessInterface;
+use Groovel\Cmsgroovel\log\LogConsole;
 
 class GroovelUserRulesController extends GroovelController {
  
@@ -41,11 +42,14 @@ class GroovelUserRulesController extends GroovelController {
    public function checkAccessRulesURL($user,$params){
    	 $isAccess=0;
    	 try{
-   	 	if(!empty($user)){
+	    LogConsole::debug("Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_rules\GroovelUserRulesController.checkAccessRulesURL START METHOD ");
+	 	if(!empty($user)){
 	   	 	$role=$this->userRoleManager->getUserRoleByUserId($user->id);
-	  	 	
+	  	 	 LogConsole::debug("user id: ".$user->id ." role: ".$role->role['role']);
 	  	 	if($role!=null && !empty($role) && count($role)>0){
 		  	 	if($role->role['role']=='ADMIN'){
+		  	 		LogConsole::debug(" user is admin " ." access true ");
+		  	 		LogConsole::debug("Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_rules\GroovelUserRulesController.checkAccessRulesURL END METHOD");
 		  	 		return true;
 		  	 	}
 	  	 	}
@@ -60,11 +64,15 @@ class GroovelUserRulesController extends GroovelController {
 	 	     
 	 	    $auth=\Auth::user();
 	 	    if(empty($auth)&& empty($permissions)|| (!empty($auth)&&$params['action']=='op_none')){
+	 	    	LogConsole::debug("access true ");
+	 	    	LogConsole::debug("Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_rules\GroovelUserRulesController.checkAccessRulesURL END METHOD");
 	 	    	return true;
 	 	    }
 	 	    if($permissions!=null && !empty($permissions)){
 	 	    	foreach($permissions as $permission){
 	 	    		if($params['uri']==$permission['uri'] &&  $permission[$params['action']]==1 ){
+	 	    			LogConsole::debug("user have right to access uri ");
+	 	    			LogConsole::debug("Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_rules\GroovelUserRulesController.checkAccessRulesURL END METHOD");
 	 	    			$isAccess= true;
 	 	    			return $isAccess;
 	 	    		}
@@ -73,6 +81,8 @@ class GroovelUserRulesController extends GroovelController {
 	 	    return 0;
    	 	}else if(empty($user)){
    	 		if($params['action']=='op_none'){
+   	 			LogConsole::debug("public access true ");
+   	 			LogConsole::debug("Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_rules\GroovelUserRulesController.checkAccessRulesURL END METHOD");
    		 			return true;
    	 		}
    	 	

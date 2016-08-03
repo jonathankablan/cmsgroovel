@@ -16,13 +16,6 @@ namespace Groovel\Cmsgroovel\dao;
 
 interface UserPermissionDaoInterface{
 
-	public function create($user,$action,$type,$owncontent,$othercontent);
-	public function updateUserPermissions($permissionid,$userid,$contenttype,$actions,$owncontent,$othercontent);
-	public function deleteUserPermission($id);
-	public function getPermissionByUserid($id);
-	public function getPermissionsByContentTypeAndActionAndUserId($userid,$typeid,$action);
-	public function getPermissionById($id);
 	public function paginate();
-	public function getPermissionsByContentTypeAndAction($typeid,$action);
 	
 }

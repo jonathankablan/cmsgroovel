@@ -32,6 +32,7 @@ class GroovelFilterBeforeMiddleware
 	public function handle($request, Closure $next)
 	{
 		try{
+		LogConsole::debug("middleware Filter : START METHOD handle()");
 			$uri=$this->filterBadUriApi(\Request::path());
 			$app = App();
 			$controller = $app->make('Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteController');
@@ -52,19 +53,24 @@ class GroovelFilterBeforeMiddleware
 					\Session::put('params',$params);
 					$response = $next($request);
 					$response->header('Content-Type', 'text/html');
+					LogConsole::debug("middleware Filter route found! : END METHOD handle()");
 					return $response;
 				}else{
+					LogConsole::debug("middleware Filter route not found! : END METHOD handle()");
 					return response()->view('cmsgroovel.pages.pagenotauthorized')->header('Content-Type', 'text/html');
 				}
 			}else{
 				if (\Request::ajax() && !\Request::is('api','api/*'))
 				{
+				     LogConsole::debug("middleware Filter ajax route not found! : END METHOD handle()");
 					return $this->jsonResponse('error 404 page not found',false,true,true);
 				}else if (\Request::is('api','api/*')){
 					\Log::info("404 not found api");
+					 LogConsole::debug("middleware Filter api route not found! : END METHOD handle()");
 					 return $this->jsonResponse('error 404 page not found',false,true,true);
 				}
 			}
+			LogConsole::debug("middleware Filter : END METHOD handle()");
 			return $next($request);
 		}catch (\Exception $ex){
 			\Log::info($ex);

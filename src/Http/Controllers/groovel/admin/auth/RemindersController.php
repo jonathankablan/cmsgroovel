@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\View\Factory;
 use Illuminate\Mail\Message;
+use Groovel\Cmsgroovel\log\LogConsole;
 
 class RemindersController extends GroovelFormController {
  
@@ -85,7 +86,6 @@ class RemindersController extends GroovelFormController {
 		$credentials = \Input::only(
 				'email', 'password', 'password_confirmation', 'token'
 		);
-	
 		$response = \Password::reset($credentials, function($user, $password)
 		{
 			$user->password = \Hash::make($password);

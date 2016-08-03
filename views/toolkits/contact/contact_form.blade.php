@@ -15,36 +15,43 @@
 				             	<input type='hidden' name='leave_blank'/>
 								
 								<div class="form-group form-inline">
-					                <label class="col-md-5 control-label required" style='margin-right:50px'>username:</label>
-					                <div class="col-md-5">
+					                <label class="col-md-2 control-label required" style='margin-right:10px'>username:</label>
+					                <div class="col-md-8">
 					                    <input type='text' name='username' class="form-control" style='width:100%'/>
 					                </div>
 	            				</div>
 	            				<div class="form-group form-inline">
-					                <label class="col-md-5 control-label required" style='margin-right:50px'>email:</label>
-					                <div class="col-md-5">
+					                <label class="col-md-2 control-label required" style='margin-right:10px'>email:</label>
+					                <div class="col-md-8">
 					                    <input type='email' name='email' class="form-control" style='width:100%'/>
 					                </div>
 	            				</div>
 	            				<div class="form-group form-inline">
-					                <label class="col-md-5 control-label required" style='margin-right:50px'>subject:</label>
-					                <div class="col-md-5">
+					                <label class="col-md-2 control-label required" style='margin-right:10px'>subject:</label>
+					                <div class="col-md-8">
 					                    <input type='text' name='subject' class="form-control" style='width:100%'/>
 					                </div>
 	            				</div>
 	            				<div class="form-group form-inline">
-					                <label class="col-md-5 control-label required" style='margin-right:50px'>message:</label>
-					                <div class="col-md-5">
-					                    <textarea name='message' class="form-control" style='width:100%' rows='10' cols='20'></textarea>
+					                <label class="col-md-2 control-label required" style='margin-right:10px'>message:</label>
+					                <div class="col-md-9">
+					                    <textarea name='message' class="form-control" style='width:100%' rows='10' cols='40'></textarea>
 					                </div>
 	            				</div>
 														   
 					     </div>
 					      <div class="modal-footer">
-						     <p class='required' style='font-size:15px;margin-right:80%'>Fields are required</p>
-			       		
-			       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			       			 <input type="submit" id="submitForm" value="Send"  class="btn btn-default"/>
+					        <div class="row">
+					          <div class="col-md-4">
+							     <p class='required' style='font-size:15px;margin-right:10%'>Fields are required</p>
+							   </div>
+							   <div class="col-md-2 col-md-offset-4">
+				       			 <input type="submit" id="submitForm" value="Send"  class="btn btn-default"/>
+				       			</div>
+				       			<div class="col-md-2">
+				       			 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				       		   </div>
+			       			</div>
 			        	 </div>
 			        	 </form>
 					</div>

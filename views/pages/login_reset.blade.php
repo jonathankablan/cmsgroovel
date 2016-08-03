@@ -16,6 +16,7 @@
 		<div class="col-md-9">
 		<form method="POST" action="{{ url('admin/auth/remind/reset') }}" accept-charset="UTF-8" class="form-horizontal well">	
 			{{csrf_field()}}
+			<input type="hidden" name="token" value="{{ $token }}">
 					<div class="form-group">
 						<label for="email" class="col-md-4 control-label">Email :</label>
 						<div class="col-md-8">

@@ -746,6 +746,9 @@ CREATE TABLE IF NOT EXISTS `routes_groovel` (
 --
 -- Contenu de la table `routes_groovel`
 --
+INSERT INTO `routes_groovel` (`id`, `uri`, `name`, `controller`, `method`, `action`, `view`, `type`, `audit_tracking_url_enable`, `activate_route`, `updated_at`, `created_at`) VALUES
+(573, 'api/getContentsByType', 'get all contents by type', 'Groovel\\Restapi\\Http\\Controllers\\api\\contents\\ContentController', 'getContentsByType', 'op_none', '', 'Groovel', 0, 1, '2016-07-28 20:36:31', '2016-07-28 20:33:15');
+
 
 INSERT INTO `routes_groovel` (`id`, `uri`, `name`, `controller`, `method`, `action`, `view`, `type`, `audit_tracking_url_enable`, `activate_route`, `updated_at`, `created_at`) VALUES
 (1, 'admin/dashboard', 'admin panels', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\stats\\GroovelDashBoardController', 'init', 'op_read', 'cmsgroovel.pages.dashboard', 'Groovel', 1, 1, '2015-07-14 17:16:08', '0000-00-00 00:00:00'),
@@ -845,8 +848,8 @@ INSERT INTO `routes_groovel` (`id`, `uri`, `name`, `controller`, `method`, `acti
 (333, 'admin/configuration/email', 'email configuration', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\configuration\\GroovelSystemConfigurationController', 'validateForm', 'op_update', 'cmsgroovel.pages.admin_configuration_system', 'Groovel', 0, 1, '2015-07-11 21:07:06', '2015-07-11 21:07:06'),
 (345, 'admin/configuration/activate/users', 'configuration activate user at registration', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\configuration\\GroovelSystemConfigurationController', 'validateForm', 'op_update', 'cmsgroovel.pages.admin_configuration_system', 'Groovel', 0, 1, '2015-07-14 20:45:35', '2015-07-14 20:45:35'),
 (346, 'admin/auth/login/remind', 'reset password reminders', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\auth\\RemindersController', 'validateForm', 'op_none', '', 'Groovel', 0, 1, '2015-07-15 09:07:15', '2015-07-15 09:07:15'),
-(347, 'remind/reset', 'reset password', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\auth\\RemindersController', 'validateForm', 'op_update', '', 'Groovel', 0, 1, '2015-07-15 12:47:41', '2015-07-15 12:47:41'),
-(348, 'admin/auth/remind/reset', 'reset password', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\auth\\RemindersController', 'validateForm', 'op_create', '', 'Groovel', 0, 1, '2015-07-15 13:01:43', '2015-07-15 13:01:43'),
+(347, 'remind/reset', 'reset password', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\auth\\RemindersController', 'validateForm', 'op_none', '', 'Groovel', 0, 1, '2015-07-15 12:47:41', '2015-07-15 12:47:41'),
+(348, 'admin/auth/remind/reset', 'reset password', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\auth\\RemindersController', 'validateForm', 'op_none', '', 'Groovel', 0, 1, '2015-07-15 13:01:43', '2015-07-15 13:01:43'),
 (350, 'contact/post', 'contact form', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\contact\\GroovelContactFormController', 'validateForm', 'op_none', 'cmsgroovel.pages.contact_form', 'Groovel', 0, 1, '2015-07-28 16:37:34', '2015-07-20 15:03:14'),
 (351, 'forum', 'forum', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\forum\\GroovelForumController', 'validateForm', 'op_read', 'cmsgroovel.pages.forum.forum', 'Groovel', 0, 1, '2015-07-24 15:55:46', '2015-07-21 16:39:53'),
 (352, 'forum/subject', 'subject form', '', '', 'op_read', 'cmsgroovel.pages.forum.subject_forum', 'Groovel', 0, 1, '2015-07-21 16:54:48', '2015-07-21 16:54:48'),
