@@ -21,6 +21,13 @@ use Monolog\Logger;
 use Groovel\Cmsgroovel\business\groovel\admin\routes\GroovelRoutesBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\routes\GroovelRoutesBusinessInterface;
 
+/**
+ * Manage configuration of all groovel system
+ * number pagination of list,
+ * audit uri access
+ * email activation to enable notification by email
+ * Maintenance: to block all users access in order to make some changes.
+ */
 
 class GroovelSystemConfigurationController extends GroovelController {
 

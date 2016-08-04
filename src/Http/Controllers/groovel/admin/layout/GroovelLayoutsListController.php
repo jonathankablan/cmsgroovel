@@ -21,7 +21,9 @@ use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusinessInterface;
 
 
-
+/**
+ * list layout
+ */
 class GroovelLayoutsListController extends GroovelController {
 
 	protected $layoutManager;

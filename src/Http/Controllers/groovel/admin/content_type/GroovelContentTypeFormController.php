@@ -25,6 +25,10 @@ use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusinessInterf
 use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentManagerBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentManagerBusinessInterface;
 
+/**
+ * Manage the type of contents
+ */
+
 class GroovelContentTypeFormController extends GroovelFormController {
 
 	

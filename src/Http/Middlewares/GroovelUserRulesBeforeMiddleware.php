@@ -11,6 +11,11 @@ use Illuminate\Http\Response;
 use Dingo\Api\Routing\Helpers;
 use Groovel\Cmsgroovel\log\LogConsole;
 
+/**
+ * middleware class called on each request http.
+ * loads and filters users by private access rules defined in groovel
+ */
+
 class GroovelUserRulesBeforeMiddleware
 {
 	use Helpers;

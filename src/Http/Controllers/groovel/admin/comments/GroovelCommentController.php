@@ -22,6 +22,10 @@ use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelFormControll
 use Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusinessInterface;
 use Groovel\Cmsgroovel\business\groovel\admin\comments\GroovelCommentBusiness;
 
+/**
+ * Manage comments on post blogs
+ */
+
 class GroovelCommentController extends GroovelFormController {
 	
 	private $commentManager;

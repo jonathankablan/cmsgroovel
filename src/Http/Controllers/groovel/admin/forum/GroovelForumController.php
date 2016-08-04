@@ -26,7 +26,10 @@ use Groovel\Cmsgroovel\business\groovel\admin\users\GroovelUserManagerBusinessIn
 use Groovel\Cmsgroovel\business\groovel\admin\configuration\GroovelConfigurationBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\configuration\GroovelConfigurationBusinessInterface;
 
-
+/**
+ * Manage forums
+ * 
+ */
 class GroovelForumController extends GroovelFormController {
 	
 	private $forumManager;

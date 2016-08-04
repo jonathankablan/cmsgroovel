@@ -6,6 +6,10 @@ use Monolog\Logger;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelController;
 use Groovel\Cmsgroovel\log\LogConsole;
 
+/**
+ * middleware class called on each request http.
+ * loads and filters contents depends on language
+ */
 
 class ContentsBeforeMiddleware
 {

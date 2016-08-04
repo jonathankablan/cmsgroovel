@@ -34,6 +34,9 @@ use Groovel\Cmsgroovel\business\groovel\admin\messages\GroovelUserMessageBusines
 use Groovel\Cmsgroovel\models\User;
 
 
+/**
+ * Manage signin,login,logout,password users
+ */
 
 class AuthController extends GroovelController {
  

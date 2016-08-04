@@ -22,6 +22,10 @@ use Symfony\Component\HttpKernel\Tests\Controller;
 use Groovel\Cmsgroovel\business\groovel\admin\bundles\GroovelPackageManagerBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\bundles\GroovelPackageManagerBusinessInterface;
 
+/**
+ * Manage packages, list ,update, artisan commands 
+ * 
+ */
 
 class GroovelPackageManagerController extends GroovelController {
 	protected $packageManager;

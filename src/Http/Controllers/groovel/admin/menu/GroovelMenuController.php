@@ -25,7 +25,9 @@ use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusinessInterface;
 
 
-
+/**
+ * Manage Menu
+ */
 class GroovelMenuController extends GroovelFormController {
 	
 	private $menuManager;

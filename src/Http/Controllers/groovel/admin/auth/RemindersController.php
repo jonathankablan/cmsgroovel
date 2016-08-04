@@ -28,6 +28,10 @@ use Illuminate\View\Factory;
 use Illuminate\Mail\Message;
 use Groovel\Cmsgroovel\log\LogConsole;
 
+/**
+ * provide remembers or reset password
+ */
+
 class RemindersController extends GroovelFormController {
  
 	protected $configManager;

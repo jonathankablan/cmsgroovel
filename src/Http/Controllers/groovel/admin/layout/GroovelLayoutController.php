@@ -24,6 +24,9 @@ use Groovel\Cmsgroovel\business\groovel\admin\layout\GroovelLayoutBusinessInterf
 
 
 
+/**
+ * Manage layout
+ */
 class GroovelLayoutController extends GroovelFormController {
 	
 	private $layoutManager;

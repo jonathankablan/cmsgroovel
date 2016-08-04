@@ -28,6 +28,16 @@ use Groovel\Cmsgroovel\models\AllContentTypes;
 use Groovel\Cmsgroovel\models\Contents;
 use Groovel\Cmsgroovel\models\ContentsTranslation;
 
+/**
+ * Manage contents
+ * Contents is a set of fields value define by the object ContentTypes
+ * This class parses and makes association with fields value from content
+ * and fields definition defined in ContentTypes
+ * Each content is derivated as many contentTranslation depends on how many languages
+ * you have translated in.
+ * ex one contentTranslation for US language associated to one content.
+ * The core content is serialized as a blob , see contentTranslation Table ,field content
+ */
 
 class GroovelContentFormController extends GroovelFormController {
 

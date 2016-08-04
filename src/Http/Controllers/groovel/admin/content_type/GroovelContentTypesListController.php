@@ -22,6 +22,9 @@ use Groovel\Cmsgroovel\business\groovel\admin\contents\GroovelContentTypeManager
 
 
 
+/**
+ * get all contents types to list
+ */
 
 class GroovelContentTypesListController extends GroovelController {
 	

@@ -17,6 +17,11 @@ namespace Groovel\Cmsgroovel\Http\Controllers\groovel\admin\antispam;
 use Illuminate\Database\Eloquent\Model;
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\BaseController;
 
+/**
+ * Class should prevent spam and bots
+ *  
+ */
+
 
 abstract class GroovelAntiSpamController extends BaseController  {
 

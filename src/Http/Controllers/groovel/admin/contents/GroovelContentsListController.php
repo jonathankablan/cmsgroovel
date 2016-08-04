@@ -23,6 +23,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Groovel\Cmsgroovel\business\groovel\admin\configuration\GroovelConfigurationBusinessInterface;
 
+/**
+ * get all contents to list
+ */
 
 class GroovelContentsListController extends GroovelController {
 
@@ -41,7 +44,14 @@ class GroovelContentsListController extends GroovelController {
 	}
 
 	
-	//load all contents into a view
+	/**
+	 * load all contents into a view depends of your website extension or language
+	 * only English and French are managed for the moment.
+	 * @param site_extension  extension of your web site fr com 
+	 * @param associated layout
+	 * @param language
+	 * @return paginator to pagignate contents in the blade view page
+	 */
 	public function loadContents($site_extension,$lang=null,$layout=null){
 		if($lang==null){
 			if($site_extension=='com'){

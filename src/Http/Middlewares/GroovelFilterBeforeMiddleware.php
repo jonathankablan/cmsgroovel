@@ -9,6 +9,12 @@ use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\routes\GroovelRouteControl
 use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\users_rules\GroovelUserRulesController;
 use  Groovel\Cmsgroovel\log\LogConsole;
 
+
+/**
+ * middleware class called on each request http.
+ * check if uri exists for request api or web
+ */
+
 class GroovelFilterBeforeMiddleware
 {
 	

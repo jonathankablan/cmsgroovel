@@ -20,7 +20,11 @@ use Monolog\Logger;
 use Groovel\Cmsgroovel\business\groovel\admin\routes\GroovelRoutesBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\routes\GroovelRoutesBusinessInterface;
 
-
+/**
+ * Main responsability
+ * this class loads all routes from database
+ * and calls the controller and view asked.
+ */
 class GroovelRouteController extends GroovelController {
 
 	protected $routeBusiness;
@@ -75,7 +79,9 @@ class GroovelRouteController extends GroovelController {
   	}
   	
   	
-
+  	/**
+  	 * @param array: containing method, controller ,view to call
+  	 */
 	public function dispatcher($params)
 	{
 		//init the uri and controller to call and view put in memory simple singleton

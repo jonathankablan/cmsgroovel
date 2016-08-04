@@ -19,6 +19,12 @@ use Monolog\Logger;
 use Groovel\Cmsgroovel\log\LogConsole;
 
 
+/**
+ * 
+ * Manage Files upload
+ * Called by TinyMCE widget
+ * 
+ */
 
 class GroovelFileController extends GroovelController {
 	
