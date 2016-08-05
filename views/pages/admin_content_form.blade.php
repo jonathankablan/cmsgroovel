@@ -47,7 +47,7 @@
 									    		<label for="title">title</label><span class="required"></span>
 										    </div>
 										    <div class="col-md-8">
-										    	<input class="form-control" name="title" type="text" value={{ Session::get('content_edit')['title']}}>
+										    	<input class="form-control" name="title" type="text" value="{{ Session::get('content_edit')['title']}}">
 										    </div>
 						             	</div>
 					            	</div>

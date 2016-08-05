@@ -1,4 +1,9 @@
 tinymce.init({
+	protect: [
+	           /\<\/?(if|endif)\>/g, // Protect <if> & </endif>
+	           /\<xsl\:[^>]+\>/g, // Protect <xsl:...>
+	           /<\?php.*?\?>/g // Protect php code
+	       ],
     selector: "textarea#elm1",
     theme: "modern",
     width: 300,

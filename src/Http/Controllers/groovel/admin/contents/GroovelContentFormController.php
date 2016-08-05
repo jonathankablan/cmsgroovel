@@ -27,17 +27,8 @@ use Illuminate\Support\Facades\View;
 use Groovel\Cmsgroovel\models\AllContentTypes;
 use Groovel\Cmsgroovel\models\Contents;
 use Groovel\Cmsgroovel\models\ContentsTranslation;
+use Groovel\Cmsgroovel\log\LogConsole;
 
-/**
- * Manage contents
- * Contents is a set of fields value define by the object ContentTypes
- * This class parses and makes association with fields value from content
- * and fields definition defined in ContentTypes
- * Each content is derivated as many contentTranslation depends on how many languages
- * you have translated in.
- * ex one contentTranslation for US language associated to one content.
- * The core content is serialized as a blob , see contentTranslation Table ,field content
- */
 
 class GroovelContentFormController extends GroovelFormController {
 
@@ -240,7 +231,7 @@ class GroovelContentFormController extends GroovelFormController {
         foreach($datas as $key=>$value){
         	if('title'!=$key && 'ContentType'!=$key && 'tag'!=$key
         			&& 'isPublish'!=$key &&'description'!=$key &&'weight'!=$key && '_token'!=$key
-        			&&'langage'!=$key && 'uri'!=$key){
+        			&&'langage'!=$key && 'uri'!=$key && 'action'!=$key && 'content_id'!=$key){
         		$arr[$key]=$value;
         		
         	}
@@ -281,11 +272,11 @@ class GroovelContentFormController extends GroovelFormController {
 					if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
 			    			$key!='translation_id' && $key!='duplicate' 
 							&& $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight' 
-							&& $key!='isPublish' &&$key!='uri'){
+							&& $key!='isPublish' &&$key!='uri'  && $key!='action'){
 						$data[$key]=$input[$key];
 						if('myfiles'==$key && array_key_exists('myfiles',$input)){
 							if(empty($input['myfiles'])){
-								unset($data[$key]);
+								$data[$key]="";
 							}else{
 								$data[$key]=$input['myfiles'];
 							}
@@ -317,11 +308,11 @@ class GroovelContentFormController extends GroovelFormController {
 			    foreach (array_keys($input) as $key){
 			    	if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
 			    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight' 
-			    			&& $key!='isPublish' && $key!='uri'){
+			    			&& $key!='isPublish' && $key!='uri'  && $key!='action'){
 			    		$blob[$key]=$input[$key];
 			    		if('myfiles'==$key && array_key_exists('myfiles',$input)){
 			    			if(empty($input['myfiles'])){
-			    				unset($blob[$key]);
+			    				$blob[$key]="";
 			    			}else{
 			    				$blob[$key]=$input['myfiles'];
 			    			}
@@ -354,11 +345,11 @@ class GroovelContentFormController extends GroovelFormController {
 		    foreach (array_keys($input) as $key){
 		    	if($key!='_token' && $key!='content_id' && $key!='files' && $key!='fileName' && $key!='fileSize' && $key!='fileType' &&
 		    			$key!='translation_id' && $key!='duplicate' && $key!='title' &&  $key!='description' && $key!='tag' && $key!='langage' && $key!='weight'
-		    			&& $key!='isPublish'  && $key!='uri'){
+		    			&& $key!='isPublish'  && $key!='uri' && $key!='action'){
 		    		$blob[$key]=$input[$key];
 		    		if('myfiles'==$key && array_key_exists('myfiles',$input)){
 		    			if(empty($input['myfiles'])){
-		    				unset($blob[$key]);
+		    				$blob[$key]="";
 		    			}else{
 		    				$blob[$key]=$input['myfiles'];
 		    			}

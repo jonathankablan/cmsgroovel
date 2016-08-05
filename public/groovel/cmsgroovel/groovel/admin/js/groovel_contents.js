@@ -393,6 +393,11 @@ for(var i=0;i<generateFormTinyMCE.length;i++){
 	if(sel!=null){
 	sel.focus();
 	eval (tinymce.init({
+		protect: [
+		           /\<\/?(if|endif)\>/g, // Protect <if> & </endif>
+		           /\<xsl\:[^>]+\>/g, // Protect <xsl:...>
+		           /<\?php.*?\?>/g // Protect php code
+		       ],
 	    selector: "textarea#"+generateFormTinyMCE[i],
 		    theme: "modern",
 		    height: 300,
