@@ -26,6 +26,11 @@ use Groovel\Cmsgroovel\dao\ContentTypeDaoInterface;
 use Groovel\Cmsgroovel\dao\UserPermissionDaoInterface;
 use Groovel\Cmsgroovel\dao\UserDaoInterface;
 use Groovel\Cmsgroovel\dao\UserRoleDaoInterface;
+use Groovel\Cmsgroovel\models\Comments;
+use Groovel\Cmsgroovel\models\Messages;
+use Groovel\Cmsgroovel\models\User;
+use Groovel\Cmsgroovel\log\LogConsole;
+use Groovel\Cmsgroovel\models\Contents;
 
 
 class GroovelUserManagerBusiness implements GroovelUserManagerBusinessInterface{
@@ -82,11 +87,37 @@ class GroovelUserManagerBusiness implements GroovelUserManagerBusinessInterface{
 	
 	
 	public function deleteUser($id){
+		//delete all message
+		$user=User::find($id);
+		LogConsole::debug("delete user". $user);
+		$messages=Messages::where("author","=",$user->pseudo);
+		foreach($messages as $message){
+			$message->delete();
+		}
+		
+		//delete all comments
+		$comments=Comments::where("author_id","=",$id);
+		foreach($comments as $comment){
+			$comment->delete();
+		}
+		
+		//Delete all contents from users
+		$contents=Contents::where("author_id","=",$id)->get();
+		foreach($contents as $content){
+			$translations=$content->translation;
+			foreach($translations as $translation){
+				$translation->delete();
+			}
+		}
+		
+		
 		$this->userDao->delete($id);
 		$role=$this->userRoleDao-> getUserRoleByUserId($id);
 		if($role!=null){
 			$role->delete();
 		}
+		
+		LogConsole::debug("delete user has been deleted ". $user);
 	}
    
    public function paginateUser(){

@@ -84,7 +84,7 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 		$contentTranslation= $this->contentTranslationDao->find($contentTranslationid);
 		$comments=array();
 		foreach($contentTranslation->comments as $comm){
-			if(!empty($comm->author)){
+			if($comm->author!=null){
 				array_push($comments,['author_picture'=>$comm->author->picture,'author_pseudo'=>$comm->author->pseudo,'comment'=>unserialize(base64_decode($comm->comment)),'created_at'=>$comm->created_at,'updated_at'=>$comm->updated_at]);
 			}		
 		}
@@ -99,7 +99,7 @@ class GroovelContentManagerBusiness implements GroovelContentManagerBusinessInte
 		$contentTranslation= $this->contentTranslationDao->findTranslation($content->id,$lang);
 		$comments=array();
 		foreach($contentTranslation->comments as $comm){
-			if(!empty($comm->author)){
+			if($comm->author!=null){
 				array_push($comments,['author_picture'=>$comm->author->picture,'author_pseudo'=>$comm->author->pseudo,'comment'=>unserialize(base64_decode($comm->comment)),'created_at'=>$comm->created_at,'updated_at'=>$comm->updated_at]);
 			}
 		}
