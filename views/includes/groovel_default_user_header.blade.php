@@ -38,6 +38,9 @@
                 </ul>
                  <ul class="nav navbar-nav navbar-right navbar-user">
                   <li>
+                  	<a href="{{ url('/users/directory') }}" style="color:#9d9d9d" ><i class="glyphicon glyphicon-globe"></i>Users Directory</a>
+                  </li> 
+                  <li>
                   <a href="{{ url('/messages/list') }}" style="color:#9d9d9d" >Inbox<span class="badge" style='margin-left:5px'>{!!\Session::get('newmessages')!!}</span></a>
                   </li> 
                  </ul>  

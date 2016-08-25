@@ -34,9 +34,6 @@ use Groovel\Cmsgroovel\business\groovel\admin\messages\GroovelUserMessageBusines
 use Groovel\Cmsgroovel\models\User;
 
 
-/**
- * Manage signin,login,logout,password users
- */
 
 class AuthController extends GroovelController {
  
@@ -138,7 +135,9 @@ class AuthController extends GroovelController {
 	          $role= $this->userManager->getUserRole($user['id']);
 	          $user_privileges=array("role"=>$role->role['role'],"status"=>$user['activate']);
 	          \Session::put('user_privileges',$user_privileges);
-	          return \Redirect::intended('/admin/welcome')->with('flash_notice', 'You are connected with ' . \Auth::user()->pseudo);
+	          $newmessage=$this->messageManager->countNewMessage(\Auth::user()['pseudo']);
+	          \Session::put('newmessages',$newmessage);
+	           return \Redirect::intended('/admin/welcome')->with('flash_notice', 'You are connected with ' . \Auth::user()->pseudo);
 	        }
     	}else if ($v->failed()) {	
     		return \Redirect::to('admin/failed/login')->with('flash_error', 'Password or Pseudo not correct !')->withInput();

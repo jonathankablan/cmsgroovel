@@ -217,7 +217,8 @@ return [
     	'Input' => Illuminate\Support\Facades\Input::class,
     	'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
     	'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-    	 'LogConsole'=>Groovel\Cmsgroovel\log\LogConsole::class,
+    	'LogConsole'=>Groovel\Cmsgroovel\log\LogConsole::class,
+    	'AuthAccessRules'=>Groovel\Cmsgroovel\facades\auth\AuthAccessRules::class,
   
     ],
 

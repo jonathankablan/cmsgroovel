@@ -1,5 +1,3 @@
-@extends('cmsgroovel.layouts.groovel_admin_default')
-@section('content')
 	 <div class="col-sm-4">
         
         
@@ -76,7 +74,7 @@
  	</div>
 <script type="text/javascript">
 $(document).ready(function() { 
-	 $('#modal').modal('show');
+	
 
 
 
@@ -250,4 +248,3 @@ color: #333;
 
 </style>
 
-@stop

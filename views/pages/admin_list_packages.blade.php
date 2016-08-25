@@ -12,20 +12,20 @@
 	                  		<div class="panel-heading">
 	                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Packages</h3>
 	                        </div>
-	                        <div class="panel-body col-xs-7 col-sm-10 col-md-10">
+	                        <div class="panel-body col-xs-7 col-sm-10 col-md-12">
 		                        <div style='margin-bottom: 10px' >
 		                        	<div class="col-md-2 col-sm-3 col-xs-2  hidden-xs">
 			                        	<input class="search" placeholder="Search" style="height:30px" />
 			                        </div>
-			                        <div class="col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 hidden-xs hidden-sm">
+			                        <div class="col-md-2 col-md-offset-1 col-sm-8 col-sm-offset-1 hidden-xs hidden-sm">
 								  		<button class="sort" data-sort="packagename" style="height:30px">
 								    		Sort by name
 								  		</button>
 								  	</div>
-								  	 <div class="col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 hidden-xs hidden-sm">     
+								  	 <div class="col-md-2 col-md-offset-1 col-sm-8 col-sm-offset-1 hidden-xs hidden-sm">     
 								        <button id="artisanCacheClear" class="btn btn-default btnArtisanCacheClear">Artisan Cache Clear</button>
 								     </div>
-								      <div class="col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 hidden-xs hidden-sm">  
+								      <div class="col-md-2 col-md-offset-1 col-sm-8 col-sm-offset-1 hidden-xs hidden-sm">  
 								           <button id="artisanDumpAutoload" class="btn btn-default btnArtisanDumpAutoload">Artisan dump-autoload</button>
 								       </div>
 							  	</div>

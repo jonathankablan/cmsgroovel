@@ -23,6 +23,8 @@ use Groovel\Cmsgroovel\handlers\ElasticSearchHandler;
 use Groovel\Cmsgroovel\handlers\DatabaseSearchHandler;
 use Groovel\Cmsgroovel\commons\ModelConstants;
 use Illuminate\Database\Eloquent\Model;
+use Groovel\Cmsgroovel\facades\auth\AuthAccessRules;
+use Groovel\Cmsgroovel\log\LogConsole;
 
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
@@ -187,6 +189,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		
 		User::updating(function($user)
 		{
+			if(AuthAccessRules::getCurrentAction()!="op_none"
+					 &&(AuthAccessRules::hasPermissionToOtherContent()==false && AuthAccessRules::hasPermissionToOwnContent($user->id)==false)){
+				throw new \Exception(ModelConstants::$error_message);
+			}
 			$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
 					'description'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
 		   
@@ -196,7 +202,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		
 		User::saved(function($user)
 		{
-				
+			if(AuthAccessRules::getCurrentAction()!="op_none"
+					&&(AuthAccessRules::hasPermissionToOtherContent()==false && AuthAccessRules::hasPermissionToOwnContent($user->id)==false)){
+				throw new \Exception(ModelConstants::$error_message);
+			}
 			$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
 					'description'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
 				
@@ -206,6 +215,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		
 		User::deleting(function($user)
 		{
+			LogConsole::debug("user deleting event");
+			if(AuthAccessRules::getCurrentAction()!="op_none"
+					&&(AuthAccessRules::hasPermissionToOtherContent()==false && AuthAccessRules::hasPermissionToOwnContent($user->id)==false)){
+				throw new \Exception(ModelConstants::$error_message);
+			}
 			$data=array('id'=>$user['id'],'title'=>$user['username'],'pseudo'=>$user['pseudo'],
 					'description'=>'','tag'=>$user['username'].' '.$user['pseudo'],'created_at'=>$user['created_at'],'updated_at'=>$user['updated_at']);
 			

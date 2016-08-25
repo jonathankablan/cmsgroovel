@@ -47,5 +47,7 @@ interface UserDaoInterface{
 	public function getAllUsersAdmin();
 	
 	public function checkUserByEmailIsUnique($email,$pseudo);
+	
+	public function searchUser($pseudo);
 
 }

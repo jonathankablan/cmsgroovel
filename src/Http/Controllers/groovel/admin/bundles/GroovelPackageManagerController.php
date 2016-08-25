@@ -21,11 +21,8 @@ use Monolog\Logger;
 use Symfony\Component\HttpKernel\Tests\Controller;
 use Groovel\Cmsgroovel\business\groovel\admin\bundles\GroovelPackageManagerBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\bundles\GroovelPackageManagerBusinessInterface;
+use Groovel\Cmsgroovel\log\LogConsole;
 
-/**
- * Manage packages, list ,update, artisan commands 
- * 
- */
 
 class GroovelPackageManagerController extends GroovelController {
 	protected $packageManager;
@@ -75,6 +72,10 @@ class GroovelPackageManagerController extends GroovelController {
 	
 	
 	function artisanCacheClear() {
+		LogConsole::debug("cache cleared");
+		\Session::forget("permissions");
+		\Session::forget("user_role");
+		\Session::forget("action");
 		\Cache::flush();
 	}
 	

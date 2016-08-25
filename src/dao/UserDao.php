@@ -17,6 +17,7 @@ namespace Groovel\Cmsgroovel\dao;
 
 use \Carbon\Carbon;
 use Groovel\Cmsgroovel\models\User;
+use Groovel\Cmsgroovel\log\LogConsole;
 
 class UserDao implements UserDaoInterface{
 
@@ -145,5 +146,35 @@ class UserDao implements UserDaoInterface{
 		if($user!=null){
 			return false;
 		}else return true;
+	}
+	
+	public function searchUser($pseudo){
+		if(empty($pseudo)){
+			return User::take(15)->get();
+		}
+		
+		$user=User::where('pseudo', '=', $pseudo)->get();
+		if(!empty($user)&& count($user)>0){
+			LogConsole::debug("case1");
+			return $user;
+		}
+		$arg='%'.$pseudo;
+		$user=User::where('pseudo', 'like', $arg)->get();
+		
+		if(!empty($user)&& count($user)>0){
+			return $user;
+		}
+		$arg=$pseudo.'%';
+		$user=User::where('pseudo', 'like', $arg)->get();
+		
+		if(!empty($user)&& count($user)>0){
+			LogConsole::debug("case3");
+			return $user;
+		}else{
+			LogConsole::debug("case4");
+			$arg='%'.$pseudo.'%';
+			return User::where('pseudo', 'like', $arg)->get();
+		}
+		
 	}
 }

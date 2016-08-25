@@ -40,7 +40,7 @@ class GroovelMessageController extends GroovelFormController {
 	
 	public function validateForm($params){
 		$newmessage=$this->messageManager->countNewMessage(\Auth::user()['pseudo']);
-		\Session::flash('newmessages',$newmessage);
+		\Session::put('newmessages',$newmessage);
 		
 		if(\Request::is('messages/compose')){
 			return \View::make('cmsgroovel.pages.email.compose_messages');

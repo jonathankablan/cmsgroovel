@@ -627,6 +627,10 @@ INSERT INTO `permissions` (`id`, `uri`, `owncontent`, `othercontent`, `op_create
 (795, 'admin/user/update', 'yes', 'no', 0, 0, 1, 0, '2016-06-26 12:54:22', '2016-06-26 12:54:22'),
 (796, 'comment/post', 'yes', 'no', 1, 0, 0, 0, '2016-06-26 12:54:22', '2016-06-26 12:54:22');
 
+INSERT INTO `permissions` (`id`, `uri`, `owncontent`, `othercontent`, `op_create`, `op_read`, `op_update`, `op_delete`, `created_at`, `updated_at`) VALUES
+(859, 'messages/reply', 'yes', 'no', 1, 0, 0, 0, '2016-08-22 21:00:20', '2016-08-22 21:00:20'),
+(860, 'admin/user/validate', 'yes', 'no', 0, 1, 0, 0, '2016-08-22 21:00:20', '2016-08-22 21:00:20'),
+(880, 'users/directory', 'yes', 'no', 0, 1, 0, 0, '2016-08-22 21:00:20', '2016-08-22 21:00:20');
 
 
 
@@ -719,6 +723,11 @@ INSERT INTO `role_permissions` (`id`, `roleid`, `permissionid`, `updated_at`, `c
 (501, 42, 794, '2016-06-26 12:54:22', '2016-06-26 12:54:22'),
 (502, 42, 795, '2016-06-26 12:54:22', '2016-06-26 12:54:22'),
 (503, 42, 796, '2016-06-26 12:54:22', '2016-06-26 12:54:22');
+
+INSERT INTO `role_permissions` (`id`, `roleid`, `permissionid`, `updated_at`, `created_at`) VALUES
+(566, 42, 859, '2016-08-22 21:00:20', '2016-08-22 21:00:20'),
+(567, 42, 860, '2016-08-22 21:00:20', '2016-08-22 21:00:20'),
+(587, 42, 880, '2016-08-22 21:00:20', '2016-08-22 21:00:20');
 
 -- --------------------------------------------------------
 
@@ -925,6 +934,10 @@ INSERT INTO `routes_groovel` (`id`, `uri`, `name`, `controller`, `method`, `acti
 (569, 'api/updateEmailProfile', 'update email profile', 'Groovel\\Restapi\\Http\\Controllers\\api\\profile\\ProfileController', 'updateEmailProfile', 'op_update', '', 'Groovel', 0, 1, '2016-07-30 14:13:02', '2016-07-30 13:17:54'),
 (570, 'api/resetPasswordProfile', 'reset password profile', 'Groovel\\Restapi\\Http\\Controllers\\api\\profile\\ProfileController', 'resetPasswordProfile', 'op_update', '', 'Groovel', 0, 1, '2016-07-30 14:13:20', '2016-07-30 13:18:56'),
 (571, 'api/getContent', 'get one content', 'Groovel\\Restapi\\Http\\Controllers\\api\\contents\\ContentController', 'getContent', 'op_read', '', 'Groovel', 0, 1, '2016-07-30 14:13:20', '2016-07-30 13:18:56');
+
+INSERT INTO `routes_groovel` (`id`, `uri`, `name`, `controller`, `method`, `action`, `view`, `type`, `audit_tracking_url_enable`, `activate_route`, `updated_at`, `created_at`) VALUES
+(574, 'search/users', 'search agenda user contact', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\users\\GroovelUsersListController', 'search', 'op_read', '', 'Groovel', 0, 1, '2016-08-13 11:43:20', '2016-08-13 11:43:20'),
+(575, 'users/directory', 'directory of users', 'Groovel\\Cmsgroovel\\Http\\Controllers\\groovel\\admin\\users\\GroovelUsersListController', 'initUsersDirectory', 'op_read', '', 'Groovel', 0, 1, '2016-08-16 20:34:01', '2016-08-16 20:34:01');
 
 -- --------------------------------------------------------
 

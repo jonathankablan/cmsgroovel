@@ -19,6 +19,7 @@ use Groovel\Cmsgroovel\Http\Controllers\groovel\admin\common\GroovelController;
 use Monolog\Logger;
 use Groovel\Cmsgroovel\business\groovel\admin\users\GroovelUserManagerBusiness;
 use Groovel\Cmsgroovel\business\groovel\admin\users\GroovelUserManagerBusinessInterface;
+use Groovel\Cmsgroovel\log\LogConsole;
 
 
 
@@ -33,7 +34,18 @@ class GroovelUsersListController extends GroovelController {
 		$this->middleware('auth');
 	}
 	
-
+	public function search(){
+		$pseudo=\Input::get("recipient");
+		LogConsole::debug("test ".$pseudo);
+		$users=$this->userManager->searchUser($pseudo);
+		return json_encode(['users'=>$users]);
+	}
+	
+	public function initUsersDirectory(){
+		return \View::make('cmsgroovel.pages.users.directory.admin_list_users',['users'=>$this->userManager->paginateUser()]);
+	}
+	
+	
 	public function init(){
 	     return \View::make('cmsgroovel.pages.admin_list_users',['users'=>$this->userManager->paginateUser()]);
  	}

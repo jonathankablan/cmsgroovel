@@ -14,6 +14,9 @@
 /**********************************************************************/
 namespace Groovel\Cmsgroovel\models;
 use Illuminate\Database\Eloquent\Model;
+use Groovel\Cmsgroovel\log\LogConsole;
+use Groovel\Cmsgroovel\facades\auth\AuthAccessRules;
+use Groovel\Cmsgroovel\commons\ModelConstants;
 
 class Messages extends Model{
 
@@ -26,6 +29,37 @@ class Messages extends Model{
 
 
 	protected $fillable = array('subject','body','recipient','author','isalreadyread','created_at','updated_at');
+	
+	
+	public function hasAuthor(){
+		return $this->hasOne('Groovel\Cmsgroovel\models\User','pseudo','author');
+	}
+	
+	public function hasRecipient(){
+		return $this->hasOne('Groovel\Cmsgroovel\models\User','pseudo','recipient');
+	}
+	
+	
+	
+	public static function boot()
+	{
+		parent::boot();
+	
+		
+	
+		Messages::deleting(function($message)
+		{
+			LogConsole::debug("user message event delete");
+			if(AuthAccessRules::getCurrentAction()!="op_none"
+					&&(AuthAccessRules::hasPermissionToOtherContent()==false && AuthAccessRules::hasPermissionToOwnContent($message->hasRecipient->id)==false)){
+				throw new \Exception(ModelConstants::$error_message);
+			}
+			
+		});
+	
+	
+	}
+	
 	
 	
 }
