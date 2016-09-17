@@ -1,3 +1,15 @@
+//open a modal window other another
+$(document).ready(function (){
+	$('#popupModal').on('show.bs.modal', function() {
+	 	  	$('#modal').css('opacity', 0.2);
+	 	  	$('#modal').css({zIndex: 1040})
+	});
+	
+	$('#popupModal').on('hide.bs.modal', function() {
+		 	$('#modal').css('opacity', 1);
+	});
+})
+
 function validateUser(form){
 var ajax=	$.ajax({
 		  type: 'POST',
@@ -25,7 +37,7 @@ return false;
 
 function postPicture(){
 	 var token = $('#token').val();
-	 getFileOldList();
+	 getUserPictureOldList();
 	 var status=true;
 	 if($('#user_form #my-file').length){
 		$('#user_form #my-file').val('');
@@ -144,7 +156,14 @@ function postUser(form,action){
                data : any2url('q',inputData),
                url: "user/delete",
                 success: function(data) {
-                   alert('user deleted successfull');
+                   $("#alertmsg").css("color","green");
+					  $("#alertmsg").text('user has been deleted');
+					  $("#error").empty();
+					  $("#popupModal").modal({                    // wire up the actual modal functionality and show the dialog
+					        "backdrop"  : "static",
+					        "keyboard"  : true,
+					        "show"      : true                     // ensure the modal is shown immediately
+					      });
                },
                error: function(xhr, textStatus, thrownError) {
                   alert(thrownError);

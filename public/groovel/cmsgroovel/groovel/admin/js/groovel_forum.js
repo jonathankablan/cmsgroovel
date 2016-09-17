@@ -1,3 +1,16 @@
+//open a modal window other another
+$(document).ready(function (){
+	$('#popupModal').on('show.bs.modal', function() {
+	 	  	$('#modal').css('opacity', 0.2);
+	 	  	$('#modal').css({zIndex: 1040})
+	});
+	
+	$('#popupModal').on('hide.bs.modal', function() {
+		 	$('#modal').css('opacity', 1);
+	});
+})
+
+
 function DeleteMessage(){
    var thArray = $("#table_messages thead tr").map(function(index,elem) {
                 var ret = [];
@@ -25,7 +38,14 @@ function DeleteMessage(){
                 data : any2url('q',inputData),
                 url: "/messages/delete",
                  success: function(data) {
-                    alert('message deleted successfull');
+                	  $("#alertmsg").css("color","green");
+					  $("#alertmsg").text('message has been deleted');
+					  $("#error").empty();
+					  $("#popupModal").modal({                    // wire up the actual modal functionality and show the dialog
+					        "backdrop"  : "static",
+					        "keyboard"  : true,
+					        "show"      : true                     // ensure the modal is shown immediately
+					      });
                  },
                 error: function(xhr, textStatus, thrownError) {
                    alert(thrownError);

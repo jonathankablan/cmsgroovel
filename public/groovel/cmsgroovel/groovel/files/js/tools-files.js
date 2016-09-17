@@ -66,6 +66,19 @@ function getFileOldList(){
 	}
 }
 
+
+function getUserPictureOldList(){
+	var list=$('#user_form #input_list');
+	if(list.length){
+		list.find("input").each(function() {
+		      var tab=new Object();
+			  tab={'name':$(this).attr('id'),'value':$(this).val()};
+			  filesAlreadyStored.push(tab);
+			  $(this).remove();
+		   });
+	}
+}
+
 function clearFileOldList(){
 	filesAlreadyStored=[];
 	urlimg=new Object();
